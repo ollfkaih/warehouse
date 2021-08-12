@@ -19,6 +19,15 @@ public class AppController {
         calc = new Calc(0.0, 0.0, 0.0);
     }
 
+    public Calc getCalc() {
+        return calc;
+    }
+
+    public void setCalc(Calc calc) {
+        this.calc = calc;
+        updateOperandsView();
+    }
+
     @FXML
     private ListView<Double> operandsView;
 
