@@ -2,6 +2,8 @@ package app;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -91,27 +93,37 @@ public class AppController {
     void handlePoint() {
         var operandString = getOperandString();
         if (operandString.contains(".")) {
-            setOperand(operandString.substring(operandString.indexOf(".") + 1));
+            setOperand(operandString.substring(0, operandString.indexOf(".") + 1));
         } else {
             appendToOperand(".");
         }
     }
 
-    private void performOperation(boolean swap, BinaryOperator<Double> op) {
+    @FXML
+    void handleClear() {
+        clearOperand();
+    }
+
+    private void withOperand(Runnable proc) {
         if (hasOperand()) {
             calc.pushOperand(getOperand());
             clearOperand();
         }
-        if (swap) {
-            calc.swap();
-        }
-        calc.performOperation(op);
+        proc.run();
         updateOperandsView();
     }
 
-    @FXML
-    void handlePi() {
-        setOperand(Math.PI);
+    private void performOperation(UnaryOperator<Double> op) {
+        withOperand(() -> calc.performOperation(op));
+    }
+
+    private void performOperation(boolean swap, BinaryOperator<Double> op) {
+        withOperand(() -> {
+            if (swap) {
+                calc.swap();
+            }
+            calc.performOperation(op);
+        });
     }
 
     @FXML
@@ -132,5 +144,19 @@ public class AppController {
     @FXML
     void handleOpDiv() {
         performOperation(true, (op1, op2) -> op1 / op2);
+    }
+
+    @FXML
+    void handleOpSquareRoot() {
+        performOperation(op1 -> Math.sqrt(op1));
+    }
+
+    @FXML
+    void handlePi() {
+        withOperand(() -> calc.pushOperand(Math.PI));
+    }
+
+    public static void main(String[] args) {
+        System.out.println("\u221A");
     }
 }

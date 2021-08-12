@@ -38,7 +38,7 @@
       GridPane.rowIndex="5" GridPane.columnIndex="0"/>
    <Button text="." onAction="#handlePoint"
       GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-   <Button text="π" onAction="#handlePi"
+   <Button text="C" onAction="#handleClear"
       GridPane.rowIndex="5" GridPane.columnIndex="2"/>
 
    <Button text="+" onAction="#handleOpAdd"
@@ -49,4 +49,8 @@
       GridPane.rowIndex="6" GridPane.columnIndex="2"/>
    <Button text="/" onAction="#handleOpDiv"
       GridPane.rowIndex="6" GridPane.columnIndex="3"/>
+   <Button text="√" onAction="#handleOpSquareRoot"   
+      GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+   <Button text="π" onAction="#handlePi"   
+      GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 </GridPane>

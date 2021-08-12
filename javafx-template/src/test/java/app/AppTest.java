@@ -1,6 +1,5 @@
 package app;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,10 +7,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import org.testfx.framework.junit5.ApplicationTest;
+
 /**
- * JavaFX App
+ * TestFX App test
  */
-public class App extends Application {
+public class AppTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -19,9 +20,5 @@ public class App extends Application {
         Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
         stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }
