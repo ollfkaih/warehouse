@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.opentest4j.AssertionFailedError;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 
@@ -106,7 +104,7 @@ public class AppTest extends ApplicationTest {
         for (var label : labels.split(" ")) {
             click(label.equals("\n") ? enterLabel : label);
         }
-        checkView(Stream.of(operandsString.split(" ")).mapToDouble(Double::valueOf).toArray());
+        checkView("", Stream.of(operandsString.split(" ")).mapToDouble(Double::valueOf).toArray());
     }
 
     private static Stream<Arguments> testClicksOperands() {
