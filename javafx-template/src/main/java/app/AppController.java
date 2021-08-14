@@ -100,6 +100,11 @@ public class AppController {
         // TODO clear operand
     }
 
+    @FXML
+    void handleSwap() {
+        // TODO clear operand
+    }
+
     private void performOperation(UnaryOperator<Double> op) {
         // TODO
     }

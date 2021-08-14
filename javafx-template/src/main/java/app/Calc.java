@@ -7,10 +7,13 @@ import java.util.function.UnaryOperator;
 
 public class Calc {
     
-    private List<Double> operandStack = new ArrayList<>();
+    private final List<Double> operandStack;
 
-    public Calc(Double... operands) {
-        operandStack.addAll(List.of(operands));
+    public Calc(double... operands) {
+        operandStack = new ArrayList<>(operands.length + 2);
+        for (var d : operands) {
+            operandStack.add(d);
+        }
     }
 
     /**
@@ -21,28 +24,23 @@ public class Calc {
     }
 
     /**
-     * Pushes a new operand into the n'th place from the top.
-     * @param n the place to push
-     * @param d the new operand
-     */
-    public void pushOperand(int n, double d) {
-        operandStack.add(operandStack.size() - n, d);
-    }
-
-    /**
      * Pushes a new operand onto top of the stack.
      * @param d the new operand
      */
     public void pushOperand(double d) {
-        pushOperand(0, d);
+        operandStack.add(d);
     }
 
     /**
      * @param n the place (from the top) to peek
      * @return the n'th operand from the top
+     * @throws IllegalArgumentException if n is larger than the operand count
      */
     public double peekOperand(int n) {
-        return operandStack.get(operandStack.size() - n - 1);
+        if (n > getOperandCount()) {
+            throw new IllegalArgumentException("Cannot peek at position " + n + " when the operand count is " + getOperandCount());
+        }
+        return operandStack.get(getOperandCount() - n - 1);
     }
 
     /**
@@ -53,29 +51,25 @@ public class Calc {
     }
 
     /**
-     * Removes and returns the n'th operand from the top.
-     * @param n the place from the top to remove
-     * @return the n'th operand from the top
-     */
-    public double popOperand(int n) {
-        return operandStack.remove(operandStack.size() - n - 1);
-    }
-
-    /**
      * Removes and returns the top operand.
      * @return the top operand
+     * @throws IllegalStateException if the stack is empty
      */
     public double popOperand() {
-        return popOperand(0);
+        if (getOperandCount() == 0) {
+            throw new IllegalStateException("Cannot pop from an empty stack");
+        }
+        return operandStack.remove(operandStack.size() - 1);
     }
-
+    
     /**
      * Performs the provided operation in the top operand, and
      * replaces it with the result.
      * @param op the operation to perform
      * @return the result of performing the operation
+     * @throws IllegalStateException if the operand stack is empty
      */
-    public double performOperation(UnaryOperator<Double> op) {
+    public double performOperation(UnaryOperator<Double> op) throws IllegalStateException {
         // TODO
         return 0.0;
     }
@@ -85,8 +79,12 @@ public class Calc {
      * replaces them with the result.
      * @param op the operation to perform
      * @return the result of performing the operation
+     * @throws IllegalStateException if the operand count is less than two
      */
-    public double performOperation(BinaryOperator<Double> op) {
+    public double performOperation(BinaryOperator<Double> op) throws IllegalStateException {
+        if (getOperandCount() < 2) {
+            throw new IllegalStateException("Too few operands (" + getOperandCount() + ") on the stack");
+        }
         var op1 = popOperand();
         var op2 = popOperand();
         var result = op.apply(op1, op2);

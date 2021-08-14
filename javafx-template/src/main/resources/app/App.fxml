@@ -15,7 +15,7 @@
 
    <!-- multi-line button label with XML entity for newline -->
    <Button text="E&#10;n&#10;t&#10;e&#10;r" onAction="#handleEnter"
-      GridPane.rowIndex="2" GridPane.columnIndex="3" GridPane.rowSpan="4"/>
+      GridPane.rowIndex="2" GridPane.columnIndex="3" GridPane.rowSpan="3"/>
 
    <Button text="7" onAction="#handleDigit"
       GridPane.rowIndex="2" GridPane.columnIndex="0"/>
@@ -23,24 +23,29 @@
       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
    <Button text="9" onAction="#handleDigit"
       GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+   
    <Button text="4" onAction="#handleDigit"
       GridPane.rowIndex="3" GridPane.columnIndex="0"/>
    <Button text="5" onAction="#handleDigit"
       GridPane.rowIndex="3" GridPane.columnIndex="1"/>
    <Button text="6" onAction="#handleDigit"
       GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+   
    <Button text="1" onAction="#handleDigit"
       GridPane.rowIndex="4" GridPane.columnIndex="0"/>
    <Button text="2" onAction="#handleDigit"
       GridPane.rowIndex="4" GridPane.columnIndex="1"/>
    <Button text="3" onAction="#handleDigit"
       GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+   
    <Button text="0" onAction="#handleDigit"
       GridPane.rowIndex="5" GridPane.columnIndex="0"/>
    <Button text="." onAction="#handlePoint"
       GridPane.rowIndex="5" GridPane.columnIndex="1"/>
    <Button text="C" onAction="#handleClear"
       GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+   <Button text="~" onAction="#handleSwap"
+      GridPane.rowIndex="5" GridPane.columnIndex="3"/>
 
    <Button text="+" onAction="#handleOpAdd"
       GridPane.rowIndex="6" GridPane.columnIndex="0"/>
