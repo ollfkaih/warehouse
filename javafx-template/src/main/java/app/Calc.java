@@ -38,7 +38,7 @@ public class Calc {
      * @throws IllegalArgumentException if n is larger than the operand count
      */
     public double peekOperand(int n) {
-        if (n > getOperandCount()) {
+        if (n >= getOperandCount()) {
             throw new IllegalArgumentException("Cannot peek at position " + n + " when the operand count is " + getOperandCount());
         }
         return operandStack.get(getOperandCount() - n - 1);
@@ -102,7 +102,7 @@ public class Calc {
      * @throws IllegalStateException if the operand count is less than two
      */
     public void swap() {
-        // TODO
+        
     }
 
     /**

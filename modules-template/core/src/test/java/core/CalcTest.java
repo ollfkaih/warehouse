@@ -86,10 +86,11 @@ public class CalcTest {
     @Test
     public void testSwap() {
         Calc calc = new Calc(1.0, 3.14);
-        calc.swap();
         checkCalc(calc, 3.14, 1.0);
         calc.swap();
         checkCalc(calc, 1.0, 3.14);
+        calc.swap();
+        checkCalc(calc, 3.14, 1.0);
     }
 
     @Test
