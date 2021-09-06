@@ -94,6 +94,8 @@ public class Calc {
 
     /**
      * Swaps the two topmost operands.
+     *
+     * @throws IllegalStateException if the operand count is less than two
      */
     public void swap() {
         // TODO
@@ -101,6 +103,8 @@ public class Calc {
 
     /**
      * Duplicates the top operand.
+     *
+     * @throws IllegalStateException if the operand stack is empty
      */
     public void dup() {
         // TODO
