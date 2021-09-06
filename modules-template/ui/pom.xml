@@ -84,7 +84,8 @@
                 <!-- Default configuration for running -->
                 <!-- Usage: mvn javafx:run -->
                 <configuration>
-                    <mainClass>app.App</mainClass>
+                    <!-- syntax: module-name/full-app-class-name -->
+                    <mainClass>calc.ui/ui.App</mainClass>
                 </configuration>
             </plugin>
         </plugins>
