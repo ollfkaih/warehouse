@@ -3,14 +3,13 @@
 
 Project repo for IT1901 - group 38.
 
-## modules-template
+## Warehouse app
 
-Template for  multi-module, multi-package javafx project.
 
 ## Trying it out
 
-All projects can be tried out by cd-ing into the corresponding folder and using `mvn`:
+All projects can be tried out by cd-ing into the `warehouse` folder and using `mvn`:
 
-- compile with `mvn compile` (after `cd javafx-template` of course)
-- test with `mvn test` (it should fail until you complete the RPN calculator)
-- run with `mvn javafx:run` (it should open, but not work properly)
+- compile with `mvn compile` (after `cd warehouse` of course)
+- test with `mvn test`
+- run with `mvn javafx:run`
