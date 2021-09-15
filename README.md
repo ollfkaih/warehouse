@@ -10,6 +10,7 @@ Project repo for IT1901 - group 38.
 
 All projects can be tried out by cd-ing into the `warehouse` folder and using `mvn`:
 
-- compile with `mvn compile` (after `cd warehouse` of course)
-- test with `mvn test`
-- run with `mvn javafx:run`
+1. run `mvn install`
+  If some tests fail, use `mvn install "-DskipTests"`
+2. Change directory to ui, and
+3. run with `mvn javafx:run`
