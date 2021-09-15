@@ -1,3 +1,3 @@
-module calc.core {
+module warehouse.core {
     exports core;
 }

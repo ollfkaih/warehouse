@@ -1,6 +1,6 @@
 package ui;
 
-import core.Calc;
+import core.Warehouse;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
@@ -14,19 +14,19 @@ import javafx.scene.control.ListView;
 
 public class AppController {
 
-    private Calc calc;
+    private Warehouse warehouse;
 
     public AppController() {
-        calc = new Calc(0.0, 0.0, 0.0);
+        warehouse = new Warehouse();
     }
 
-    public Calc getCalc() {
-        return calc;
+    public Warehouse getWarehouse() {
+        return warehouse;
     }
 
-    public void setCalc(Calc calc) {
-        this.calc = calc;
-        updateOperandsView();
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+        //updateOperandsView();
     }
 
     @FXML
@@ -37,17 +37,17 @@ public class AppController {
 
     @FXML
     void initialize() {
-        updateOperandsView();
+        //updateOperandsView();
     }
 
-    private void updateOperandsView() {
+    /*private void updateOperandsView() {
         List<Double> operands = operandsView.getItems();
         operands.clear();
-        int elementCount = Math.min(calc.getOperandCount(), 3);
+        int elementCount = Math.min(warehouse.getOperandCount(), 3);
         for (int i = 0; i < elementCount; i++) {
-            operands.add(calc.peekOperand(elementCount - i - 1));
+            operands.add(warehouse.peekOperand(elementCount - i - 1));
         }
-    }
+    }*/
 
     private String getOperandString() {
         return operandView.getText();
@@ -67,13 +67,14 @@ public class AppController {
 
     @FXML
     void handleEnter() {
-        if (hasOperand()) {
-            calc.pushOperand(getOperand());
+    /*    if (hasOperand()) {
+            warehouse.pushOperand(getOperand());
         } else {
-            calc.dup();
+            warehouse.dup();
         }
         setOperand("");
         updateOperandsView();
+        */
     }
 
     private void appendToOperand(String s) {
