@@ -1,5 +1,5 @@
-module calc.ui {
-    requires calc.core;
+module warehouse.ui {
+    requires warehouse.core;
     requires javafx.controls;
     requires javafx.fxml;
 
