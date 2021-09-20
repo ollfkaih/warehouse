@@ -61,6 +61,7 @@
 
     <modules>
         <module>core</module>
+        <module>data</module>
         <module>ui</module>
     </modules>
 </project>
