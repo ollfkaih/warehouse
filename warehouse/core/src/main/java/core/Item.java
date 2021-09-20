@@ -1,5 +1,47 @@
 package core;
 
 public class Item {
-    //TODO: make this class for items in the warehouse
+    private int id;
+    private String name;
+    private int quantity;
+
+    public Item(int id, String name, int quantity) {
+        setName(name);
+        setId(id);
+        setQuantity(quantity);    
+}
+
+    public Item(int id, String name) {
+        this(id, name, 0);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException();
+        }
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException();
+        }
+        this.quantity = quantity;
+    }
 }

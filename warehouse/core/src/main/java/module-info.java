@@ -1,3 +1,3 @@
-module warehouse.core {
+open module warehouse.core {
     exports core;
 }
