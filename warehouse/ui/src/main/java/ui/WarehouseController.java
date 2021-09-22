@@ -3,8 +3,11 @@ package ui;
 import core.Warehouse;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import core.CoreConst.SortOptions;
 import core.Item;
+
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -38,20 +41,17 @@ public class WarehouseController {
     private void updateInventory() {
         vBox.getChildren().clear();
         ArrayList<Pane> itemPaneList = new ArrayList<>();
-        System.out.println("Length: " + warehouse.getAllItems().size());
-        for (int i=0; i<warehouse.getAllItems().size(); i++) {
-            System.out.println("NAME: " + warehouse.getAllItems().get(i).getName());
-            System.out.println("ID: " + warehouse.getAllItems().get(i).getId());
-            System.out.println("AMOUNT: " + warehouse.getAllItems().get(i).getAmount());
+        List<Item> allItems = warehouse.getAllItemsSorted(SortOptions.Date, true); //TODO: When adding sorting options, call getAllItemsSorted with params
+        for (int i = 0; i < allItems.size(); i++) {
 
-            String id = warehouse.getAllItems().get(i).getId();
+            String id = allItems.get(i).getId();
             itemPaneList.add(new Pane());
             itemPaneList.get(i).setPrefHeight(70);
             itemPaneList.get(i).setPrefWidth(460);
             itemPaneList.get(i).setStyle("-fx-background-color: #f9f9f9;");
 
             //Text
-            Text textName = new Text(warehouse.getAllItems().get(i).getName());
+            Text textName = new Text(allItems.get(i).getName());
             textName.setStrokeType(StrokeType.OUTSIDE);
             textName.setStrokeWidth(0);
             textName.setLayoutX(20);
@@ -71,7 +71,7 @@ public class WarehouseController {
             textAmountText.setLayoutY(36);
             textAmountText.setFont(new Font("Arial Bold",13));
 
-            Text textAmount = new Text(String.valueOf(warehouse.getAllItems().get(i).getAmount()));
+            Text textAmount = new Text(String.valueOf(allItems.get(i).getAmount()));
             textAmount.setStrokeType(StrokeType.OUTSIDE);
             textAmount.setStrokeWidth(0);
             textAmount.setLayoutX(222);
