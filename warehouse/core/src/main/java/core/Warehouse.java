@@ -48,12 +48,12 @@ public class Warehouse {
         .toList();
     }
 
-    public List<Item> findItemswithAmountlessthan(int quantity) {
-        return findItemsbyPredicate(item -> item.getAmount() < quantity);
+    public List<Item> findItemsWithAmountLessThan(int amount) {
+        return findItemsbyPredicate(item -> item.getAmount() < amount);
     }
     
-    public List<Item> findItemswittAmountmorethan(int quantity) {
-        return findItemsbyPredicate(item -> item.getAmount() > quantity);
+    public List<Item> findItemsWithAmountMoreThan(int amount) {
+        return findItemsbyPredicate(item -> item.getAmount() > amount);
     }
 
     public List<Item> findItemsbyName(String name) {
@@ -65,7 +65,7 @@ public class Warehouse {
     }
 
     public Map<Integer, Item> getAllItemsAsMap() {
-        return new HashMap<>(items);
+        return new TreeMap<>(items);
     }
 
 }

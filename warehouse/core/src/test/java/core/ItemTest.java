@@ -2,6 +2,9 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Date;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +14,7 @@ public class ItemTest {
 
     @BeforeEach
     void setup() {
-        item = new Item(123,"ItemName",10);
+        item = new Item(123,"ItemName",10, new Date());
     }
 
     @Test

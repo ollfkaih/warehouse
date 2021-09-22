@@ -118,7 +118,7 @@ public class WarehouseController {
 
     @FXML
     private void addItem() {
-        Item item = new Item(0, newProductName.getText(), 0);
+        Item item = new Item(0, newProductName.getText());
         warehouse.addItem(item);
         updateInventory();
     }
