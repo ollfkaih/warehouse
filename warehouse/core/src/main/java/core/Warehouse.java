@@ -1,5 +1,10 @@
 package core;
 
+import core.CoreConst.SortOptions;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -65,7 +70,40 @@ public class Warehouse {
     }
 
     public List<Item> getAllItems() {
-        return items.values().stream().toList();
+        return getAllItemsSorted(SortOptions.Date, true);
+    }
+
+    private List<Item> sortingMethod(Comparator<Item> c) {
+        return items.values().stream().sorted((c)).toList();
+    }
+
+    public List<Item> getAllItemsSorted(SortOptions options, boolean ascendingOrder) {
+        List<Item> sortedItems;
+        switch (options) {
+            case Date -> {
+                sortedItems = sortingMethod((i1, i2) -> 
+                    i2.getCreationDate().compareTo(i1.getCreationDate()));
+            }
+            case Amount -> {
+                //TODO: sort by name if amount is equal
+                sortedItems = sortingMethod((i1, i2) ->
+                    Integer.compare(i1.getAmount(), (i2.getAmount())));
+            }
+            case Name -> {
+                sortedItems = sortingMethod((i1, i2) ->
+                    i1.getName().compareTo(i2.getName()));
+            }
+            //TODO: Add case for status[gitlab.assigne=eikhr]
+            default -> {
+                sortedItems = getAllItems();
+            }
+        }
+        if (! ascendingOrder && sortedItems.size() > 0) {
+            List<Item> descendingList = new ArrayList<>(sortedItems);
+            Collections.reverse(descendingList);
+            return descendingList;
+        }
+        return new ArrayList<>(sortedItems);
     }
 
     public Map<String, Item> getAllItemsAsMap() {
