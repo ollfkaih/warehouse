@@ -4,4 +4,5 @@ module warehouse.data {
     requires com.fasterxml.jackson.databind;
 
     exports data;
+    opens data;
 }

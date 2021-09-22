@@ -34,6 +34,7 @@ public class WarehouseSerializerTest {
             assertEquals(item.getId(), newItem.getId());
             assertEquals(item.getName(), newItem.getName());
             assertEquals(item.getAmount(), newItem.getAmount());
+            assertEquals(item.getCreationDate(), newItem.getCreationDate());
         }
     }
 }
