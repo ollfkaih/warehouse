@@ -55,36 +55,29 @@ public class WarehouseController {
             textName.setStrokeType(StrokeType.OUTSIDE);
             textName.setStrokeWidth(0);
             textName.setLayoutX(20);
-            textName.setLayoutY(28);
-            textName.setFont(new Font("Arial Bond",13));
-
-            Text textId= new Text("SKU/ID: " + warehouse.getAllItems().get(i).getId());
-            textId.setStrokeType(StrokeType.OUTSIDE);
-            textId.setStrokeWidth(0);
-            textId.setLayoutX(20);
-            textId.setLayoutY(44);
+            textName.setLayoutY(36);
+            textName.setFont(new Font("Arial Bold",13));
 
             Text textStatus = new Text("Status: ");
             textStatus.setStrokeType(StrokeType.OUTSIDE);
             textStatus.setStrokeWidth(0);
             textStatus.setLayoutX(20);
-            textStatus.setLayoutY(61);
+            textStatus.setLayoutY(50);
 
             Text textAmountText = new Text("Antall");
             textAmountText.setStrokeType(StrokeType.OUTSIDE);
             textAmountText.setStrokeWidth(0);
             textAmountText.setLayoutX(222);
             textAmountText.setLayoutY(36);
+            textAmountText.setFont(new Font("Arial Bold",13));
 
             Text textAmount = new Text(String.valueOf(warehouse.getAllItems().get(i).getAmount()));
             textAmount.setStrokeType(StrokeType.OUTSIDE);
             textAmount.setStrokeWidth(0);
             textAmount.setLayoutX(222);
             textAmount.setLayoutY(50);
-            textAmount.setFont(new Font("Arial Bond",13));
 
             itemPaneList.get(i).getChildren().addAll(textName);
-            itemPaneList.get(i).getChildren().addAll(textId);
             itemPaneList.get(i).getChildren().addAll(textStatus);
             itemPaneList.get(i).getChildren().addAll(textAmountText);
             itemPaneList.get(i).getChildren().addAll(textAmount);
@@ -155,12 +148,14 @@ public class WarehouseController {
 
     @FXML
     private void incrementAmount(String id) {
-        //TODO
+        warehouse.findItem(id).incrementAmount();
+        updateInventory();
     }
 
     @FXML
     private void decrementAmount(String id) {
-        //TODO
+        warehouse.findItem(id).decrementAmount();
+        updateInventory();
     }
 }
 

@@ -86,7 +86,7 @@ public class Item {
     }
 
     public void decrementAmount() {
-        if (getAmount() > CoreConst.MINAMOUNT + 1) {
+        if (getAmount() > CoreConst.MINAMOUNT) {
             setAmount(getAmount() - 1);
         }
     }
