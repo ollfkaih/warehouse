@@ -6,9 +6,7 @@ import java.util.TreeMap;
 import java.util.function.Predicate;
 
 public class Warehouse {
-
-    private Map<Integer, Item> items;
-
+    private Map<String, Item> items;
     public Warehouse() {
         items = new TreeMap<>();
     }
@@ -20,11 +18,16 @@ public class Warehouse {
         items.putIfAbsent(item.getId(), item);
     }
 
+    public void addItem(String name, int amount) {
+        Item item = new Item(name, amount);
+        addItem(item);
+    }
+
     public Item removeItem(Item item) {
         return removeItem(item.getId());
     }
 
-    public Item removeItem(int id) {
+    public Item removeItem(String id) {
         if (! items.containsKey(id)) {
             throw new IllegalArgumentException("Item id does not exist in warehouse");
         }
@@ -33,7 +36,8 @@ public class Warehouse {
         return item;
     }
 
-    public Item findItem(int id) {
+    public Item findItem(String id) {
+
         if (! items.containsKey(id)) {
             throw new IllegalArgumentException();
         }
@@ -64,8 +68,7 @@ public class Warehouse {
         return items.values().stream().toList();
     }
 
-    public Map<Integer, Item> getAllItemsAsMap() {
+    public Map<String, Item> getAllItemsAsMap() {
         return new TreeMap<>(items);
     }
-
 }

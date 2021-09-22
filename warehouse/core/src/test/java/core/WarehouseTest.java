@@ -12,7 +12,7 @@ public class WarehouseTest {
     @BeforeEach
     public void setup() {
         wh = new Warehouse();
-        item = new Item(21, "itemName");
+        item = new Item("itemName");
     }
 
     @Test

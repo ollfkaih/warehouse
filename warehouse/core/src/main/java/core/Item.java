@@ -1,29 +1,43 @@
 package core;
 
-
+import java.util.UUID;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Item {
-    private int id;
     private String name;
     private int amount;
+    private String id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private Date creationDate;
 
     public Item(
-            @JsonProperty("id") int id, 
-            @JsonProperty("name") String name, 
-            @JsonProperty("amount") int amount,
-            @JsonProperty("creationdate") Date creationDate
-        ) {
-        setName(name);
+        @JsonProperty("id") String id,
+        @JsonProperty("name") String name,
+        @JsonProperty("amount") int amount,
+        @JsonProperty("creationDate") Date creationDate
+    ) {
         setId(id);
-        setAmount(amount);    
+        setAmount(amount);
+        setName(name);
         setCreationDate(creationDate);
-}
+    }
+
+    public Item(String name, int amount) {
+        this(UUID.randomUUID().toString(), name, amount, new Date());
+    }
+
+    public Item(String name) {
+        this(name, 0);
+    }
+
 
     private void setCreationDate(Date date) {
+        if (date == null) {
+            throw new IllegalArgumentException("Date must be set");
+        }
         if (new Date().compareTo(date) > 0) {
             return;
         }
@@ -32,10 +46,6 @@ public class Item {
 
     public Date getCreationDate() {
         return creationDate;
-    }
-
-    public Item(int id, String name) {
-        this(id, name, 0, new Date());
     }
 
     public String getName() {
@@ -49,14 +59,11 @@ public class Item {
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
-        if (id < 0) {
-            throw new IllegalArgumentException();
-        } 
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -83,4 +90,5 @@ public class Item {
             setAmount(getAmount() - 1);
         }
     }
+
 }
