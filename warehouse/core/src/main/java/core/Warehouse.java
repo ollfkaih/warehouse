@@ -1,16 +1,16 @@
 package core;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Predicate;
 
-public class Warehouse{
-    
+public class Warehouse {
+
     private Map<Integer, Item> items;
-    
+
     public Warehouse() {
-        items = new HashMap<>();
+        items = new TreeMap<>();
     }
 
     public void addItem(Item item) {
@@ -21,10 +21,15 @@ public class Warehouse{
     }
 
     public Item removeItem(Item item) {
-        if (! items.containsKey(item.getId())) {
+        return removeItem(item.getId());
+    }
+
+    public Item removeItem(int id) {
+        if (! items.containsKey(id)) {
             throw new IllegalArgumentException("Item id does not exist in warehouse");
         }
-        items.remove(item.getId());
+        Item item = items.get(id);
+        items.remove(id);
         return item;
     }
 
@@ -43,12 +48,12 @@ public class Warehouse{
         .toList();
     }
 
-    public List<Item> findItemswithQuantitylessthan(int quantity) {
-        return findItemsbyPredicate(item -> item.getQuantity() < quantity);
+    public List<Item> findItemswithAmountlessthan(int quantity) {
+        return findItemsbyPredicate(item -> item.getAmount() < quantity);
     }
     
-    public List<Item> findItemswithQuantitymorethan(int quantity) {
-        return findItemsbyPredicate(item -> item.getQuantity() > quantity);
+    public List<Item> findItemswittAmountmorethan(int quantity) {
+        return findItemsbyPredicate(item -> item.getAmount() > quantity);
     }
 
     public List<Item> findItemsbyName(String name) {
