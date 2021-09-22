@@ -38,8 +38,8 @@ public class Item {
         if (date == null) {
             throw new IllegalArgumentException("Date must be set");
         }
-        if (new Date().compareTo(date) > 0) {
-            return;
+        if (new Date().compareTo(date) < 0) {
+            throw new IllegalArgumentException("Date cannot be in the future");
         }
         this.creationDate = date;
     }

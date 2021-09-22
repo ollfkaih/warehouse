@@ -11,7 +11,12 @@ import core.Warehouse;
 
 public class WarehouseFileSaver implements IDataPersistence {
     private static final String WAREHOUSE_FILE_EXTENSION = "json";
+    private final String WAREHOUSE_FILE_NAME;
     
+    public WarehouseFileSaver(String filename) {
+        this.WAREHOUSE_FILE_NAME = filename;
+    }
+
     @Override
     public Warehouse getWarehouse() throws IOException {
         var warehouseFilePath = getWarehouseFilePath();
@@ -29,12 +34,16 @@ public class WarehouseFileSaver implements IDataPersistence {
         }
     }
 
+    public void deleteWarehouse() throws IOException {
+        Files.delete(getWarehouseFilePath());
+    }
+
     private Path getWarehouseFolderPath() {
         return Path.of(System.getProperty("user.home"), "warehouse", "items");
     }
 
     private Path getWarehouseFilePath() {
-        return getWarehouseFolderPath().resolve("warehouse." + WAREHOUSE_FILE_EXTENSION);
+        return getWarehouseFolderPath().resolve(WAREHOUSE_FILE_NAME + "." + WAREHOUSE_FILE_EXTENSION);
     }
 
     private boolean ensureWarehouseFolderExists() {
@@ -53,4 +62,6 @@ public class WarehouseFileSaver implements IDataPersistence {
 	private void writeWarehouse(Warehouse warehouse, OutputStream os) throws IOException {
         WarehouseSerializer.warehouseToJson(warehouse, os);
 	}
+
+
 }

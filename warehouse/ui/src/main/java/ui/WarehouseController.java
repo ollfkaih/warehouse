@@ -7,7 +7,8 @@ import java.util.List;
 
 import core.CoreConst.SortOptions;
 import core.Item;
-
+import data.IDataPersistence;
+import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -19,7 +20,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class WarehouseController {
+    private static final String FILENAME = "warehouse";
+
     private Warehouse warehouse;
+    private final IDataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
 
     @FXML
     Pane textPane;
@@ -32,7 +36,13 @@ public class WarehouseController {
 
     @FXML
     void initialize() {
-        warehouse=new Warehouse();
+        try {
+            warehouse = dataPersistence.getWarehouse();
+        } catch (Exception e) {
+            System.out.println("Could not load saved warehouse");
+            System.out.println(e.toString());
+            warehouse=new Warehouse();
+        }
         //something here
         updateInventory();
     }
@@ -138,24 +148,36 @@ public class WarehouseController {
         Item item = new Item(newProductName.getText(), 0);
         warehouse.addItem(item);
         updateInventory();
+        saveWarehouse();
     }
 
     @FXML
     private void removeItem(String id) {
         warehouse.removeItem(warehouse.findItem(id));
         updateInventory();
+        saveWarehouse();
     }
 
     @FXML
     private void incrementAmount(String id) {
         warehouse.findItem(id).incrementAmount();
         updateInventory();
+        saveWarehouse();
     }
 
     @FXML
     private void decrementAmount(String id) {
         warehouse.findItem(id).decrementAmount();
         updateInventory();
+        saveWarehouse();
+    }
+
+    private void saveWarehouse() {
+        try {
+            dataPersistence.saveWarehouse(warehouse);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 }
 
