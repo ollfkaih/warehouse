@@ -16,9 +16,9 @@ public class WarehouseFileSaverTest {
     @DisplayName("Test that a Warehouse can be saved and loaded again")
     public void testWarehouseSave() throws IOException {
         Warehouse warehouse = new Warehouse();
-        warehouse.addItem(new Item(0, "Bok", 4));
-        warehouse.addItem(new Item(1, "Laks"));
-        warehouse.addItem(new Item(43, "Kaffe", 100));
+        warehouse.addItem(new Item("Bok", 4));
+        warehouse.addItem(new Item( "Laks"));
+        warehouse.addItem(new Item("Kaffe", 100));
 
         WarehouseFileSaver fileSaver = new WarehouseFileSaver();
 
@@ -32,7 +32,7 @@ public class WarehouseFileSaverTest {
             Item newItem = newWarehouse.findItem(item.getId());
             assertEquals(item.getId(), newItem.getId());
             assertEquals(item.getName(), newItem.getName());
-            assertEquals(item.getQuantity(), newItem.getQuantity());
+            assertEquals(item.getAmount(), newItem.getAmount());
         }
     }
 }

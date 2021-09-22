@@ -18,9 +18,9 @@ public class WarehouseSerializerTest {
     @DisplayName("Test that a Warehouse that is serialized and then deserialized is equal")
     public void testSerializeDeserialize() throws IOException {
         Warehouse warehouse = new Warehouse();
-        warehouse.addItem(new Item(0, "Bok", 4));
-        warehouse.addItem(new Item(1, "Laks"));
-        warehouse.addItem(new Item(43, "Kaffe", 100));
+        warehouse.addItem(new Item("Bok", 4));
+        warehouse.addItem(new Item("Laks"));
+        warehouse.addItem(new Item("Kaffe", 100));
 
         ByteArrayOutputStream jsonOutput = new ByteArrayOutputStream();
         WarehouseSerializer.warehouseToJson(warehouse, jsonOutput);
@@ -33,7 +33,7 @@ public class WarehouseSerializerTest {
             Item newItem = newWarehouse.findItem(item.getId());
             assertEquals(item.getId(), newItem.getId());
             assertEquals(item.getName(), newItem.getName());
-            assertEquals(item.getQuantity(), newItem.getQuantity());
+            assertEquals(item.getAmount(), newItem.getAmount());
         }
     }
 }
