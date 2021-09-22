@@ -1,24 +1,41 @@
 package core;
 
+
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Item {
     private int id;
     private String name;
     private int amount;
+    private Date creationDate;
 
     public Item(
             @JsonProperty("id") int id, 
             @JsonProperty("name") String name, 
-            @JsonProperty("amount") int amount
+            @JsonProperty("amount") int amount,
+            @JsonProperty("creationdate") Date creationDate
         ) {
         setName(name);
         setId(id);
         setAmount(amount);    
+        setCreationDate(creationDate);
 }
 
+    private void setCreationDate(Date date) {
+        if (new Date().compareTo(date) > 0) {
+            return;
+        }
+        this.creationDate = date;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
     public Item(int id, String name) {
-        this(id, name, 0);
+        this(id, name, 0, new Date());
     }
 
     public String getName() {
