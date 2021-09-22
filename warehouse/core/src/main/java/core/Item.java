@@ -5,16 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Item {
     private int id;
     private String name;
-    private int quantity;
+    private int amount;
 
     public Item(
             @JsonProperty("id") int id, 
             @JsonProperty("name") String name, 
-            @JsonProperty("quantity") int quantity
+            @JsonProperty("amount") int amount
         ) {
         setName(name);
         setId(id);
-        setQuantity(quantity);    
+        setAmount(amount);    
 }
 
     public Item(int id, String name) {
@@ -37,17 +37,33 @@ public class Item {
     }
 
     public void setId(int id) {
+        if (id < 0) {
+            throw new IllegalArgumentException();
+        } 
         this.id = id;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setQuantity(int quantity) {
-        if (quantity < 0) {
+    public void setAmount(int amount) {
+        if (amount < CoreConst.MINAMOUNT) {
             throw new IllegalArgumentException();
         }
-        this.quantity = quantity;
+        this.amount = amount;
+    }
+
+    public void incrementAmount() {
+        if (getAmount() >= CoreConst.MAXAMOUNT) {
+            return;
+        }
+        setAmount(getAmount() + 1);
+    }
+
+    public void decrementAmount() {
+        if (getAmount() > CoreConst.MINAMOUNT + 1) {
+            setAmount(getAmount() - 1);
+        }
     }
 }

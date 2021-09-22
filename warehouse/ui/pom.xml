@@ -64,6 +64,18 @@
             <scope>test</scope>
         </dependency>
 
+    
+      <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>2.13.0</version>
+      </dependency>
+    
+      <dependency>
+        <groupId>com.microsoft.azure</groupId>
+        <artifactId>azure-mgmt-resources</artifactId>
+        <version>1.24.2</version>
+      </dependency>
     </dependencies>
 
     <build>
@@ -90,7 +102,7 @@
                 <!-- Usage: mvn javafx:run -->
                 <configuration>
                     <!-- syntax: module-name/full-app-class-name -->
-                    <mainClass>warehouse.ui/ui.App</mainClass>
+                    <mainClass>warehouse.ui/ui.WarehouseApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>
