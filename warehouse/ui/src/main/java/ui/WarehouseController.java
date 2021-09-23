@@ -89,20 +89,13 @@ public class WarehouseController {
             textAmount.setLayoutX(222);
             textAmount.setLayoutY(50);
 
-            itemPaneList.get(i).getChildren().addAll(textName);
-            itemPaneList.get(i).getChildren().addAll(textStatus);
-            itemPaneList.get(i).getChildren().addAll(textAmountText);
-            itemPaneList.get(i).getChildren().addAll(textAmount);
-
             //Buttons
             Button buttonRemove = new Button();
             buttonRemove.setLayoutX(390);
             buttonRemove.setLayoutY(23);
             buttonRemove.setMnemonicParsing(false);
             buttonRemove.setTextFill(Color.WHITE);
-            buttonRemove.setOnAction((e) -> 
-                {removeItem(id);
-                });
+            buttonRemove.setOnAction(e -> removeItem(id));
             buttonRemove.setStyle("-fx-background-color: #D95C5C;");
             buttonRemove.setText("Slett");
 
@@ -111,9 +104,7 @@ public class WarehouseController {
             buttonIncrement.setLayoutY(23);
             buttonIncrement.setMnemonicParsing(false);
             buttonIncrement.setTextFill(Color.WHITE);
-            buttonIncrement.setOnAction((e) -> 
-                {incrementAmount(id);
-                });
+            buttonIncrement.setOnAction(e -> incrementAmount(id));
             buttonIncrement.setStyle("-fx-background-color: #5CA0D9;");
             buttonIncrement.setText("+");
 
@@ -122,24 +113,11 @@ public class WarehouseController {
             buttonDecrement.setLayoutY(23);
             buttonDecrement.setMnemonicParsing(false);
             buttonDecrement.setTextFill(Color.WHITE);
-            buttonDecrement.setOnAction((e) -> 
-                {decrementAmount(id);
-                });
+            buttonDecrement.setOnAction(e -> decrementAmount(id));
             buttonDecrement.setStyle("-fx-background-color: #5CA0D9;");
             buttonDecrement.setText("-");
 
-            
-            Button[] buttonList = new Button[3];
-            for (Button button: buttonList){
-                button= new Button("Button");
-                button.setLayoutY(23);
-                button.setMnemonicParsing(false);
-                button.setTextFill(Color.WHITE);
-            }
-
-            itemPaneList.get(i).getChildren().add(buttonRemove);
-            itemPaneList.get(i).getChildren().add(buttonIncrement);
-            itemPaneList.get(i).getChildren().add(buttonDecrement);
+            itemPaneList.get(i).getChildren().addAll(textName, textStatus, textAmountText, textAmount, buttonRemove, buttonIncrement, buttonDecrement);
 
             vBox.getChildren().add(itemPaneList.get(i));
         }
