@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import core.Warehouse;
@@ -19,9 +20,14 @@ public class WarehouseFileSaver implements IDataPersistence {
 
     @Override
     public Warehouse getWarehouse() throws IOException {
-        var warehouseFilePath = getWarehouseFilePath();
-        try (var is = new FileInputStream(warehouseFilePath.toFile())) {
-            return readWarehouse(is);
+        Path warehouseFilePath = getWarehouseFilePath();
+        File warehouseFile = warehouseFilePath.toFile();
+        if (warehouseFile.isFile()) {
+            try (var is = new FileInputStream(warehouseFile)) {
+                return readWarehouse(is);
+            }
+        } else {
+            return null;
         }
     }
 
@@ -30,7 +36,7 @@ public class WarehouseFileSaver implements IDataPersistence {
         var warehouseFilePath = getWarehouseFilePath();
         ensureWarehouseFolderExists();
         try (var os = new FileOutputStream(warehouseFilePath.toFile())) {
-        	writeWarehouse(warehouse, os);
+            writeWarehouse(warehouse, os);
         }
     }
 
@@ -46,13 +52,8 @@ public class WarehouseFileSaver implements IDataPersistence {
         return getWarehouseFolderPath().resolve(WAREHOUSE_FILE_NAME + "." + WAREHOUSE_FILE_EXTENSION);
     }
 
-    private boolean ensureWarehouseFolderExists() {
-        try {
-            Files.createDirectories(getWarehouseFolderPath());
-            return true;
-        } catch (IOException ioe) {
-            return false;
-        }
+    private void ensureWarehouseFolderExists() throws IOException {
+        Files.createDirectories(getWarehouseFolderPath());
     }
 
 	private Warehouse readWarehouse(InputStream is) throws IOException {
@@ -62,6 +63,4 @@ public class WarehouseFileSaver implements IDataPersistence {
 	private void writeWarehouse(Warehouse warehouse, OutputStream os) throws IOException {
         WarehouseSerializer.warehouseToJson(warehouse, os);
 	}
-
-
 }
