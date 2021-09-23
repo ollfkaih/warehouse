@@ -41,6 +41,8 @@ public class WarehouseController {
         } catch (Exception e) {
             System.out.println("Could not load saved warehouse");
             System.out.println(e.toString());
+        }
+        if (warehouse == null) {
             warehouse=new Warehouse();
         }
         //something here
