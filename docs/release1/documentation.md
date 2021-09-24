@@ -8,5 +8,7 @@ Listen over varer og antall blir lagret til disk i en JSON-fil, slik at dataen f
 [Finnes her](/docs/userStories.md)
 Kun `us-1` er relevant for denne innleveringen
 
+For lagersjefen fra us-1 er det nyttig at alle varene på lageret vises som en liste der antallet av hver vare er lett synlig. Dersom lagersjefen trenger å endre antallet av en vare (f.eks. når noe blir solgt) er det lett tilgjengelige knapper for å øke eller minke antallet av varene. Når lagersjefen får inn en ny vare er det lett å legge den til ved hjelp av tekstfeltet, og hvis en vare går ut av sortimentet kan den enkelt slettes. Lagersjefen vil også sette pris på at programmet lagrer varene automatisk hver gang det blir gjort en endring, slik at det ikke er noen fare for at endringer går tapt når programmet lukkes. 
+
 ## Designskisse
 ![Designskisse innlevering 1](/docs/release1/Warehouse_p1.png)
