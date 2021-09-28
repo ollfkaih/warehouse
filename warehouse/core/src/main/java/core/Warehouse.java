@@ -20,7 +20,9 @@ public class Warehouse {
         if (items.containsKey(item.getId())) {
             throw new IllegalArgumentException("Item cannot be added because id is taken");
         }
-        items.putIfAbsent(item.getId(), item);
+        if (!item.getName().isEmpty()) {
+            items.putIfAbsent(item.getId(), item);
+        }
     }
 
     public void addItem(String name, int amount) {
