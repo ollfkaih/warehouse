@@ -118,6 +118,11 @@ public class WarehouseController {
             buttonDecrement.setOnAction(e -> decrementAmount(id));
             buttonDecrement.setStyle("-fx-background-color: #5CA0D9;");
             buttonDecrement.setText("-");
+            
+            if (warehouse.findItem(id).getAmount()==0) {
+                buttonDecrement.setDisable(true);
+            }
+
 
             itemPaneList.get(i).getChildren().addAll(textName, textStatus, textAmountText, textAmount, buttonRemove, buttonIncrement, buttonDecrement);
 
