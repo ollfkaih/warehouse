@@ -26,15 +26,9 @@ public class WarehouseController {
     private Warehouse warehouse;
     private final IDataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
 
-    @FXML
-    Pane textPane;
-    
-        
-    @FXML
-    TextField newProductName;
-
-    @FXML
-    VBox vBox;
+    @FXML Pane textPane;
+    @FXML TextField newProductName;
+    @FXML VBox itemContainer;
 
     @FXML
     void initialize() {
@@ -53,7 +47,7 @@ public class WarehouseController {
 
     @FXML
     private void updateInventory() {
-        vBox.getChildren().clear();
+        itemContainer.getChildren().clear();
         ArrayList<Pane> itemPaneList = new ArrayList<>();
         List<Item> allItems = warehouse.getAllItemsSorted(SortOptions.Date, true); //TODO: When adding sorting options, call getAllItemsSorted with params
         for (int i = 0; i < allItems.size(); i++) {
@@ -66,68 +60,55 @@ public class WarehouseController {
 
             //Text
             Text textName = new Text(allItems.get(i).getName());
-            textName.setStrokeType(StrokeType.OUTSIDE);
-            textName.setStrokeWidth(0);
-            textName.setLayoutX(20);
-            textName.setLayoutY(36);
-            textName.setFont(new Font("Arial Bold",13));
+            setTextProperties(textName, 20, 36, new Font("Arial Bold",13));
 
             Text textStatus = new Text("Status: ");
-            textStatus.setStrokeType(StrokeType.OUTSIDE);
-            textStatus.setStrokeWidth(0);
-            textStatus.setLayoutX(20);
-            textStatus.setLayoutY(50);
+            setTextProperties(textStatus, 20, 50);
 
             Text textAmountText = new Text("Antall");
-            textAmountText.setStrokeType(StrokeType.OUTSIDE);
-            textAmountText.setStrokeWidth(0);
-            textAmountText.setLayoutX(222);
-            textAmountText.setLayoutY(36);
-            textAmountText.setFont(new Font("Arial Bold",13));
+            setTextProperties(textAmountText, 222, 36, new Font("Arial Bold", 13));
 
             Text textAmount = new Text(String.valueOf(allItems.get(i).getAmount()));
-            textAmount.setStrokeType(StrokeType.OUTSIDE);
-            textAmount.setStrokeWidth(0);
-            textAmount.setLayoutX(222);
-            textAmount.setLayoutY(50);
+            setTextProperties(textAmount, 222, 50);
 
             //Buttons
-            Button buttonRemove = new Button();
-            buttonRemove.setLayoutX(390);
-            buttonRemove.setLayoutY(23);
-            buttonRemove.setMnemonicParsing(false);
-            buttonRemove.setTextFill(Color.WHITE);
+            Button buttonRemove = new Button("Slett");
+            setButtonPosition(buttonRemove, 390, 23);
             buttonRemove.setOnAction(e -> removeItem(id));
             buttonRemove.setStyle("-fx-background-color: #D95C5C;");
-            buttonRemove.setText("Slett");
 
-            Button buttonIncrement = new Button();
-            buttonIncrement.setLayoutX(300);
-            buttonIncrement.setLayoutY(23);
-            buttonIncrement.setMnemonicParsing(false);
-            buttonIncrement.setTextFill(Color.WHITE);
+            Button buttonIncrement = new Button("+");
+            setButtonPosition(buttonIncrement, 300, 23);
             buttonIncrement.setOnAction(e -> incrementAmount(id));
-            buttonIncrement.setStyle("-fx-background-color: #5CA0D9;");
-            buttonIncrement.setText("+");
 
-            Button buttonDecrement = new Button();
+            Button buttonDecrement = new Button("-");
             buttonDecrement.setLayoutX(195);
             buttonDecrement.setLayoutY(23);
-            buttonDecrement.setMnemonicParsing(false);
-            buttonDecrement.setTextFill(Color.WHITE);
             buttonDecrement.setOnAction(e -> decrementAmount(id));
-            buttonDecrement.setStyle("-fx-background-color: #5CA0D9;");
-            buttonDecrement.setText("-");
             
-            if (warehouse.findItem(id).getAmount()==0) {
+            if (warehouse.findItem(id).getAmount() == 0) {
                 buttonDecrement.setDisable(true);
             }
 
-
             itemPaneList.get(i).getChildren().addAll(textName, textStatus, textAmountText, textAmount, buttonRemove, buttonIncrement, buttonDecrement);
 
-            vBox.getChildren().add(itemPaneList.get(i));
+            itemContainer.getChildren().add(itemPaneList.get(i));
         }
+    }
+
+    private void setButtonPosition(Button button, int xPos, int yPos) {
+        button.setLayoutX(xPos);
+        button.setLayoutY(yPos);
+    }
+
+    private void setTextProperties(Text textField, int xPos, int yPos, Font font) {
+        setTextProperties(textField, xPos, yPos);
+        textField.setFont(font);
+    }
+
+    private void setTextProperties(Text textField, int xPos, int yPos) {
+        textField.setLayoutX(xPos);
+        textField.setLayoutY(yPos);
     }
 
     private void enterPressed() {
@@ -178,5 +159,3 @@ public class WarehouseController {
         }
     }
 }
-
-

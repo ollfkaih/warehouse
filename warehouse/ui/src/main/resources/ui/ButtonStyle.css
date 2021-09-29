@@ -1,0 +1,12 @@
+.button
+{
+    -fx-text-fill: WHITE;
+    -fx-background-color: #5CA0D9;
+}
+
+#addItemButton
+{
+    -fx-text-fill: BLACK;
+    -fx-background-color: #bcbcbd;
+
+}
