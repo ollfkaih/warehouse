@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -27,12 +28,13 @@ public class WarehouseController {
 
     @FXML
     Pane textPane;
+    
+        
+    @FXML
+    TextField newProductName;
 
     @FXML
     VBox vBox;
-    
-    @FXML
-    TextField newProductName;
 
     @FXML
     void initialize() {
@@ -45,8 +47,8 @@ public class WarehouseController {
         if (warehouse == null) {
             warehouse=new Warehouse();
         }
-        //something here
         updateInventory();
+        enterPressed();
     }
 
     @FXML
@@ -121,6 +123,14 @@ public class WarehouseController {
 
             vBox.getChildren().add(itemPaneList.get(i));
         }
+    }
+
+    private void enterPressed() {
+        newProductName.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+              addItem();
+            }
+          } );
     }
 
     @FXML
