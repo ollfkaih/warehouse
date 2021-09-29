@@ -88,5 +88,10 @@ public class Item {
             setAmount(getAmount() - 1);
         }
     }
+    
+    @Override
+    public String toString() {
+        return "Name: " + getName() + " Amout: " + getAmount() + " Date: " + getCreationDate() + "\n";
+    }
 
 }

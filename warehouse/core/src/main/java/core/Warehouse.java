@@ -87,9 +87,13 @@ public class Warehouse {
                     i2.getCreationDate().compareTo(i1.getCreationDate()));
             }
             case Amount -> {
-                //TODO: sort by name if amount is equal
-                sortedItems = sortingMethod((i1, i2) ->
-                    Integer.compare(i1.getAmount(), (i2.getAmount())));
+                sortedItems = sortingMethod((i1, i2) -> {
+                    if (i1.getAmount()!=i2.getAmount()) {
+                        return Integer.compare(i1.getAmount(), (i2.getAmount()));
+                    }else {
+                        return i1.getName().compareTo(i2.getName());
+                    }   
+                });
             }
             case Name -> {
                 sortedItems = sortingMethod((i1, i2) ->
