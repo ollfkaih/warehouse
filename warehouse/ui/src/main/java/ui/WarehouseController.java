@@ -144,6 +144,9 @@ public class WarehouseController {
         warehouse.addItem(item);
         updateInventory();
         saveWarehouse();
+
+        newProductName.requestFocus();
+        newProductName.selectAll();
     }
 
     @FXML
