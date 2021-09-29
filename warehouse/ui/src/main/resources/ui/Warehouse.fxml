@@ -37,7 +37,7 @@
          <children>
             <Text layoutX="36.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Søk" wrappingWidth="120" />
             <TextField fx:id="searchField" layoutX="160" layoutY="24.0" prefHeight="27.0" prefWidth="200" promptText="Navn" />
-            <Button layoutX="361.0" layoutY="24.0" mnemonicParsing="false" onAction="#searchItem" text="Søk" />
+            <Button layoutX="361.0" layoutY="24.0" mnemonicParsing="false" text="Søk" />
          </children>
       </Pane>
    </children>
