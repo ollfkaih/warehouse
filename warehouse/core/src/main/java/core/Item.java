@@ -1,23 +1,21 @@
 package core;
 
 import java.util.UUID;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Item {
     private String name;
     private int amount;
     private String id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     public Item(
         @JsonProperty("id") String id,
         @JsonProperty("name") String name,
         @JsonProperty("amount") int amount,
-        @JsonProperty("creationDate") Date creationDate
+        @JsonProperty("creationDate") LocalDateTime creationDate
     ) {
         setId(id);
         setAmount(amount);
@@ -26,7 +24,7 @@ public class Item {
     }
 
     public Item(String name, int amount) {
-        this(UUID.randomUUID().toString(), name, amount, new Date());
+        this(UUID.randomUUID().toString(), name, amount, LocalDateTime.now());
     }
 
     public Item(String name) {
@@ -34,17 +32,17 @@ public class Item {
     }
 
 
-    private void setCreationDate(Date date) {
+    private void setCreationDate(LocalDateTime date) {
         if (date == null) {
             throw new IllegalArgumentException("Date must be set");
         }
-        if (new Date().compareTo(date) < 0) {
+        if (LocalDateTime.now().compareTo(date) < 0) {
             throw new IllegalArgumentException("Date cannot be in the future");
         }
         this.creationDate = date;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
