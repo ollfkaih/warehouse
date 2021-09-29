@@ -4,11 +4,14 @@ import core.Warehouse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import core.CoreConst.SortOptions;
 import core.Item;
 import data.IDataPersistence;
 import data.WarehouseFileSaver;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -29,6 +32,7 @@ public class WarehouseController {
     @FXML Pane textPane;
     @FXML TextField newProductName;
     @FXML VBox itemContainer;
+    @FXML TextField searchInput;
 
     @FXML
     void initialize() {
@@ -41,25 +45,36 @@ public class WarehouseController {
         if (warehouse == null) {
             warehouse=new Warehouse();
         }
+
+        searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
+
         updateInventory();
         enterPressed();
+    }
+
+    private List<Item> getItems() {
+        List<Item> items = warehouse.getAllItemsSorted(SortOptions.Date, true); //TODO: When adding sorting options, call getAllItemsSorted with params
+        return items
+            .stream()
+            .filter(item -> item.getName().contains(searchInput.getText()))
+            .collect(Collectors.toList());
     }
 
     @FXML
     private void updateInventory() {
         itemContainer.getChildren().clear();
         ArrayList<Pane> itemPaneList = new ArrayList<>();
-        List<Item> allItems = warehouse.getAllItemsSorted(SortOptions.Date, true); //TODO: When adding sorting options, call getAllItemsSorted with params
-        for (int i = 0; i < allItems.size(); i++) {
+        List<Item> items = getItems();
+        for (int i = 0; i < items.size(); i++) {
 
-            String id = allItems.get(i).getId();
+            String id = items.get(i).getId();
             itemPaneList.add(new Pane());
             itemPaneList.get(i).setPrefHeight(70);
             itemPaneList.get(i).setPrefWidth(460);
             itemPaneList.get(i).setStyle("-fx-background-color: #f9f9f9;");
 
             //Text
-            Text textName = new Text(allItems.get(i).getName());
+            Text textName = new Text(items.get(i).getName());
             setTextProperties(textName, 20, 36, new Font("Arial Bold",13));
 
             Text textStatus = new Text("Status: ");
@@ -68,7 +83,7 @@ public class WarehouseController {
             Text textAmountText = new Text("Antall");
             setTextProperties(textAmountText, 222, 36, new Font("Arial Bold", 13));
 
-            Text textAmount = new Text(String.valueOf(allItems.get(i).getAmount()));
+            Text textAmount = new Text(String.valueOf(items.get(i).getAmount()));
             setTextProperties(textAmount, 222, 50);
 
             //Buttons

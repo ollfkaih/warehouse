@@ -32,7 +32,7 @@
       <Pane layoutX="57.0" layoutY="180.0" prefHeight="72.0" prefWidth="480.0" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
          <children>
             <Text layoutX="36.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Søk" wrappingWidth="120" />
-            <TextField layoutX="160" layoutY="24.0" prefHeight="27.0" prefWidth="200" promptText="Navn" />
+            <TextField fx:id="searchInput" layoutX="160" layoutY="24.0" prefHeight="27.0" prefWidth="200" promptText="Navn" />
             <Button layoutX="361.0" layoutY="24.0" mnemonicParsing="false" text="Søk" />
          </children>
       </Pane>
