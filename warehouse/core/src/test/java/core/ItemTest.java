@@ -3,7 +3,7 @@ package core;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,7 @@ public class ItemTest {
 
     @BeforeEach
     void setup() {
-        item = new Item("ItemID", "ItemName",10, new Date());
+        item = new Item("ItemID", "ItemName",10, LocalDateTime.now());
     }
 
     @Test
