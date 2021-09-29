@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -27,12 +28,13 @@ public class WarehouseController {
 
     @FXML
     Pane textPane;
+    
+        
+    @FXML
+    TextField newProductName;
 
     @FXML
     VBox vBox;
-    
-    @FXML
-    TextField newProductName;
 
     @FXML
     void initialize() {
@@ -45,8 +47,8 @@ public class WarehouseController {
         if (warehouse == null) {
             warehouse=new Warehouse();
         }
-        //something here
         updateInventory();
+        enterPressed();
     }
 
     @FXML
@@ -116,11 +118,24 @@ public class WarehouseController {
             buttonDecrement.setOnAction(e -> decrementAmount(id));
             buttonDecrement.setStyle("-fx-background-color: #5CA0D9;");
             buttonDecrement.setText("-");
+            
+            if (warehouse.findItem(id).getAmount()==0) {
+                buttonDecrement.setDisable(true);
+            }
+
 
             itemPaneList.get(i).getChildren().addAll(textName, textStatus, textAmountText, textAmount, buttonRemove, buttonIncrement, buttonDecrement);
 
             vBox.getChildren().add(itemPaneList.get(i));
         }
+    }
+
+    private void enterPressed() {
+        newProductName.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+              addItem();
+            }
+          } );
     }
 
     @FXML

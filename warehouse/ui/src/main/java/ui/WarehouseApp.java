@@ -19,6 +19,8 @@ public class WarehouseApp extends Application {
         Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
         stage.show();
+        stage.setMinHeight(480);
+        stage.setMinWidth(620);
     }
 
     public static void main(String[] args) {
