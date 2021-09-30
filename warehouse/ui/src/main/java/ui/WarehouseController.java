@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
@@ -29,9 +30,16 @@ public class WarehouseController {
     private Warehouse warehouse;
     private final IDataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
 
+    private SortOptions sortBy = SortOptions.Date;
+    private boolean ascending = true;
+
     @FXML Pane textPane;
     @FXML TextField newProductName;
     @FXML VBox itemContainer;
+
+    @FXML ComboBox<Enum<SortOptions>> sortBySelector;
+    @FXML ComboBox<String> orderBySelector;
+
     @FXML TextField searchInput;
 
     @FXML
@@ -46,14 +54,22 @@ public class WarehouseController {
             warehouse=new Warehouse();
         }
 
+        // adds values to combobox
+        for (SortOptions values : SortOptions.values()) {
+            sortBySelector.getItems().add(values);
+        }
+        orderBySelector.getItems().add("ASC");
+        orderBySelector.getItems().add("DESC");
+        
         searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
 
         updateInventory();
         enterPressed();
+        changeSortBy();
     }
 
     private List<Item> getItems() {
-        List<Item> items = warehouse.getAllItemsSorted(SortOptions.Date, true); //TODO: When adding sorting options, call getAllItemsSorted with params
+        List<Item> items = warehouse.getAllItemsSorted(sortBy, ascending); //TODO: When adding sorting options, call getAllItemsSorted with params
         return items
             .stream()
             .filter(item -> item.getName().contains(searchInput.getText()))
@@ -64,9 +80,9 @@ public class WarehouseController {
     private void updateInventory() {
         itemContainer.getChildren().clear();
         ArrayList<Pane> itemPaneList = new ArrayList<>();
+
         List<Item> items = getItems();
         for (int i = 0; i < items.size(); i++) {
-
             String id = items.get(i).getId();
             itemPaneList.add(new Pane());
             itemPaneList.get(i).setPrefHeight(70);
@@ -164,6 +180,54 @@ public class WarehouseController {
         warehouse.findItem(id).decrementAmount();
         updateInventory();
         saveWarehouse();
+    }
+
+    @FXML
+    private void changeSortBy() {
+
+        String value = "";
+        if (sortBySelector.getValue() != null) {
+            value = sortBySelector.getValue().toString();
+        }
+
+        switch(value) {
+            case "Date": 
+                sortBy = SortOptions.Date;
+                break;
+            case "Amount":
+                sortBy = SortOptions.Amount;
+                break;
+            case "Name":
+                sortBy = SortOptions.Name;
+                break;
+            case "Status":
+                sortBy = SortOptions.Status;
+                break;
+            default:
+                sortBy = SortOptions.Name;
+                break;        
+            }
+            updateInventory();
+    }
+
+    @FXML
+    private void changeOrderBy() {
+        String orderByValue = "";
+        if (orderBySelector.getValue() != null) {
+            orderByValue = orderBySelector.getValue().toString();
+        }
+        switch(orderByValue) {
+            case "ASC":
+                ascending = true;
+                break;
+            case "DESC":
+                ascending = false;
+                break;
+            default:
+                ascending = true;
+                break;
+        }
+        updateInventory();
     }
 
     private void saveWarehouse() {
