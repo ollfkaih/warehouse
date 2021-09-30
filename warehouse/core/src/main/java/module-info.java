@@ -1,5 +1,5 @@
 open module warehouse.core {
-    exports core;
-    
-    requires com.fasterxml.jackson.annotation;
+  exports core;
+
+  requires com.fasterxml.jackson.annotation;
 }
