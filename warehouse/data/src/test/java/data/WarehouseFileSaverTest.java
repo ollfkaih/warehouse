@@ -36,7 +36,7 @@ public class WarehouseFileSaverTest {
       assertEquals(item.getId(), newItem.getId());
       assertEquals(item.getName(), newItem.getName());
       assertEquals(item.getAmount(), newItem.getAmount());
-      assertEquals(item.getCreationDate(), newItem.getCreationDate());
+      assertEquals(item.getCreationDate().format(Utils.dateTimeFormatter), newItem.getCreationDate().format(Utils.dateTimeFormatter));
     }
   }
 
