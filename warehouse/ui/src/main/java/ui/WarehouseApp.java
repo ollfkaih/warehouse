@@ -3,7 +3,6 @@ package ui;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -12,15 +11,16 @@ import javafx.stage.Stage;
  * JavaFX App.
  */
 public class WarehouseApp extends Application {
-
+  FXMLLoader fxmlLoader;
+    
   @Override
   public void start(Stage stage) throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Warehouse.fxml"));
-    Parent parent = fxmlLoader.load();
-    stage.setScene(new Scene(parent));
+    fxmlLoader = new FXMLLoader(this.getClass().getResource("Warehouse.fxml"));
+    fxmlLoader.load();
+    stage.setScene(new Scene(fxmlLoader.getRoot()));
     stage.show();
-    stage.setMinHeight(520);
-    stage.setMinWidth(620);
+    stage.setMinHeight(380);
+    stage.setMinWidth(480);
     try {
       stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("icon/1-rounded.png")));
     } catch (Exception e) {
