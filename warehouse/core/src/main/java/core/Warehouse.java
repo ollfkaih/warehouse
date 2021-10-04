@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Warehouse {
   private Map<String, Item> items;
@@ -82,6 +83,14 @@ public class Warehouse {
 
   private List<Item> sortingMethod(Comparator<Item> c) {
     return items.values().stream().sorted((c)).toList();
+  }
+
+  public List<Item> getItemsSortedAndFiltered(SortOptions options, boolean ascendingOrder, String filterText) {
+    List<Item> items = getAllItemsSorted(options, ascendingOrder);
+    return items
+        .stream()
+        .filter(item -> item.getName().contains(filterText) || item.getBarcode().contains(filterText))
+        .collect(Collectors.toList());
   }
 
   public List<Item> getAllItemsSorted(SortOptions options, boolean ascendingOrder) {
