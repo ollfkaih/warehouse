@@ -89,7 +89,7 @@ public class Warehouse {
     List<Item> items = getAllItemsSorted(options, ascendingOrder);
     return items
         .stream()
-        .filter(item -> item.getName().contains(filterText) || item.getBarcode().contains(filterText))
+        .filter(item -> item.getName().toLowerCase().contains(filterText.toLowerCase()) || item.getBarcode().contains(filterText))
         .collect(Collectors.toList());
   }
 
