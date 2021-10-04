@@ -136,6 +136,7 @@ public class WarehouseController {
     switch (value) {
       case "Date":
         sortBy = SortOptions.Date;
+        ascending = true;
         break;
       case "Amount":
         sortBy = SortOptions.Amount;
@@ -143,9 +144,11 @@ public class WarehouseController {
         break;
       case "Name":
         sortBy = SortOptions.Name;
+        ascending = true;
         break;
       case "Status":
         sortBy = SortOptions.Status;
+        ascending = true;
         break;
       default:
         sortBy = SortOptions.Name;
