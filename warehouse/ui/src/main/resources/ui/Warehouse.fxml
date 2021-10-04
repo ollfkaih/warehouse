@@ -9,52 +9,363 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" prefHeight="520.0" prefWidth="600.0" style="-fx-border-width: 10; -fx-background-color: #f9f9f9;" stylesheets="@ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
-  <GridPane fx:id="dividerGridPane" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-    </columnConstraints>
-    <rowConstraints>
-      <RowConstraints minHeight="200.0" vgrow="NEVER" />
-      <RowConstraints vgrow="SOMETIMES" />
-    </rowConstraints>
+<AnchorPane fx:id="root" prefHeight="891.0" prefWidth="844.0" style="-fx-border-width: 10; -fx-background-color: #f9f9f9;" stylesheets="@ButtonStyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
+   <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
       <children>
-      <VBox fx:id="titleAddandSearch" prefWidth="560.0" spacing="10.0">
-        <AnchorPane id="appTitleBox">
-            <Label fx:id="appTitle" alignment="center" text="Warehouse" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-              <font>
-                  <Font size="32.0" />
-              </font>
-            </Label>
-        </AnchorPane>
-        <!-- Start of add new item box -->
-        <HBox fx:id="addItemVBox" alignment="center" minHeight="50.0" spacing="5" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
+        <GridPane fx:id="dividerGridPane">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="200.0" vgrow="NEVER" />
+            <RowConstraints vgrow="SOMETIMES" />
+          </rowConstraints>
             <children>
-              <Text text="Legg til nytt produkt" wrappingWidth="120" />
-              <TextField fx:id="newProductName" minWidth="200" prefHeight="27.0" promptText="Navn" />
-              <Button id="addItemButton" onAction="#addItem" text="Legg til" />
-            </children>
-        </HBox>
-        <HBox fx:id="searchPane" alignment="center" minHeight="72.0" prefHeight="72.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
-            <Text text="Søk" />
-            <TextField fx:id="searchInput" minWidth="200" prefHeight="27.0" promptText="Navn" />
-            <VBox fx:id="sortAndOrderSelectors" alignment="center" spacing="5">
-              <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sort by" />
-              <ComboBox fx:id="orderBySelector" minWidth="98.0" onAction="#changeOrderBy" prefHeight="27.0" promptText="Order by" />
+            <VBox fx:id="titleAddandSearch" prefWidth="560.0" spacing="10.0">
+              <AnchorPane id="appTitleBox">
+                  <Label fx:id="appTitle" alignment="center" text="Warehouse" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <font>
+                        <Font size="32.0" />
+                    </font>
+                  </Label>
+              </AnchorPane>
+              <!-- Start of add new item box -->
+              <HBox fx:id="addItemVBox" alignment="center" minHeight="50.0" spacing="5" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
+                  <children>
+                    <Text text="Legg til nytt produkt" wrappingWidth="120" />
+                    <TextField fx:id="newProductName" minWidth="200" prefHeight="27.0" promptText="Navn" />
+                    <Button id="addItemButton" onAction="#addItem" text="Legg til" />
+                  </children>
+              </HBox>
+              <HBox fx:id="searchPane" alignment="center" minHeight="72.0" prefHeight="72.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
+                  <Text text="Søk" />
+                  <TextField fx:id="searchInput" minWidth="200" prefHeight="27.0" promptText="Navn" />
+                  <VBox fx:id="sortAndOrderSelectors" alignment="center" spacing="5">
+                    <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sort by" />
+                    <ComboBox fx:id="orderBySelector" minWidth="98.0" onAction="#changeOrderBy" prefHeight="27.0" promptText="Order by" />
+                  </VBox>
+              </HBox>
             </VBox>
-        </HBox>
-      </VBox>
-      <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" GridPane.rowIndex="1">
-        <content>
-            <VBox fx:id="itemList" alignment="center" />
-        </content>
-      </ScrollPane>
+            <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" GridPane.rowIndex="1">
+              <content>
+                  <VBox fx:id="itemList" alignment="center" />
+              </content>
+            </ScrollPane>
+            </children>
+        </GridPane>
+         <ScrollPane fx:id="itemContainer1" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" GridPane.columnIndex="1">
+            <content>
+               <VBox fx:id="itemList1" alignment="center">
+                  <children>
+                     <Label text="Rediger detaljer">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                     <AnchorPane prefHeight="39.0" prefWidth="420.0">
+                        <children>
+                           <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <children>
+                                 <Label text="Produktnavn">
+                                    <font>
+                                       <Font name="System Bold" size="13.0" />
+                                    </font>
+                                 </Label>
+                                 <TextField promptText="navn" />
+                              </children>
+                           </VBox>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane prefHeight="39.0" prefWidth="420.0">
+                        <children>
+                           <VBox spacing="5.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <children>
+                                 <Label text="Antall på lager">
+                                    <font>
+                                       <Font name="System Bold" size="13.0" />
+                                    </font>
+                                 </Label>
+                                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                       <HBox HBox.hgrow="ALWAYS">
+                                          <children>
+                                             <Button mnemonicParsing="false" text="-" />
+                                             <TextField promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
+                                             <Button mnemonicParsing="false" text="+" />
+                                          </children>
+                                       </HBox>
+                                       <HBox spacing="10.0" HBox.hgrow="NEVER">
+                                          <children>
+                                             <AnchorPane>
+                                                <children>
+                                                   <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
+                                                      <children>
+                                                         <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                            <children>
+                                                               <Label prefHeight="43.0" text="A" textAlignment="CENTER">
+                                                                  <font>
+                                                                     <Font size="35.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <Label text="seksjon" textAlignment="CENTER" />
+                                                            </children>
+                                                         </VBox>
+                                                      </children>
+                                                   </Pane>
+                                                </children>
+                                             </AnchorPane>
+                                             <AnchorPane>
+                                                <children>
+                                                   <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
+                                                      <children>
+                                                         <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                            <children>
+                                                               <Label prefHeight="43.0" text="9" textAlignment="CENTER">
+                                                                  <font>
+                                                                     <Font size="35.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <Label text="reol" textAlignment="CENTER" />
+                                                            </children>
+                                                         </VBox>
+                                                      </children>
+                                                   </Pane>
+                                                </children>
+                                             </AnchorPane>
+                                             <AnchorPane>
+                                                <children>
+                                                   <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
+                                                      <children>
+                                                         <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                            <children>
+                                                               <Label prefHeight="43.0" text="16" textAlignment="CENTER">
+                                                                  <font>
+                                                                     <Font size="35.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <Label text="hylle" textAlignment="CENTER" />
+                                                            </children>
+                                                         </VBox>
+                                                      </children>
+                                                   </Pane>
+                                                </children>
+                                             </AnchorPane>
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </VBox>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane prefHeight="39.0" prefWidth="420.0">
+                        <children>
+                           <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <children>
+                                 <Label text="Prisdata">
+                                    <font>
+                                       <Font name="Arial Bold" size="13.0" />
+                                    </font>
+                                 </Label>
+                                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                       <VBox prefHeight="200.0">
+                                          <children>
+                                             <Label text="Ordinær pris">
+                                                <font>
+                                                   <Font name="System Font" size="13.0" />
+                                                </font>
+                                             </Label>
+                                             <TextField promptText="0" />
+                                             <Label text="ink.mva">
+                                                <font>
+                                                   <Font size="10.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </VBox>
+                                       <VBox prefHeight="200.0">
+                                          <children>
+                                             <Label text="Utsalgspris" />
+                                             <TextField promptText="0" />
+                                             <Label text="ink.mva">
+                                                <font>
+                                                   <Font size="10.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </VBox>
+                                       <VBox prefHeight="200.0">
+                                          <children>
+                                             <Label text="Innkjøpspris" />
+                                             <TextField promptText="0" />
+                                             <Label text="eks.mva">
+                                                <font>
+                                                   <Font size="10.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </VBox>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </VBox>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane>
+                        <children>
+                           <VBox prefHeight="81.0" prefWidth="149.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <children>
+                                 <Label text="Avgiftstatus (mva)" />
+                                 <ComboBox promptText="Velg" />
+                              </children>
+                           </VBox>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane prefHeight="39.0" prefWidth="420.0">
+                        <children>
+                           <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <children>
+                                 <Label text="Plassering på lager">
+                                    <font>
+                                       <Font name="System Bold" size="13.0" />
+                                    </font>
+                                 </Label>
+                                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                       <VBox prefHeight="200.0">
+                                          <children>
+                                             <TextField promptText="A-Å" />
+                                             <Label text="Seksjon">
+                                                <font>
+                                                   <Font size="10.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </VBox>
+                                       <VBox prefHeight="200.0">
+                                          <children>
+                                             <TextField promptText="0" />
+                                             <Label text="Reol">
+                                                <font>
+                                                   <Font size="10.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </VBox>
+                                       <VBox prefHeight="200.0">
+                                          <children>
+                                             <TextField promptText="0" />
+                                             <Label text="Hylle">
+                                                <font>
+                                                   <Font size="10.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </VBox>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </VBox>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane prefHeight="39.0" prefWidth="420.0">
+                        <children>
+                           <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <children>
+                                 <Label text="Dimensjoner (cm)">
+                                    <font>
+                                       <Font name="System Bold" size="13.0" />
+                                    </font>
+                                 </Label>
+                                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                       <VBox prefHeight="200.0">
+                                          <children>
+                                             <TextField promptText="0" />
+                                             <Label text="Lengde">
+                                                <font>
+                                                   <Font size="10.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </VBox>
+                                       <VBox prefHeight="200.0">
+                                          <children>
+                                             <TextField promptText="0" />
+                                             <Label text="Bredde">
+                                                <font>
+                                                   <Font size="10.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </VBox>
+                                       <VBox prefHeight="200.0">
+                                          <children>
+                                             <TextField promptText="0" />
+                                             <Label text="Høyde">
+                                                <font>
+                                                   <Font size="10.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                       </VBox>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </VBox>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane prefHeight="39.0" prefWidth="420.0">
+                        <children>
+                           <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <children>
+                                 <Label text="Vekt (kg)">
+                                    <font>
+                                       <Font name="System Bold" size="13.0" />
+                                    </font>
+                                 </Label>
+                                 <TextField promptText="0" />
+                              </children>
+                           </VBox>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane prefHeight="39.0" prefWidth="420.0">
+                        <children>
+                           <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <children>
+                                 <Label text="Barcode">
+                                    <font>
+                                       <Font name="System Bold" size="13.0" />
+                                    </font>
+                                 </Label>
+                                 <TextField promptText="0000000000000" />
+                              </children>
+                           </VBox>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <children>
+                           <Pane minHeight="100.0" minWidth="100.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
+                        </children>
+                     </AnchorPane>
+                  </children>
+               </VBox>
+            </content>
+         </ScrollPane>
       </children>
-  </GridPane>
+   </GridPane>
 </AnchorPane>
