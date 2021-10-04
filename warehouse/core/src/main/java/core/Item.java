@@ -2,16 +2,17 @@ package core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.UUID;
 
-public class Item {
+public class Item { 
   private String id;
   private String barcode;
   private String name;
   private String brand;
   private int amount;
   private Double price;
-  private Double weight;
+  private double weight;
   private LocalDateTime creationDate;
 
   public Item(
@@ -21,7 +22,7 @@ public class Item {
       @JsonProperty("brand") String brand,
       @JsonProperty("amount") int amount,
       @JsonProperty("price") Double price,
-      @JsonProperty("weight") Double weight,
+      @JsonProperty("weight") double weight,
       @JsonProperty("creationDate") LocalDateTime creationDate
   ) {
     setId(id);
@@ -34,7 +35,7 @@ public class Item {
   }
 
   public Item(String name, int amount) {
-    this(UUID.randomUUID().toString(), null, name, null, amount, null, null, LocalDateTime.now());
+    this(UUID.randomUUID().toString(), null, name, null, amount, null, 0, LocalDateTime.now());
   }
 
   public Item(String name) {
@@ -121,7 +122,7 @@ public class Item {
     this.price=price;
   }
 
-  public Double getWeight() {
+  public double getWeight() {
     return weight;
   }
 
@@ -151,4 +152,30 @@ public class Item {
     return "Name: " + getName() + " Amout: " + getAmount() + " Price: " + price + " Date: " + getCreationDate() + "\n";
   }
 
+
+  public static final Comparator<Item> nameComparator = (Item i1, Item i2) -> {
+    return i1.getName().compareTo(i2.getName());
+  };
+
+  public static final Comparator<Item> amountComparator = (Item i1, Item i2) -> {
+    return Integer.compare(i1.getAmount(), (i2.getAmount()));
+  };
+
+  public static final Comparator<Item> priceComparator = (Item i1, Item i2) -> {
+    if (i1.getPrice() == null) {
+      return 1;
+    }
+    if (i2.getPrice() == null) {
+      return -1;
+    }
+    return Double.compare(i1.getPrice().doubleValue(), (i2.getPrice().doubleValue()));
+  };
+
+  public static final Comparator<Item> weightComparator = (Item i1, Item i2) -> {
+    return Double.compare(i1.getWeight(), (i2.getWeight()));
+  };
+
+  public static final Comparator<Item> createdDateComparator = (Item i1, Item i2) -> {
+    return i2.getCreationDate().compareTo(i1.getCreationDate());
+  };
 }
