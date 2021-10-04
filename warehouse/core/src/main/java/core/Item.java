@@ -10,8 +10,8 @@ public class Item {
   private String name;
   private String brand;
   private int amount;
-  private double price;
-  private double weight;
+  private Double price;
+  private Double weight;
   private LocalDateTime creationDate;
 
   public Item(
@@ -20,8 +20,8 @@ public class Item {
       @JsonProperty("name") String name,
       @JsonProperty("brand") String brand,
       @JsonProperty("amount") int amount,
-      @JsonProperty("price") double price,
-      @JsonProperty("weight") double weight,
+      @JsonProperty("price") Double price,
+      @JsonProperty("weight") Double weight,
       @JsonProperty("creationDate") LocalDateTime creationDate
   ) {
     setId(id);
@@ -34,7 +34,7 @@ public class Item {
   }
 
   public Item(String name, int amount) {
-    this(UUID.randomUUID().toString(),"barcode", name, "brand", amount, 0, 0, LocalDateTime.now());
+    this(UUID.randomUUID().toString(), null, name, null, amount, null, null, LocalDateTime.now());
   }
 
   public Item(String name) {
@@ -54,8 +54,13 @@ public class Item {
   }
 
   public void setBarcode(String barcode) {
-    if (barcode == null) {
-      throw new IllegalArgumentException();
+    if (barcode != null) {
+      if (barcode.length() != 13) {
+        throw new IllegalArgumentException("Barcode must have length 13");
+      }
+      if (!barcode.matches("^[0-9]+$")) {
+        throw new IllegalArgumentException("Barcode can only contain numbers");
+      }
     }
     this.barcode = barcode;
   }
@@ -78,9 +83,6 @@ public class Item {
   }
 
   public void setBrand(String brand) {
-    if (brand == null) {
-      throw new IllegalArgumentException();
-    }
     this.brand=brand;
   }
 
@@ -108,23 +110,23 @@ public class Item {
     }
   }
 
-  public double getPrice() {
+  public Double getPrice() {
     return price;
   }
 
-  public void setPrice(double price) {
-    if (price<CoreConst.MINAMOUNT || price>CoreConst.MAXAMOUNT) {
+  public void setPrice(Double price) {
+    if (price != null && (price<CoreConst.MINAMOUNT || price>CoreConst.MAXAMOUNT)) {
       throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
     }
     this.price=price;
   }
 
-  public double getWeight() {
+  public Double getWeight() {
     return weight;
   }
 
   public void setWeight(double weight) {
-    if (price<CoreConst.MINAMOUNT || price>CoreConst.MAXAMOUNT) {
+    if (weight<CoreConst.MINAMOUNT || weight>CoreConst.MAXAMOUNT) {
       throw new IllegalArgumentException("Weight cannot be negative or larger than infinity");
     }
     this.weight=weight;
