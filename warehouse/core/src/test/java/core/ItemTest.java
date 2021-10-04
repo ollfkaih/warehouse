@@ -28,7 +28,7 @@ public class ItemTest {
     assertNull(item.getBarcode());
     assertNull(item.getBrand());
     assertNotNull(item.getCreationDate());
-    assertNull(item.getWeight());
+    assertEquals(0, item.getWeight());
     assertNull(item.getPrice());
     assertThrows(IllegalArgumentException.class, () -> new Item(null, 10));
     assertThrows(IllegalArgumentException.class, () -> new Item(null));

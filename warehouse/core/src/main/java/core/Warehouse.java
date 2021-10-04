@@ -3,7 +3,6 @@ package core;
 import core.CoreConst.SortOptions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +80,7 @@ public class Warehouse {
     return getAllItemsSorted(SortOptions.Date, true);
   }
 
-  private List<Item> sortingMethod(Comparator<Item> c) {
+  private List<Item> sortItemsByComparator(Comparator<Item> c) {
     return items.values().stream().sorted((c)).toList();
   }
 
@@ -94,54 +93,28 @@ public class Warehouse {
   }
 
   public List<Item> getAllItemsSorted(SortOptions options, boolean ascendingOrder) {
-    List<Item> sortedItems;
-    switch (options) {
-      case Name -> {
-        sortedItems = sortingMethod((i1, i2) ->
-            i1.getName().compareTo(i2.getName()));
-      }
-      case Amount -> {
-        sortedItems = sortingMethod((i1, i2) -> {
-          if (i1.getAmount() != i2.getAmount()) {
-            return Integer.compare(i1.getAmount(), (i2.getAmount()));
-          } else {
-            return i1.getName().compareTo(i2.getName());
-          }
-        });
-      }
-      case Price -> {
-          sortedItems = sortingMethod((i1, i2) -> {
-            if (i1.getPrice() != i2.getPrice()) {
-              return Double.compare(i1.getPrice(), (i2.getPrice()));
-            } else {
-              return i1.getName().compareTo(i2.getName());
-            }
-          });
-      }
-      case Weight -> {
-        sortedItems = sortingMethod((i1, i2) -> {
-          if (i1.getWeight() != i2.getWeight()) {
-            return Double.compare(i1.getWeight(), (i2.getWeight()));
-          } else {
-            return i1.getName().compareTo(i2.getName());
-          }
-        });
-      }
-      case Date -> {
-        sortedItems = sortingMethod((i1, i2) ->
-            i2.getCreationDate().compareTo(i1.getCreationDate()));
-      }
-      //TODO: Add case for status[gitlab.assigne=eikhr]
-      default -> {
-        sortedItems = getAllItems();
-      }
-    }
-    if (!ascendingOrder && sortedItems.size() > 0) {
-      List<Item> descendingList = new ArrayList<>(sortedItems);
-      Collections.reverse(descendingList);
-      return descendingList;
-    }
+    final Comparator<Item> comparatorType = switch (options) {
+      case Name -> Item.nameComparator;
+      case Amount -> Item.amountComparator;
+      case Price -> Item.priceComparator;
+      case Weight -> Item.weightComparator;
+      case Date -> Item.createdDateComparator;
+      default -> Item.nameComparator;
+    };
+    Comparator<Item> comparator = (i1, i2) -> compareItems(i1, i2, comparatorType, ascendingOrder);
+    List<Item> sortedItems = sortItemsByComparator(comparator);
     return new ArrayList<>(sortedItems);
+  }
+
+  private int compareItems(Item i1, Item i2, Comparator<Item> comparator, boolean ascendingOrder) {
+    if (!ascendingOrder) {
+      comparator = comparator.reversed();
+    }
+    int comparison = comparator.compare(i1, i2);
+    if (comparison == 0) {
+      return ascendingOrder ? Item.nameComparator.compare(i1, i2) : Item.nameComparator.reversed().compare(i1, i2);
+    }
+    return comparison;
   }
 
   public Map<String, Item> getAllItemsAsMap() {
