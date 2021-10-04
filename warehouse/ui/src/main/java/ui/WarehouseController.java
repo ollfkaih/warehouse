@@ -80,7 +80,13 @@ public class WarehouseController {
       }
 
       itemList.getChildren().add(itemElement);
+      itemElement.setOnMouseClicked(e -> showDetailsView());
     }
+  }
+
+  private void showDetailsView() {
+    
+    return;
   }
 
   private List<Item> getItems() {

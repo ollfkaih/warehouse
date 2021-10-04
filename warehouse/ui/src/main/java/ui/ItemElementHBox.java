@@ -49,15 +49,15 @@ public class ItemElementHBox extends HBox {
     HBox.setHgrow(nameAndStatusVBox, Priority.ALWAYS);
   }
   
-  public ButtonBase getDecrementButton() {
+  public Button getDecrementButton() {
     return decrementButton;
   }
   
-  public ButtonBase getRemoveButton() {
+  public Button getRemoveButton() {
     return removeButton;
   }
   
-  public ButtonBase getIncrementButton() {
+  public Button getIncrementButton() {
     return incrementButton;
   }
 }
