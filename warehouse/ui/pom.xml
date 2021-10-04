@@ -2,6 +2,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>warehouse-ui</artifactId>
+    <properties>
+      <itext.version>7.1.16</itext.version>
+    </properties>
 
     <parent>
         <groupId>it1901</groupId>
@@ -68,19 +71,12 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
-
-    
-      <dependency>
-        <groupId>org.scala-lang</groupId>
-        <artifactId>scala-library</artifactId>
-        <version>2.13.0</version>
-      </dependency>
-    
-      <dependency>
-        <groupId>com.microsoft.azure</groupId>
-        <artifactId>azure-mgmt-resources</artifactId>
-        <version>1.24.2</version>
-      </dependency>
+        <!-- add all iText 7 modules -->
+    <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>barcodes</artifactId>
+      <version>${itext.version}</version>
+    </dependency>
     </dependencies>
 
     <build>

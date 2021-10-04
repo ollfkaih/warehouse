@@ -84,11 +84,7 @@ public class WarehouseController {
   }
 
   private List<Item> getItems() {
-    List<Item> items = warehouse.getAllItemsSorted(sortBy, ascending);
-    return items
-        .stream()
-        .filter(item -> item.getName().contains(searchInput.getText()))
-        .collect(Collectors.toList());
+    return warehouse.getItemsSortedAndFiltered(sortBy, ascending, searchInput.getText());
   }
 
   private void enterPressed() {
@@ -143,6 +139,7 @@ public class WarehouseController {
         break;
       case "Amount":
         sortBy = SortOptions.Amount;
+        ascending = false;
         break;
       case "Name":
         sortBy = SortOptions.Name;

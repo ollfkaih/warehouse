@@ -14,7 +14,7 @@ public class ItemTest {
 
   @BeforeEach
   void setup() {
-    item = new Item("ItemID", "ItemName", 10, LocalDateTime.now());
+    item = new Item("ItemName", 10);
   }
 
   @Test
