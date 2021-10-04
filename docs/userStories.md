@@ -6,7 +6,6 @@ Som ansvarlig for et varelager er det viktig å ha god kontroll på inventaret, 
 
 Lageransvarlig har behov for å kunne se lagerbeholdning samt mulighet til å endre på sortimentet og beholdningen til hvert produkt. 
 
-
 Viktig å kunne se:
 -	Oversikt over lagerets sortiment og beholdning
 
@@ -14,12 +13,12 @@ Viktig å kunne gjøre:
 -	Oppdatere beholdning på spesifikke produkter
 -	Legge til og fjerne produkter i sortimentet
 
-## Markedsføringsavdeling/andre avdelinger (us-2)
+## Lagersjef (us-2)
+For at lagersjef skal ha bedre kontroll over produktene sine, må han ha mulighet til å søke etter produkter og sortere dem etter navn, antall og dato. I tillegg bør han kunne klikke inn på hvert produkt for å finne mer detaljert informasjon om hvert produkt. 
 
-Markedsføringsavdelingen er interessert i å bruke statistikk fra varelageret til å bedømme produkters suksess og lønnsomhet.
+Viktig å kunne se:
+- Detaljinformasjon om hvert produkt som for eksempel lagerstatus
 
-Lagerhistorikk må kunne vises ved hvert produkt, slik at de ulike avdelingene kan få oversikt over vareflyten i lageret.
-
-Viktig å kunne:
--   Se antall enheter (varer) solgt av hvert produkt, samt antall bestilt inn til lageret
--   Se grafer/visualisere over salg/beholdning/bestillinger
+Viktig å kunne gjøre:
+-   Søke etter produkter etter navn, antall og dato
+-   Sortere produkter etter navn, antall og dato

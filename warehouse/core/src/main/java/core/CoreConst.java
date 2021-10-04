@@ -5,6 +5,6 @@ public abstract class CoreConst {
   public static final double MAXAMOUNT = Double.POSITIVE_INFINITY;
 
   public enum SortOptions {
-    Date, Amount, Name, Status
+    Name, Amount, Price, Weight, Date, Status
   }
 }

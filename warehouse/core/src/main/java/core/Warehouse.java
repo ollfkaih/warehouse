@@ -60,16 +60,20 @@ public class Warehouse {
         .toList();
   }
 
+  public List<Item> findItemsbyName(String name) {
+    return findItemsbyPredicate(item -> item.getName().equals(name));
+  }
+
+  public List<Item> findItemsbyBrand(String brand) {
+    return findItemsbyPredicate(item -> item.getBrand().equals(brand));
+  }
+
   public List<Item> findItemsWithAmountLessThan(int amount) {
     return findItemsbyPredicate(item -> item.getAmount() < amount);
   }
 
   public List<Item> findItemsWithAmountMoreThan(int amount) {
     return findItemsbyPredicate(item -> item.getAmount() > amount);
-  }
-
-  public List<Item> findItemsbyName(String name) {
-    return findItemsbyPredicate(item -> item.getName().equals(name));
   }
 
   public List<Item> getAllItems() {
@@ -83,9 +87,9 @@ public class Warehouse {
   public List<Item> getAllItemsSorted(SortOptions options, boolean ascendingOrder) {
     List<Item> sortedItems;
     switch (options) {
-      case Date -> {
+      case Name -> {
         sortedItems = sortingMethod((i1, i2) ->
-            i2.getCreationDate().compareTo(i1.getCreationDate()));
+            i1.getName().compareTo(i2.getName()));
       }
       case Amount -> {
         sortedItems = sortingMethod((i1, i2) -> {
@@ -96,9 +100,27 @@ public class Warehouse {
           }
         });
       }
-      case Name -> {
+      case Price -> {
+          sortedItems = sortingMethod((i1, i2) -> {
+            if (i1.getPrice() != i2.getPrice()) {
+              return Double.compare(i1.getPrice(), (i2.getPrice()));
+            } else {
+              return i1.getName().compareTo(i2.getName());
+            }
+          });
+      }
+      case Weight -> {
+        sortedItems = sortingMethod((i1, i2) -> {
+          if (i1.getWeight() != i2.getWeight()) {
+            return Double.compare(i1.getWeight(), (i2.getWeight()));
+          } else {
+            return i1.getName().compareTo(i2.getName());
+          }
+        });
+      }
+      case Date -> {
         sortedItems = sortingMethod((i1, i2) ->
-            i1.getName().compareTo(i2.getName()));
+            i2.getCreationDate().compareTo(i1.getCreationDate()));
       }
       //TODO: Add case for status[gitlab.assigne=eikhr]
       default -> {
