@@ -15,17 +15,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" prefHeight="891.0" prefWidth="844.0" style="-fx-border-width: 10; -fx-background-color: #f9f9f9;" stylesheets="@ButtonStyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
+<AnchorPane fx:id="root" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-border-width: 10; -fx-background-color: #f9f9f9;" stylesheets="@ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
      <columnConstraints>
-       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+       <ColumnConstraints hgrow="NEVER" minWidth="450.0" prefWidth="0.0" />
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="400.0" />
      </columnConstraints>
      <rowConstraints>
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-        <GridPane fx:id="dividerGridPane">
+        <GridPane fx:id="dividerGridPane" minWidth="450.0">
           <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
           </columnConstraints>
@@ -47,7 +47,7 @@
                   <children>
                     <Text text="Legg til nytt produkt" wrappingWidth="120" />
                     <TextField fx:id="newProductName" minWidth="200" prefHeight="27.0" promptText="Navn" />
-                    <Button id="addItemButton" onAction="#addItem" text="Legg til" />
+                    <Button id="addItemButton" minWidth="70" onAction="#addItem" text="Legg til" />
                   </children>
               </HBox>
               <HBox fx:id="searchPane" alignment="center" minHeight="72.0" prefHeight="72.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
@@ -58,13 +58,13 @@
                     <ComboBox fx:id="orderBySelector" minWidth="98.0" onAction="#changeOrderBy" prefHeight="27.0" promptText="Order by" />
                   </VBox>
               </HBox>
-            </VBox>
-            <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" GridPane.rowIndex="1">
-              <content>
-                  <VBox fx:id="itemList" alignment="center" />
-              </content>
-            </ScrollPane>
-            </children>
+        </VBox>
+      <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" stylesheets="@ItemStyle.css" GridPane.rowIndex="1">
+        <content>
+            <VBox fx:id="itemList" alignment="center" spacing="3" />
+        </content>
+      </ScrollPane>
+        </children>
         </GridPane>
          <ScrollPane fx:id="itemContainer1" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" GridPane.columnIndex="1">
             <content>
@@ -91,84 +91,85 @@
                      </AnchorPane>
                      <AnchorPane prefHeight="39.0" prefWidth="420.0">
                         <children>
-                           <VBox spacing="5.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                               <children>
-                                 <Label text="Antall på lager">
-                                    <font>
-                                       <Font name="System Bold" size="13.0" />
-                                    </font>
-                                 </Label>
-                                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                 <VBox spacing="5.0" HBox.hgrow="ALWAYS">
                                     <children>
-                                       <HBox HBox.hgrow="ALWAYS">
+                                       <Label text="Antall på lager">
+                                          <font>
+                                             <Font name="System Bold" size="13.0" />
+                                          </font>
+                                       </Label>
+                                       <HBox spacing="4.0">
                                           <children>
-                                             <Button mnemonicParsing="false" text="-" />
-                                             <TextField promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
-                                             <Button mnemonicParsing="false" text="+" />
+                                             <Button minWidth="25.0" mnemonicParsing="false" text="-" HBox.hgrow="NEVER" />
+                                             <TextField promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" HBox.hgrow="ALWAYS" />
+                                             <Button minWidth="25.0" mnemonicParsing="false" text="+" HBox.hgrow="NEVER" />
                                           </children>
                                        </HBox>
-                                       <HBox spacing="10.0" HBox.hgrow="NEVER">
+                                       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" />
+                                    </children>
+                                 </VBox>
+                                 <HBox spacing="10.0">
+                                    <children>
+                                       <AnchorPane>
                                           <children>
-                                             <AnchorPane>
+                                             <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
                                                 <children>
-                                                   <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
+                                                   <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                       <children>
-                                                         <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                                                            <children>
-                                                               <Label prefHeight="43.0" text="A" textAlignment="CENTER">
-                                                                  <font>
-                                                                     <Font size="35.0" />
-                                                                  </font>
-                                                               </Label>
-                                                               <Label text="seksjon" textAlignment="CENTER" />
-                                                            </children>
-                                                         </VBox>
+                                                         <Label prefHeight="43.0" text="A" textAlignment="CENTER">
+                                                            <font>
+                                                               <Font size="35.0" />
+                                                            </font>
+                                                         </Label>
+                                                         <Label text="seksjon" textAlignment="CENTER" />
                                                       </children>
-                                                   </Pane>
+                                                   </VBox>
                                                 </children>
-                                             </AnchorPane>
-                                             <AnchorPane>
-                                                <children>
-                                                   <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
-                                                      <children>
-                                                         <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                                                            <children>
-                                                               <Label prefHeight="43.0" text="9" textAlignment="CENTER">
-                                                                  <font>
-                                                                     <Font size="35.0" />
-                                                                  </font>
-                                                               </Label>
-                                                               <Label text="reol" textAlignment="CENTER" />
-                                                            </children>
-                                                         </VBox>
-                                                      </children>
-                                                   </Pane>
-                                                </children>
-                                             </AnchorPane>
-                                             <AnchorPane>
-                                                <children>
-                                                   <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
-                                                      <children>
-                                                         <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                                                            <children>
-                                                               <Label prefHeight="43.0" text="16" textAlignment="CENTER">
-                                                                  <font>
-                                                                     <Font size="35.0" />
-                                                                  </font>
-                                                               </Label>
-                                                               <Label text="hylle" textAlignment="CENTER" />
-                                                            </children>
-                                                         </VBox>
-                                                      </children>
-                                                   </Pane>
-                                                </children>
-                                             </AnchorPane>
+                                             </Pane>
                                           </children>
-                                       </HBox>
+                                       </AnchorPane>
+                                       <AnchorPane>
+                                          <children>
+                                             <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
+                                                <children>
+                                                   <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                      <children>
+                                                         <Label prefHeight="43.0" text="9" textAlignment="CENTER">
+                                                            <font>
+                                                               <Font size="35.0" />
+                                                            </font>
+                                                         </Label>
+                                                         <Label text="reol" textAlignment="CENTER" />
+                                                      </children>
+                                                   </VBox>
+                                                </children>
+                                             </Pane>
+                                          </children>
+                                       </AnchorPane>
+                                       <AnchorPane>
+                                          <children>
+                                             <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
+                                                <children>
+                                                   <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                      <children>
+                                                         <Label prefHeight="43.0" text="16" textAlignment="CENTER">
+                                                            <font>
+                                                               <Font size="35.0" />
+                                                            </font>
+                                                         </Label>
+                                                         <Label text="hylle" textAlignment="CENTER" />
+                                                      </children>
+                                                   </VBox>
+                                                </children>
+                                             </Pane>
+                                          </children>
+                                       </AnchorPane>
                                     </children>
                                  </HBox>
                               </children>
-                           </VBox>
+                           </HBox>
                         </children>
                      </AnchorPane>
                      <AnchorPane prefHeight="39.0" prefWidth="420.0">
@@ -227,7 +228,7 @@
                      </AnchorPane>
                      <AnchorPane>
                         <children>
-                           <VBox prefHeight="81.0" prefWidth="149.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <VBox AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                               <children>
                                  <Label text="Avgiftstatus (mva)" />
                                  <ComboBox promptText="Velg" />

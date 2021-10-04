@@ -20,7 +20,7 @@ public class WarehouseApp extends Application {
     stage.setScene(new Scene(fxmlLoader.getRoot()));
     stage.show();
     stage.setMinHeight(380);
-    stage.setMinWidth(480);
+    stage.setMinWidth(870);
     try {
       stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("icon/1-rounded.png")));
     } catch (Exception e) {
