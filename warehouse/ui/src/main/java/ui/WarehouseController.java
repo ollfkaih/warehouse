@@ -6,17 +6,23 @@ import core.Warehouse;
 import data.DataPersistence;
 import data.WarehouseFileSaver;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 
 public class WarehouseController {
   private static final String FILENAME = "warehouse";
@@ -34,6 +40,8 @@ public class WarehouseController {
   @FXML ComboBox<String> orderBySelector;
   @FXML VBox sortAndOrderSelectors;
   @FXML VBox titleAddandSearch;
+  @FXML SplitPane splitPane;
+  @FXML DetailsViewController detailsViewController;
 
   private SortOptions sortBy = SortOptions.Date;
   private boolean ascending = true;
@@ -61,7 +69,15 @@ public class WarehouseController {
     orderBySelector.getItems().add("DESC");
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
+
+    //TODO add something
+    //showDetailsView();
   }
+
+
+
+
+
   
   @FXML
   private void updateInventory() {
@@ -80,12 +96,31 @@ public class WarehouseController {
       }
 
       itemList.getChildren().add(itemElement);
-      itemElement.setOnMouseClicked(e -> showDetailsView());
+      int index = i;
+      itemElement.setOnMouseClicked(e -> showDetailsView(items.get(index)));
     }
   }
 
-  private void showDetailsView() {
-    
+  private void showDetailsView(Item item) {
+    try {
+      //Load second scene
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
+      Parent detailsRoot = loader.load();
+       
+      //Get controller of scene2
+      //Scene2Controller scene2Controller = loader.getController();
+      //Pass whatever data you want. You can have multiple method calls here
+      //scene2Controller.transferMessage(inputField.getText());
+
+      //Show scene 2 in new window            
+      Stage stage = new Stage();
+      stage.setScene(new Scene(detailsRoot));
+      stage.setTitle("Edit: " + item.getName());
+      stage.show();
+  } catch (IOException ex) {
+      System.err.println(ex);
+  }
+
     return;
   }
 
