@@ -42,7 +42,6 @@ public class WarehouseController {
   @FXML Button orderByButton;
   @FXML VBox sortAndOrderSelectors;
   @FXML VBox titleAddandSearch;
-  @FXML SplitPane splitPane;
   @FXML DetailsViewController detailsViewController;
 
   private SortOptions sortBy = SortOptions.Date;
@@ -105,7 +104,6 @@ public class WarehouseController {
     final int safeBoundTop = 30;
     final int safeBoundBottom = 75;
     try {
-      //Load second scene
       FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
       Parent detailsRoot = loader.load();
              
@@ -115,6 +113,7 @@ public class WarehouseController {
       stage.show();
       stage.setMinWidth(450);
       stage.setHeight(Screen.getPrimary().getBounds().getHeight() - safeBoundBottom);
+      stage.setMaxHeight(detailsRoot.prefHeight(0));
       stage.setY(safeBoundTop);
   } catch (IOException ex) {
       System.err.println(ex);
