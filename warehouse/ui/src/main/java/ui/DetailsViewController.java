@@ -41,11 +41,16 @@ public class DetailsViewController {
   private FXMLLoader loader;
   private Stage stage;
   private Parent detailsRoot;
+  private Item item;
 
   private static final int safeBoundTop = 30;
   private static final int safeBoundBottom = 75;
 
   public DetailsViewController(Item item) {
+    if (item == null) {
+      throw new IllegalArgumentException();
+    }
+    this.item = item;
     try {
       loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
       loader.setController(this);
@@ -64,15 +69,40 @@ public class DetailsViewController {
   @FXML
   void initialize() {
   }
-  
-  protected void showDetailsView() {
-    stage.show();
-    requestFocus();
-    stage.setMaxHeight(detailsRoot.prefHeight(0));
-  }
 
   protected void requestFocus() {
     stage.requestFocus();
   }
 
+  protected void showDetailsView() {
+    stage.show();
+    requestFocus();
+    stage.setMaxHeight(detailsRoot.prefHeight(0));
+    this.update();
+  }
+ 
+  private void update() {
+    this.inpName.setText(item.getName());
+    this.inpAmount.setText(String.valueOf(item.getAmount()));
+    this.btnIncrement.setOnAction(e -> item.incrementAmount());
+    this.btnDecrement.setOnAction(e -> item.decrementAmount());
+    // placements
+    this.inpOrdinaryPrice.setText(String.valueOf(item.getPrice()));
+    // priser
+    // comboBox
+    // dimensions
+    this.inpWeight.setText(String.valueOf(item.getWeight()));
+    this.inpBarcode.setText(item.getBarcode());
+  }
+
+
+  private void saveItem() {
+    item.setName(inpName.getText());
+    item.setAmount(Integer.parseInt(inpAmount.getText()));
+    item.setPrice(Double.parseDouble(inpOrdinaryPrice.getText()));
+    item.setWeight(Double.parseDouble(inpWeight.getText()));
+    item.setBarcode(inpBarcode.getText());
+  }
+  
+  
 }

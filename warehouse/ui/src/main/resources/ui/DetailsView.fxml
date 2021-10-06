@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox fx:id="itemList1" alignment="center">
          <children>
@@ -47,9 +47,9 @@
                            <children>
                               <HBox HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Button mnemonicParsing="false" text="-" />
-                                    <TextField promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
-                                    <Button mnemonicParsing="false" text="+" />
+                                    <Button fx:id="btnDecrement" mnemonicParsing="false" text="-" />
+                                    <TextField fx:id="inpAmount" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
+                                    <Button fx:id="btnIncrement" mnemonicParsing="false" text="+" />
                                  </children>
                               </HBox>
                               <HBox spacing="10.0" HBox.hgrow="NEVER">
@@ -60,7 +60,7 @@
                                              <children>
                                                 <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                    <children>
-                                                      <Label prefHeight="43.0" text="A" textAlignment="CENTER">
+                                                      <Label fx:id="placementSection" prefHeight="43.0" text="A" textAlignment="CENTER">
                                                          <font>
                                                             <Font size="35.0" />
                                                          </font>
@@ -78,7 +78,7 @@
                                              <children>
                                                 <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                    <children>
-                                                      <Label prefHeight="43.0" text="9" textAlignment="CENTER">
+                                                      <Label fx:id="placementRow" prefHeight="43.0" text="9" textAlignment="CENTER">
                                                          <font>
                                                             <Font size="35.0" />
                                                          </font>
@@ -96,7 +96,7 @@
                                              <children>
                                                 <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                    <children>
-                                                      <Label prefHeight="43.0" text="16" textAlignment="CENTER">
+                                                      <Label fx:id="placementShelf" prefHeight="43.0" text="16" textAlignment="CENTER">
                                                          <font>
                                                             <Font size="35.0" />
                                                          </font>
@@ -134,7 +134,7 @@
                                           <Font name="System Font" size="13.0" />
                                        </font>
                                     </Label>
-                                    <TextField promptText="0" />
+                                    <TextField fx:id="inpOrdinaryPrice" promptText="0" />
                                     <Label text="ink.mva">
                                        <font>
                                           <Font size="10.0" />
@@ -145,7 +145,7 @@
                               <VBox prefHeight="200.0">
                                  <children>
                                     <Label text="Utsalgspris" />
-                                    <TextField promptText="0" />
+                                    <TextField fx:id="inpSalesPrice" promptText="0" />
                                     <Label text="ink.mva">
                                        <font>
                                           <Font size="10.0" />
@@ -156,7 +156,7 @@
                               <VBox prefHeight="200.0">
                                  <children>
                                     <Label text="Innkjøpspris" />
-                                    <TextField promptText="0" />
+                                    <TextField fx:id="inpRetailerPrice" promptText="0" />
                                     <Label text="eks.mva">
                                        <font>
                                           <Font size="10.0" />
@@ -175,7 +175,7 @@
                   <VBox prefHeight="81.0" prefWidth="149.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
                         <Label text="Avgiftstatus (mva)" />
-                        <ComboBox promptText="Velg" />
+                        <ComboBox fx:id="comboBoxSalesTax" promptText="Velg" />
                      </children>
                   </VBox>
                </children>
@@ -193,7 +193,7 @@
                            <children>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField promptText="A-Å" />
+                                    <TextField fx:id="inpPlacementSection" promptText="A-Å" />
                                     <Label text="Seksjon">
                                        <font>
                                           <Font size="10.0" />
@@ -203,7 +203,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField promptText="0" />
+                                    <TextField fx:id="inpPlacementRow" promptText="0" />
                                     <Label text="Reol">
                                        <font>
                                           <Font size="10.0" />
@@ -213,7 +213,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField promptText="0" />
+                                    <TextField fx:id="inpPlacementShelf" promptText="0" />
                                     <Label text="Hylle">
                                        <font>
                                           <Font size="10.0" />
@@ -240,7 +240,7 @@
                            <children>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField promptText="0" />
+                                    <TextField fx:id="inpDimensionsLength" promptText="0" />
                                     <Label text="Lengde">
                                        <font>
                                           <Font size="10.0" />
@@ -250,7 +250,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField promptText="0" />
+                                    <TextField fx:id="inpDimensionWidth" promptText="0" />
                                     <Label text="Bredde">
                                        <font>
                                           <Font size="10.0" />
@@ -260,7 +260,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField promptText="0" />
+                                    <TextField fx:id="inpDimensionsHeigth" promptText="0" />
                                     <Label text="Høyde">
                                        <font>
                                           <Font size="10.0" />
@@ -283,7 +283,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField promptText="0" />
+                        <TextField fx:id="inpWeight" promptText="0" />
                      </children>
                   </VBox>
                </children>
@@ -297,16 +297,16 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField promptText="0000000000000" />
+                        <TextField fx:id="inpBarcode" promptText="0000000000000" />
                      </children>
                   </VBox>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Pane minHeight="100.0" minWidth="100.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
-                  <Button layoutX="14.0" layoutY="125.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="188.0" text="LAGRE" />
-                  <Button layoutX="217.0" layoutY="125.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="189.0" text="SLETT" />
+                  <Pane fx:id="barcodeViewer" minHeight="100.0" minWidth="100.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
+                  <Button fx:id="btnSave" layoutX="14.0" layoutY="125.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="188.0" text="LAGRE" />
+                  <Button fx:id="btnDelete" layoutX="217.0" layoutY="125.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="189.0" text="SLETT" />
                </children>
             </AnchorPane>
          </children>
