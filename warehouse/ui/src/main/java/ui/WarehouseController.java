@@ -20,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -102,21 +103,20 @@ public class WarehouseController {
   }
 
   private void showDetailsView(Item item) {
+    final int safeBoundTop = 30;
+    final int safeBoundBottom = 75;
     try {
       //Load second scene
       FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
       Parent detailsRoot = loader.load();
-       
-      //Get controller of scene2
-      //Scene2Controller scene2Controller = loader.getController();
-      //Pass whatever data you want. You can have multiple method calls here
-      //scene2Controller.transferMessage(inputField.getText());
-
-      //Show scene 2 in new window            
+             
       Stage stage = new Stage();
       stage.setScene(new Scene(detailsRoot));
       stage.setTitle("Edit: " + item.getName());
       stage.show();
+      stage.setMinWidth(450);
+      stage.setHeight(Screen.getPrimary().getBounds().getHeight() - safeBoundBottom);
+      stage.setY(safeBoundTop);
   } catch (IOException ex) {
       System.err.println(ex);
   }
