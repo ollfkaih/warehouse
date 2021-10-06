@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -11,6 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -46,10 +48,25 @@
               <HBox fx:id="searchPane" alignment="center" minHeight="72.0" prefHeight="72.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
                   <Text text="Søk" />
                   <TextField fx:id="searchInput" minWidth="200" prefHeight="27.0" promptText="Navn" />
-                  <VBox fx:id="sortAndOrderSelectors" alignment="center" spacing="5">
-                    <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sort by" />
-                    <ComboBox fx:id="orderBySelector" minWidth="98.0" onAction="#changeOrderBy" prefHeight="27.0" promptText="Order by" />
-                  </VBox>
+                 <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sort by" />
+                     <Button fx:id="orderByButton" mnemonicParsing="false" onAction="#changeOrderBy" prefHeight="27.0" prefWidth="32.0" styleClass="orderByButton">
+                        <graphic>
+                        <VBox fx:id="sortAndOrderSelectors" alignment="center" spacing="5.0">
+                              <children>
+                                 <Region prefHeight="200.0" prefWidth="200.0" stylesheets="@arrowIcons.css">
+                                    <styleClass>
+                                       <String fx:value="orderByUp" />
+                                       <String fx:value="up" />
+                                    </styleClass></Region>
+                                 <Region prefHeight="200.0" prefWidth="200.0" stylesheets="@arrowIcons.css">
+                                    <styleClass>
+                                       <String fx:value="orderByDown" />
+                                       <String fx:value="down" />
+                                    </styleClass></Region>
+                              </children>
+                        </VBox>
+                        </graphic>
+                     </Button>
               </HBox>
         </VBox>
       <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" stylesheets="@ItemStyle.css" GridPane.rowIndex="1">

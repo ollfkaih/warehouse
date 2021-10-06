@@ -10,3 +10,26 @@
     -fx-background-color: #bcbcbd;
 
 }*/
+
+.orderByButton {
+    -fx-text-fill: BLACK;
+    -fx-background-color: WHITE;
+    -fx-border-color: GRAY;
+    -fx-border-radius: 3;
+}
+
+.orderByButton .orderByUp {
+    -fx-background-color: BLACK;
+}
+
+.orderByButton.descending .orderByUp {
+    -fx-background-color: GRAY;
+}
+
+.orderByButton .orderByDown {
+    -fx-background-color: GRAY;
+}
+
+.orderByButton.descending .orderByDown {
+    -fx-background-color: BLACK;
+}
