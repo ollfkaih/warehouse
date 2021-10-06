@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -38,7 +39,7 @@ public class WarehouseController {
   @FXML VBox itemList;
   @FXML TextField searchInput;
   @FXML ComboBox<Enum<SortOptions>> sortBySelector;
-  @FXML ComboBox<String> orderBySelector;
+  @FXML Button orderByButton;
   @FXML VBox sortAndOrderSelectors;
   @FXML VBox titleAddandSearch;
   @FXML SplitPane splitPane;
@@ -66,8 +67,6 @@ public class WarehouseController {
     for (SortOptions values : SortOptions.values()) {
       sortBySelector.getItems().add(values);
     }
-    orderBySelector.getItems().add("ASC");
-    orderBySelector.getItems().add("DESC");
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
 
@@ -200,21 +199,15 @@ public class WarehouseController {
 
   @FXML
   private void changeOrderBy() {
-    String orderByValue = "";
-    if (orderBySelector.getValue() != null) {
-      orderByValue = orderBySelector.getValue().toString();
+    ascending = !ascending;
+
+    if (ascending && orderByButton.getStyleClass().contains("descending")) {
+      orderByButton.getStyleClass().remove("descending");
     }
-    switch (orderByValue) {
-      case "ASC":
-        ascending = true;
-        break;
-      case "DESC":
-        ascending = false;
-        break;
-      default:
-        ascending = true;
-        break;
+    if (!ascending && !orderByButton.getStyleClass().contains("descending")) {
+      orderByButton.getStyleClass().add("descending");
     }
+
     updateInventory();
   }
 
