@@ -41,7 +41,7 @@ public class WarehouseApp extends Application {
     launch();
   }
 
-  private void appExit() throws Exception {
+  private void appExit() {
     Platform.exit();
   }
 }
