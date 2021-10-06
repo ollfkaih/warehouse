@@ -12,7 +12,7 @@ public class Item {
   private String brand;
   private int amount;
   private Double price;
-  private double weight;
+  private Double weight;
   private LocalDateTime creationDate;
 
   public Item(
@@ -22,7 +22,7 @@ public class Item {
       @JsonProperty("brand") String brand,
       @JsonProperty("amount") int amount,
       @JsonProperty("price") Double price,
-      @JsonProperty("weight") double weight,
+      @JsonProperty("weight") Double weight,
       @JsonProperty("creationDate") LocalDateTime creationDate
   ) {
     setId(id);
@@ -31,11 +31,12 @@ public class Item {
     setBrand(brand);
     setAmount(amount);
     setPrice(price);
+    setWeight(price);
     setCreationDate(creationDate);
   }
 
   public Item(String name, int amount) {
-    this(UUID.randomUUID().toString(), null, name, null, amount, null, 0, LocalDateTime.now());
+    this(UUID.randomUUID().toString(), null, name, null, amount, null, null, LocalDateTime.now());
   }
 
   public Item(String name) {
@@ -122,12 +123,12 @@ public class Item {
     this.price=price;
   }
 
-  public double getWeight() {
+  public Double getWeight() {
     return weight;
   }
 
-  public void setWeight(double weight) {
-    if (weight<CoreConst.MINAMOUNT || weight>CoreConst.MAXAMOUNT) {
+  public void setWeight(Double weight) {
+    if (weight !=null && (weight<CoreConst.MINAMOUNT || weight>CoreConst.MAXAMOUNT)) {
       throw new IllegalArgumentException("Weight cannot be negative or larger than infinity");
     }
     this.weight=weight;
@@ -162,6 +163,9 @@ public class Item {
   };
 
   public static final Comparator<Item> priceComparator = (Item i1, Item i2) -> {
+    if (i1.getPrice() == null && i2.getPrice() == null) {
+      return 0;
+    }
     if (i1.getPrice() == null) {
       return 1;
     }
@@ -172,7 +176,16 @@ public class Item {
   };
 
   public static final Comparator<Item> weightComparator = (Item i1, Item i2) -> {
-    return Double.compare(i1.getWeight(), (i2.getWeight()));
+    if (i1.getWeight() == null && i2.getWeight() == null) {
+      return 0;
+    }
+    if (i1.getWeight() == null) {
+      return 1;
+    }
+    if (i2.getWeight() == null) {
+      return -1;
+    }
+    return Double.compare(i1.getWeight().doubleValue(), (i2.getWeight().doubleValue()));
   };
 
   public static final Comparator<Item> createdDateComparator = (Item i1, Item i2) -> {
