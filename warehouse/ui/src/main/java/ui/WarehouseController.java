@@ -7,7 +7,10 @@ import data.DataPersistence;
 import data.WarehouseFileSaver;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
@@ -32,20 +35,21 @@ public class WarehouseController {
   private Warehouse warehouse;
   private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
 
-  @FXML AnchorPane root;
-  @FXML GridPane dividerGridPane;
-  @FXML TextField newProductName;
-  @FXML ScrollPane itemContainer;
-  @FXML VBox itemList;
-  @FXML TextField searchInput;
-  @FXML ComboBox<Enum<SortOptions>> sortBySelector;
-  @FXML Button orderByButton;
-  @FXML VBox sortAndOrderSelectors;
-  @FXML VBox titleAddandSearch;
-  @FXML DetailsViewController detailsViewController;
+  @FXML private AnchorPane root;
+  @FXML private GridPane dividerGridPane;
+  @FXML private TextField newProductName;
+  @FXML private ScrollPane itemContainer;
+  @FXML private VBox itemList;
+  @FXML private TextField searchInput;
+  @FXML private ComboBox<Enum<SortOptions>> sortBySelector;
+  @FXML private Button orderByButton;
+  @FXML private VBox sortAndOrderSelectors;
+  @FXML private VBox titleAddandSearch;
 
   private SortOptions sortBy = SortOptions.Date;
   private boolean ascending = true;
+
+  private Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
 
   @FXML
   void initialize() {
@@ -68,16 +72,8 @@ public class WarehouseController {
     }
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
-
-    //TODO add something
-    //showDetailsView();
   }
 
-
-
-
-
-  
   @FXML
   private void updateInventory() {
     itemList.getChildren().clear();
@@ -95,31 +91,12 @@ public class WarehouseController {
       }
 
       itemList.getChildren().add(itemElement);
+      detailsViewControllers.putIfAbsent(items.get(i), new DetailsViewController(items.get(i)));
+      
       int index = i;
-      itemElement.setOnMouseClicked(e -> showDetailsView(items.get(index)));
+
+      itemElement.setOnMouseClicked(e -> detailsViewControllers.get(items.get(index)).showDetailsView());
     }
-  }
-
-  private void showDetailsView(Item item) {
-    final int safeBoundTop = 30;
-    final int safeBoundBottom = 75;
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
-      Parent detailsRoot = loader.load();
-             
-      Stage stage = new Stage();
-      stage.setScene(new Scene(detailsRoot));
-      stage.setTitle("Edit: " + item.getName());
-      stage.show();
-      stage.setMinWidth(450);
-      stage.setHeight(Screen.getPrimary().getBounds().getHeight() - safeBoundBottom);
-      stage.setMaxHeight(detailsRoot.prefHeight(0));
-      stage.setY(safeBoundTop);
-  } catch (IOException ex) {
-      System.err.println(ex);
-  }
-
-    return;
   }
 
   private List<Item> getItems() {
