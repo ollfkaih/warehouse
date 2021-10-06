@@ -28,7 +28,7 @@ public class ItemTest {
     assertNull(item.getBarcode());
     assertNull(item.getBrand());
     assertNotNull(item.getCreationDate());
-    assertEquals(0, item.getWeight());
+    assertEquals(null, item.getWeight());
     assertNull(item.getPrice());
     assertThrows(IllegalArgumentException.class, () -> new Item(null, 10));
     assertThrows(IllegalArgumentException.class, () -> new Item(null));
@@ -40,7 +40,7 @@ public class ItemTest {
     assertThrows(IllegalArgumentException.class, () -> item.setBarcode("abcabcabcabca"));
     assertThrows(IllegalArgumentException.class, () -> item.setBarcode("12345678"));
     assertThrows(IllegalArgumentException.class, () -> item.setPrice(-4.0));
-    assertThrows(IllegalArgumentException.class, () -> item.setWeight(-1));
+    assertThrows(IllegalArgumentException.class, () -> item.setWeight(-1.0));
     assertThrows(IllegalArgumentException.class, () -> item.setAmount(-4));
     assertThrows(IllegalArgumentException.class, () -> item.setName(null));
   }
