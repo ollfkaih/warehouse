@@ -48,6 +48,7 @@ public class DetailsViewController {
   public DetailsViewController(Item item) {
     try {
       loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
+      loader.setController(this);
       detailsRoot = loader.load();
       stage = new Stage();
       stage.setScene(new Scene(detailsRoot));
