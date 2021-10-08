@@ -34,7 +34,7 @@ public class WarehouseFileSaverTest {
     for (Item item : warehouse.getAllItems()) {
       Item newItem = newWarehouse.findItem(item.getId());
       assertEquals(item.getId(), newItem.getId());
-      assertEquals("Name", newItem.getName());
+      assertEquals(item.getName(), newItem.getName());
       assertEquals(item.getAmount(), newItem.getAmount());
       assertEquals(item.getCreationDate().format(Utils.dateTimeFormatter), newItem.getCreationDate().format(Utils.dateTimeFormatter));
     }
