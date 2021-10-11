@@ -1,42 +1,83 @@
 package core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.UUID;
 
 public class Item { 
   private String id;
-  private String barcode;
   private String name;
-  private String brand;
   private int amount;
-  private Double price;
+  private String barcode;
+  private String brand;
+  private Double regularPrice;
+  private Double salePrice;
+  private Double purchasePrice;
+  private String section;
+  private String rack;
+  private String shelf;
+  private Double height;
+  private Double width;
+  private Double length;
   private Double weight;
   private LocalDateTime creationDate;
 
   public Item(
       @JsonProperty("id") String id,
-      @JsonProperty("barcode") String barcode,
       @JsonProperty("name") String name,
-      @JsonProperty("brand") String brand,
       @JsonProperty("amount") int amount,
-      @JsonProperty("price") Double price,
+      @JsonProperty("barcode") String barcode,
+      @JsonProperty("brand") String brand,
+      @JsonProperty("regularPrice") Double regularPrice,
+      @JsonProperty("salePrice") Double salePrice,
+      @JsonProperty("purchasePrice") Double purchasePrice,
+      @JsonProperty("section") String section,
+      @JsonProperty("rack") String rack,
+      @JsonProperty("shelf") String shelf,
+      @JsonProperty("itemHeight") Double height,
+      @JsonProperty("itemWidth") Double width,
+      @JsonProperty("itemLength") Double length,
       @JsonProperty("weight") Double weight,
       @JsonProperty("creationDate") LocalDateTime creationDate
   ) {
     setId(id);
-    setBarcode(barcode);
     setName(name);
-    setBrand(brand);
     setAmount(amount);
-    setPrice(price);
-    setWeight(price);
+    setBarcode(barcode);
+    setBrand(brand);
+    setRegularPrice(regularPrice);
+    setSalePrice(salePrice);
+    setPurchasePrice(purchasePrice);
+    setSection(section);
+    setRack(rack);
+    setShelf(shelf);
+    setHeight(height);
+    setWidth(width);
+    setLength(length);
+    setWeight(weight);
     setCreationDate(creationDate);
   }
 
   public Item(String name, int amount) {
-    this(UUID.randomUUID().toString(), null, name, null, amount, null, null, LocalDateTime.now());
+    this(
+        UUID.randomUUID().toString(),
+        name,
+        amount,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        LocalDateTime.now()
+    );
   }
 
   public Item(String name) {
@@ -48,7 +89,46 @@ public class Item {
   }
 
   public void setId(String id) {
+    if (id == null) {
+      throw new IllegalArgumentException();
+    }
     this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    if (name == null) {
+      throw new IllegalArgumentException();
+    }
+    this.name = name;
+  }
+
+  public int getAmount() {
+    return amount;
+  }
+
+  public void setAmount(int amount) {
+    if (amount < CoreConst.MIN_AMOUNT || getAmount() > CoreConst.MAX_AMOUNT) {
+      throw new IllegalArgumentException();
+    }
+    this.amount = amount;
+  }
+
+  public void incrementAmount() {
+    if (amount == CoreConst.MAX_AMOUNT) {
+      throw new IllegalStateException("Cannot increment any more");
+    }
+    setAmount(getAmount() + 1);
+  }
+
+  public void decrementAmount() {
+    if (amount == CoreConst.MIN_AMOUNT) {
+      throw new IllegalStateException("Cannot decrement any more");
+    }
+    setAmount(getAmount() - 1);
   }
 
   public String getBarcode() {
@@ -67,60 +147,122 @@ public class Item {
     this.barcode = barcode;
   }
 
-  
-  public String getName() {
-    return name;
-  }
-  
-
-  public void setName(String name) {
-    if (name == null) {
-      throw new IllegalArgumentException();
-    }
-    this.name = name;
-  }
-
   public String getBrand() {
     return brand;
   }
 
   public void setBrand(String brand) {
-    this.brand=brand;
+    this.brand = brand;
   }
 
-  public int getAmount() {
-    return amount;
+  public Double getRegularPrice() {
+    return regularPrice;
   }
 
-  public void setAmount(int amount) {
-    if (amount < CoreConst.MINAMOUNT) {
-      throw new IllegalArgumentException();
-    }
-    this.amount = amount;
-  }
-
-  public void incrementAmount() {
-    if (getAmount() >= CoreConst.MAXAMOUNT) {
-      return;
-    }
-    setAmount(getAmount() + 1);
-  }
-
-  public void decrementAmount() {
-    if (getAmount() > CoreConst.MINAMOUNT) {
-      setAmount(getAmount() - 1);
-    }
-  }
-
-  public Double getPrice() {
-    return price;
-  }
-
-  public void setPrice(Double price) {
-    if (price != null && (price<CoreConst.MINAMOUNT || price>CoreConst.MAXAMOUNT)) {
+  public void setRegularPrice(Double regularPrice) {
+    if (regularPrice != null && (regularPrice < CoreConst.MIN_PRICE || regularPrice > CoreConst.MAX_PRICE)) {
       throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
     }
-    this.price=price;
+    this.regularPrice = regularPrice;
+  }
+
+  @JsonIgnore
+  public Double getCurrentPrice() {
+    return salePrice != null ? salePrice : regularPrice;
+  }
+
+  public Double getSalePrice() {
+    return salePrice;
+  }
+
+  public void setSalePrice(Double salePrice) {
+    if (salePrice != null && (salePrice < CoreConst.MIN_PRICE || salePrice > CoreConst.MAX_PRICE)) {
+      throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
+    }
+    this.salePrice = salePrice;
+  }
+
+  public Double getPurchasePrice() {
+    return purchasePrice;
+  }
+
+  public void setPurchasePrice(Double purchasePrice) {
+    if (purchasePrice != null && (purchasePrice < CoreConst.MIN_PRICE || purchasePrice > CoreConst.MAX_PRICE)) {
+      throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
+    }
+    this.purchasePrice = purchasePrice;
+  }
+
+  public String getSection() {
+    return section;
+  }
+
+  public void setSection(String section) {
+    if (section != null && (section.length() > CoreConst.MAX_SECTION_LENGTH)) {
+      throw new IllegalArgumentException(
+          "Section length is too long. Max is " + CoreConst.MAX_SECTION_LENGTH + " characters"
+      );
+    }
+    this.section = section;
+  }
+
+  public String getRack() {
+    return rack;
+  }
+
+  public void setRack(String rack) {
+    if (rack != null && (rack.length() > CoreConst.MAX_RACK_LENGTH)) {
+      throw new IllegalArgumentException(
+          "Rack length is too long. Max is " + CoreConst.MAX_RACK_LENGTH + " characters"
+      );
+    }
+    this.rack = rack;
+  }
+
+  public String getShelf() {
+    return shelf;
+  }
+
+  public void setShelf(String shelf) {
+    if (shelf != null && (shelf.length() > CoreConst.MAX_SHELF_LENGTH)) {
+      throw new IllegalArgumentException(
+          "Shelf length is too long. Max is " + CoreConst.MAX_SHELF_LENGTH + " characters"
+      );
+    }
+    this.shelf = shelf;
+  }
+
+  public Double getHeight() {
+    return height;
+  }
+
+  public void setHeight(Double height) {
+    if (height != null && (height < CoreConst.MIN_ITEM_DIMENSION || height > CoreConst.MAX_ITEM_DIMENSION)) {
+      throw new IllegalArgumentException("Height is outside of allowed values");
+    }
+    this.height = height;
+  }
+
+  public Double getWidth() {
+    return width;
+  }
+
+  public void setWidth(Double width) {
+    if (width != null && (width < CoreConst.MIN_ITEM_DIMENSION || width > CoreConst.MAX_ITEM_DIMENSION)) {
+      throw new IllegalArgumentException("Width is outside of allowed values");
+    }
+    this.width = width;
+  }
+
+  public Double getLength() {
+    return length;
+  }
+
+  public void setLength(Double length) {
+    if (length != null && (length < CoreConst.MIN_ITEM_DIMENSION || length > CoreConst.MAX_ITEM_DIMENSION)) {
+      throw new IllegalArgumentException("Length is outside of allowed values");
+    }
+    this.length = length;
   }
 
   public Double getWeight() {
@@ -128,10 +270,10 @@ public class Item {
   }
 
   public void setWeight(Double weight) {
-    if (weight !=null && (weight<CoreConst.MINAMOUNT || weight>CoreConst.MAXAMOUNT)) {
-      throw new IllegalArgumentException("Weight cannot be negative or larger than infinity");
+    if (weight != null && (weight < CoreConst.MIN_WEIGHT || weight > CoreConst.MAX_WEIGHT)) {
+      throw new IllegalArgumentException("Weight is outside of allowed values");
     }
-    this.weight=weight;
+    this.weight = weight;
   }
 
   public LocalDateTime getCreationDate() {
@@ -148,46 +290,28 @@ public class Item {
     this.creationDate = date;
   }
 
-  public static final Comparator<Item> nameComparator = (Item i1, Item i2) -> {
-    return i1.getName().toLowerCase().compareTo(i2.getName().toLowerCase());
-  };
-
-  public static final Comparator<Item> amountComparator = (Item i1, Item i2) -> {
-    return Integer.compare(i1.getAmount(), (i2.getAmount()));
-  };
-
-  public static final Comparator<Item> priceComparator = (Item i1, Item i2) -> {
-    if (i1.getPrice() == null && i2.getPrice() == null) {
-      return 0;
-    }
-    if (i1.getPrice() == null) {
-      return 1;
-    }
-    if (i2.getPrice() == null) {
-      return -1;
-    }
-    return Double.compare(i1.getPrice().doubleValue(), (i2.getPrice().doubleValue()));
-  };
-
-  public static final Comparator<Item> weightComparator = (Item i1, Item i2) -> {
-    if (i1.getWeight() == null && i2.getWeight() == null) {
-      return 0;
-    }
-    if (i1.getWeight() == null) {
-      return 1;
-    }
-    if (i2.getWeight() == null) {
-      return -1;
-    }
-    return Double.compare(i1.getWeight().doubleValue(), (i2.getWeight().doubleValue()));
-  };
-
-  public static final Comparator<Item> createdDateComparator = (Item i1, Item i2) -> {
-    return i2.getCreationDate().compareTo(i1.getCreationDate());
-  };
-  
   @Override
   public String toString() {
-    return "Name: " + getName() + " Amout: " + getAmount() + " Price: " + price + " Date: " + getCreationDate() + "\n";
+    return String.format(
+        "Name: %s%n" +
+        "Id: %s%n" +
+        "Amount: %d%n" +
+        "Brand: %s%n" +
+        "Regular price: %f%n" +
+        "Sale price: %f%n" +
+        "Purchase price: %f%n" +
+        "Warehouse placement: %s %s %s%n" +
+        "Item dimensions: %f*%f*%f%n" +
+        "Weight: %f%n",
+        getName(),
+        getId(),
+        getAmount(),
+        getBrand(),
+        getRegularPrice(),
+        getSalePrice(),
+        getPurchasePrice(),
+        getSection(), getRack(), getShelf(),
+        getWidth(), getLength(), getHeight(),
+        getWeight());
   }
 }

@@ -81,7 +81,7 @@ public class Warehouse {
   }
 
   private List<Item> sortItemsByComparator(Comparator<Item> c) {
-    return items.values().stream().sorted((c)).toList();
+    return items.values().stream().sorted(c).toList();
   }
 
   public List<Item> getItemsSortedAndFiltered(SortOptions options, boolean ascendingOrder, String filterText) {
@@ -93,28 +93,25 @@ public class Warehouse {
   }
 
   public List<Item> getAllItemsSorted(SortOptions options, boolean ascendingOrder) {
-    final Comparator<Item> comparatorType = switch (options) {
-      case Name -> Item.nameComparator;
-      case Amount -> Item.amountComparator;
-      case Price -> Item.priceComparator;
-      case Weight -> Item.weightComparator;
-      case Date -> Item.createdDateComparator;
-      default -> Item.nameComparator;
+    Comparator<Item> comparator = switch (options) {
+      case Name -> Comparator.comparing(Item::getName, String::compareToIgnoreCase);
+      case Amount -> Comparator.comparingInt(Item::getAmount);
+      case Price -> Comparator.comparing(Item::getCurrentPrice, Comparator.nullsLast(Comparator.naturalOrder()));
+      case Weight -> Comparator.comparing(Item::getWeight, Comparator.nullsLast(Comparator.naturalOrder()));
+      case Date -> Comparator.comparing(Item::getCreationDate);
+      default -> Comparator.comparing(Item::getCreationDate);
     };
-    Comparator<Item> comparator = (i1, i2) -> compareItems(i1, i2, comparatorType, ascendingOrder);
-    List<Item> sortedItems = sortItemsByComparator(comparator);
-    return new ArrayList<>(sortedItems);
-  }
-
-  private int compareItems(Item i1, Item i2, Comparator<Item> comparator, boolean ascendingOrder) {
+    Comparator<Item> nameComparator = Comparator.comparing(Item::getName);
+    Comparator<Item> creationDateComparator = Comparator.comparing(Item::getCreationDate);
     if (!ascendingOrder) {
       comparator = comparator.reversed();
+      nameComparator = nameComparator.reversed();
+      creationDateComparator = creationDateComparator.reversed();
     }
-    int comparison = comparator.compare(i1, i2);
-    if (comparison == 0) {
-      return ascendingOrder ? Item.nameComparator.compare(i1, i2) : Item.nameComparator.reversed().compare(i1, i2);
-    }
-    return comparison;
+    comparator = comparator
+        .thenComparing(nameComparator)
+        .thenComparing(creationDateComparator);
+    return new ArrayList<>(sortItemsByComparator(comparator));
   }
 
   public Map<String, Item> getAllItemsAsMap() {
