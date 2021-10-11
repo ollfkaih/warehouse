@@ -111,7 +111,7 @@ public class Item {
   }
 
   public void setAmount(int amount) {
-    if (amount < CoreConst.MIN_AMOUNT || getAmount() > CoreConst.MAX_AMOUNT) {
+    if (amount < CoreConst.MIN_AMOUNT || amount > CoreConst.MAX_AMOUNT) {
       throw new IllegalArgumentException();
     }
     this.amount = amount;
