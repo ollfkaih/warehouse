@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox fx:id="itemList1" alignment="center">
          <children>
