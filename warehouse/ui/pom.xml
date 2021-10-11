@@ -71,12 +71,11 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
-        <!-- add all iText 7 modules -->
-    <dependency>
-      <groupId>com.itextpdf</groupId>
-      <artifactId>barcodes</artifactId>
-      <version>${itext.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>net.sourceforge.barbecue</groupId>
+            <artifactId>barbecue</artifactId>
+            <version>1.5-beta1</version>
+        </dependency>
     </dependencies>
 
     <build>
