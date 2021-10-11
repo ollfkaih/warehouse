@@ -27,10 +27,12 @@ Spotbugs:
   stage: test
   needs: []
   script:
+    - cd warehouse
     - mvn spotbugs:check
 
 Checkstyle:
   stage: test
   needs: []
   script:
+    - cd warehouse
     - mvn checkstyle:check
