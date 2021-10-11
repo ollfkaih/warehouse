@@ -5,13 +5,13 @@ cache:
     - .m2/repository/
     - target/
 
-build:
+Build:
   stage: build
   script:
     - cd warehouse
     - mvn compile
 
-test:
+Jacoco:
   stage: test
   needs: []
   script:
@@ -22,3 +22,15 @@ test:
   artifacts:
     paths:
       - $CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/report/target/site/jacoco-aggregate/*
+
+Spotbugs:
+  stage: test
+  needs: []
+  script:
+    - mvn spotbugs:check
+
+Checkstyle:
+  stage: test
+  needs: []
+  script:
+    - mvn checkstyle:check
