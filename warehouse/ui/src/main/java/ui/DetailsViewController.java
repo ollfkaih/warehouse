@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import core.Item;
 import javafx.fxml.FXML;
@@ -12,6 +13,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -37,6 +40,7 @@ public class DetailsViewController {
   @FXML private TextField inpDimensionsHeight;
   @FXML private TextField inpWeight;
   @FXML private TextField inpBarcode;
+  @FXML private ImageView barcodeImageView;
 
   private FXMLLoader loader;
   private Stage stage;
@@ -66,10 +70,6 @@ public class DetailsViewController {
     stage.setTitle("Edit: " + item.getName());
   }
 
-  @FXML
-  void initialize() {
-  }
-
   protected void requestFocus() {
     stage.requestFocus();
   }
@@ -94,8 +94,21 @@ public class DetailsViewController {
     // dimensions
     this.inpWeight.setText(String.valueOf(item.getWeight()));
     this.inpBarcode.setText(item.getBarcode());
+
+    if (item.getBarcode() != null) {
+      generateBarcodeImage();
+    }
   }
 
+  private void generateBarcodeImage() {
+    try (InputStream imageInputStream =
+             BarcodeCreator.generateBarcodeImageInputStream(item.getBarcode().substring(0, 12))) {
+      Image barcodeImage = new Image(imageInputStream);
+      barcodeImageView.setImage(barcodeImage);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
   private void saveItem() {
     item.setName(inpName.getText());

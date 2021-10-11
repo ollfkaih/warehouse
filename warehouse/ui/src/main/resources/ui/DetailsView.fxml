@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -302,11 +303,11 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <ImageView fx:id="barcodeImageView" fitHeight="100.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
+            <AnchorPane prefHeight="60.0" prefWidth="200.0">
                <children>
-                  <Pane fx:id="barcodeViewer" minHeight="100.0" minWidth="100.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0" />
-                  <Button fx:id="btnSave" layoutX="14.0" layoutY="125.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="188.0" text="LAGRE" />
-                  <Button fx:id="btnDelete" layoutX="217.0" layoutY="125.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="189.0" text="SLETT" />
+                  <Button fx:id="btnSave" prefHeight="42.0" prefWidth="188.0" text="LAGRE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+                  <Button fx:id="btnDelete" prefHeight="41.0" prefWidth="189.0" text="SLETT" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>
          </children>
