@@ -3,7 +3,6 @@ package ui;
 import core.Item;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.HBox;
@@ -11,6 +10,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+/**
+ * This element is an item in the list over items.
+ */
 public class ItemElementHBox extends HBox {
   final Font boldFont = new Font("Arial Bold", 13);
   private HBox textAmountAndButtonsHBox;

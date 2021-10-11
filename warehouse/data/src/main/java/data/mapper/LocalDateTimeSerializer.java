@@ -8,6 +8,9 @@ import data.Utils;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+/**
+ * Serializer for encoding LocalDateTime in JSON.
+ */
 public class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
   @Override
   public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers)

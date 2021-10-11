@@ -1,6 +1,7 @@
 package data;
 
 import core.Warehouse;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,6 +11,9 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Implementation of DataPersistence that saves warehouse to json file on disk.
+ */
 public class WarehouseFileSaver implements DataPersistence {
   private static final String WAREHOUSE_FILE_EXTENSION = "json";
   private final String warehouseFileName;

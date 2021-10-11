@@ -7,13 +7,17 @@ import core.Item;
 import core.Warehouse;
 import data.mapper.LocalDateTimeDeserializer;
 import data.mapper.LocalDateTimeSerializer;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class WarehouseSerializer {
+/**
+ * Wrapper class for static functions that serialize and deserialize Warehouse to JSON.
+ */
+public abstract class WarehouseSerializer {
   public static void warehouseToJson(Warehouse warehouse, OutputStream outputStream)
       throws IOException {
     ObjectMapper objectMapper = new ObjectMapper();
