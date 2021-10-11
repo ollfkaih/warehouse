@@ -148,14 +148,8 @@ public class Item {
     this.creationDate = date;
   }
 
-  @Override
-  public String toString() {
-    return "Name: " + getName() + " Amout: " + getAmount() + " Price: " + price + " Date: " + getCreationDate() + "\n";
-  }
-
-
   public static final Comparator<Item> nameComparator = (Item i1, Item i2) -> {
-    return i1.getName().compareTo(i2.getName());
+    return i1.getName().toLowerCase().compareTo(i2.getName().toLowerCase());
   };
 
   public static final Comparator<Item> amountComparator = (Item i1, Item i2) -> {
@@ -191,4 +185,9 @@ public class Item {
   public static final Comparator<Item> createdDateComparator = (Item i1, Item i2) -> {
     return i2.getCreationDate().compareTo(i1.getCreationDate());
   };
+  
+  @Override
+  public String toString() {
+    return "Name: " + getName() + " Amout: " + getAmount() + " Price: " + price + " Date: " + getCreationDate() + "\n";
+  }
 }
