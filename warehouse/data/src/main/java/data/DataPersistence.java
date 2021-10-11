@@ -1,8 +1,12 @@
 package data;
 
 import core.Warehouse;
+
 import java.io.IOException;
 
+/**
+ * Interface for persisting warehouse data.
+ */
 public interface DataPersistence {
   /**
    * Get a the saved warehouse.

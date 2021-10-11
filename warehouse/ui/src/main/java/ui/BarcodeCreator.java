@@ -1,16 +1,19 @@
 package ui;
 
+import net.sourceforge.barbecue.Barcode;
+import net.sourceforge.barbecue.BarcodeFactory;
+import net.sourceforge.barbecue.BarcodeImageHandler;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import net.sourceforge.barbecue.Barcode;
-import net.sourceforge.barbecue.BarcodeFactory;
-import net.sourceforge.barbecue.BarcodeImageHandler;
-
-public class BarcodeCreator {
+/**
+ * Wrapper class for a static function that generates an InputStream with a barcode image from a barcode string.
+ */
+public abstract class BarcodeCreator {
   public static InputStream generateBarcodeImageInputStream(String barcodeText) throws Exception {
     Barcode barcode = BarcodeFactory.createEAN13(barcodeText);
 

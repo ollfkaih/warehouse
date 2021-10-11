@@ -10,6 +10,9 @@ import java.util.TreeMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * Class representing a physical warehouse that contains different items in various amounts.
+ */
 public class Warehouse {
   private Map<String, Item> items;
 

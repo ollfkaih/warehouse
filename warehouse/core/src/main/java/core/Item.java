@@ -2,9 +2,13 @@ package core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Class for representing one type of item.
+ */
 public class Item { 
   private String id;
   private String name;
@@ -293,16 +297,16 @@ public class Item {
   @Override
   public String toString() {
     return String.format(
-        "Name: %s%n" +
-        "Id: %s%n" +
-        "Amount: %d%n" +
-        "Brand: %s%n" +
-        "Regular price: %f%n" +
-        "Sale price: %f%n" +
-        "Purchase price: %f%n" +
-        "Warehouse placement: %s %s %s%n" +
-        "Item dimensions: %f*%f*%f%n" +
-        "Weight: %f%n",
+        "Name: %s%n"
+        + "Id: %s%n"
+        + "Amount: %d%n"
+        + "Brand: %s%n"
+        + "Regular price: %f%n"
+        + "Sale price: %f%n"
+        + "Purchase price: %f%n"
+        + "Warehouse placement: %s %s %s%n"
+        + "Item dimensions: %f*%f*%f%n"
+        + "Weight: %f%n",
         getName(),
         getId(),
         getAmount(),

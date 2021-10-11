@@ -1,12 +1,13 @@
 package ui;
 
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * JavaFX App.
@@ -29,12 +30,12 @@ public class WarehouseApp extends Application {
       System.out.println("[WarehouseApp.java] Icon-image not found");
     }
     stage.setOnCloseRequest(event -> {
-			try {
-				appExit();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+      try {
+        appExit();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    });
   }
 
   public static void main(String[] args) {

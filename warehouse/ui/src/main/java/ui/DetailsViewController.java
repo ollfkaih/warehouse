@@ -1,8 +1,5 @@
 package ui;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import core.Item;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +15,12 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * This controller shows a separate window with all the properties of an item, and the possibilty to change propeties of the selected item.
+ */
 public class DetailsViewController {
   @FXML private ScrollPane detailsViewScrollPane;
   

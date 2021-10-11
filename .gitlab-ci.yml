@@ -23,12 +23,12 @@ Jacoco:
     paths:
       - $CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/report/target/site/jacoco-aggregate/*
 
-Spotbugs:
+Verify:
   stage: test
   needs: []
   script:
     - cd warehouse
-    - mvn spotbugs:check
+    - mvn verify
 
 Checkstyle:
   stage: test
