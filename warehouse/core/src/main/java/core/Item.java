@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -26,6 +28,8 @@ public class Item {
   private Double length;
   private Double weight;
   private LocalDateTime creationDate;
+
+  Collection<ItemListener> listeners = new ArrayList<>();
 
   public Item(
       @JsonProperty("id") String id,
@@ -97,6 +101,7 @@ public class Item {
       throw new IllegalArgumentException();
     }
     this.id = id;
+    notifyChange();
   }
 
   public String getName() {
@@ -108,6 +113,7 @@ public class Item {
       throw new IllegalArgumentException();
     }
     this.name = name;
+    notifyChange();
   }
 
   public int getAmount() {
@@ -119,6 +125,7 @@ public class Item {
       throw new IllegalArgumentException();
     }
     this.amount = amount;
+    notifyChange();
   }
 
   public void incrementAmount() {
@@ -149,6 +156,7 @@ public class Item {
       }
     }
     this.barcode = barcode;
+    notifyChange();
   }
 
   public String getBrand() {
@@ -157,6 +165,7 @@ public class Item {
 
   public void setBrand(String brand) {
     this.brand = brand;
+    notifyChange();
   }
 
   public Double getRegularPrice() {
@@ -168,6 +177,7 @@ public class Item {
       throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
     }
     this.regularPrice = regularPrice;
+    notifyChange();
   }
 
   @JsonIgnore
@@ -184,6 +194,7 @@ public class Item {
       throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
     }
     this.salePrice = salePrice;
+    notifyChange();
   }
 
   public Double getPurchasePrice() {
@@ -195,6 +206,7 @@ public class Item {
       throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
     }
     this.purchasePrice = purchasePrice;
+    notifyChange();
   }
 
   public String getSection() {
@@ -208,6 +220,7 @@ public class Item {
       );
     }
     this.section = section;
+    notifyChange();
   }
 
   public String getRack() {
@@ -221,6 +234,7 @@ public class Item {
       );
     }
     this.rack = rack;
+    notifyChange();
   }
 
   public String getShelf() {
@@ -234,6 +248,7 @@ public class Item {
       );
     }
     this.shelf = shelf;
+    notifyChange();
   }
 
   public Double getHeight() {
@@ -245,6 +260,7 @@ public class Item {
       throw new IllegalArgumentException("Height is outside of allowed values");
     }
     this.height = height;
+    notifyChange();
   }
 
   public Double getWidth() {
@@ -256,6 +272,7 @@ public class Item {
       throw new IllegalArgumentException("Width is outside of allowed values");
     }
     this.width = width;
+    notifyChange();
   }
 
   public Double getLength() {
@@ -267,6 +284,7 @@ public class Item {
       throw new IllegalArgumentException("Length is outside of allowed values");
     }
     this.length = length;
+    notifyChange();
   }
 
   public Double getWeight() {
@@ -278,6 +296,7 @@ public class Item {
       throw new IllegalArgumentException("Weight is outside of allowed values");
     }
     this.weight = weight;
+    notifyChange();
   }
 
   public LocalDateTime getCreationDate() {
@@ -292,6 +311,7 @@ public class Item {
       throw new IllegalArgumentException("Date cannot be in the future");
     }
     this.creationDate = date;
+    notifyChange();
   }
 
   @Override
@@ -317,5 +337,19 @@ public class Item {
         getSection(), getRack(), getShelf(),
         getWidth(), getLength(), getHeight(),
         getWeight());
+  }
+
+  private void notifyChange() {
+    for (ItemListener listener : listeners) {
+      listener.itemUpdated();
+    }
+  }
+
+  public void addListener(ItemListener listener) {
+    listeners.add(listener);
+  }
+
+  public void removeListener(ItemListener listener) {
+    listeners.remove(listener);
   }
 }

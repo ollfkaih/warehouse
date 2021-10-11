@@ -3,7 +3,9 @@ package core;
 import core.CoreConst.SortOptions;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -16,6 +18,9 @@ import java.util.stream.Collectors;
 public class Warehouse {
   private Map<String, Item> items;
 
+  private Collection<WarehouseListener> listeners = new ArrayList<>();
+  private Map<String, ItemListener> itemListeners = new HashMap<>();
+
   public Warehouse() {
     items = new TreeMap<>();
   }
@@ -26,6 +31,9 @@ public class Warehouse {
     }
     if (!item.getName().isEmpty()) {
       items.putIfAbsent(item.getId(), item);
+      notifyItemAdded(item);
+      itemListeners.put(item.getId(), this::notifyItemsUpdated);
+      item.addListener(itemListeners.get(item.getId()));
     }
   }
 
@@ -43,7 +51,10 @@ public class Warehouse {
       throw new IllegalArgumentException("Item id does not exist in warehouse");
     }
     Item item = items.get(id);
+    item.removeListener(itemListeners.get(item.getId()));
+    itemListeners.remove(item.getId());
     items.remove(id);
+    notifyItemRemoved(item);
     return item;
   }
 
@@ -119,5 +130,33 @@ public class Warehouse {
 
   public Map<String, Item> getAllItemsAsMap() {
     return new TreeMap<>(items);
+  }
+
+  private void notifyItemAdded(Item item) {
+    for (WarehouseListener listener : listeners) {
+      listener.itemAddedToWarehouse(item);
+    }
+    notifyItemsUpdated();
+  }
+  
+  private void notifyItemsUpdated() {
+    for (WarehouseListener listener : listeners) {
+      listener.warehouseItemsUpdated();
+    }
+  }
+  
+  private void notifyItemRemoved(Item item) {
+    for (WarehouseListener listener : listeners) {
+      listener.itemRemovedFromWarehouse(item);
+    }
+    notifyItemsUpdated();
+  }
+
+  public void addListener(WarehouseListener listener) {
+    this.listeners.add(listener);
+  }
+
+  public void removeListener(WarehouseListener listener) {
+    this.listeners.remove(listener);
   }
 }

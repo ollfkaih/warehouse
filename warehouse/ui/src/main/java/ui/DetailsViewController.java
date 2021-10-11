@@ -52,6 +52,7 @@ public class DetailsViewController {
   private FXMLLoader loader;
   private Stage stage;
   private Parent detailsRoot;
+
   private Item item;
   private Warehouse warehouse;
   private WarehouseController warehouseController;
@@ -62,10 +63,12 @@ public class DetailsViewController {
   public DetailsViewController(Item item, Warehouse warehouse, WarehouseController warehouseController) {
     if (item == null || warehouseController == null || warehouse == null) {
       throw new IllegalArgumentException();
-      System.out.println(warehouse);
     }
+
     this.item = item;
+    this.warehouse = warehouse;
     this.warehouseController = warehouseController;
+
     try {
       loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
       loader.setController(this);
@@ -73,21 +76,25 @@ public class DetailsViewController {
       stage = new Stage();
       stage.setScene(new Scene(detailsRoot));
     } catch (IOException e) {
-      e.printStackTrace();
+      close();
     }
+
     try {
       stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("icon/1-rounded.png")));
-    } catch (Exception e) {  
+    } catch (Exception e) {
       e.printStackTrace();
     }
+
     stage.setMinWidth(450);
     stage.setHeight(Screen.getPrimary().getBounds().getHeight() - safeBoundBottom);
     stage.setY(safeBoundTop);
-    stage.setTitle("Edit: " + item.getName());
-    stage.setOnCloseRequest(e -> {
-      warehouseController.removeDetailsViewController(item);
-      stage.close();
-    });
+    stage.setTitle("Rediger: " + item.getName());
+    stage.setOnCloseRequest(e -> close());
+  }
+
+  private void close() {
+    warehouseController.removeDetailsViewController(item);
+    stage.close();
   }
 
   private void ensureTextFormat() {
@@ -99,10 +106,6 @@ public class DetailsViewController {
     numberFormat(inpDimensionsLength, true);
     numberFormat(inpDimensionsWidth, true);
     numberFormat(inpWeight, false);
-  }
-  
-  @FXML
-  void initialize() {
   }
   
   private void numberFormat(TextField textField, final boolean isInteger) {
@@ -142,8 +145,6 @@ public class DetailsViewController {
   private void update() {
     this.inpName.setText(item.getName());
     this.inpAmount.setText(String.valueOf(item.getAmount()));
-    this.btnIncrement.setOnAction(e -> item.incrementAmount());
-    this.btnDecrement.setOnAction(e -> item.decrementAmount());
     // placements
     this.inpOrdinaryPrice.setText(String.valueOf(item.getRegularPrice()));
     // priser
@@ -183,14 +184,13 @@ public class DetailsViewController {
     stage.close();
   }
 
-  @FXML protected void decrement() {
-    item.decrementAmount();
-    inpAmount.setText(String.valueOf(item.getAmount()));
+  @FXML
+  protected void decrement() {
+    inpAmount.setText(String.valueOf(Integer.parseInt(inpAmount.getText()) - 1));
   }
 
-  @FXML protected void increment() {
-    item.incrementAmount();
-    inpAmount.setText(String.valueOf(item.getAmount()));
+  @FXML
+  protected void increment() {
+    inpAmount.setText(String.valueOf(Integer.parseInt(inpAmount.getText()) + 1));
   }
-
 }

@@ -1,7 +1,9 @@
 package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,5 +135,56 @@ public class WarehouseTest {
     assertEquals(itemsPriceSortedDescending, wh.getAllItemsSorted(SortOptions.Price, false));
     assertEquals(itemsWeightSortedAscending, wh.getAllItemsSorted(SortOptions.Weight, true));
     assertEquals(itemsWeightSortedDescending, wh.getAllItemsSorted(SortOptions.Weight, false));
+  }
+
+  static Item addedItem;
+  static Item removedItem;
+  static boolean updated = false;
+
+  @Test
+  @DisplayName("Test Warehouse listener")
+  public void testListener() {
+    WarehouseListener listener = new WarehouseListener(){
+      @Override
+      public void itemAddedToWarehouse(Item i) {
+        addedItem = i;
+      }
+
+      @Override
+      public void warehouseItemsUpdated() {
+        updated = true;
+      }
+
+      @Override
+      public void itemRemovedFromWarehouse(Item i) {
+        removedItem = i;
+      }
+    };
+
+    wh.addListener(listener);
+
+    wh.addItem(item);
+    assertEquals(item, addedItem);
+    assertTrue(updated);
+
+    updated = false;
+    item.setHeight(6.9);
+    assertTrue(updated);
+    
+    updated = false;
+    wh.removeItem(item);
+    assertEquals(item, removedItem);
+    assertTrue(updated);
+
+    updated = false;
+    item.setBarcode("1739280375232");;
+    assertFalse(updated); // item is no longer in warehouse
+
+    wh.removeListener(listener);
+
+    updated = false;
+    Item item2 = new Item("item2", 2);
+    wh.addItem(item2);
+    assertFalse(updated);
   }
 }
