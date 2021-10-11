@@ -6,12 +6,14 @@ import core.Warehouse;
 import data.DataPersistence;
 import data.WarehouseFileSaver;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -24,19 +26,21 @@ public class WarehouseController {
   private Warehouse warehouse;
   private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
 
-  @FXML AnchorPane root;
-  @FXML GridPane dividerGridPane;
-  @FXML TextField newProductName;
-  @FXML ScrollPane itemContainer;
-  @FXML VBox itemList;
-  @FXML TextField searchInput;
-  @FXML ComboBox<Enum<SortOptions>> sortBySelector;
-  @FXML ComboBox<String> orderBySelector;
-  @FXML VBox sortAndOrderSelectors;
-  @FXML VBox titleAddandSearch;
+  @FXML private AnchorPane root;
+  @FXML private GridPane dividerGridPane;
+  @FXML private TextField newProductName;
+  @FXML private ScrollPane itemContainer;
+  @FXML private VBox itemList;
+  @FXML private TextField searchInput;
+  @FXML private ComboBox<Enum<SortOptions>> sortBySelector;
+  @FXML private Button orderByButton;
+  @FXML private VBox sortAndOrderSelectors;
+  @FXML private VBox titleAddandSearch;
 
   private SortOptions sortBy = SortOptions.Date;
   private boolean ascending = true;
+
+  private Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
 
   @FXML
   void initialize() {
@@ -57,12 +61,10 @@ public class WarehouseController {
     for (SortOptions values : SortOptions.values()) {
       sortBySelector.getItems().add(values);
     }
-    orderBySelector.getItems().add("ASC");
-    orderBySelector.getItems().add("DESC");
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
   }
-  
+
   @FXML
   private void updateInventory() {
     itemList.getChildren().clear();
@@ -80,6 +82,11 @@ public class WarehouseController {
       }
 
       itemList.getChildren().add(itemElement);
+      detailsViewControllers.putIfAbsent(items.get(i), new DetailsViewController(items.get(i)));
+      
+      int index = i;
+
+      itemElement.setOnMouseClicked(e -> detailsViewControllers.get(items.get(index)).showDetailsView());
     }
   }
 
@@ -159,21 +166,15 @@ public class WarehouseController {
 
   @FXML
   private void changeOrderBy() {
-    String orderByValue = "";
-    if (orderBySelector.getValue() != null) {
-      orderByValue = orderBySelector.getValue().toString();
+    ascending = !ascending;
+
+    if (ascending && orderByButton.getStyleClass().contains("descending")) {
+      orderByButton.getStyleClass().remove("descending");
     }
-    switch (orderByValue) {
-      case "ASC":
-        ascending = true;
-        break;
-      case "DESC":
-        ascending = false;
-        break;
-      default:
-        ascending = true;
-        break;
+    if (!ascending && !orderByButton.getStyleClass().contains("descending")) {
+      orderByButton.getStyleClass().add("descending");
     }
+
     updateInventory();
   }
 
