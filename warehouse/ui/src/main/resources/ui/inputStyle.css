@@ -1,0 +1,12 @@
+TextField {
+  -fx-border-width: 2px;
+  -fx-border-color: lightgrey;
+}
+.legalInput {
+  -fx-border-color: chartreuse;
+
+}
+.illegalInput {
+  -fx-border-color: red;
+  
+}

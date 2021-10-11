@@ -1,6 +1,7 @@
 package ui;
 
 import core.Item;
+import core.Warehouse;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * This controller shows a separate window with all the properties of an item, and the possibilty to change propeties of the selected item.
@@ -40,24 +42,30 @@ public class DetailsViewController {
   @FXML private TextField inpPlacementShelf;
   @FXML private TextField inpDimensionsLength;
   @FXML private TextField inpDimensionsWidth;
-  @FXML private TextField inpDimensionsHeight;
+  @FXML private TextField inpDimensionsHeigth;
   @FXML private TextField inpWeight;
   @FXML private TextField inpBarcode;
+  @FXML private Button btnSave;
+  @FXML private Button btnDelete;
   @FXML private ImageView barcodeImageView;
 
   private FXMLLoader loader;
   private Stage stage;
   private Parent detailsRoot;
   private Item item;
+  private Warehouse warehouse;
+  private WarehouseController warehouseController;
 
   private static final int safeBoundTop = 30;
   private static final int safeBoundBottom = 75;
 
-  public DetailsViewController(Item item) {
-    if (item == null) {
+  public DetailsViewController(Item item, Warehouse warehouse, WarehouseController warehouseController) {
+    if (item == null || warehouseController == null || warehouse == null) {
       throw new IllegalArgumentException();
+      System.out.println(warehouse);
     }
     this.item = item;
+    this.warehouseController = warehouseController;
     try {
       loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
       loader.setController(this);
@@ -67,10 +75,54 @@ public class DetailsViewController {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    try {
+      stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("icon/1-rounded.png")));
+    } catch (Exception e) {  
+      e.printStackTrace();
+    }
     stage.setMinWidth(450);
     stage.setHeight(Screen.getPrimary().getBounds().getHeight() - safeBoundBottom);
     stage.setY(safeBoundTop);
     stage.setTitle("Edit: " + item.getName());
+    stage.setOnCloseRequest(e -> {
+      warehouseController.removeDetailsViewController(item);
+      stage.close();
+    });
+  }
+
+  private void ensureTextFormat() {
+    numberFormat(inpAmount, true);
+    numberFormat(inpOrdinaryPrice, false);
+    numberFormat(inpSalesPrice, false);
+    numberFormat(inpRetailerPrice, false);
+    numberFormat(inpDimensionsHeigth, true);
+    numberFormat(inpDimensionsLength, true);
+    numberFormat(inpDimensionsWidth, true);
+    numberFormat(inpWeight, false);
+  }
+  
+  @FXML
+  void initialize() {
+  }
+  
+  private void numberFormat(TextField textField, final boolean isInteger) {
+    if (textField == null) {
+      return;
+    }
+    textField.textProperty().addListener((obs, oldv, newv) -> {
+      try {
+        textField.getStyleClass().removeAll(Arrays.asList("legalInput", "illegalInput"));
+        if (isInteger) {
+          Integer.parseInt(textField.getText());
+        } else {
+          Double.parseDouble(textField.getText());
+        }
+        textField.getStyleClass().add("legalInput");
+      } catch (NumberFormatException e) {
+
+        textField.getStyleClass().add("illegalInput");
+      }
+    });
   }
 
   protected void requestFocus() {
@@ -82,6 +134,8 @@ public class DetailsViewController {
     stage.setIconified(false);
     requestFocus();
     stage.setMaxHeight(detailsRoot.prefHeight(0));
+    this.btnSave.setOnAction(e -> saveItem());
+    this.btnDelete.setOnAction(e -> removeItem());
     this.update();
   }
  
@@ -97,7 +151,8 @@ public class DetailsViewController {
     // dimensions
     this.inpWeight.setText(String.valueOf(item.getWeight()));
     this.inpBarcode.setText(item.getBarcode());
-
+    ensureTextFormat();
+    
     if (item.getBarcode() != null) {
       generateBarcodeImage();
     }
@@ -119,7 +174,23 @@ public class DetailsViewController {
     item.setRegularPrice(Double.parseDouble(inpOrdinaryPrice.getText()));
     item.setWeight(Double.parseDouble(inpWeight.getText()));
     item.setBarcode(inpBarcode.getText());
+    warehouseController.saveWarehouse();
   }
-  
-  
+
+  private void removeItem() {
+    warehouse.removeItem(item.getId());
+    warehouseController.removeDetailsViewController(item);
+    stage.close();
+  }
+
+  @FXML protected void decrement() {
+    item.decrementAmount();
+    inpAmount.setText(String.valueOf(item.getAmount()));
+  }
+
+  @FXML protected void increment() {
+    item.incrementAmount();
+    inpAmount.setText(String.valueOf(item.getAmount()));
+  }
+
 }
