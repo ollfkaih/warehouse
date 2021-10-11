@@ -134,5 +134,6 @@
         <module>core</module>
         <module>data</module>
         <module>ui</module>
+        <module>report</module>
     </modules>
 </project>

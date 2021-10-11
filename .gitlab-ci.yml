@@ -13,8 +13,12 @@ build:
 
 test:
   stage: test
+  needs: []
   script:
     - cd warehouse
     - mvn test
-  only:
-    - merge_requests
+    - mvn jacoco:report-aggregate
+    - cat $CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/report/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
+  artifacts:
+    paths:
+      - $CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/report/target/site/jacoco-aggregate/*
