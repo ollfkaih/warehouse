@@ -3,6 +3,7 @@ package ui;
 import core.CoreConst.SortOptions;
 import core.Item;
 import core.Warehouse;
+import core.WarehouseListener;
 import data.DataPersistence;
 import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ import java.util.Map;
 /**
  * Main Controller class. Controls the main Warehouse view.
  */
-public class WarehouseController {
+public class WarehouseController implements WarehouseListener {
   private static final String FILENAME = "warehouse";
 
   private Warehouse warehouse;
@@ -68,6 +69,8 @@ public class WarehouseController {
     }
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
+
+    warehouse.addListener(this);
   }
 
   @FXML
@@ -139,7 +142,6 @@ public class WarehouseController {
   private void addItem() {
     Item item = new Item(newProductName.getText());
     warehouse.addItem(item);
-    updateInventory();
     saveWarehouse();
 
     newProductName.requestFocus();
@@ -149,19 +151,16 @@ public class WarehouseController {
   @FXML
   protected void removeItem(String id) {
     warehouse.removeItem(warehouse.findItem(id));
-    updateInventory();
     saveWarehouse();
   }
 
   protected void incrementAmount(String id) {
     warehouse.findItem(id).incrementAmount();
-    updateInventory();
     saveWarehouse();
   }
 
   protected void decrementAmount(String id) {
     warehouse.findItem(id).decrementAmount();
-    updateInventory();
     saveWarehouse();
   }
 
@@ -217,5 +216,20 @@ public class WarehouseController {
     } catch (Exception e) {
       System.out.println(e.toString());
     }
+  }
+
+  @Override
+  public void itemAddedToWarehouse(Item item) {
+    updateInventory();
+  }
+
+  @Override
+  public void warehouseItemsUpdated() {
+    updateInventory();
+  }
+
+  @Override
+  public void itemRemovedFromWarehouse(Item item) {
+    updateInventory();
   }
 } 

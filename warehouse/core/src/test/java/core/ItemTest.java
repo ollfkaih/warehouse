@@ -163,4 +163,80 @@ public class ItemTest {
     assertEquals(expected.getLength(), actual.getLength());
     assertEquals(expected.getWeight(), actual.getWeight());
   }
+
+  static int changeCounter;
+
+  @Test
+  @DisplayName("Test listener")
+  void testListener() {
+    ItemListener listener = () -> changeCounter++;
+    item.addListener(listener);
+
+    changeCounter = 0;
+    item.setId("itemId");
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setName("name");
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setAmount(2);
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setBarcode("1234567890123");
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setBrand("brand");
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setRegularPrice(100.00);
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setSalePrice(99.99);
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setPurchasePrice(1.43);
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setSection("A");
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setRack("42");
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setShelf("02");
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setHeight(10.0);
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setWidth(2.32);
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setLength(53.0);
+    assertEquals(changeCounter, 1);
+
+    changeCounter = 0;
+    item.setWeight(0.012);
+    assertEquals(changeCounter, 1);
+
+
+    item.removeListener(listener);
+
+    changeCounter = 0;
+    item.setLength(53.0);
+    assertEquals(changeCounter, 0);
+  }
 }
