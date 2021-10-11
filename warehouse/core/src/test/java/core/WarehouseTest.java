@@ -95,10 +95,10 @@ public class WarehouseTest {
     item2.incrementAmount();
     item3.incrementAmount();
 
-    item1.setPrice(20.0);
-    item3.setPrice(30.0);
-    item5.setPrice(5.0);
-    item6.setPrice(15.0);
+    item1.setRegularPrice(20.0);
+    item3.setRegularPrice(30.0);
+    item5.setRegularPrice(5.0);
+    item6.setRegularPrice(15.0);
 
     item2.setWeight(10.0);
     item3.setWeight(40.0);
@@ -124,11 +124,12 @@ public class WarehouseTest {
     List<Item> itemsWeightSortedAscending = List.of(item5, item2, item6, item3, item1, item4);
     List<Item> itemsWeightSortedDescending = List.of(item4, item1, item3, item6, item2, item5);
 
+    assertEquals(itemsPriceSortedAscending, wh.getAllItemsSorted(SortOptions.Price, true));
+
     assertEquals(itemsNameSortedAscending, wh.getAllItemsSorted(SortOptions.Name, true));
     assertEquals(itemsNameSortedDescending, wh.getAllItemsSorted(SortOptions.Name, false));
     assertEquals(itemsAmountSortedAscending, wh.getAllItemsSorted(SortOptions.Amount, true));
     assertEquals(itemsAmountSortedDescending, wh.getAllItemsSorted(SortOptions.Amount, false));
-    assertEquals(itemsPriceSortedAscending, wh.getAllItemsSorted(SortOptions.Price, true));
     assertEquals(itemsPriceSortedDescending, wh.getAllItemsSorted(SortOptions.Price, false));
     assertEquals(itemsWeightSortedAscending, wh.getAllItemsSorted(SortOptions.Weight, true));
     assertEquals(itemsWeightSortedDescending, wh.getAllItemsSorted(SortOptions.Weight, false));

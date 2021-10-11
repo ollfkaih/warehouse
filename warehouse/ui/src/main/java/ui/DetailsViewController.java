@@ -88,7 +88,7 @@ public class DetailsViewController {
     this.btnIncrement.setOnAction(e -> item.incrementAmount());
     this.btnDecrement.setOnAction(e -> item.decrementAmount());
     // placements
-    this.inpOrdinaryPrice.setText(String.valueOf(item.getPrice()));
+    this.inpOrdinaryPrice.setText(String.valueOf(item.getRegularPrice()));
     // priser
     // comboBox
     // dimensions
@@ -100,7 +100,7 @@ public class DetailsViewController {
   private void saveItem() {
     item.setName(inpName.getText());
     item.setAmount(Integer.parseInt(inpAmount.getText()));
-    item.setPrice(Double.parseDouble(inpOrdinaryPrice.getText()));
+    item.setRegularPrice(Double.parseDouble(inpOrdinaryPrice.getText()));
     item.setWeight(Double.parseDouble(inpWeight.getText()));
     item.setBarcode(inpBarcode.getText());
   }
