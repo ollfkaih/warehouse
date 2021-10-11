@@ -76,6 +76,7 @@ public class DetailsViewController {
 
   protected void showDetailsView() {
     stage.show();
+    stage.setIconified(false);
     requestFocus();
     stage.setMaxHeight(detailsRoot.prefHeight(0));
     this.update();
