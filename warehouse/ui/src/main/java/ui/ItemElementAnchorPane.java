@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -13,24 +14,23 @@ import javafx.scene.text.Font;
 /**
  * This element is an item in the list over items.
  */
-public class ItemElementHBox extends HBox {
+public class ItemElementAnchorPane extends AnchorPane {
   final Font boldFont = new Font("Arial Bold", 13);
   private HBox textAmountAndButtonsHBox;
   private VBox nameAndStatusVBox;
   
   private final Button incrementButton;
   private final Button decrementButton;
-  private final Button removeButton;
   
-  public ItemElementHBox(Item item) {
-    super.setSpacing(25);
-    super.paddingProperty().set(new Insets(10));
+  public ItemElementAnchorPane(Item item) {
+    super.paddingProperty().set(new Insets(5));
     
     Label nameText = new Label(item.getName());
     nameText.setFont(boldFont);
     Label statusText = new Label("Status: ");
     nameAndStatusVBox = new VBox(nameText, statusText);
     nameText.setTextOverrun(OverrunStyle.ELLIPSIS);
+    AnchorPane.setLeftAnchor(nameAndStatusVBox, 20d);
     
     Label textAmountLabel = new Label("Antall");
     textAmountLabel.setFont(boldFont);
@@ -38,25 +38,20 @@ public class ItemElementHBox extends HBox {
     VBox textAmount = new VBox(textAmountLabel, amountLabel);
     incrementButton = new Button("+");
     decrementButton = new Button("-");
+    HBox.setHgrow(textAmount, Priority.ALWAYS);
     textAmountAndButtonsHBox = new HBox(decrementButton, textAmount, incrementButton);
-    textAmountAndButtonsHBox.setSpacing(25);
-    textAmountAndButtonsHBox.setPrefWidth(150);
+    textAmountAndButtonsHBox.setSpacing(10);
     textAmountAndButtonsHBox.setMinWidth(150);
+    AnchorPane.setRightAnchor(textAmountAndButtonsHBox, 20d);
     
-    removeButton = new Button("Slett");
-    removeButton.setStyle("-fx-background-color: #D95C5C;");
-    removeButton.setMinWidth(60);
-    
-    super.getChildren().addAll(nameAndStatusVBox, textAmountAndButtonsHBox, removeButton);
-    HBox.setHgrow(nameAndStatusVBox, Priority.ALWAYS);
+    super.getChildren().addAll(nameAndStatusVBox, textAmountAndButtonsHBox);
+    AnchorPane.setTopAnchor(nameAndStatusVBox, 5d);
+    AnchorPane.setTopAnchor(textAmountAndButtonsHBox, 5d);
+    HBox.setHgrow(textAmountAndButtonsHBox, Priority.ALWAYS);
   }
   
   public Button getDecrementButton() {
     return decrementButton;
-  }
-  
-  public Button getRemoveButton() {
-    return removeButton;
   }
   
   public Button getIncrementButton() {

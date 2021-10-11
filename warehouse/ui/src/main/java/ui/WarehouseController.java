@@ -6,6 +6,8 @@ import core.Warehouse;
 import data.DataPersistence;
 import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -15,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,24 +75,52 @@ public class WarehouseController {
     itemList.getChildren().clear();
     List<Item> items = getItems();
     for (int i = 0; i < items.size(); i++) {
-      ItemElementHBox itemElement = new ItemElementHBox(items.get(i));
+      ItemElementAnchorPane itemElement = new ItemElementAnchorPane(items.get(i));
 
       String id = items.get(i).getId();
       itemElement.getDecrementButton().setOnAction(e -> decrementAmount(id));
       itemElement.getIncrementButton().setOnAction(e -> incrementAmount(id));
-      itemElement.getRemoveButton().setOnAction(e -> removeItem(id));
       
       if (warehouse.findItem(id).getAmount() == 0) {
         itemElement.getDecrementButton().setDisable(true);
       }
 
       itemList.getChildren().add(itemElement);
-      detailsViewControllers.putIfAbsent(items.get(i), new DetailsViewController(items.get(i)));
+      detailsViewControllers.putIfAbsent(items.get(i), new DetailsViewController(items.get(i), this.warehouse, this));
       
       int index = i;
 
       itemElement.setOnMouseClicked(e -> detailsViewControllers.get(items.get(index)).showDetailsView());
+      itemElement.setOnMouseEntered(e -> hover(itemElement, index));
+      itemElement.setOnMouseExited(e -> notHover(itemElement, index));
+      notHover(itemElement, index);
     }
+  }
+
+  private void notHover(Node itemElement, int i) {
+    itemElement.getStyleClass().removeAll(Arrays.asList("hoverOverDark", "hoverOverLight"));
+    if (i % 2 == 0) {
+      itemElement.getStyleClass().add("notHoverOverLight");
+    } else { 
+      itemElement.getStyleClass().add("notHoverOverDark");
+    }
+  }
+
+  private void hover(Node itemElement, int i) {
+    itemElement.setCursor(Cursor.HAND);
+    itemElement.getStyleClass().removeAll(Arrays.asList("notHoverOverDark", "notHoverOverLight"));
+    if (i % 2 == 0) {
+      itemElement.getStyleClass().add("hoverOverLight");
+    } else { 
+      itemElement.getStyleClass().add("hoverOverDark");
+    }
+  }
+
+  protected void removeDetailsViewController(Item item) {
+    if (detailsViewControllers.containsKey(item)) {
+      detailsViewControllers.remove(item);
+    }
+    updateInventory();
   }
 
   private List<Item> getItems() {
@@ -116,7 +147,7 @@ public class WarehouseController {
   }
 
   @FXML
-  private void removeItem(String id) {
+  protected void removeItem(String id) {
     warehouse.removeItem(warehouse.findItem(id));
     updateInventory();
     saveWarehouse();
@@ -180,7 +211,7 @@ public class WarehouseController {
     updateInventory();
   }
 
-  private void saveWarehouse() {
+  protected void saveWarehouse() {
     try {
       dataPersistence.saveWarehouse(warehouse);
     } catch (Exception e) {

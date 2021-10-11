@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" stylesheets="@inputStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox fx:id="itemList1" alignment="center">
          <children>
@@ -48,9 +48,9 @@
                            <children>
                               <HBox HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Button fx:id="btnDecrement" mnemonicParsing="false" text="-" />
+                                    <Button fx:id="btnDecrement" minWidth="25.0" mnemonicParsing="false" onAction="#decrement" text="-" />
                                     <TextField fx:id="inpAmount" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
-                                    <Button fx:id="btnIncrement" mnemonicParsing="false" text="+" />
+                                    <Button fx:id="btnIncrement" minWidth="25.0" mnemonicParsing="false" onAction="#increment" text="+" />
                                  </children>
                               </HBox>
                               <HBox spacing="10.0" HBox.hgrow="NEVER">
@@ -251,7 +251,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionWidth" promptText="0" />
+                                    <TextField fx:id="inpDimensionsWidth" promptText="0" />
                                     <Label text="Bredde">
                                        <font>
                                           <Font size="10.0" />
