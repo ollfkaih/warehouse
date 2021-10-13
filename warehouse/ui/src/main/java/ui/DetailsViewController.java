@@ -143,20 +143,33 @@ public class DetailsViewController {
   }
  
   private void update() {
-    this.inpName.setText(item.getName());
-    this.inpAmount.setText(String.valueOf(item.getAmount()));
-    // placements
-    this.inpOrdinaryPrice.setText(String.valueOf(item.getRegularPrice()));
-    // priser
-    // comboBox
-    // dimensions
-    this.inpWeight.setText(String.valueOf(item.getWeight()));
-    this.inpBarcode.setText(item.getBarcode());
+    updateField(inpName, item.getName());
+    updateField(inpAmount, item.getAmount());
+
+    updateField(inpOrdinaryPrice, item.getRegularPrice());
+    updateField(inpSalesPrice, item.getSalePrice());
+    updateField(inpRetailerPrice, item.getPurchasePrice());
+
+    updateField(inpPlacementSection, item.getSection());
+    updateField(inpPlacementRow, item.getRack());
+    updateField(inpPlacementShelf, item.getShelf());
+
+    updateField(inpDimensionsHeigth, item.getHeight());
+    updateField(inpDimensionsWidth, item.getWidth());
+    updateField(inpDimensionsLength, item.getLength());
+  
+    updateField(inpWeight, item.getWeight());
+    updateField(inpBarcode, item.getBarcode());
+
     ensureTextFormat();
     
     if (item.getBarcode() != null) {
       generateBarcodeImage();
     }
+  }
+
+  private void updateField(TextField field, Object itemProperty) {
+    field.setText(itemProperty == null ? "" : String.valueOf(itemProperty));
   }
 
   private void generateBarcodeImage() {
