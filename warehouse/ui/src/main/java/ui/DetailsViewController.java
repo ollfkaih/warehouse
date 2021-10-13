@@ -102,30 +102,37 @@ public class DetailsViewController {
     numberFormat(inpOrdinaryPrice, false);
     numberFormat(inpSalesPrice, false);
     numberFormat(inpRetailerPrice, false);
-    numberFormat(inpDimensionsHeigth, true);
-    numberFormat(inpDimensionsLength, true);
-    numberFormat(inpDimensionsWidth, true);
+    numberFormat(inpDimensionsHeigth, false);
+    numberFormat(inpDimensionsLength, false);
+    numberFormat(inpDimensionsWidth, false);
     numberFormat(inpWeight, false);
   }
   
-  private void numberFormat(TextField textField, final boolean isInteger) {
+  private void numberFormat(final TextField textField, final boolean isInteger) {
     if (textField == null) {
       return;
     }
     textField.textProperty().addListener((obs, oldv, newv) -> {
       try {
-        textField.getStyleClass().removeAll(Arrays.asList("legalInput", "illegalInput"));
-        if (isInteger) {
-          Integer.parseInt(textField.getText());
-        } else {
-          Double.parseDouble(textField.getText());
+        if (!textField.getText().equals("")) {
+          if (isInteger) {
+            Integer.parseInt(textField.getText());
+          } else {
+            Double.parseDouble(textField.getText());
+          }
         }
-        textField.getStyleClass().add("legalInput");
+        setTextFieldLegality(textField, true);
       } catch (NumberFormatException e) {
-
-        textField.getStyleClass().add("illegalInput");
+        setTextFieldLegality(textField, false);
       }
     });
+  }
+
+  private void setTextFieldLegality(TextField textField, boolean legal) {
+    textField.getStyleClass().removeAll(Arrays.asList("illegalInput"));
+    if (!legal) {
+      textField.getStyleClass().add("illegalInput");
+    }
   }
 
   protected void requestFocus() {
@@ -143,20 +150,33 @@ public class DetailsViewController {
   }
  
   private void update() {
-    this.inpName.setText(item.getName());
-    this.inpAmount.setText(String.valueOf(item.getAmount()));
-    // placements
-    this.inpOrdinaryPrice.setText(String.valueOf(item.getRegularPrice()));
-    // priser
-    // comboBox
-    // dimensions
-    this.inpWeight.setText(String.valueOf(item.getWeight()));
-    this.inpBarcode.setText(item.getBarcode());
+    updateField(inpName, item.getName());
+    updateField(inpAmount, item.getAmount());
+
+    updateField(inpOrdinaryPrice, item.getRegularPrice());
+    updateField(inpSalesPrice, item.getSalePrice());
+    updateField(inpRetailerPrice, item.getPurchasePrice());
+
+    updateField(inpPlacementSection, item.getSection());
+    updateField(inpPlacementRow, item.getRack());
+    updateField(inpPlacementShelf, item.getShelf());
+
+    updateField(inpDimensionsHeigth, item.getHeight());
+    updateField(inpDimensionsWidth, item.getWidth());
+    updateField(inpDimensionsLength, item.getLength());
+  
+    updateField(inpWeight, item.getWeight());
+    updateField(inpBarcode, item.getBarcode());
+
     ensureTextFormat();
     
     if (item.getBarcode() != null) {
       generateBarcodeImage();
     }
+  }
+
+  private void updateField(TextField field, Object itemProperty) {
+    field.setText(itemProperty == null ? "" : String.valueOf(itemProperty));
   }
 
   private void generateBarcodeImage() {
@@ -170,12 +190,55 @@ public class DetailsViewController {
   }
 
   private void saveItem() {
-    item.setName(inpName.getText());
-    item.setAmount(Integer.parseInt(inpAmount.getText()));
-    item.setRegularPrice(Double.parseDouble(inpOrdinaryPrice.getText()));
-    item.setWeight(Double.parseDouble(inpWeight.getText()));
-    item.setBarcode(inpBarcode.getText());
+    saveField(inpName, () -> item.setName(inpName.getText()));
+    saveField(inpAmount, () -> item.setAmount(getIntegerFieldValue(inpAmount)));
+
+    saveField(inpOrdinaryPrice, () -> item.setRegularPrice(getDoubleFieldValue(inpOrdinaryPrice)));
+    saveField(inpSalesPrice, () -> item.setSalePrice(getDoubleFieldValue(inpSalesPrice)));
+    saveField(inpRetailerPrice, () -> item.setPurchasePrice(getDoubleFieldValue(inpRetailerPrice)));
+
+    saveField(inpPlacementSection, () -> item.setSection(inpPlacementSection.getText()));
+    saveField(inpPlacementRow, () -> item.setRack(inpPlacementRow.getText()));
+    saveField(inpPlacementShelf, () -> item.setShelf(inpPlacementShelf.getText()));
+
+    saveField(inpDimensionsHeigth, () -> item.setHeight(getDoubleFieldValue(inpDimensionsHeigth)));
+    saveField(inpDimensionsWidth, () -> item.setWidth(getDoubleFieldValue(inpDimensionsWidth)));
+    saveField(inpDimensionsLength, () -> item.setLength(getDoubleFieldValue(inpDimensionsLength)));
+
+    saveField(inpWeight, () -> item.setWeight(getDoubleFieldValue(inpWeight)));
+    saveField(inpBarcode, () -> item.setBarcode(inpBarcode.getText()));
+
     warehouseController.saveWarehouse();
+    update();
+  }
+
+  private Double getDoubleFieldValue(TextField textField) {
+    if (textField.getText().equals("") || textField.getText() == null) {
+      return null;
+    } else {
+      return Double.valueOf(textField.getText());
+    }
+  }
+
+  private Integer getIntegerFieldValue(TextField textField) {
+    if (textField.getText().equals("") || textField.getText() == null) {
+      return null;
+    } else {
+      return Integer.valueOf(textField.getText());
+    }
+  }
+
+  private interface PropertySaver {
+    void save() throws Exception;
+  }
+
+  private void saveField(TextField textField, PropertySaver saver) {
+    try {
+      saver.save();
+      setTextFieldLegality(textField, true);
+    } catch (Exception e) {
+      setTextFieldLegality(textField, false);
+    }
   }
 
   private void removeItem() {
