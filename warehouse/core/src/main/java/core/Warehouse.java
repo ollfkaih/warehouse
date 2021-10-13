@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
  */
 public class Warehouse {
   private Map<String, Item> items;
+  private List<User> users = new ArrayList<>();
 
   private Collection<WarehouseListener> listeners = new ArrayList<>();
   private Map<String, ItemListener> itemListeners = new HashMap<>();
@@ -158,5 +159,24 @@ public class Warehouse {
 
   public void removeListener(WarehouseListener listener) {
     this.listeners.remove(listener);
+  }
+
+  public void addUser(User user) {
+    users.add(user);
+    System.out.println(getUsers());
+  }
+
+  public boolean containsUser(String userName, String password, boolean admin) {
+    return getUsers()
+        .stream()
+        .anyMatch(user -> user.getUserName().equals(userName) && user.getPassword().equals(password) && user.getAdmin() == admin);
+  }
+
+  public User getUser(int index) {
+    return users.get(index);
+  }
+
+  public List<User> getUsers() {
+    return users;
   }
 }

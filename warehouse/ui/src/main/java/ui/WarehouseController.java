@@ -47,6 +47,7 @@ public class WarehouseController implements WarehouseListener {
   private boolean ascending = true;
 
   private Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
+  private LoginController loginController;
 
   @FXML
   void initialize() {
@@ -60,6 +61,8 @@ public class WarehouseController implements WarehouseListener {
       warehouse = new Warehouse();
     }
 
+    loginController = new LoginController(warehouse);
+
     updateInventory();
     enterPressed();
         
@@ -71,6 +74,11 @@ public class WarehouseController implements WarehouseListener {
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
 
     warehouse.addListener(this);
+  }
+
+  @FXML
+  private void login() {
+    loginController.showLoginView();
   }
 
   @FXML
