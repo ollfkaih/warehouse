@@ -15,6 +15,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import ui.validators.DoubleValidator;
+import ui.validators.InputValidator;
+import ui.validators.IntegerValidator;
+import ui.validators.MaxLengthValidator;
+import ui.validators.MinLengthValidator;
+import ui.validators.NotEmptyValidatior;
+import ui.validators.NotNegativeValidator;
+import ui.validators.RegexValidator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,44 +105,6 @@ public class DetailsViewController {
     stage.close();
   }
 
-  private void ensureTextFormat() {
-    numberFormat(inpAmount, true);
-    numberFormat(inpOrdinaryPrice, false);
-    numberFormat(inpSalesPrice, false);
-    numberFormat(inpRetailerPrice, false);
-    numberFormat(inpDimensionsHeigth, false);
-    numberFormat(inpDimensionsLength, false);
-    numberFormat(inpDimensionsWidth, false);
-    numberFormat(inpWeight, false);
-  }
-  
-  private void numberFormat(final TextField textField, final boolean isInteger) {
-    if (textField == null) {
-      return;
-    }
-    textField.textProperty().addListener((obs, oldv, newv) -> {
-      try {
-        if (!textField.getText().equals("")) {
-          if (isInteger) {
-            Integer.parseInt(textField.getText());
-          } else {
-            Double.parseDouble(textField.getText());
-          }
-        }
-        setTextFieldLegality(textField, true);
-      } catch (NumberFormatException e) {
-        setTextFieldLegality(textField, false);
-      }
-    });
-  }
-
-  private void setTextFieldLegality(TextField textField, boolean legal) {
-    textField.getStyleClass().removeAll(Arrays.asList("illegalInput"));
-    if (!legal) {
-      textField.getStyleClass().add("illegalInput");
-    }
-  }
-
   protected void requestFocus() {
     stage.requestFocus();
   }
@@ -144,9 +114,60 @@ public class DetailsViewController {
     stage.setIconified(false);
     requestFocus();
     stage.setMaxHeight(detailsRoot.prefHeight(0));
-    this.btnSave.setOnAction(e -> saveItem());
-    this.btnDelete.setOnAction(e -> removeItem());
     this.update();
+    addInputValidationListeners();
+  }
+
+  private void addInputValidationListeners() {
+    addValidationListener(inpName, false);
+    addValidationListener(inpAmount, false, new IntegerValidator(), new NotNegativeValidator());
+
+    addValidationListener(inpOrdinaryPrice, true, new DoubleValidator(), new NotNegativeValidator());
+    addValidationListener(inpSalesPrice, true, new DoubleValidator(), new NotNegativeValidator());
+    addValidationListener(inpRetailerPrice, true, new DoubleValidator(), new NotNegativeValidator());
+
+    addValidationListener(inpPlacementSection, true, new MaxLengthValidator(2));
+    addValidationListener(inpPlacementRow, true, new MaxLengthValidator(2));
+    addValidationListener(inpPlacementShelf, true, new MaxLengthValidator(2));
+
+    addValidationListener(inpDimensionsHeigth, true, new DoubleValidator(), new NotNegativeValidator());
+    addValidationListener(inpDimensionsLength, true, new DoubleValidator(), new NotNegativeValidator());
+    addValidationListener(inpDimensionsWidth, true, new DoubleValidator(), new NotNegativeValidator());
+
+    addValidationListener(inpWeight, true, new DoubleValidator(), new NotNegativeValidator());
+    addValidationListener(inpBarcode, true, new MinLengthValidator(13), new MaxLengthValidator(13), new RegexValidator("^[0-9]*$"));
+  }
+  
+  private void addValidationListener(final TextField textField, boolean nullable, InputValidator... validators) {
+    InputValidator notEmptyValidator = new NotEmptyValidatior();
+    textField.textProperty().addListener((obs, oldv, value) -> {
+      boolean valid;
+
+      boolean isEmpty = !notEmptyValidator.validateInput(value);
+      if (!nullable && isEmpty) {
+        valid = false;
+      } else if (nullable && isEmpty) {
+        valid = true;
+      } else {
+        valid = true;
+
+        for (InputValidator validator : validators) {
+          if (!validator.validateInput(value)) {
+            valid = false;
+            break;
+          }
+        }
+      }
+      
+      setTextFieldLegality(textField, valid);
+    });
+  }
+
+  private void setTextFieldLegality(TextField textField, boolean legal) {
+    textField.getStyleClass().removeAll(Arrays.asList("illegalInput"));
+    if (!legal) {
+      textField.getStyleClass().add("illegalInput");
+    }
   }
  
   private void update() {
@@ -167,8 +188,6 @@ public class DetailsViewController {
   
     updateField(inpWeight, item.getWeight());
     updateField(inpBarcode, item.getBarcode());
-
-    ensureTextFormat();
     
     if (item.getBarcode() != null) {
       generateBarcodeImage();
@@ -189,6 +208,7 @@ public class DetailsViewController {
     }
   }
 
+  @FXML
   private void saveItem() {
     saveField(inpName, () -> item.setName(inpName.getText()));
     saveField(inpAmount, () -> item.setAmount(getIntegerFieldValue(inpAmount)));
@@ -241,6 +261,7 @@ public class DetailsViewController {
     }
   }
 
+  @FXML
   private void removeItem() {
     warehouse.removeItem(item.getId());
     warehouseController.removeDetailsViewController(item);
