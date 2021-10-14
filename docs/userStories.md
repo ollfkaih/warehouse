@@ -28,3 +28,16 @@ Viktig å kunne gjøre:
 - Sortere produkter etter navn
 - Registrere bruker
 - Logge seg inn
+
+## Lagerarbeider (us-3)
+Som ansatt i et varelager er det viktig for meg å enkelt kunne søke etter de tingene jeg ønsker å finne i lageret, og lett kunne se informasjon om hvor de befinner seg, hvor mange det er på lager, o.s.v. slik at jeg raskt kan finne frem til ting jeg trenger.
+
+Viktig å kunne se:
+- Lagerplassering til produktet
+- Beholdningen til produktet
+- Oversiktlig og liste over produkter som stemmer overens med søket
+
+Viktig å kunne gjøre:
+- Søke etter produkter i produktlisten med navn eller strekkode
+- Sortere produktlisten etter f.eks. navn eller antall
+- Åpne detaljside om et produkt som viser lagerplasseringen
