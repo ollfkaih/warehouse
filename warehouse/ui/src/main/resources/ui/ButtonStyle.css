@@ -2,14 +2,14 @@
 {
     -fx-text-fill: WHITE;
     -fx-background-color: #5CA0D9;
+    
 }
 
-/*#addItemButton, #searchButton
+#btnDelete
 {
-    -fx-text-fill: BLACK;
-    -fx-background-color: #bcbcbd;
+    -fx-background-color: rgb(255,5,5);
 
-}*/
+}
 
 .orderByButton {
     -fx-text-fill: BLACK;
