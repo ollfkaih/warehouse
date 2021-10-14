@@ -35,6 +35,7 @@ public class DetailsViewController {
   @FXML private ScrollPane detailsViewScrollPane;
   
   @FXML private TextField inpName;
+  @FXML private TextField inpBrand;
   @FXML private TextField inpAmount;
   @FXML private Button btnIncrement;
   @FXML private Button btnDecrement;
@@ -171,6 +172,7 @@ public class DetailsViewController {
   }
  
   private void update() {
+    updateField(inpBrand, item.getBrand());
     updateField(inpName, item.getName());
     updateField(inpAmount, item.getAmount());
 
@@ -211,6 +213,7 @@ public class DetailsViewController {
   @FXML
   private void saveItem() {
     saveField(inpName, () -> item.setName(inpName.getText()));
+    saveField(inpBrand, () -> item.setBrand(inpBrand.getText()));
     saveField(inpAmount, () -> item.setAmount(getIntegerFieldValue(inpAmount)));
 
     saveField(inpOrdinaryPrice, () -> item.setRegularPrice(getDoubleFieldValue(inpOrdinaryPrice)));
