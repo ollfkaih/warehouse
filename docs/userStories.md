@@ -14,7 +14,7 @@ Viktig å kunne gjøre:
 -	Legge til og fjerne produkter i sortimentet
 
 ## Lagersjef (us-2)
-For at lagersjef skal ha bedre kontroll over produktene sine, må han ha mulighet til å søke etter produkter og sortere dem etter navn, antall, pris, vekt og dato. I tillegg bør han kunne klikke inn på hvert produkt for å finne mer detaljert informasjon om hvert produkt. Lagersjefen skal i tillegg kunne logge seg inn og forbli pålogget.
+For at lagersjef skal ha bedre kontroll over produktene sine, må han ha mulighet til å søke etter produkter og sortere dem etter navn, antall, pris, vekt og dato. I tillegg bør han kunne klikke inn på hvert produkt for å finne mer detaljert informasjon om hvert produkt. Lagersjefen skal i tillegg kunne registrere en bruker. Dersom brukeren han har registrert eksisterer skal han da også kunne logge seg på og forbli pålogget.
 
 Viktig å kunne se:
 - Oversikt over lagerets sortiment og beholdning
@@ -26,4 +26,5 @@ Viktig å kunne gjøre:
 - Forandre på detaljinformasjonen til hvert enkelt produkt
 - Søke etter produkter etter navn, antall, pris, vekt og dato
 - Sortere produkter etter navn
+- Registrere bruker
 - Logge seg inn
