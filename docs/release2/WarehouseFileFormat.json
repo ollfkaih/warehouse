@@ -89,7 +89,7 @@
           }
         ]
       },
-      "row": {
+      "rack": {
         "anyOf": [
           {
             "type": "null"

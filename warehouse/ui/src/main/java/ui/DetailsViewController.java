@@ -42,9 +42,9 @@ public class DetailsViewController {
   @FXML private Label placementSection;
   @FXML private Label placementRow;
   @FXML private Label placementShelf;
-  @FXML private TextField inpRegularPrice;
-  @FXML private TextField inpSalePrice;
-  @FXML private TextField inpPurchasePrice;
+  @FXML private TextField inpOrdinaryPrice;
+  @FXML private TextField inpSalesPrice;
+  @FXML private TextField inpRetailerPrice;
   @FXML private ComboBox<String> comboBoxSalesTax;
   @FXML private TextField inpPlacementSection;
   @FXML private TextField inpPlacementRow;
@@ -120,9 +120,9 @@ public class DetailsViewController {
     addValidationListener(inpName, false);
     addValidationListener(inpAmount, false, new IntegerValidator(), new NotNegativeValidator());
 
-    addValidationListener(inpRegularPrice, true, new DoubleValidator(), new NotNegativeValidator());
-    addValidationListener(inpSalePrice, true, new DoubleValidator(), new NotNegativeValidator());
-    addValidationListener(inpPurchasePrice, true, new DoubleValidator(), new NotNegativeValidator());
+    addValidationListener(inpOrdinaryPrice, true, new DoubleValidator(), new NotNegativeValidator());
+    addValidationListener(inpSalesPrice, true, new DoubleValidator(), new NotNegativeValidator());
+    addValidationListener(inpRetailerPrice, true, new DoubleValidator(), new NotNegativeValidator());
 
     addValidationListener(inpPlacementSection, true, new MaxLengthValidator(2));
     addValidationListener(inpPlacementRow, true, new MaxLengthValidator(2));
@@ -175,12 +175,12 @@ public class DetailsViewController {
     updateField(inpBrand, item.getBrand());
     updateField(inpAmount, item.getAmount());
 
-    updateField(inpRegularPrice, item.getRegularPrice());
-    updateField(inpSalePrice, item.getSalePrice());
-    updateField(inpPurchasePrice, item.getPurchasePrice());
+    updateField(inpOrdinaryPrice, item.getRegularPrice());
+    updateField(inpSalesPrice, item.getSalePrice());
+    updateField(inpRetailerPrice, item.getPurchasePrice());
 
     updateField(inpPlacementSection, item.getSection());
-    updateField(inpPlacementRow, item.getRow());
+    updateField(inpPlacementRow, item.getRack());
     updateField(inpPlacementShelf, item.getShelf());
 
     updateField(inpDimensionsHeigth, item.getHeight());
@@ -225,12 +225,12 @@ public class DetailsViewController {
     saveField(inpBrand, () -> item.setBrand(inpBrand.getText()));
     saveField(inpAmount, () -> item.setAmount(getIntegerFieldValue(inpAmount)));
 
-    saveField(inpRegularPrice, () -> item.setRegularPrice(getDoubleFieldValue(inpRegularPrice)));
-    saveField(inpSalePrice, () -> item.setSalePrice(getDoubleFieldValue(inpSalePrice)));
-    saveField(inpPurchasePrice, () -> item.setPurchasePrice(getDoubleFieldValue(inpPurchasePrice)));
+    saveField(inpOrdinaryPrice, () -> item.setRegularPrice(getDoubleFieldValue(inpOrdinaryPrice)));
+    saveField(inpSalesPrice, () -> item.setSalePrice(getDoubleFieldValue(inpSalesPrice)));
+    saveField(inpRetailerPrice, () -> item.setPurchasePrice(getDoubleFieldValue(inpRetailerPrice)));
 
     saveField(inpPlacementSection, () -> item.setSection(inpPlacementSection.getText()));
-    saveField(inpPlacementRow, () -> item.setRow(inpPlacementRow.getText()));
+    saveField(inpPlacementRow, () -> item.setRack(inpPlacementRow.getText()));
     saveField(inpPlacementShelf, () -> item.setShelf(inpPlacementShelf.getText()));
 
     saveField(inpDimensionsHeigth, () -> item.setHeight(getDoubleFieldValue(inpDimensionsHeigth)));
