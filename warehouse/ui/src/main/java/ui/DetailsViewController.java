@@ -82,23 +82,25 @@ public class DetailsViewController {
       loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
       loader.setController(this);
       detailsRoot = loader.load();
-      stage = new Stage();
-      stage.setScene(new Scene(detailsRoot));
     } catch (IOException e) {
       close();
     }
+    double height = Screen.getPrimary().getBounds().getHeight() - safeBoundBottom;
+    if (height > 800) {
+      height = 800;
+    }
+    stage = new Stage();
+    stage.setScene(new Scene(detailsRoot, 450, height));
+    stage.setMinWidth(450);
+    stage.setY(safeBoundTop);
+    stage.setTitle("Rediger: " + item.getName());
+    stage.setOnCloseRequest(e -> close());
 
     try {
       stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("icon/1-rounded.png")));
     } catch (Exception e) {
       e.printStackTrace();
     }
-
-    stage.setMinWidth(450);
-    stage.setHeight(Screen.getPrimary().getBounds().getHeight() - safeBoundBottom);
-    stage.setY(safeBoundTop);
-    stage.setTitle("Rediger: " + item.getName());
-    stage.setOnCloseRequest(e -> close());
   }
 
   private void close() {
@@ -106,15 +108,10 @@ public class DetailsViewController {
     stage.close();
   }
 
-  protected void requestFocus() {
-    stage.requestFocus();
-  }
-
   protected void showDetailsView() {
     stage.show();
     stage.setIconified(false);
-    requestFocus();
-    stage.setMaxHeight(detailsRoot.prefHeight(0));
+    stage.requestFocus();
     this.update();
     addInputValidationListeners();
   }
