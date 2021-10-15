@@ -14,7 +14,7 @@ public abstract class CoreConst {
   public static final double MAX_WEIGHT = Double.POSITIVE_INFINITY;
 
   public static final int MAX_SECTION_LENGTH = 2;
-  public static final int MAX_ROW_LENGTH = 2;
+  public static final int MAX_RACK_LENGTH = 2;
   public static final int MAX_SHELF_LENGTH = 2;
 
   public static final double MIN_ITEM_DIMENSION = 0;
