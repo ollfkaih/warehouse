@@ -201,7 +201,7 @@ public class DetailsViewController {
 
   private void updatePlacementLabels() {
     updatePlacementLabel(placementSection, item.getSection());
-    updatePlacementLabel(placementRow, item.getRack());
+    updatePlacementLabel(placementRow, item.getRow());
     updatePlacementLabel(placementShelf, item.getShelf());
   }
 
