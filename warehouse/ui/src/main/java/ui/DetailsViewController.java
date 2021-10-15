@@ -276,6 +276,7 @@ public class DetailsViewController {
   @FXML
   private void removeItem() {
     warehouse.removeItem(item.getId());
+    warehouseController.saveWarehouse();
     warehouseController.removeDetailsViewController(item);
     stage.close();
   }
@@ -288,5 +289,23 @@ public class DetailsViewController {
   @FXML
   protected void increment() {
     inpAmount.setText(String.valueOf(Integer.parseInt(inpAmount.getText()) + 1));
+  }
+
+  public String toString() {
+    return ""
+      + inpName.getText() + "\n"
+      + inpBrand.getText() + "\n"
+      + inpAmount.getText() + "\n"
+      + inpOrdinaryPrice.getText() + "\n"
+      + inpSalesPrice.getText() + "\n"
+      + inpRetailerPrice.getText() + "\n"
+      + inpPlacementSection.getText() + "\n"
+      + inpPlacementRow.getText() + "\n"
+      + inpPlacementShelf.getText() + "\n"
+      + inpDimensionsLength.getText() + "\n"
+      + inpDimensionsWidth.getText() + "\n"
+      + inpDimensionsHeigth.getText() + "\n"
+      + inpWeight.getText() + "\n"
+      + inpBarcode.getText();
   }
 }

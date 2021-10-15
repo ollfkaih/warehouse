@@ -134,7 +134,7 @@ public class WarehouseController implements WarehouseListener {
     updateInventory();
   }
 
-  private List<Item> getItems() {
+  protected List<Item> getItems() {
     return warehouse.getItemsSortedAndFiltered(sortBy, ascending, searchInput.getText());
   }
 
@@ -239,5 +239,10 @@ public class WarehouseController implements WarehouseListener {
   @Override
   public void itemRemovedFromWarehouse(Item item) {
     updateInventory();
+  }
+
+  // for testing purposes only
+  protected HashMap<Item, DetailsViewController> getDetailViewControllers() {
+    return new HashMap<Item, DetailsViewController>(detailsViewControllers);
   }
 } 
