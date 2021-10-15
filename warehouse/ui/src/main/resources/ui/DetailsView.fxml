@@ -67,12 +67,12 @@
                                  <children>
                                     <Button fx:id="btnDecrement" minHeight="29.0" minWidth="29.0" mnemonicParsing="false" onAction="#decrement" text="-">
                                        <font>
-                                          <Font name="System Bold" size="14.0" />
+                                          <Font name="System Bold" size="12.0" />
                                        </font></Button>
                                     <TextField fx:id="inpAmount" minHeight="30.0" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
                                     <Button fx:id="btnIncrement" maxHeight="29.0" maxWidth="29.0" minHeight="29.0" minWidth="29.0" mnemonicParsing="false" onAction="#increment" text="+" textOverrun="CLIP">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="System Bold" size="12.0" />
                                        </font></Button>
                                  </children>
                               </HBox>
@@ -326,17 +326,23 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <ImageView fx:id="barcodeImageView" fitHeight="100.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
-            <AnchorPane prefHeight="60.0" prefWidth="200.0">
+            <ImageView fx:id="barcodeImageView" fitHeight="70.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
+            <AnchorPane>
                <children>
-                  <Button fx:id="btnSave" onAction="#saveItem" prefHeight="42.0" prefWidth="188.0" text="LAGRE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font></Button>
-                  <Button fx:id="btnDelete" onAction="#removeItem" prefHeight="41.0" prefWidth="189.0" text="SLETT" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font></Button>
+                  <HBox spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <children>
+                        <Button fx:id="btnSave" alignment="CENTER" onAction="#saveItem" prefHeight="42.0" prefWidth="188.0" text="LAGRE">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnDelete" onAction="#removeItem" prefHeight="41.0" prefWidth="189.0" text="SLETT">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>
