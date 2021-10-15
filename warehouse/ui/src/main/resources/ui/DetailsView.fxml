@@ -86,12 +86,16 @@
                                        <children>
                                           <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                              <children>
-                                                <Label fx:id="placementSection" prefHeight="43.0" text="A" textAlignment="CENTER">
-                                                   <font>
-                                                      <Font size="35.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="seksjon" textAlignment="CENTER" />
+                                                <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                   <children>
+                                                      <Label fx:id="placementSection" prefHeight="43.0" text="" textAlignment="CENTER">
+                                                         <font>
+                                                            <Font size="35.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="seksjon" textAlignment="CENTER" />
+                                                   </children>
+                                                </VBox>
                                              </children>
                                           </VBox>
                                        </children>
@@ -104,12 +108,16 @@
                                        <children>
                                           <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                              <children>
-                                                <Label fx:id="placementRow" prefHeight="43.0" text="9" textAlignment="CENTER">
-                                                   <font>
-                                                      <Font size="35.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="reol" textAlignment="CENTER" />
+                                                <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                   <children>
+                                                      <Label fx:id="placementRow" prefHeight="43.0" text="" textAlignment="CENTER">
+                                                         <font>
+                                                            <Font size="35.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="reol" textAlignment="CENTER" />
+                                                   </children>
+                                                </VBox>
                                              </children>
                                           </VBox>
                                        </children>
@@ -122,12 +130,16 @@
                                        <children>
                                           <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                              <children>
-                                                <Label fx:id="placementShelf" prefHeight="43.0" text="16" textAlignment="CENTER">
-                                                   <font>
-                                                      <Font size="35.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label text="hylle" textAlignment="CENTER" />
+                                                <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                   <children>
+                                                      <Label fx:id="placementShelf" prefHeight="43.0" text="" textAlignment="CENTER">
+                                                         <font>
+                                                            <Font size="35.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label text="hylle" textAlignment="CENTER" />
+                                                   </children>
+                                                </VBox>
                                              </children>
                                           </VBox>
                                        </children>

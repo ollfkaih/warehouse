@@ -169,8 +169,10 @@ public class DetailsViewController {
   }
  
   private void update() {
-    updateField(inpBrand, item.getBrand());
+    updatePlacementLabels();
+
     updateField(inpName, item.getName());
+    updateField(inpBrand, item.getBrand());
     updateField(inpAmount, item.getAmount());
 
     updateField(inpOrdinaryPrice, item.getRegularPrice());
@@ -195,6 +197,16 @@ public class DetailsViewController {
 
   private void updateField(TextField field, Object itemProperty) {
     field.setText(itemProperty == null ? "" : String.valueOf(itemProperty));
+  }
+
+  private void updatePlacementLabels() {
+    updatePlacementLabel(placementSection, item.getSection());
+    updatePlacementLabel(placementRow, item.getRack());
+    updatePlacementLabel(placementShelf, item.getShelf());
+  }
+
+  private void updatePlacementLabel(Label label, String placement) {
+    label.setText(placement == null ? "?" : placement);
   }
 
   private void generateBarcodeImage() {
