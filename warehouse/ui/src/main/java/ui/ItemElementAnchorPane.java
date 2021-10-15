@@ -32,12 +32,15 @@ public class ItemElementAnchorPane extends AnchorPane {
     nameText.setTextOverrun(OverrunStyle.ELLIPSIS);
     AnchorPane.setLeftAnchor(nameAndStatusVBox, 20d);
     
+    incrementButton = new Button("+");
+    decrementButton = new Button("-");
+    incrementButton.setId("incrementButton");
+    decrementButton.setId("decrementButton");
+    
     Label textAmountLabel = new Label("Antall");
     textAmountLabel.setFont(boldFont);
     Label amountLabel = new Label(String.valueOf(item.getAmount()));
     VBox textAmount = new VBox(textAmountLabel, amountLabel);
-    incrementButton = new Button("+");
-    decrementButton = new Button("-");
     HBox.setHgrow(textAmount, Priority.ALWAYS);
     textAmountAndButtonsHBox = new HBox(decrementButton, textAmount, incrementButton);
     textAmountAndButtonsHBox.setSpacing(10);

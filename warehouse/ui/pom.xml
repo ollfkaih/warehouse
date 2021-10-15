@@ -4,6 +4,7 @@
     <artifactId>warehouse-ui</artifactId>
     <properties>
       <itext.version>7.1.16</itext.version>
+      <skipUiTests>false</skipUiTests>
     </properties>
 
     <parent>
@@ -88,8 +89,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
         		<artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <skipTests>${skipUiTests}</skipTests>
                     <argLine>
-                    --add-opens warehouse.ui/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        --add-opens warehouse.ui/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
                 </configuration>
 	        </plugin>
