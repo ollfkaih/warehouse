@@ -180,7 +180,7 @@ public class DetailsViewController {
     updateField(inpRetailerPrice, item.getPurchasePrice());
 
     updateField(inpPlacementSection, item.getSection());
-    updateField(inpPlacementRow, item.getRack());
+    updateField(inpPlacementRow, item.getRow());
     updateField(inpPlacementShelf, item.getShelf());
 
     updateField(inpDimensionsHeigth, item.getHeight());
@@ -230,7 +230,7 @@ public class DetailsViewController {
     saveField(inpRetailerPrice, () -> item.setPurchasePrice(getDoubleFieldValue(inpRetailerPrice)));
 
     saveField(inpPlacementSection, () -> item.setSection(inpPlacementSection.getText()));
-    saveField(inpPlacementRow, () -> item.setRack(inpPlacementRow.getText()));
+    saveField(inpPlacementRow, () -> item.setRow(inpPlacementRow.getText()));
     saveField(inpPlacementShelf, () -> item.setShelf(inpPlacementShelf.getText()));
 
     saveField(inpDimensionsHeigth, () -> item.setHeight(getDoubleFieldValue(inpDimensionsHeigth)));
