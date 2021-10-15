@@ -32,7 +32,7 @@ public class ItemTest {
     assertNull(item.getSalePrice());
     assertNull(item.getPurchasePrice());
     assertNull(item.getSection());
-    assertNull(item.getRack());
+    assertNull(item.getRow());
     assertNull(item.getShelf());
     assertNull(item.getHeight());
     assertNull(item.getWidth());
@@ -57,7 +57,7 @@ public class ItemTest {
     assertThrows(IllegalArgumentException.class, () -> item.setSalePrice(CoreConst.MIN_PRICE-1));
     assertThrows(IllegalArgumentException.class, () -> item.setPurchasePrice(CoreConst.MIN_PRICE-1));
     assertThrows(IllegalArgumentException.class, () -> item.setSection("A".repeat(CoreConst.MAX_SECTION_LENGTH+1)));
-    assertThrows(IllegalArgumentException.class, () -> item.setRack("A".repeat(CoreConst.MAX_RACK_LENGTH+1)));
+    assertThrows(IllegalArgumentException.class, () -> item.setRow("A".repeat(CoreConst.MAX_ROW_LENGTH+1)));
     assertThrows(IllegalArgumentException.class, () -> item.setShelf("A".repeat(CoreConst.MAX_SHELF_LENGTH+1)));
     assertThrows(IllegalArgumentException.class, () -> item.setHeight(CoreConst.MIN_ITEM_DIMENSION-1));
     assertThrows(IllegalArgumentException.class, () -> item.setWidth(CoreConst.MIN_ITEM_DIMENSION-1));
@@ -115,9 +115,9 @@ public class ItemTest {
     item.setSection(section);
     assertEquals(section, item.getSection());
 
-    String rack = String.valueOf(rnd.nextInt(50));
-    item.setRack(rack);
-    assertEquals(rack, item.getRack());
+    String row = String.valueOf(rnd.nextInt(50));
+    item.setRow(row);
+    assertEquals(row, item.getRow());
 
     String shelf = String.valueOf(rnd.nextInt(50));
     item.setShelf(shelf);
@@ -156,7 +156,7 @@ public class ItemTest {
     assertEquals(expected.getRegularPrice(), actual.getRegularPrice());
     assertEquals(expected.getPurchasePrice(), actual.getPurchasePrice());
     assertEquals(expected.getSection(), actual.getSection());
-    assertEquals(expected.getRack(), actual.getRack());
+    assertEquals(expected.getRow(), actual.getRow());
     assertEquals(expected.getShelf(), actual.getShelf());
     assertEquals(expected.getHeight(), actual.getHeight());
     assertEquals(expected.getWidth(), actual.getWidth());
@@ -209,7 +209,7 @@ public class ItemTest {
     assertEquals(changeCounter, 1);
 
     changeCounter = 0;
-    item.setRack("42");
+    item.setRow("42");
     assertEquals(changeCounter, 1);
 
     changeCounter = 0;

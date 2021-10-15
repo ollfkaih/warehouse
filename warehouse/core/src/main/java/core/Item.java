@@ -21,7 +21,7 @@ public class Item {
   private Double salePrice;
   private Double purchasePrice;
   private String section;
-  private String rack;
+  private String row;
   private String shelf;
   private Double height;
   private Double width;
@@ -41,7 +41,7 @@ public class Item {
       @JsonProperty("salePrice") Double salePrice,
       @JsonProperty("purchasePrice") Double purchasePrice,
       @JsonProperty("section") String section,
-      @JsonProperty("rack") String rack,
+      @JsonProperty("row") String row,
       @JsonProperty("shelf") String shelf,
       @JsonProperty("itemHeight") Double height,
       @JsonProperty("itemWidth") Double width,
@@ -58,7 +58,7 @@ public class Item {
     setSalePrice(salePrice);
     setPurchasePrice(purchasePrice);
     setSection(section);
-    setRack(rack);
+    setRow(row);
     setShelf(shelf);
     setHeight(height);
     setWidth(width);
@@ -223,17 +223,17 @@ public class Item {
     notifyChange();
   }
 
-  public String getRack() {
-    return rack;
+  public String getRow() {
+    return row;
   }
 
-  public void setRack(String rack) {
-    if (rack != null && (rack.length() > CoreConst.MAX_RACK_LENGTH)) {
+  public void setRow(String row) {
+    if (row != null && (row.length() > CoreConst.MAX_ROW_LENGTH)) {
       throw new IllegalArgumentException(
-          "Rack length is too long. Max is " + CoreConst.MAX_RACK_LENGTH + " characters"
+          "Row length is too long. Max is " + CoreConst.MAX_ROW_LENGTH + " characters"
       );
     }
-    this.rack = rack;
+    this.row = row;
     notifyChange();
   }
 
@@ -334,7 +334,7 @@ public class Item {
         getRegularPrice(),
         getSalePrice(),
         getPurchasePrice(),
-        getSection(), getRack(), getShelf(),
+        getSection(), getRow(), getShelf(),
         getWidth(), getLength(), getHeight(),
         getWeight());
   }
