@@ -7,4 +7,5 @@ module warehouse.ui {
   requires barbecue;
 
   opens ui to javafx.graphics, javafx.fxml;
+  opens ui.validators;
 }

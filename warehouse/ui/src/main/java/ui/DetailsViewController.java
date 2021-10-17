@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import ui.validators.BarcodeValidator;
 import ui.validators.DoubleValidator;
 import ui.validators.InputValidator;
 import ui.validators.IntegerValidator;
@@ -133,7 +134,7 @@ public class DetailsViewController {
     addValidationListener(inpDimensionsWidth, true, new DoubleValidator(), new NotNegativeValidator());
 
     addValidationListener(inpWeight, true, new DoubleValidator(), new NotNegativeValidator());
-    addValidationListener(inpBarcode, true, new MinLengthValidator(13), new MaxLengthValidator(13), new RegexValidator("^[0-9]*$"));
+    addValidationListener(inpBarcode, true, new BarcodeValidator());
   }
   
   private void addValidationListener(final TextField textField, boolean nullable, InputValidator... validators) {
