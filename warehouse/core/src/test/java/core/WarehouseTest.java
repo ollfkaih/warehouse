@@ -18,11 +18,15 @@ public class WarehouseTest {
 
   Warehouse wh;
   Item item;
+  User user;
+  List<User> users;
 
   @BeforeEach
   public void setup() {
     wh = new Warehouse();
     item = new Item("itemName");
+    user = new User("a", "b", true);
+    users = new ArrayList<User>();
   }
 
   @Test
@@ -187,4 +191,30 @@ public class WarehouseTest {
     wh.addItem(item2);
     assertFalse(updated);
   }
+
+  @Test
+  @DisplayName("Test user list")
+  public void testUsers() {
+    assertEquals(users, wh.getUsers());
+    wh.addUser(user);
+    users.add(user);
+    assertEquals(users, wh.getUsers());
+    assertEquals(user, wh.getUser(0));
+    assertTrue(wh.containsUser("a", "b", true));
+    assertFalse(wh.containsUser("a", "d", true));
+    assertFalse(wh.containsUser("c", "b", true));
+    assertFalse(wh.containsUser("a", "b", false));
+  }
+
+  @Test
+  @DisplayName("Test user list validation")
+  public void testUsersValidation() {
+    assertThrows(IllegalStateException.class, () -> wh.getUser(-1));
+    assertThrows(IllegalStateException.class, () -> wh.getUser(0));
+    assertThrows(IllegalStateException.class, () -> wh.getUser(1));
+    wh.addUser(user);
+    assertThrows(IllegalStateException.class, () -> wh.getUser(-1));
+    assertThrows(IllegalStateException.class, () -> wh.getUser(1));
+  }
+
 }

@@ -36,4 +36,12 @@ public class UserTest {
         assertThrows(IllegalArgumentException.class, () -> user3= new User("", "b", true));
         assertThrows(IllegalArgumentException.class, () -> user3= new User("a", "", true));
     }
+
+    @Test
+    @DisplayName("toString")
+    public void testToString() {
+        assertEquals("Username: " + "a" + " Password: " + "b" + " Admin: " + "true", user1.toString());
+        assertEquals("Username: " + "c" + " Password: " + "d" + " Admin: " + "false", user2.toString());
+    }
+
 }

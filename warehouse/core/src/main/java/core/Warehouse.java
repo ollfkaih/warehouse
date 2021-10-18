@@ -173,6 +173,12 @@ public class Warehouse {
   }
 
   public User getUser(int index) {
+    if (users.size() == 0) {
+      throw new IllegalStateException("User list is empty.");
+    }
+    if (index < 0 || index >= users.size()) {
+      throw new IllegalStateException("Index out of range");
+    }
     return users.get(index);
   }
 
