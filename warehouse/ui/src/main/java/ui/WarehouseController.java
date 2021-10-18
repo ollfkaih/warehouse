@@ -120,16 +120,17 @@ public class WarehouseController implements WarehouseListener {
     }
   }
 
-  private void notHover(Node itemElement, int i) {
+  private void notHover(ItemElementAnchorPane itemElement, int i) {
     itemElement.getStyleClass().removeAll(Arrays.asList("hoverOverDark", "hoverOverLight"));
     if (i % 2 == 0) {
       itemElement.getStyleClass().add("notHoverOverLight");
     } else { 
       itemElement.getStyleClass().add("notHoverOverDark");
     }
+    itemElement.setButtonsVisible(false);
   }
 
-  private void hover(Node itemElement, int i) {
+  private void hover(ItemElementAnchorPane itemElement, int i) {
     itemElement.setCursor(Cursor.HAND);
     itemElement.getStyleClass().removeAll(Arrays.asList("notHoverOverDark", "notHoverOverLight"));
     if (i % 2 == 0) {
@@ -137,6 +138,7 @@ public class WarehouseController implements WarehouseListener {
     } else { 
       itemElement.getStyleClass().add("hoverOverDark");
     }
+    itemElement.setButtonsVisible(true);
   }
 
   protected void removeDetailsViewController(Item item) {
