@@ -2,6 +2,14 @@ TextField {
   -fx-border-width: 2px;
   -fx-border-color: lightgrey;
 }
+
+TextField:disabled {
+  -fx-opacity: 1;
+  -fx-border-color: white;
+  -fx-background-color: white;
+  -fx-prompt-text-fill: white;
+}
+
 .legalInput {
   -fx-border-color: chartreuse;
 

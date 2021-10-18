@@ -139,6 +139,7 @@ public class WarehouseControllerTest {
     assertNotNull(getItemFromWarehouse(testProductName), "unable to create item");
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
     click(robot, testProductName);
+    robot.clickOn("#btnEdit");
     robot.clickOn(detailsViewDeleteButton);
     assertNull(getItemFromWarehouse(testProductName), "unable to delete item");
     FxAssert.verifyThat(itemList, NodeMatchers.hasChildren(0, testProductName));
@@ -156,6 +157,7 @@ public class WarehouseControllerTest {
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
 
     click(robot, testProductName);
+    robot.clickOn("#btnEdit");
     DetailsViewController testProductViewController = getDetailsViewController(testItem);
     assertNotNull(testProductViewController, "unable to find the detailsViewController of the opened item");
 
@@ -171,19 +173,24 @@ public class WarehouseControllerTest {
     robot.clickOn("#inpDimensionsWidth").write("20");
     robot.clickOn("#inpDimensionsHeigth").write("4");
     robot.clickOn("#inpWeight").write("5.0");
-    robot.clickOn("#inpBarcode").write("1234567890123");
+    robot.clickOn("#inpBarcode").write("6830473201734");
     robot.clickOn(detailsViewSaveButton);
 
-    verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "1234567890123");
+    verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
     verifyDetailView(testItem);
 
     robot.interact(() -> ((Stage) ((robot.lookup(detailsView).query())).getScene().getWindow()).close());
 
     click(robot, testProductName);
 
-    verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "1234567890123");
+    verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
     verifyDetailView(testItem);
-      
+    
+    robot.clickOn("#btnEdit");
+
+    verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
+    verifyDetailView(testItem);
+
     robot.clickOn(detailsViewDeleteButton);
   }
 
@@ -235,9 +242,15 @@ public class WarehouseControllerTest {
     Item testItem = getItemFromWarehouse(testProductName);
     assertNotNull(testItem);
     click(robot, testProductName);
+
+    robot.clickOn("#btnEdit");
+
     robot.clickOn("#btnIncrement");
     robot.clickOn("#btnSave");
     assertEquals(1, testItem.getAmount());
+
+    robot.clickOn("#btnEdit");
+
     robot.clickOn("#btnDecrement");
     robot.clickOn("#btnSave");
     assertEquals(0, testItem.getAmount());
