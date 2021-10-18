@@ -17,13 +17,16 @@ import java.util.stream.Collectors;
  */
 public class Warehouse {
   private Map<String, Item> items;
-  private List<User> users = new ArrayList<>();
-
-  private Collection<WarehouseListener> listeners = new ArrayList<>();
-  private Map<String, ItemListener> itemListeners = new HashMap<>();
+  private User currentUser;
+  private Collection<User> users;
+  private Collection<WarehouseListener> listeners;
+  private Map<String, ItemListener> itemListeners;
 
   public Warehouse() {
     items = new TreeMap<>();
+    users = new ArrayList<>();
+    listeners = new ArrayList<>();
+    itemListeners = new HashMap<>();
   }
 
   public void addItem(Item item) {
@@ -161,28 +164,41 @@ public class Warehouse {
     this.listeners.remove(listener);
   }
 
-  public void addUser(User user) {
-    users.add(user);
-    System.out.println(getUsers());
+  public User getCurrentUser() {
+    return currentUser;
   }
 
-  public boolean containsUser(String userName, String password, boolean admin) {
+  public void setCurrentUser(User currentUser) {
+    if (!containsUser(currentUser.getUserName(), currentUser.getPassword(), currentUser.getAdmin())) {
+      throw new IllegalArgumentException("The user list does not contain this user.");
+    }
+    this.currentUser = currentUser;
+  }
+
+  public void removeCurrentUser() {
+    this.currentUser = null;
+  }
+
+  public Collection<User> getUsers() {
+    return users;
+  }
+
+  public boolean containsUser(String username, String password, boolean admin) {
     return getUsers()
         .stream()
-        .anyMatch(user -> user.getUserName().equals(userName) && user.getPassword().equals(password) && user.getAdmin() == admin);
+        .anyMatch(user -> user.getUserName().equals(username) && user.getPassword().equals(password) && user.getAdmin() == admin);
   }
 
-  public User getUser(int index) {
-    if (users.size() == 0) {
-      throw new IllegalStateException("User list is empty.");
-    }
-    if (index < 0 || index >= users.size()) {
-      throw new IllegalStateException("Index out of range");
-    }
-    return users.get(index);
+  public boolean containsUserByUsername(String username) {
+    return getUsers()
+        .stream()
+        .anyMatch(user -> user.getUserName().equals(username));
   }
-
-  public List<User> getUsers() {
-    return users;
+  
+  public void addUser(User user) {
+    if (containsUserByUsername(user.getUserName())) {
+      throw new IllegalArgumentException("Username already taken.");
+    }
+    users.add(user);
   }
 }

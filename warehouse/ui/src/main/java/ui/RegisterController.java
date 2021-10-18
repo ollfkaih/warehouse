@@ -17,12 +17,10 @@ import java.io.IOException;
  * This controller shows a separate window for registering a user.
  */
 public class RegisterController {
-  @FXML
-  TextField userNameField;
-  @FXML
-  PasswordField passwordField;
-  @FXML
-  Label errorMessageEmptyField;
+  @FXML TextField userNameField;
+  @FXML PasswordField passwordField;
+  @FXML Label errorMessageEmptyField;
+  @FXML Label errorMessageUserTaken;
 
   private String userName;
   private String password;
@@ -62,11 +60,17 @@ public class RegisterController {
     userName = userNameField.getText();
     password = passwordField.getText();
     if (!userName.equals("") && !password.equals("")) {
-      user = new User(userName, password, true);
-      warehouse.addUser(user);
-      hideRegisterView();
+      if (warehouse.containsUserByUsername(userName)) {
+        errorMessageEmptyField.setText("");
+        errorMessageUserTaken.setText("Brukernavnet er allerede tatt.");
+      } else {
+        user = new User(userName, password, true);
+        warehouse.addUser(user);
+        hideRegisterView();
+      }
     } else {
-      errorMessageEmptyField.setText("Du må fylle ut alle feltene før du kan gå videre");
+      errorMessageUserTaken.setText("");
+      errorMessageEmptyField.setText("Du må fylle ut alle feltene før du kan gå videre.");
     }
   }
 

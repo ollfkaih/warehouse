@@ -20,10 +20,8 @@ import ui.validators.DoubleValidator;
 import ui.validators.InputValidator;
 import ui.validators.IntegerValidator;
 import ui.validators.MaxLengthValidator;
-import ui.validators.MinLengthValidator;
 import ui.validators.NotEmptyValidatior;
 import ui.validators.NotNegativeValidator;
-import ui.validators.RegexValidator;
 
 import java.io.IOException;
 import java.io.InputStream;
