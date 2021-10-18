@@ -222,27 +222,35 @@ public class DetailsViewController {
 
   @FXML
   private void saveItem() {
-    saveField(inpName, () -> item.setName(inpName.getText()));
-    saveField(inpBrand, () -> item.setBrand(inpBrand.getText()));
+    saveField(inpName, () -> item.setName(getStringFieldValue(inpName)));
+    saveField(inpBrand, () -> item.setBrand(getStringFieldValue(inpBrand)));
     saveField(inpAmount, () -> item.setAmount(getIntegerFieldValue(inpAmount)));
 
     saveField(inpOrdinaryPrice, () -> item.setRegularPrice(getDoubleFieldValue(inpOrdinaryPrice)));
     saveField(inpSalesPrice, () -> item.setSalePrice(getDoubleFieldValue(inpSalesPrice)));
     saveField(inpRetailerPrice, () -> item.setPurchasePrice(getDoubleFieldValue(inpRetailerPrice)));
 
-    saveField(inpPlacementSection, () -> item.setSection(inpPlacementSection.getText()));
-    saveField(inpPlacementRow, () -> item.setRow(inpPlacementRow.getText()));
-    saveField(inpPlacementShelf, () -> item.setShelf(inpPlacementShelf.getText()));
+    saveField(inpPlacementSection, () -> item.setSection(getStringFieldValue(inpPlacementSection)));
+    saveField(inpPlacementRow, () -> item.setRow(getStringFieldValue(inpPlacementRow)));
+    saveField(inpPlacementShelf, () -> item.setShelf(getStringFieldValue(inpPlacementShelf)));
 
     saveField(inpDimensionsHeigth, () -> item.setHeight(getDoubleFieldValue(inpDimensionsHeigth)));
     saveField(inpDimensionsWidth, () -> item.setWidth(getDoubleFieldValue(inpDimensionsWidth)));
     saveField(inpDimensionsLength, () -> item.setLength(getDoubleFieldValue(inpDimensionsLength)));
 
     saveField(inpWeight, () -> item.setWeight(getDoubleFieldValue(inpWeight)));
-    saveField(inpBarcode, () -> item.setBarcode(inpBarcode.getText()));
+    saveField(inpBarcode, () -> item.setBarcode(getStringFieldValue(inpBarcode)));
 
     warehouseController.saveWarehouse();
     update();
+  }
+
+  private String getStringFieldValue(TextField textField) {
+    if (textField.getText().equals("") || textField.getText() == null) {
+      return null;
+    } else {
+      return textField.getText();
+    }
   }
 
   private Double getDoubleFieldValue(TextField textField) {
