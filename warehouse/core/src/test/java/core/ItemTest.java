@@ -66,6 +66,17 @@ public class ItemTest {
   }
 
   @Test
+  @DisplayName("Test increment/decrement")
+  void testIncrementDecrement() {
+    item.setAmount(10);
+    item.decrementAmount();
+    assertEquals(9, item.getAmount());
+    item.incrementAmount();
+    assertEquals(10, item.getAmount());
+  }
+
+  
+  @Test
   @DisplayName("Test validation in amount increment/decrement")
   void testIncrementDecrementValidation() {
     item.setAmount(CoreConst.MIN_AMOUNT);
