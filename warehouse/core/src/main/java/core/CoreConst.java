@@ -23,7 +23,7 @@ public abstract class CoreConst {
   /**
    * Options for different values to sort items by.
    */
-  public enum SortOptions {
+  public enum SortOption {
     Name, Amount, Price, Weight, Date, Status
   }
 }

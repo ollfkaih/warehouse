@@ -1,6 +1,6 @@
 package core;
 
-import core.CoreConst.SortOptions;
+import core.CoreConst.SortOption;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,39 +67,39 @@ public class Warehouse {
     return items.get(id);
   }
 
-  public List<Item> findItemsbyPredicate(Predicate<Item> predicate) {
+  public Collection<Item> findItemsbyPredicate(Predicate<Item> predicate) {
     return items
         .values()
         .stream()
         .filter(predicate)
-        .toList();
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
-  public List<Item> findItemsbyName(String name) {
+  public Collection<Item> findItemsbyName(String name) {
     return findItemsbyPredicate(item -> item.getName().equals(name));
   }
 
-  public List<Item> findItemsbyBrand(String brand) {
+  public Collection<Item> findItemsbyBrand(String brand) {
     return findItemsbyPredicate(item -> item.getBrand().equals(brand));
   }
 
-  public List<Item> findItemsWithAmountLessThan(int amount) {
+  public Collection<Item> findItemsWithAmountLessThan(int amount) {
     return findItemsbyPredicate(item -> item.getAmount() < amount);
   }
 
-  public List<Item> findItemsWithAmountMoreThan(int amount) {
+  public Collection<Item> findItemsWithAmountMoreThan(int amount) {
     return findItemsbyPredicate(item -> item.getAmount() > amount);
   }
 
   public List<Item> getAllItems() {
-    return getAllItemsSorted(SortOptions.Date, true);
+    return getAllItemsSorted(SortOption.Date, true);
   }
 
   private List<Item> sortItemsByComparator(Comparator<Item> c) {
     return items.values().stream().sorted(c).toList();
   }
 
-  public List<Item> getItemsSortedAndFiltered(SortOptions options, boolean ascendingOrder, String filterText) {
+  public List<Item> getItemsSortedAndFiltered(SortOption options, boolean ascendingOrder, String filterText) {
     List<Item> items = getAllItemsSorted(options, ascendingOrder);
     return items
         .stream()
@@ -107,7 +107,7 @@ public class Warehouse {
         .collect(Collectors.toList());
   }
 
-  public List<Item> getAllItemsSorted(SortOptions options, boolean ascendingOrder) {
+  public List<Item> getAllItemsSorted(SortOption options, boolean ascendingOrder) {
     Comparator<Item> comparator = switch (options) {
       case Name -> Comparator.comparing(Item::getName, String::compareToIgnoreCase);
       case Amount -> Comparator.comparingInt(Item::getAmount);

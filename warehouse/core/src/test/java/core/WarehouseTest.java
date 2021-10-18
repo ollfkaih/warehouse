@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import core.CoreConst.SortOptions;
+import core.CoreConst.SortOption;
 
 public class WarehouseTest {
 
@@ -30,7 +30,7 @@ public class WarehouseTest {
   public void testAddToWarehouse() {
     wh.addItem(item);
     assertEquals(item, wh.findItem(item.getId()));
-    assertEquals(item, wh.findItemsbyName("itemName").get(0));
+    assertTrue(wh.findItemsbyName("itemName").contains(item));
   }
 
   @Test
@@ -126,15 +126,15 @@ public class WarehouseTest {
     List<Item> itemsWeightSortedAscending = List.of(item5, item2, item6, item3, item1, item4);
     List<Item> itemsWeightSortedDescending = List.of(item4, item1, item3, item6, item2, item5);
 
-    assertEquals(itemsPriceSortedAscending, wh.getAllItemsSorted(SortOptions.Price, true));
+    assertEquals(itemsPriceSortedAscending, wh.getAllItemsSorted(SortOption.Price, true));
 
-    assertEquals(itemsNameSortedAscending, wh.getAllItemsSorted(SortOptions.Name, true));
-    assertEquals(itemsNameSortedDescending, wh.getAllItemsSorted(SortOptions.Name, false));
-    assertEquals(itemsAmountSortedAscending, wh.getAllItemsSorted(SortOptions.Amount, true));
-    assertEquals(itemsAmountSortedDescending, wh.getAllItemsSorted(SortOptions.Amount, false));
-    assertEquals(itemsPriceSortedDescending, wh.getAllItemsSorted(SortOptions.Price, false));
-    assertEquals(itemsWeightSortedAscending, wh.getAllItemsSorted(SortOptions.Weight, true));
-    assertEquals(itemsWeightSortedDescending, wh.getAllItemsSorted(SortOptions.Weight, false));
+    assertEquals(itemsNameSortedAscending, wh.getAllItemsSorted(SortOption.Name, true));
+    assertEquals(itemsNameSortedDescending, wh.getAllItemsSorted(SortOption.Name, false));
+    assertEquals(itemsAmountSortedAscending, wh.getAllItemsSorted(SortOption.Amount, true));
+    assertEquals(itemsAmountSortedDescending, wh.getAllItemsSorted(SortOption.Amount, false));
+    assertEquals(itemsPriceSortedDescending, wh.getAllItemsSorted(SortOption.Price, false));
+    assertEquals(itemsWeightSortedAscending, wh.getAllItemsSorted(SortOption.Weight, true));
+    assertEquals(itemsWeightSortedDescending, wh.getAllItemsSorted(SortOption.Weight, false));
   }
 
   static Item addedItem;

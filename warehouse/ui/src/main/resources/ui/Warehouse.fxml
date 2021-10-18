@@ -46,7 +46,7 @@
           <HBox fx:id="searchPane" alignment="center" minHeight="72.0" prefHeight="72.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
               <Text text="Søk" />
               <TextField fx:id="searchInput" minWidth="200" prefHeight="27.0" promptText="Navn" />
-              <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sort by" />
+              <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sorter" />
                   <Button fx:id="orderByButton" mnemonicParsing="false" onAction="#changeOrderBy" prefHeight="27.0" prefWidth="32.0" styleClass="orderByButton">
                     <graphic>
                     <VBox fx:id="sortAndOrderSelectors" alignment="center" spacing="5.0">
