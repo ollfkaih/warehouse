@@ -2,6 +2,7 @@ package ui;
 
 import core.Item;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
@@ -17,7 +18,7 @@ import javafx.scene.text.Font;
 public class ItemElementAnchorPane extends AnchorPane {
   final Font boldFont = new Font("Arial Bold", 13);
   private HBox textAmountAndButtonsHBox;
-  private VBox nameAndStatusVBox;
+  private VBox brandAndNameVBox;
   
   private final Button incrementButton;
   private final Button decrementButton;
@@ -25,32 +26,36 @@ public class ItemElementAnchorPane extends AnchorPane {
   public ItemElementAnchorPane(Item item) {
     super.paddingProperty().set(new Insets(5));
     
+    Label brandText = new Label(item.getBrand());
     Label nameText = new Label(item.getName());
     nameText.setFont(boldFont);
-    Label statusText = new Label("Status: ");
-    nameAndStatusVBox = new VBox(nameText, statusText);
+    brandAndNameVBox = new VBox(brandText, nameText);
     nameText.setTextOverrun(OverrunStyle.ELLIPSIS);
-    AnchorPane.setLeftAnchor(nameAndStatusVBox, 20d);
+    AnchorPane.setLeftAnchor(brandAndNameVBox, 20d);
+    AnchorPane.setRightAnchor(brandAndNameVBox, 200d);
     
     incrementButton = new Button("+");
     decrementButton = new Button("-");
     incrementButton.setId("incrementButton");
     decrementButton.setId("decrementButton");
+    incrementButton.setMinWidth(25);
+    decrementButton.setMinWidth(25);
+    incrementButton.setMinHeight(25);
+    decrementButton.setMinHeight(25);
     
-    Label textAmountLabel = new Label("Antall");
-    textAmountLabel.setFont(boldFont);
     Label amountLabel = new Label(String.valueOf(item.getAmount()));
-    VBox textAmount = new VBox(textAmountLabel, amountLabel);
-    HBox.setHgrow(textAmount, Priority.ALWAYS);
-    textAmountAndButtonsHBox = new HBox(decrementButton, textAmount, incrementButton);
+    amountLabel.setMinWidth(80);
+    amountLabel.setFont(boldFont);
+    textAmountAndButtonsHBox = new HBox(decrementButton, amountLabel, incrementButton);
     textAmountAndButtonsHBox.setSpacing(10);
-    textAmountAndButtonsHBox.setMinWidth(150);
+    textAmountAndButtonsHBox.setAlignment(Pos.CENTER);
     AnchorPane.setRightAnchor(textAmountAndButtonsHBox, 20d);
     
-    super.getChildren().addAll(nameAndStatusVBox, textAmountAndButtonsHBox);
-    AnchorPane.setTopAnchor(nameAndStatusVBox, 5d);
+    super.getChildren().addAll(brandAndNameVBox, textAmountAndButtonsHBox);
+    AnchorPane.setTopAnchor(brandAndNameVBox, 5d);
     AnchorPane.setTopAnchor(textAmountAndButtonsHBox, 5d);
     HBox.setHgrow(textAmountAndButtonsHBox, Priority.ALWAYS);
+    HBox.setHgrow(brandAndNameVBox, Priority.NEVER);
   }
   
   public Button getDecrementButton() {
