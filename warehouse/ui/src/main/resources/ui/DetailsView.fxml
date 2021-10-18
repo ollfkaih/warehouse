@@ -15,11 +15,20 @@
    <content>
       <VBox fx:id="itemList1" alignment="center">
          <children>
-            <Label text="Rediger detaljer">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
+            <AnchorPane prefHeight="50.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="158.0" layoutY="17.0" text="Detaljer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnEdit" alignment="CENTER" onAction="#toggleEditing" prefHeight="38.0" prefWidth="100.0" text="REDIGER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <AnchorPane prefHeight="39.0" prefWidth="420.0">
@@ -31,7 +40,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="inpBrand" promptText="merke" />
+                              <TextField fx:id="inpBrand" disable="true" promptText="merke" text="dasf" />
                            </children>
                         </VBox>
                      </children>
@@ -45,7 +54,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="inpName" promptText="navn" />
+                              <TextField fx:id="inpName" disable="true" promptText="navn" />
                            </children>
                         </VBox>
                      </children>
@@ -63,14 +72,14 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <HBox alignment="TOP_CENTER">
+                              <HBox alignment="CENTER_LEFT">
                                  <children>
-                                    <Button fx:id="btnDecrement" minHeight="29.0" minWidth="29.0" mnemonicParsing="false" onAction="#decrement" text="-">
+                                    <Button fx:id="btnDecrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#decrement" prefHeight="29.0" prefWidth="29.0" text="-">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font></Button>
-                                    <TextField fx:id="inpAmount" minHeight="30.0" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
-                                    <Button fx:id="btnIncrement" maxHeight="29.0" maxWidth="29.0" minHeight="29.0" minWidth="29.0" mnemonicParsing="false" onAction="#increment" text="+" textOverrun="CLIP">
+                                    <TextField fx:id="inpAmount" disable="true" minHeight="30.0" prefWidth="100.0" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
+                                    <Button fx:id="btnIncrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#increment" prefHeight="29.0" prefWidth="29.0" text="+" textOverrun="CLIP">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font></Button>
@@ -170,7 +179,7 @@
                                           <Font name="System Font" size="13.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="inpOrdinaryPrice" promptText="0" />
+                                    <TextField fx:id="inpOrdinaryPrice" disable="true" promptText="0" />
                                     <Label text="ink.mva">
                                        <font>
                                           <Font size="10.0" />
@@ -181,7 +190,7 @@
                               <VBox prefHeight="200.0">
                                  <children>
                                     <Label text="Utsalgspris" />
-                                    <TextField fx:id="inpSalesPrice" promptText="0" />
+                                    <TextField fx:id="inpSalesPrice" disable="true" promptText="0" />
                                     <Label text="ink.mva">
                                        <font>
                                           <Font size="10.0" />
@@ -192,7 +201,7 @@
                               <VBox prefHeight="200.0">
                                  <children>
                                     <Label text="Innkjøpspris" />
-                                    <TextField fx:id="inpRetailerPrice" promptText="0" />
+                                    <TextField fx:id="inpRetailerPrice" disable="true" promptText="0" />
                                     <Label text="eks.mva">
                                        <font>
                                           <Font size="10.0" />
@@ -229,7 +238,7 @@
                            <children>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpPlacementSection" promptText="A-Å" />
+                                    <TextField fx:id="inpPlacementSection" disable="true" promptText="A-Å" />
                                     <Label text="Seksjon">
                                        <font>
                                           <Font size="10.0" />
@@ -239,7 +248,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpPlacementRow" promptText="0" />
+                                    <TextField fx:id="inpPlacementRow" disable="true" promptText="0" />
                                     <Label text="Reol">
                                        <font>
                                           <Font size="10.0" />
@@ -249,7 +258,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpPlacementShelf" promptText="0" />
+                                    <TextField fx:id="inpPlacementShelf" disable="true" promptText="0" />
                                     <Label text="Hylle">
                                        <font>
                                           <Font size="10.0" />
@@ -276,7 +285,7 @@
                            <children>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionsLength" promptText="0" />
+                                    <TextField fx:id="inpDimensionsLength" disable="true" promptText="0" />
                                     <Label text="Lengde">
                                        <font>
                                           <Font size="10.0" />
@@ -286,7 +295,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionsWidth" promptText="0" />
+                                    <TextField fx:id="inpDimensionsWidth" disable="true" promptText="0" />
                                     <Label text="Bredde">
                                        <font>
                                           <Font size="10.0" />
@@ -296,7 +305,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionsHeigth" promptText="0" />
+                                    <TextField fx:id="inpDimensionsHeigth" disable="true" promptText="0" />
                                     <Label text="Høyde">
                                        <font>
                                           <Font size="10.0" />
@@ -319,7 +328,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="inpWeight" promptText="0" />
+                        <TextField fx:id="inpWeight" disable="true" promptText="0" />
                      </children>
                   </VBox>
                </children>
@@ -328,27 +337,27 @@
                <children>
                   <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Label text="Strekkode">
+                        <Label text="Barcode">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="inpBarcode" promptText="0000000000000" />
+                        <TextField fx:id="inpBarcode" disable="true" promptText="0000000000000" />
                      </children>
                   </VBox>
                </children>
             </AnchorPane>
-            <ImageView fx:id="barcodeImageView" fitHeight="70.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
+            <ImageView fx:id="barcodeImageView" fitHeight="60.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
             <AnchorPane>
                <children>
                   <HBox spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Button fx:id="btnSave" alignment="CENTER" onAction="#saveItem" prefHeight="42.0" prefWidth="188.0" text="LAGRE">
+                        <Button fx:id="btnSave" alignment="CENTER" disable="true" onAction="#saveItem" prefHeight="42.0" prefWidth="188.0" text="LAGRE" visible="false">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnDelete" onAction="#removeItem" prefHeight="41.0" prefWidth="189.0" text="SLETT">
+                        <Button fx:id="btnDelete" disable="true" onAction="#removeItem" prefHeight="41.0" prefWidth="189.0" text="SLETT" visible="false">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
