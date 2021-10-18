@@ -40,7 +40,6 @@ public class WarehouseControllerTest {
   private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
   private Button addItemButtonCopy;
 
-  // TODO declaration should be done dynamically
   private final String addItemButtonText = "Legg til";
   private final String detailsViewSaveButton = "#btnSave";
   private final String detailsViewDeleteButton = "#btnDelete";
@@ -69,7 +68,6 @@ public class WarehouseControllerTest {
 
   private Item getItemFromWarehouse(String name) {
     List<Item> itemList = warehouseController.getItems();
-    // might use warehouse.findItemsByName (will produce duplicates)
     Item testItem = null;
     for (int i = 0; i < itemList.size(); i++) {
       if (itemList.get(i).getName().equals(name)) {
@@ -87,7 +85,6 @@ public class WarehouseControllerTest {
   }
 
   private void removeAllItems() {
-    // TODO this method causes unnecessary method-calls (might smell), check for other solutions
     // Creating a new runner to avoid updating GUI while Stage is not running
     Platform.runLater(new Runnable() {
       @Override
@@ -141,7 +138,7 @@ public class WarehouseControllerTest {
     click(robot, addItemButtonText);
     assertNotNull(getItemFromWarehouse(testProductName), "unable to create item");
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
-    click(robot, testProductName); // opens DetailsView
+    click(robot, testProductName);
     robot.clickOn(detailsViewDeleteButton);
     assertNull(getItemFromWarehouse(testProductName), "unable to delete item");
     FxAssert.verifyThat(itemList, NodeMatchers.hasChildren(0, testProductName));
@@ -158,11 +155,10 @@ public class WarehouseControllerTest {
     assertNotNull(testItem, "unable to locate the created Item");
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
 
-    click(robot, testProductName); // opens DetailsViewController
+    click(robot, testProductName);
     DetailsViewController testProductViewController = getDetailsViewController(testItem);
     assertNotNull(testProductViewController, "unable to find the detailsViewController of the opened item");
 
-    // tests all input fields
     robot.clickOn("#inpBrand").write("TestBrand");
     robot.clickOn("#inpAmount").write("50");
     robot.clickOn("#inpOrdinaryPrice").write("4000");
@@ -246,5 +242,4 @@ public class WarehouseControllerTest {
     robot.clickOn("#btnSave");
     assertEquals(0, testItem.getAmount());
   }
-
 }
