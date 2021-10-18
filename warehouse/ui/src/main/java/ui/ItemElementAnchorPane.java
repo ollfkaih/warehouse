@@ -35,17 +35,20 @@ public class ItemElementAnchorPane extends AnchorPane {
     AnchorPane.setRightAnchor(brandAndNameVBox, 200d);
     
     incrementButton = new Button("+");
-    decrementButton = new Button("-");
     incrementButton.setId("incrementButton");
-    decrementButton.setId("decrementButton");
     incrementButton.setMinWidth(25);
-    decrementButton.setMinWidth(25);
     incrementButton.setMinHeight(25);
+    incrementButton.setVisible(false);
+    decrementButton = new Button("-");
+    decrementButton.setId("decrementButton");
+    decrementButton.setMinWidth(25);
     decrementButton.setMinHeight(25);
-    
+    decrementButton.setVisible(false);
+
     Label amountLabel = new Label(String.valueOf(item.getAmount()));
     amountLabel.setMinWidth(80);
     amountLabel.setFont(boldFont);
+    amountLabel.setAlignment(Pos.CENTER);
     textAmountAndButtonsHBox = new HBox(decrementButton, amountLabel, incrementButton);
     textAmountAndButtonsHBox.setSpacing(10);
     textAmountAndButtonsHBox.setAlignment(Pos.CENTER);
@@ -56,6 +59,11 @@ public class ItemElementAnchorPane extends AnchorPane {
     AnchorPane.setTopAnchor(textAmountAndButtonsHBox, 5d);
     HBox.setHgrow(textAmountAndButtonsHBox, Priority.ALWAYS);
     HBox.setHgrow(brandAndNameVBox, Priority.NEVER);
+  }
+
+  protected void setButtonsVisible(boolean visible) {
+    incrementButton.setVisible(visible);
+    decrementButton.setVisible(visible);
   }
   
   public Button getDecrementButton() {
