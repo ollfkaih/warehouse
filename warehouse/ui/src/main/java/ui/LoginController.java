@@ -1,5 +1,6 @@
 package ui;
 
+import core.User;
 import core.Warehouse;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,9 +35,11 @@ public class LoginController {
 
   private RegisterController registerController;
 
-  private Warehouse warehouse;
+  private WarehouseController whController;
+  private Warehouse wh;
+  private User currentUser;
 
-  public LoginController(Warehouse warehouse) {
+  public LoginController(WarehouseController whController, Warehouse wh) {
     try {
       loader = new FXMLLoader(getClass().getResource("Login.fxml"));
       loader.setController(this);
@@ -55,8 +58,9 @@ public class LoginController {
         e.printStackTrace();
       }
     });
-    registerController = new RegisterController(warehouse);
-    this.warehouse = warehouse;
+    registerController = new RegisterController(wh);
+    this.whController = whController;
+    this.wh = wh;
   }
   
   @FXML
@@ -64,7 +68,10 @@ public class LoginController {
     userName = usernameField.getText();
     password = passwordField.getText();
     if (!userName.equals("") && !password.equals("")) {
-      if (warehouse.containsUser(userName, password, true)) {
+      if (wh.containsUser(userName, password, true)) {
+        currentUser = new User(userName, password, true);
+        wh.setCurrentUser(currentUser);
+        whController.updateUser();
         hideLoginView();
       } else {
         errorMessageEmptyField.setText("");
@@ -79,7 +86,6 @@ public class LoginController {
   @FXML
   private void register() {
     registerController.showRegisterView();
-    hideLoginView();
   }
 
   protected void showLoginView() {

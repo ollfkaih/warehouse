@@ -2,6 +2,7 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,14 +19,18 @@ public class WarehouseTest {
 
   Warehouse wh;
   Item item;
-  User user;
+  User user1;
+  User user2;
+  User user3;
   List<User> users;
 
   @BeforeEach
   public void setup() {
     wh = new Warehouse();
     item = new Item("itemName");
-    user = new User("a", "b", true);
+    user1 = new User("a", "b", true);
+    user2 = new User("a", "c", true);
+    user3 = new User("a", "b", false);
     users = new ArrayList<User>();
   }
 
@@ -193,28 +198,44 @@ public class WarehouseTest {
   }
 
   @Test
+  @DisplayName("Test current user")
+  public void testCurrentUser() {
+    assertNull(wh.getCurrentUser());
+    wh.addUser(user1);
+    wh.setCurrentUser(user1);
+    assertEquals(user1, wh.getCurrentUser());
+    wh.removeCurrentUser();
+    assertNull(wh.getCurrentUser());
+  }
+
+  @Test
+  @DisplayName("Test current user validation")
+  public void testCurrentUserValidation() {
+    assertThrows(IllegalArgumentException.class, () -> wh.setCurrentUser(user1));
+  }
+
+  @Test
   @DisplayName("Test user list")
   public void testUsers() {
     assertEquals(users, wh.getUsers());
-    wh.addUser(user);
-    users.add(user);
+    wh.addUser(user1);
+    users.add(user1);
     assertEquals(users, wh.getUsers());
-    assertEquals(user, wh.getUser(0));
     assertTrue(wh.containsUser("a", "b", true));
     assertFalse(wh.containsUser("a", "d", true));
     assertFalse(wh.containsUser("c", "b", true));
     assertFalse(wh.containsUser("a", "b", false));
+    assertTrue(wh.containsUserByUsername("a"));
+    assertFalse(wh.containsUserByUsername("b"));
   }
 
   @Test
   @DisplayName("Test user list validation")
   public void testUsersValidation() {
-    assertThrows(IllegalStateException.class, () -> wh.getUser(-1));
-    assertThrows(IllegalStateException.class, () -> wh.getUser(0));
-    assertThrows(IllegalStateException.class, () -> wh.getUser(1));
-    wh.addUser(user);
-    assertThrows(IllegalStateException.class, () -> wh.getUser(-1));
-    assertThrows(IllegalStateException.class, () -> wh.getUser(1));
+    wh.addUser(user1);
+    assertThrows(IllegalArgumentException.class, () -> wh.addUser(user1));
+    assertThrows(IllegalArgumentException.class, () -> wh.addUser(user2));
+    assertThrows(IllegalArgumentException.class, () -> wh.addUser(user3));
   }
 
 }

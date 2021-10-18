@@ -48,5 +48,6 @@ For future use
       <PasswordField fx:id="passwordField" layoutX="127.0" layoutY="157.0" promptText="Passord" />
       <Button layoutX="142.0" layoutY="200.0" onAction="#register" text="Registrer ny bruker" />
       <Label fx:id="errorMessageEmptyField" layoutX="87.0" layoutY="240.0" text="" textFill="RED" />
+      <Label fx:id="errorMessageUserTaken" layoutX="31.0" layoutY="240.0" textFill="RED" />
    </children>
 </AnchorPane>

@@ -11,6 +11,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -32,6 +33,8 @@ public class WarehouseController implements WarehouseListener {
   private Warehouse warehouse;
   private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
 
+  @FXML private Label usernameLabel;
+  @FXML private Button loginButton;
   @FXML private AnchorPane root;
   @FXML private GridPane dividerGridPane;
   @FXML private TextField newProductName;
@@ -61,7 +64,7 @@ public class WarehouseController implements WarehouseListener {
       warehouse = new Warehouse();
     }
 
-    loginController = new LoginController(warehouse);
+    loginController = new LoginController(this, warehouse);
 
     updateInventory();
     enterPressed();
@@ -76,7 +79,18 @@ public class WarehouseController implements WarehouseListener {
 
   @FXML
   private void login() {
-    loginController.showLoginView();
+    if (warehouse.getCurrentUser() == null) {
+      loginController.showLoginView();
+    } else {
+      warehouse.removeCurrentUser();
+      usernameLabel.setText("");
+      loginButton.setText("Logg inn");
+    }
+  }
+
+  protected void updateUser() {
+    usernameLabel.setText(warehouse.getCurrentUser().getUserName());
+    loginButton.setText("Logg ut");
   }
 
   @FXML
