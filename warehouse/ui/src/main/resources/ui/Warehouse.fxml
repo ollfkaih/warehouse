@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -23,6 +24,7 @@
       </columnConstraints>
       <rowConstraints>
         <RowConstraints minHeight="200.0" vgrow="NEVER" />
+         <RowConstraints maxHeight="25.0" minHeight="30.0" prefHeight="25.0" vgrow="NEVER" />
         <RowConstraints vgrow="SOMETIMES" />
       </rowConstraints>
         <children>
@@ -37,7 +39,7 @@
               <Button fx:id="loginButton" layoutX="355.0" layoutY="11.0" minWidth="70.0" onAction="#login" text="Logg inn" AnchorPane.rightAnchor="40.0" />
           </AnchorPane>
           <!-- Start of add new item box -->
-          <HBox fx:id="addItemVBox" alignment="center" minHeight="50.0" spacing="5" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
+          <HBox fx:id="addItemVBox" alignment="CENTER" minHeight="50.0" spacing="5" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
               <children>
                 <Text text="Legg til nytt produkt" wrappingWidth="120" />
                 <TextField fx:id="newProductName" minWidth="200" prefHeight="27.0" promptText="Navn" />
@@ -68,10 +70,25 @@
                   </Button>
           </HBox>
     </VBox>
-    <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" stylesheets="@ItemStyle.css" GridPane.rowIndex="1">
+         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #dddddd;" GridPane.rowIndex="1">
+            <children>
+               <Label alignment="CENTER" contentDisplay="CENTER" text="Merke/Navn" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="0.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font></Label>
+               <Label alignment="CENTER" contentDisplay="CENTER" text="Antall" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="0.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font></Label>
+            </children>
+         </AnchorPane>
+     <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="450.0" stylesheets="@ItemStyle.css" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
       <content>
         <VBox fx:id="itemList" alignment="center" spacing="3" />
       </content>
+            <GridPane.margin>
+               <Insets />
+            </GridPane.margin>
     </ScrollPane>
   </children>
   </GridPane>
