@@ -1,6 +1,6 @@
 package ui;
 
-import core.CoreConst.SortOptions;
+import core.CoreConst.SortOption;
 import core.Item;
 import core.Warehouse;
 import core.WarehouseListener;
@@ -38,12 +38,12 @@ public class WarehouseController implements WarehouseListener {
   @FXML private ScrollPane itemContainer;
   @FXML private VBox itemList;
   @FXML private TextField searchInput;
-  @FXML private ComboBox<Enum<SortOptions>> sortBySelector;
+  @FXML private ComboBox<String> sortBySelector;
   @FXML private Button orderByButton;
   @FXML private VBox sortAndOrderSelectors;
   @FXML private VBox titleAddandSearch;
 
-  private SortOptions sortBy = SortOptions.Date;
+  private SortOption sortBy = SortOption.Date;
   private boolean ascending = true;
 
   private Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
@@ -66,10 +66,8 @@ public class WarehouseController implements WarehouseListener {
     updateInventory();
     enterPressed();
         
-    // adds values to combobox
-    for (SortOptions values : SortOptions.values()) {
-      sortBySelector.getItems().add(values);
-    }
+    List<String> displaySortStrings = List.of("Antall", "Dato", "Navn", "Pris", "Vekt");
+    sortBySelector.getItems().addAll(displaySortStrings);
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
 
@@ -181,24 +179,28 @@ public class WarehouseController implements WarehouseListener {
     }
 
     switch (value) {
-      case "Date":
-        sortBy = SortOptions.Date;
+      case "Dato":
+        sortBy = SortOption.Date;
         ascending = true;
         break;
-      case "Amount":
-        sortBy = SortOptions.Amount;
+      case "Antall":
+        sortBy = SortOption.Amount;
         ascending = false;
         break;
-      case "Name":
-        sortBy = SortOptions.Name;
+      case "Navn":
+        sortBy = SortOption.Name;
         ascending = true;
         break;
-      case "Status":
-        sortBy = SortOptions.Status;
+      case "Pris":
+        sortBy = SortOption.Price;
+        ascending = true;
+        break;
+      case "Vekt":
+        sortBy = SortOption.Weight;
         ascending = true;
         break;
       default:
-        sortBy = SortOptions.Name;
+        sortBy = SortOption.Name;
         break;
     }
     updateInventory();

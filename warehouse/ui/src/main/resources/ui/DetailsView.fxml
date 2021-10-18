@@ -328,7 +328,7 @@
                <children>
                   <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Label text="Barcode">
+                        <Label text="Strekkode">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
