@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import core.Warehouse;
 import core.Item;
+import core.User;
 
 public class WarehouseSerializerTest {
   @Test
@@ -21,12 +22,17 @@ public class WarehouseSerializerTest {
     warehouse.addItem(new Item("Bok", 4));
     warehouse.addItem(new Item("Laks"));
     warehouse.addItem(new Item("Kaffe", 100));
+    warehouse.addUser(new User("a", "a", true));
 
-    ByteArrayOutputStream jsonOutput = new ByteArrayOutputStream();
-    WarehouseSerializer.warehouseToJson(warehouse, jsonOutput);
+    ByteArrayOutputStream itemsOutput = new ByteArrayOutputStream();
+    ByteArrayOutputStream usersOutput = new ByteArrayOutputStream();
 
-    ByteArrayInputStream jsonInput = new ByteArrayInputStream(jsonOutput.toByteArray());
-    Warehouse newWarehouse = WarehouseSerializer.jsonToWarehouse(jsonInput);
+    WarehouseSerializer.itemsToJson(warehouse, itemsOutput);
+    WarehouseSerializer.usersToJson(warehouse, usersOutput);
+
+    ByteArrayInputStream itemsInput = new ByteArrayInputStream(itemsOutput.toByteArray());
+    ByteArrayInputStream usersInput = new ByteArrayInputStream(usersOutput.toByteArray());
+    Warehouse newWarehouse = WarehouseSerializer.jsonToWarehouse(itemsInput, usersInput);
 
     assertEquals(warehouse.getAllItems().size(), newWarehouse.getAllItems().size());
     for (Item item : warehouse.getAllItems()) {

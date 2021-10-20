@@ -24,11 +24,13 @@ public class WarehouseFileSaver implements DataPersistence {
 
   @Override
   public Warehouse getWarehouse() throws IOException {
-    Path warehouseFilePath = getWarehouseFilePath();
-    File warehouseFile = warehouseFilePath.toFile();
-    if (warehouseFile.isFile()) {
-      try (var is = new FileInputStream(warehouseFile)) {
-        return readWarehouse(is);
+    Path itemsFilePath = getWarehouseFilePath("items");
+    Path usersFilePath = getWarehouseFilePath("users");
+    File itemsFile = itemsFilePath.toFile();
+    File usersFile = usersFilePath.toFile();
+    if (itemsFile.isFile() && usersFile.isFile()) {
+      try (var items = new FileInputStream(itemsFile); var users = new FileInputStream(usersFile)) {
+        return readWarehouse(items, users);
       }
     } else {
       return null;
@@ -36,35 +38,50 @@ public class WarehouseFileSaver implements DataPersistence {
   }
 
   @Override
-  public void saveWarehouse(Warehouse warehouse) throws IOException {
-    var warehouseFilePath = getWarehouseFilePath();
-    ensureWarehouseFolderExists();
+  public void saveItems(Warehouse warehouse) throws IOException {
+    var warehouseFilePath = getWarehouseFilePath("items");
+    ensureWarehouseFolderExists("items");
     try (var os = new FileOutputStream(warehouseFilePath.toFile())) {
-      writeWarehouse(warehouse, os);
+      writeItems(warehouse, os);
     }
   }
 
-  public void deleteWarehouse() throws IOException {
-    Files.delete(getWarehouseFilePath());
+  @Override
+  public void saveUsers(Warehouse warehouse) throws IOException {
+    var userFilePath = getWarehouseFilePath("users");
+    ensureWarehouseFolderExists("users");
+    try (var os = new FileOutputStream(userFilePath.toFile())) {
+      writeUsers(warehouse, os);
+    }
+  }
+  
+
+  public void deleteWarehouse(String folder) throws IOException {
+    Files.delete(getWarehouseFilePath(folder));
   }
 
-  private Path getWarehouseFolderPath() {
-    return Path.of(System.getProperty("user.home"), "warehouse", "items");
+  private Path getWarehouseFolderPath(String folder) {
+    return Path.of(System.getProperty("user.home"), "warehouse", folder);
   }
 
-  private Path getWarehouseFilePath() {
-    return getWarehouseFolderPath().resolve(warehouseFileName + "." + WAREHOUSE_FILE_EXTENSION);
+  private Path getWarehouseFilePath(String folder) {
+    return getWarehouseFolderPath(folder).resolve(warehouseFileName + "." + WAREHOUSE_FILE_EXTENSION);
   }
 
-  private void ensureWarehouseFolderExists() throws IOException {
-    Files.createDirectories(getWarehouseFolderPath());
+  private void ensureWarehouseFolderExists(String folder) throws IOException {
+    Files.createDirectories(getWarehouseFolderPath(folder));
   }
 
-  private Warehouse readWarehouse(InputStream is) throws IOException {
-    return WarehouseSerializer.jsonToWarehouse(is);
+  private Warehouse readWarehouse(InputStream items, InputStream users) throws IOException {
+    return WarehouseSerializer.jsonToWarehouse(items, users);
   }
 
-  private void writeWarehouse(Warehouse warehouse, OutputStream os) throws IOException {
-    WarehouseSerializer.warehouseToJson(warehouse, os);
+  private void writeItems(Warehouse warehouse, OutputStream os) throws IOException {
+    WarehouseSerializer.itemsToJson(warehouse, os);
   }
+  
+  private void writeUsers(Warehouse warehouse, OutputStream os) throws IOException {
+    WarehouseSerializer.usersToJson(warehouse, os);
+  }
+
 }
