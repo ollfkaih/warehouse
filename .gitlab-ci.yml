@@ -10,6 +10,7 @@ Build:
   script:
     - cd warehouse
     - mvn compile
+  retry: 1
 
 Jacoco:
   stage: test
@@ -22,6 +23,7 @@ Jacoco:
   artifacts:
     paths:
       - $CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/report/target/site/jacoco-aggregate/*
+  retry: 1
 
 Verify:
   stage: test
@@ -29,6 +31,7 @@ Verify:
   script:
     - cd warehouse
     - mvn verify -DskipUiTests=true
+  retry: 1
 
 Checkstyle:
   stage: test
@@ -36,3 +39,4 @@ Checkstyle:
   script:
     - cd warehouse
     - mvn checkstyle:check
+  retry: 1
