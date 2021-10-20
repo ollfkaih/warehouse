@@ -306,4 +306,25 @@ public class DetailsViewController {
         + inpDimensionsLength.getText() + "\n" + inpDimensionsWidth.getText() + "\n" + inpDimensionsHeigth.getText()
         + "\n" + inpWeight.getText() + "\n" + inpBarcode.getText();
   }
+
+  
+  protected ScrollPane getScrollPane() {
+    return detailsViewScrollPane;
+  }
+
+  protected Button getDeleteButton() {
+    return btnDelete;
+  }
+
+  protected Button getSaveButton() {
+    return btnSave;
+  }
+
+  protected Button getIncrementButton() {
+    return btnIncrement;
+  }
+
+  protected Button getDecrementButton() {
+    return btnDecrement;
+  }
 }

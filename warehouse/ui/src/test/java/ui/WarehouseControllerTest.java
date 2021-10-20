@@ -10,10 +10,15 @@ import data.DataPersistence;
 import data.WarehouseFileSaver;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -63,7 +68,7 @@ public class WarehouseControllerTest {
   }
 
   private String getRandomProductName() {
-    return String.valueOf("TEST" + ((int) (Math.random() * (1000000000 - 100000000)) + 100000000)); 
+    return String.valueOf("TEST" + ((int) (Math.random() * (900000000)) + 100000000)); 
   }
 
   private Item getItemFromWarehouse(String name) {
@@ -97,13 +102,30 @@ public class WarehouseControllerTest {
     }); 
   } 
         
+  // Thanks to Marcos Supridatta and Joel Stevick for this superb solution: https://stackoverflow.com/questions/12837592/how-to-scroll-to-make-a-node-within-the-content-of-a-scrollpane-visible
+  private static void ensureVisible(ScrollPane scrollPane, Node node) {
+    Bounds viewport = scrollPane.getViewportBounds();
+    double contentHeight = scrollPane.getContent().localToScene(scrollPane.getContent().getBoundsInLocal()).getHeight();
+    double nodeMinY = node.localToScene(node.getBoundsInLocal()).getMinY();
+    double nodeMaxY = node.localToScene(node.getBoundsInLocal()).getMaxY();
+
+    double vValueDelta = 0;
+    double vValueCurrent = scrollPane.getVvalue();
+
+    if (nodeMaxY < 0) {
+        vValueDelta = (nodeMinY - viewport.getHeight()) / contentHeight;
+    } else if (nodeMinY > viewport.getHeight()) {
+        vValueDelta = (nodeMinY + viewport.getHeight()) / contentHeight;
+    }
+    scrollPane.setVvalue(vValueCurrent + vValueDelta);
+  }
+
   @BeforeEach
   void setup() {
     try {
       originalWarehouse = dataPersistence.getWarehouse();
     } catch (Exception e) {
       System.out.println("Unable to save loaded file");
-      e.printStackTrace();
     }
     removeAllItems();
   }
@@ -114,7 +136,6 @@ public class WarehouseControllerTest {
       dataPersistence.saveWarehouse(originalWarehouse);
     } catch (Exception e) {
       System.out.println("Unable to revert to original warehouse");
-      e.printStackTrace();
     }
   }
 
@@ -140,6 +161,7 @@ public class WarehouseControllerTest {
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
     click(robot, testProductName);
     robot.clickOn("#btnEdit");
+    ensureVisible(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), getDetailsViewController(getItemFromWarehouse(testProductName)).getDeleteButton());
     robot.clickOn(detailsViewDeleteButton);
     assertNull(getItemFromWarehouse(testProductName), "unable to delete item");
     FxAssert.verifyThat(itemList, NodeMatchers.hasChildren(0, testProductName));
@@ -174,6 +196,7 @@ public class WarehouseControllerTest {
     robot.clickOn("#inpDimensionsHeigth").write("4");
     robot.clickOn("#inpWeight").write("5.0");
     robot.clickOn("#inpBarcode").write("6830473201734");
+    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getSaveButton());
     robot.clickOn(detailsViewSaveButton);
 
     verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
@@ -191,6 +214,7 @@ public class WarehouseControllerTest {
     verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
     verifyDetailView(testItem);
 
+    ensureVisible(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), getDetailsViewController(getItemFromWarehouse(testProductName)).getDeleteButton());
     robot.clickOn(detailsViewDeleteButton);
   }
 
@@ -222,10 +246,12 @@ public class WarehouseControllerTest {
     final String testProductName = getRandomProductName();
     robot.clickOn(warehouseNewItemInputField).write(testProductName);
     click(robot, addItemButtonText);
+    robot.push(KeyCode.BACK_SPACE);
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
     Item testItem = getItemFromWarehouse(testProductName);
     assertNotNull(testItem);
     assertEquals(0, testItem.getAmount());
+    robot.moveTo(testProductName);
     robot.clickOn("#incrementButton");
     assertEquals(1, testItem.getAmount());
     robot.clickOn("#decrementButton");
@@ -238,6 +264,7 @@ public class WarehouseControllerTest {
     final String testProductName = getRandomProductName();
     robot.clickOn(warehouseNewItemInputField).write(testProductName);
     click(robot, addItemButtonText);
+    DetailsViewController testProductViewController = getDetailsViewController(getItemFromWarehouse(testProductName));
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
     Item testItem = getItemFromWarehouse(testProductName);
     assertNotNull(testItem);
@@ -245,13 +272,17 @@ public class WarehouseControllerTest {
 
     robot.clickOn("#btnEdit");
 
+    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getDecrementButton());
     robot.clickOn("#btnIncrement");
+    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getSaveButton());
     robot.clickOn("#btnSave");
     assertEquals(1, testItem.getAmount());
 
     robot.clickOn("#btnEdit");
 
+    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getDecrementButton());
     robot.clickOn("#btnDecrement");
+    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getSaveButton());
     robot.clickOn("#btnSave");
     assertEquals(0, testItem.getAmount());
   }
