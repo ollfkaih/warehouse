@@ -163,6 +163,7 @@ public class WarehouseControllerTest {
     robot.clickOn("#btnEdit");
     ensureVisible(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), getDetailsViewController(getItemFromWarehouse(testProductName)).getDeleteButton());
     robot.clickOn(detailsViewDeleteButton);
+    robot.clickOn("Slett");
     assertNull(getItemFromWarehouse(testProductName), "unable to delete item");
     FxAssert.verifyThat(itemList, NodeMatchers.hasChildren(0, testProductName));
   }
@@ -216,6 +217,7 @@ public class WarehouseControllerTest {
 
     ensureVisible(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), getDetailsViewController(getItemFromWarehouse(testProductName)).getDeleteButton());
     robot.clickOn(detailsViewDeleteButton);
+    robot.clickOn("Slett");
   }
 
   private void verifyDetailViewContainsChildren(String... childTexts) {

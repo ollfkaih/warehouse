@@ -357,7 +357,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnDelete" disable="true" onAction="#removeItem" prefHeight="41.0" prefWidth="189.0" text="SLETT" visible="false">
+                        <Button fx:id="btnDelete" disable="true" onAction="#promptRemoveItem" prefHeight="41.0" prefWidth="189.0" text="SLETT" visible="false">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
