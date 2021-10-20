@@ -8,16 +8,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import ui.itemfield.ItemField;
 import ui.validators.BarcodeValidator;
 import ui.validators.DoubleValidator;
@@ -28,6 +32,7 @@ import ui.validators.NotNegativeValidator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * This controller shows a separate window with all the properties of an item,
@@ -253,8 +258,23 @@ public class DetailsViewController {
     warehouseController.saveWarehouse();
     update();
   }
+  
+  @FXML private void promptRemoveItem() {
+    Alert promptDeleteConfirmationAlert = new Alert(AlertType.WARNING);
+    promptDeleteConfirmationAlert.setHeaderText("Vil du virkelig slette " + item.getName() + "?");
+    promptDeleteConfirmationAlert.setContentText("Denne handlingen kan ikke angres");
+    promptDeleteConfirmationAlert.initStyle(StageStyle.UTILITY);
+    ButtonType dontDeleteButtonType = new ButtonType("Ikke slett", ButtonData.CANCEL_CLOSE);
+    ButtonType confirmDeleteButtonType = new ButtonType("Slett", ButtonData.OK_DONE);
+    
+    promptDeleteConfirmationAlert.getButtonTypes().setAll(dontDeleteButtonType, confirmDeleteButtonType);
 
-  @FXML
+    Optional<ButtonType> result = promptDeleteConfirmationAlert.showAndWait();
+    if (result.isPresent() && !result.isEmpty() && result.get() == confirmDeleteButtonType) {
+      removeItem();
+    }
+  }
+
   private void removeItem() {
     warehouse.removeItem(item.getId());
     warehouseController.saveWarehouse();
