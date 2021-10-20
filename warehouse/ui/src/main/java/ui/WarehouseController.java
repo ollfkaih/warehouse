@@ -109,15 +109,21 @@ public class WarehouseController implements WarehouseListener {
       }
 
       itemList.getChildren().add(itemElement);
-      detailsViewControllers.putIfAbsent(items.get(i), new DetailsViewController(items.get(i), this.warehouse, this));
-      
+            
       int index = i;
 
-      itemElement.setOnMouseClicked(e -> detailsViewControllers.get(items.get(index)).showDetailsView());
+      itemElement.setOnMouseClicked(e -> openDetailsView(items.get(index)));
       itemElement.setOnMouseEntered(e -> hover(itemElement, index));
       itemElement.setOnMouseExited(e -> notHover(itemElement, index));
       notHover(itemElement, index);
     }
+  }
+
+  private void openDetailsView(Item item) {
+    if (! detailsViewControllers.containsKey(item)) {
+      detailsViewControllers.put(item, new DetailsViewController(item, this.warehouse, this));
+    }
+    detailsViewControllers.get(item).showDetailsView();
   }
 
   private void notHover(ItemElementAnchorPane itemElement, int i) {
