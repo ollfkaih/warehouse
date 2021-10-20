@@ -347,4 +347,8 @@ public class DetailsViewController {
   protected Button getDecrementButton() {
     return btnDecrement;
   }
+
+  protected TextField getBarcodeTextField() {
+    return inpBarcode;
+  }
 }

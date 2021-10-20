@@ -196,6 +196,7 @@ public class WarehouseControllerTest {
     robot.clickOn("#inpDimensionsWidth").write("20");
     robot.clickOn("#inpDimensionsHeigth").write("4");
     robot.clickOn("#inpWeight").write("5.0");
+    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getBarcodeTextField());
     robot.clickOn("#inpBarcode").write("6830473201734");
     ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getSaveButton());
     robot.clickOn(detailsViewSaveButton);
@@ -266,6 +267,7 @@ public class WarehouseControllerTest {
     final String testProductName = getRandomProductName();
     robot.clickOn(warehouseNewItemInputField).write(testProductName);
     click(robot, addItemButtonText);
+    click(robot, testProductName);
     DetailsViewController testProductViewController = getDetailsViewController(getItemFromWarehouse(testProductName));
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
     Item testItem = getItemFromWarehouse(testProductName);
