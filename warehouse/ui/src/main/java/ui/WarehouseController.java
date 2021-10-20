@@ -244,7 +244,7 @@ public class WarehouseController implements WarehouseListener {
 
   protected void saveWarehouse() {
     try {
-      dataPersistence.saveWarehouse(warehouse);
+      dataPersistence.saveItems(warehouse);
     } catch (Exception e) {
       System.out.println(e.toString());
     }

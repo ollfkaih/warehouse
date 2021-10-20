@@ -2,6 +2,8 @@ package ui;
 
 import core.User;
 import core.Warehouse;
+import data.DataPersistence;
+import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +23,9 @@ public class RegisterController {
   @FXML PasswordField passwordField;
   @FXML Label errorMessageEmptyField;
   @FXML Label errorMessageUserTaken;
+
+  private static final String FILENAME = "warehouse";
+  private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
 
   private String userName;
   private String password;
@@ -67,10 +72,19 @@ public class RegisterController {
         user = new User(userName, password, true);
         warehouse.addUser(user);
         hideRegisterView();
+        saveUsers();
       }
     } else {
       errorMessageUserTaken.setText("");
       errorMessageEmptyField.setText("Du må fylle ut alle feltene før du kan gå videre.");
+    }
+  }
+
+  protected void saveUsers() {
+    try {
+      dataPersistence.saveUsers(warehouse);
+    } catch (Exception e) {
+      System.out.println(e.toString());
     }
   }
 

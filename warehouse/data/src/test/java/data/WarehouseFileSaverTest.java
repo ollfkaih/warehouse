@@ -26,8 +26,8 @@ public class WarehouseFileSaverTest {
 
     fileSaver = new WarehouseFileSaver("testWarehouse");
 
-    fileSaver.saveWarehouse(warehouse);
-
+    fileSaver.saveItems(warehouse);
+    fileSaver.saveUsers(warehouse);
     Warehouse newWarehouse = fileSaver.getWarehouse();
 
     assertEquals(warehouse.getAllItems().size(), newWarehouse.getAllItems().size());
@@ -43,7 +43,8 @@ public class WarehouseFileSaverTest {
   @AfterEach
   private void cleanUpFiles() {
     try {
-      fileSaver.deleteWarehouse();
+      fileSaver.deleteWarehouse("items");
+      fileSaver.deleteWarehouse("users");
     } catch (Exception e) {
       fail("Couldn't delete file");
     }

@@ -22,5 +22,7 @@ public interface DataPersistence {
    * @param warehouse Warehouse to be saved
    * @throws IOException If the warehouse can't be written to file
    */
-  void saveWarehouse(Warehouse warehouse) throws IOException;
+  void saveItems(Warehouse warehouse) throws IOException;
+  
+  void saveUsers(Warehouse warehouse) throws IOException;
 }

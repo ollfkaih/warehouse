@@ -133,7 +133,7 @@ public class WarehouseControllerTest {
   @AfterEach
   void teardown() {
     try {
-      dataPersistence.saveWarehouse(originalWarehouse);
+      dataPersistence.saveItems(originalWarehouse);
     } catch (Exception e) {
       System.out.println("Unable to revert to original warehouse");
     }

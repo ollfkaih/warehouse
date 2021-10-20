@@ -135,7 +135,7 @@ public class Warehouse {
   public Map<String, Item> getAllItemsAsMap() {
     return new TreeMap<>(items);
   }
-
+  
   private void notifyItemAdded(Item item) {
     for (WarehouseListener listener : listeners) {
       listener.itemAddedToWarehouse(item);
