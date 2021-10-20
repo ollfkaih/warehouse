@@ -17,6 +17,8 @@ import java.nio.file.Path;
 public class WarehouseFileSaver implements DataPersistence {
   private static final String WAREHOUSE_FILE_EXTENSION = "json";
   private final String warehouseFileName;
+  private static final String ITEMS_FOLDERNAME = "items";
+  private static final String USERS_FOLDERNAME = "users";
 
   public WarehouseFileSaver(String filename) {
     this.warehouseFileName = filename;
@@ -24,10 +26,16 @@ public class WarehouseFileSaver implements DataPersistence {
 
   @Override
   public Warehouse getWarehouse() throws IOException {
-    Path itemsFilePath = getWarehouseFilePath("items");
-    Path usersFilePath = getWarehouseFilePath("users");
+    Path itemsFilePath = getWarehouseFilePath(ITEMS_FOLDERNAME);
+    Path usersFilePath = getWarehouseFilePath(USERS_FOLDERNAME);
     File itemsFile = itemsFilePath.toFile();
     File usersFile = usersFilePath.toFile();
+    if (!itemsFile.isFile()) {
+      saveItems(new Warehouse());
+    }
+    if (!usersFile.isFile()) {
+      saveUsers(new Warehouse());
+    }
     if (itemsFile.isFile() && usersFile.isFile()) {
       try (var items = new FileInputStream(itemsFile); var users = new FileInputStream(usersFile)) {
         return readWarehouse(items, users);
@@ -39,8 +47,8 @@ public class WarehouseFileSaver implements DataPersistence {
 
   @Override
   public void saveItems(Warehouse warehouse) throws IOException {
-    var warehouseFilePath = getWarehouseFilePath("items");
-    ensureWarehouseFolderExists("items");
+    var warehouseFilePath = getWarehouseFilePath(ITEMS_FOLDERNAME);
+    ensureWarehouseFolderExists(ITEMS_FOLDERNAME);
     try (var os = new FileOutputStream(warehouseFilePath.toFile())) {
       writeItems(warehouse, os);
     }
@@ -48,8 +56,8 @@ public class WarehouseFileSaver implements DataPersistence {
 
   @Override
   public void saveUsers(Warehouse warehouse) throws IOException {
-    var userFilePath = getWarehouseFilePath("users");
-    ensureWarehouseFolderExists("users");
+    var userFilePath = getWarehouseFilePath(USERS_FOLDERNAME);
+    ensureWarehouseFolderExists(USERS_FOLDERNAME);
     try (var os = new FileOutputStream(userFilePath.toFile())) {
       writeUsers(warehouse, os);
     }

@@ -33,14 +33,11 @@ public abstract class WarehouseSerializer {
   }
 
   public static Warehouse jsonToWarehouse(InputStream items, InputStream users) throws IOException {
-    ObjectMapper itemsMapper = new ObjectMapper();
-    ObjectMapper usersMapper = new ObjectMapper();
-    itemsMapper.registerModule(getLocalDateTimeModule());
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(getLocalDateTimeModule());
 
-    List<Item> warehouseItems = itemsMapper.readValue(items, new TypeReference<List<Item>>() {
-    });
-    List<User> warehouseUsers = usersMapper.readValue(users, new TypeReference<List<User>>() {
-    });
+    List<Item> warehouseItems = mapper.readValue(items, new TypeReference<List<Item>>() {});
+    List<User> warehouseUsers = mapper.readValue(users, new TypeReference<List<User>>() {});
 
     Warehouse warehouse = new Warehouse();
     for (Item item : warehouseItems) {
