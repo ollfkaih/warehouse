@@ -20,7 +20,7 @@ public class UserTest {
 
     @Test
     @DisplayName("Test constructor")
-    public void testContructor() {
+    void testContructor() {
         assertEquals("a", user1.getUserName());
         assertEquals("b", user1.getPassword());
         assertEquals(true, user1.getAdmin());
@@ -31,7 +31,7 @@ public class UserTest {
 
     @Test
     @DisplayName("Test")
-    public void testExceptions() {
+    void testExceptions() {
         assertThrows(IllegalArgumentException.class, () -> user3= new User("", "", true));
         assertThrows(IllegalArgumentException.class, () -> user3= new User("", "b", true));
         assertThrows(IllegalArgumentException.class, () -> user3= new User("a", "", true));

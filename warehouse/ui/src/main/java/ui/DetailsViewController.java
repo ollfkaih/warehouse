@@ -19,6 +19,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -74,12 +75,12 @@ public class DetailsViewController {
   private Warehouse warehouse;
   private WarehouseController warehouseController;
 
-  private static final int safeBoundTop = 30;
-  private static final int safeBoundBottom = 75;
+  private static final int SAFEBOUND_TOP = 30;
+  private static final int SAFEBOUND_BOTTOM = 75;
 
   private boolean editing = false;
 
-  private static enum Field {
+  private enum Field {
     NAME, BRAND, AMOUNT, REGULAR_PRICE, SALE_PRICE, PURCHASE_PRICE, SECTION, ROW, SHELF, HEIGHT, WIDTH, LENGTH, WEIGHT,
     BARCODE
   }
@@ -102,14 +103,14 @@ public class DetailsViewController {
     } catch (IOException e) {
       close();
     }
-    double height = Screen.getPrimary().getBounds().getHeight() - safeBoundBottom;
-    if (height > 800) {
-      height = 800;
+    double height = Screen.getPrimary().getBounds().getHeight() - SAFEBOUND_BOTTOM;
+    if (height > 815) {
+      height = 815;
     }
     stage = new Stage();
     stage.setScene(new Scene(detailsRoot, 450, height));
     stage.setMinWidth(450);
-    stage.setY(safeBoundTop);
+    stage.setY(SAFEBOUND_TOP);
     stage.setTitle("Rediger: " + item.getName());
     stage.setOnCloseRequest(e -> close());
 
@@ -124,60 +125,60 @@ public class DetailsViewController {
   public void initialize() {
     fields = Map.ofEntries(
         entry(Field.NAME,
-            new ItemField(inpName, false, (itemField) -> item.setName(itemField.getStringValue()),
-                () -> item.getName())),
+            new ItemField(inpName, false, itemField -> item.setName(itemField.getStringValue()),
+                item::getName)),
 
         entry(Field.BRAND,
-            new ItemField(inpBrand, true, (itemField) -> item.setBrand(itemField.getStringValue()),
-                () -> item.getBrand())),
+            new ItemField(inpBrand, true, itemField -> item.setBrand(itemField.getStringValue()),
+                item::getBrand)),
 
         entry(Field.AMOUNT,
-            new ItemField(inpAmount, false, (itemField) -> item.setAmount(itemField.getIntegerValue()),
-                () -> item.getAmount())),
+            new ItemField(inpAmount, false, itemField -> item.setAmount(itemField.getIntegerValue()),
+                item::getAmount)),
 
         entry(Field.REGULAR_PRICE,
-            new ItemField(inpOrdinaryPrice, true, (itemField) -> item.setRegularPrice(itemField.getDoubleValue()),
-                () -> item.getRegularPrice())),
+            new ItemField(inpOrdinaryPrice, true, itemField -> item.setRegularPrice(itemField.getDoubleValue()),
+                item::getRegularPrice)),
 
         entry(Field.SALE_PRICE,
-            new ItemField(inpSalesPrice, true, (itemField) -> item.setSalePrice(itemField.getDoubleValue()),
-                () -> item.getSalePrice())),
+            new ItemField(inpSalesPrice, true, itemField -> item.setSalePrice(itemField.getDoubleValue()),
+                item::getSalePrice)),
 
         entry(Field.PURCHASE_PRICE,
-            new ItemField(inpRetailerPrice, true, (itemField) -> item.setPurchasePrice(itemField.getDoubleValue()),
+            new ItemField(inpRetailerPrice, true, itemField -> item.setPurchasePrice(itemField.getDoubleValue()),
                 item::getPurchasePrice)),
 
         entry(Field.SECTION,
-            new ItemField(inpPlacementSection, true, (itemField) -> item.setSection(itemField.getStringValue()),
-                () -> item.getSection())),
+            new ItemField(inpPlacementSection, true, itemField -> item.setSection(itemField.getStringValue()),
+                item::getSection)),
 
         entry(Field.ROW,
-            new ItemField(inpPlacementRow, true, (itemField) -> item.setRow(itemField.getStringValue()),
-                () -> item.getRow())),
+            new ItemField(inpPlacementRow, true, itemField -> item.setRow(itemField.getStringValue()),
+                item::getRow)),
 
         entry(Field.SHELF,
-            new ItemField(inpPlacementShelf, true, (itemField) -> item.setShelf(itemField.getStringValue()),
-                () -> item.getShelf())),
+            new ItemField(inpPlacementShelf, true, itemField -> item.setShelf(itemField.getStringValue()),
+                item::getShelf)),
 
         entry(Field.HEIGHT,
-            new ItemField(inpDimensionsHeigth, true, (itemField) -> item.setHeight(itemField.getDoubleValue()),
-                () -> item.getHeight())),
+            new ItemField(inpDimensionsHeigth, true, itemField -> item.setHeight(itemField.getDoubleValue()),
+                item::getHeight)),
 
         entry(Field.WIDTH,
-            new ItemField(inpDimensionsWidth, true, (itemField) -> item.setWidth(itemField.getDoubleValue()),
-                () -> item.getWidth())),
+            new ItemField(inpDimensionsWidth, true, itemField -> item.setWidth(itemField.getDoubleValue()),
+                item::getWidth)),
 
         entry(Field.LENGTH,
-            new ItemField(inpDimensionsLength, true, (itemField) -> item.setLength(itemField.getDoubleValue()),
-                () -> item.getLength())),
+            new ItemField(inpDimensionsLength, true, itemField -> item.setLength(itemField.getDoubleValue()),
+                item::getLength)),
 
         entry(Field.WEIGHT,
-            new ItemField(inpWeight, true, (itemField) -> item.setWeight(itemField.getDoubleValue()),
-                () -> item.getWeight())),
+            new ItemField(inpWeight, true, itemField -> item.setWeight(itemField.getDoubleValue()),
+                item::getWeight)),
 
         entry(Field.BARCODE, 
-            new ItemField(inpBarcode, true, (itemField) -> item.setBarcode(itemField.getStringValue()),
-                () -> item.getBarcode()))
+            new ItemField(inpBarcode, true, itemField -> item.setBarcode(itemField.getStringValue()),
+                item::getBarcode))
     );
   }
 
@@ -270,7 +271,7 @@ public class DetailsViewController {
     promptDeleteConfirmationAlert.getButtonTypes().setAll(dontDeleteButtonType, confirmDeleteButtonType);
 
     Optional<ButtonType> result = promptDeleteConfirmationAlert.showAndWait();
-    if (result.isPresent() && !result.isEmpty() && result.get() == confirmDeleteButtonType) {
+    if (result.isPresent() && result.get() == confirmDeleteButtonType) {
       removeItem();
     }
   }
@@ -299,8 +300,10 @@ public class DetailsViewController {
       field.setDisabled(!editing);
     }
 
-    setButtonVisibility(btnDecrement, editing, 29, 29);
-    setButtonVisibility(btnIncrement, editing, 29, 29);
+    setRegionVisibility(btnDecrement, editing);
+    setRegionVisibility(btnIncrement, editing);
+
+    setRegionVisibility((Region) btnSave.getParent(), editing);
 
     btnEdit.setVisible(!editing);
 
@@ -310,13 +313,13 @@ public class DetailsViewController {
     btnDelete.setDisable(!editing);
   }
 
-  private void setButtonVisibility(Button button, boolean visible, double normalWidth, double normalHeight) {
-    button.setDisable(!visible);
-    button.setVisible(visible);
-    button.setMinWidth(visible ? -1 : 0);
-    button.setMinHeight(visible ? -1 : 0);
-    button.setMaxWidth(visible ? -1 : 0);
-    button.setMaxHeight(visible ? -1 : 0);
+  private void setRegionVisibility(Region region, boolean visible) {
+    region.setDisable(!visible);
+    region.setVisible(visible);
+    region.setMinWidth(visible ? -1 : 0);
+    region.setMinHeight(visible ? -1 : 0);
+    region.setMaxWidth(visible ? -1 : 0);
+    region.setMaxHeight(visible ? -1 : 0);
   }
 
   public String toString() {

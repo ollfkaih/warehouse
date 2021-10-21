@@ -14,10 +14,10 @@ import core.Warehouse;
 import core.Item;
 import core.User;
 
-public class WarehouseSerializerTest {
+class WarehouseSerializerTest {
   @Test
   @DisplayName("Test that a Warehouse that is serialized and then deserialized is equal")
-  public void testSerializeDeserialize() throws IOException {
+  void testSerializeDeserialize() throws IOException {
     Warehouse warehouse = new Warehouse();
     warehouse.addItem(new Item("Bok", 4));
     warehouse.addItem(new Item("Laks"));

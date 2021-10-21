@@ -72,19 +72,19 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <HBox alignment="CENTER_LEFT">
+                              <AnchorPane>
                                  <children>
-                                    <Button fx:id="btnDecrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#decrement" prefHeight="29.0" prefWidth="29.0" text="-">
+                                    <Button fx:id="btnDecrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#decrement" prefHeight="29.0" prefWidth="29.0" text="-" AnchorPane.leftAnchor="0.0">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font></Button>
-                                    <TextField fx:id="inpAmount" disable="true" minHeight="30.0" prefWidth="100.0" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
-                                    <Button fx:id="btnIncrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#increment" prefHeight="29.0" prefWidth="29.0" text="+" textOverrun="CLIP">
+                                    <TextField fx:id="inpAmount" disable="true" minHeight="30.0" prefWidth="100.0" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="29.0" />
+                                    <Button fx:id="btnIncrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#increment" prefHeight="29.0" prefWidth="29.0" text="+" textOverrun="CLIP" AnchorPane.rightAnchor="0.0">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font></Button>
                                  </children>
-                              </HBox>
+                              </AnchorPane>
                            </children>
                         </VBox>
                         <HBox spacing="10.0" HBox.hgrow="NEVER">
@@ -347,17 +347,17 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <ImageView fx:id="barcodeImageView" fitHeight="60.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
-            <AnchorPane>
+            <ImageView fx:id="barcodeImageView" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
+            <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
-                  <HBox spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <HBox maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Button fx:id="btnSave" alignment="CENTER" disable="true" onAction="#saveItem" prefHeight="42.0" prefWidth="188.0" text="LAGRE" visible="false">
+                        <Button fx:id="btnSave" alignment="CENTER" disable="true" onAction="#saveItem" prefHeight="42.0" prefWidth="192.0" text="LAGRE" visible="false">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnDelete" disable="true" onAction="#promptRemoveItem" prefHeight="41.0" prefWidth="189.0" text="SLETT" visible="false">
+                        <Button fx:id="btnDelete" disable="true" onAction="#promptRemoveItem" prefHeight="42.0" prefWidth="192.0" text="SLETT" visible="false">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>

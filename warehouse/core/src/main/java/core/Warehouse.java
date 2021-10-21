@@ -95,7 +95,7 @@ public class Warehouse {
   }
 
   public List<Item> getAllItems() {
-    return getAllItemsSorted(SortOption.Date, true);
+    return getAllItemsSorted(SortOption.DATE, true);
   }
 
   private List<Item> sortItemsByComparator(Comparator<Item> c) {
@@ -103,8 +103,8 @@ public class Warehouse {
   }
 
   public List<Item> getItemsSortedAndFiltered(SortOption options, boolean ascendingOrder, String filterText) {
-    List<Item> items = getAllItemsSorted(options, ascendingOrder);
-    return items
+    List<Item> sortedItems = getAllItemsSorted(options, ascendingOrder);
+    return sortedItems
         .stream()
         .filter(item -> item.getName().toLowerCase().contains(filterText.toLowerCase()) || item.getBarcode().contains(filterText))
         .collect(Collectors.toList());
@@ -112,11 +112,11 @@ public class Warehouse {
 
   public List<Item> getAllItemsSorted(SortOption options, boolean ascendingOrder) {
     Comparator<Item> comparator = switch (options) {
-      case Name -> Comparator.comparing(Item::getName, String::compareToIgnoreCase);
-      case Amount -> Comparator.comparingInt(Item::getAmount);
-      case Price -> Comparator.comparing(Item::getCurrentPrice, Comparator.nullsLast(Comparator.naturalOrder()));
-      case Weight -> Comparator.comparing(Item::getWeight, Comparator.nullsLast(Comparator.naturalOrder()));
-      case Date -> Comparator.comparing(Item::getCreationDate);
+      case NAME -> Comparator.comparing(Item::getName, String::compareToIgnoreCase);
+      case AMOUNT -> Comparator.comparingInt(Item::getAmount);
+      case PRICE -> Comparator.comparing(Item::getCurrentPrice, Comparator.nullsLast(Comparator.naturalOrder()));
+      case WEIGHT -> Comparator.comparing(Item::getWeight, Comparator.nullsLast(Comparator.naturalOrder()));
+      case DATE -> Comparator.comparing(Item::getCreationDate);
       default -> Comparator.comparing(Item::getCreationDate);
     };
     Comparator<Item> nameComparator = Comparator.comparing(Item::getName);

@@ -8,7 +8,6 @@ import data.DataPersistence;
 import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -46,7 +45,7 @@ public class WarehouseController implements WarehouseListener {
   @FXML private VBox sortAndOrderSelectors;
   @FXML private VBox titleAddandSearch;
 
-  private SortOption sortBy = SortOption.Date;
+  private SortOption sortBy = SortOption.DATE;
   private boolean ascending = true;
 
   private Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
@@ -202,27 +201,27 @@ public class WarehouseController implements WarehouseListener {
 
     switch (value) {
       case "Dato":
-        sortBy = SortOption.Date;
+        sortBy = SortOption.DATE;
         ascending = true;
         break;
       case "Antall":
-        sortBy = SortOption.Amount;
+        sortBy = SortOption.AMOUNT;
         ascending = false;
         break;
       case "Navn":
-        sortBy = SortOption.Name;
+        sortBy = SortOption.NAME;
         ascending = true;
         break;
       case "Pris":
-        sortBy = SortOption.Price;
+        sortBy = SortOption.PRICE;
         ascending = true;
         break;
       case "Vekt":
-        sortBy = SortOption.Weight;
+        sortBy = SortOption.WEIGHT;
         ascending = true;
         break;
       default:
-        sortBy = SortOption.Name;
+        sortBy = SortOption.NAME;
         break;
     }
     updateInventory();
@@ -267,6 +266,6 @@ public class WarehouseController implements WarehouseListener {
 
   // for testing purposes only
   protected HashMap<Item, DetailsViewController> getDetailViewControllers() {
-    return new HashMap<Item, DetailsViewController>(detailsViewControllers);
+    return new HashMap<>(detailsViewControllers);
   }
 } 
