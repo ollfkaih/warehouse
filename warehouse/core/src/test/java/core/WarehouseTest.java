@@ -135,15 +135,15 @@ public class WarehouseTest {
     List<Item> itemsWeightSortedAscending = List.of(item5, item2, item6, item3, item1, item4);
     List<Item> itemsWeightSortedDescending = List.of(item4, item1, item3, item6, item2, item5);
 
-    assertEquals(itemsPriceSortedAscending, wh.getAllItemsSorted(SortOption.Price, true));
+    assertEquals(itemsPriceSortedAscending, wh.getAllItemsSorted(SortOption.PRICE, true));
 
-    assertEquals(itemsNameSortedAscending, wh.getAllItemsSorted(SortOption.Name, true));
-    assertEquals(itemsNameSortedDescending, wh.getAllItemsSorted(SortOption.Name, false));
-    assertEquals(itemsAmountSortedAscending, wh.getAllItemsSorted(SortOption.Amount, true));
-    assertEquals(itemsAmountSortedDescending, wh.getAllItemsSorted(SortOption.Amount, false));
-    assertEquals(itemsPriceSortedDescending, wh.getAllItemsSorted(SortOption.Price, false));
-    assertEquals(itemsWeightSortedAscending, wh.getAllItemsSorted(SortOption.Weight, true));
-    assertEquals(itemsWeightSortedDescending, wh.getAllItemsSorted(SortOption.Weight, false));
+    assertEquals(itemsNameSortedAscending, wh.getAllItemsSorted(SortOption.NAME, true));
+    assertEquals(itemsNameSortedDescending, wh.getAllItemsSorted(SortOption.NAME, false));
+    assertEquals(itemsAmountSortedAscending, wh.getAllItemsSorted(SortOption.AMOUNT, true));
+    assertEquals(itemsAmountSortedDescending, wh.getAllItemsSorted(SortOption.AMOUNT, false));
+    assertEquals(itemsPriceSortedDescending, wh.getAllItemsSorted(SortOption.PRICE, false));
+    assertEquals(itemsWeightSortedAscending, wh.getAllItemsSorted(SortOption.WEIGHT, true));
+    assertEquals(itemsWeightSortedDescending, wh.getAllItemsSorted(SortOption.WEIGHT, false));
   }
 
   static Item addedItem;
@@ -152,7 +152,7 @@ public class WarehouseTest {
 
   @Test
   @DisplayName("Test Warehouse listener")
-  public void testListener() {
+  void testListener() {
     WarehouseListener listener = new WarehouseListener(){
       @Override
       public void itemAddedToWarehouse(Item i) {
@@ -199,7 +199,7 @@ public class WarehouseTest {
 
   @Test
   @DisplayName("Test current user")
-  public void testCurrentUser() {
+  void testCurrentUser() {
     assertNull(wh.getCurrentUser());
     wh.addUser(user1);
     wh.setCurrentUser(user1);
@@ -210,13 +210,13 @@ public class WarehouseTest {
 
   @Test
   @DisplayName("Test current user validation")
-  public void testCurrentUserValidation() {
+  void testCurrentUserValidation() {
     assertThrows(IllegalArgumentException.class, () -> wh.setCurrentUser(user1));
   }
 
   @Test
   @DisplayName("Test user list")
-  public void testUsers() {
+  void testUsers() {
     assertEquals(users, wh.getUsers());
     wh.addUser(user1);
     users.add(user1);
@@ -231,7 +231,7 @@ public class WarehouseTest {
 
   @Test
   @DisplayName("Test user list validation")
-  public void testUsersValidation() {
+  void testUsersValidation() {
     wh.addUser(user1);
     assertThrows(IllegalArgumentException.class, () -> wh.addUser(user1));
     assertThrows(IllegalArgumentException.class, () -> wh.addUser(user2));

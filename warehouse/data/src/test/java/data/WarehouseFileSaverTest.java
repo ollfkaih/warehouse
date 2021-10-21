@@ -15,7 +15,7 @@ import core.Item;
 import core.User;
 import core.Warehouse;
 
-public class WarehouseFileSaverTest {
+class WarehouseFileSaverTest {
 
   private WarehouseFileSaver fileSaver;
   private Warehouse warehouse;
