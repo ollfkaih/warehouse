@@ -35,7 +35,7 @@
                     <Font size="32.0" />
                 </font>
               </Label>
-              <Label fx:id="usernameLabel" layoutX="567.0" layoutY="15.0" AnchorPane.rightAnchor="200.0" />
+              <Label fx:id="usernameLabel" layoutX="340.0" layoutY="15.0" maxWidth="50.0" prefWidth="50.0" AnchorPane.rightAnchor="110.0" />
               <Button fx:id="loginButton" layoutX="355.0" layoutY="11.0" minWidth="70.0" onAction="#login" text="Logg inn" AnchorPane.rightAnchor="40.0" />
           </AnchorPane>
           <!-- Start of add new item box -->
