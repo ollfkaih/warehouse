@@ -65,7 +65,7 @@ public class LoginController {
   
   @FXML
   private void login() {
-    userName = usernameField.getText();
+    userName = usernameField.getText().toLowerCase();
     password = passwordField.getText();
     if (!userName.equals("") && !password.equals("")) {
       if (wh.containsUser(userName, password, true)) {

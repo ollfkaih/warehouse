@@ -62,7 +62,7 @@ public class RegisterController {
 
   @FXML
   private void register() {
-    userName = userNameField.getText();
+    userName = userNameField.getText().toLowerCase();
     password = passwordField.getText();
     if (!userName.equals("") && !password.equals("")) {
       if (warehouse.containsUserByUsername(userName)) {
