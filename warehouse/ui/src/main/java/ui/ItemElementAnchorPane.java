@@ -25,19 +25,22 @@ public class ItemElementAnchorPane extends AnchorPane {
   
   public ItemElementAnchorPane(Item item) {
     super.paddingProperty().set(new Insets(5));
+    super.setMinHeight(50);
     Label nameLabel = new Label(item.getName());
     nameLabel.setFont(boldFont);
     
     if (item.getBrand() != null) {
       Label brandLabel = new Label(item.getBrand());
       brandAndNameVBox = new VBox(brandLabel, nameLabel);
+      AnchorPane.setTopAnchor(brandAndNameVBox, 2d);
     } else {
       brandAndNameVBox = new VBox(nameLabel);
+      AnchorPane.setTopAnchor(brandAndNameVBox, 10d);
     }
     nameLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
     AnchorPane.setLeftAnchor(brandAndNameVBox, 20d);
     AnchorPane.setRightAnchor(brandAndNameVBox, 200d);
-    
+
     incrementButton = new Button("+");
     incrementButton.setId("incrementButton");
     incrementButton.setMinWidth(25);
@@ -59,8 +62,7 @@ public class ItemElementAnchorPane extends AnchorPane {
     AnchorPane.setRightAnchor(textAmountAndButtonsHBox, 20d);
     
     super.getChildren().addAll(brandAndNameVBox, textAmountAndButtonsHBox);
-    AnchorPane.setTopAnchor(brandAndNameVBox, 5d);
-    AnchorPane.setTopAnchor(textAmountAndButtonsHBox, 5d);
+    AnchorPane.setTopAnchor(textAmountAndButtonsHBox, 7d);
     HBox.setHgrow(textAmountAndButtonsHBox, Priority.ALWAYS);
     HBox.setHgrow(brandAndNameVBox, Priority.NEVER);
   }
