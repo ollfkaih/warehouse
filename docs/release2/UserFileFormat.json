@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "array",
+  "title": "Warehouse",
+  "items": {
+    "type": "object",
+    "properties": {
+      "userName": {
+        "description": "Nickname (and id) of user",
+        "type": "string"
+      },
+      "password": {
+        "description": "The users password",
+        "type": "string",
+        "format": "password"
+      },
+      "admin": {
+        "description": "A boolean to say if user is admin or not",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "userName",
+      "password",
+      "admin"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+@startuml
+class Item [[java:core.Item]] {
+	-String id
+	-String name
+	-int amount
+	-String barcode
+	-String brand
+	-Double regularPrice
+	-Double salePrice
+	-Double purchasePrice
+	-String section
+	-String row
+	-String shelf
+	-Double height
+	-Double width
+	-Double length
+	-Double weight
+	-LocalDateTime creationDate
+	~Collection<ItemListener> listeners
+
+}
+class User [[java:core.User]] {
+	~String userName
+	~String password
+	~boolean admin
+
+}
+class Warehouse [[java:core.Warehouse]] {
+	-Map<String,Item> items
+	-Collection<WarehouseListener> listeners
+	-Map<String,ItemListener> itemListeners
+}
+Warehouse --> "1" User : currentUser
+Warehouse --> "*" User : users
+Warehouse --> "*" Item : items
+@enduml
