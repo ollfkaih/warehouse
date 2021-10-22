@@ -106,7 +106,8 @@ public class Warehouse {
     List<Item> sortedItems = getAllItemsSorted(options, ascendingOrder);
     return sortedItems
         .stream()
-        .filter(item -> item.getName().toLowerCase().contains(filterText.toLowerCase()) || item.getBarcode().contains(filterText))
+        .filter(item -> 
+            item.getName().toLowerCase().contains(filterText.toLowerCase()) || (item.getBarcode() != null && item.getBarcode().equals(filterText)))
         .collect(Collectors.toList());
   }
 
