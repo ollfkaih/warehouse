@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -72,19 +73,23 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <AnchorPane>
-                                 <children>
-                                    <Button fx:id="btnDecrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#decrement" prefHeight="29.0" prefWidth="29.0" text="-" AnchorPane.leftAnchor="0.0">
+                              <BorderPane prefHeight="30.0" prefWidth="200.0">
+                                 <left>
+                                    <Button fx:id="btnDecrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" onAction="#decrement" prefHeight="29.0" prefWidth="29.0" text="-" BorderPane.alignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font></Button>
-                                    <TextField fx:id="inpAmount" disable="true" minHeight="30.0" prefWidth="100.0" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="29.0" />
-                                    <Button fx:id="btnIncrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#increment" prefHeight="29.0" prefWidth="29.0" text="+" textOverrun="CLIP" AnchorPane.rightAnchor="0.0">
+                                 </left>
+                                 <center>
+                                    <TextField fx:id="inpAmount" disable="true" minHeight="30.0" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" BorderPane.alignment="CENTER" />
+                                 </center>
+                                 <right>
+                                    <Button fx:id="btnIncrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" onAction="#increment" prefHeight="29.0" prefWidth="29.0" text="+" textOverrun="CLIP" BorderPane.alignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font></Button>
-                                 </children>
-                              </AnchorPane>
+                                 </right>
+                              </BorderPane>
                            </children>
                         </VBox>
                         <HBox spacing="10.0" HBox.hgrow="NEVER">
