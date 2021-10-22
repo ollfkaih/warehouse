@@ -15,11 +15,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -289,5 +294,47 @@ public class WarehouseControllerTest {
     ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getSaveButton());
     robot.clickOn("#btnSave");
     assertEquals(0, testItem.getAmount());
+  }
+
+  private List<Node> findItemNodes(FxRobot robot) {
+    return robot.lookup(itemList).queryAs(VBox.class).getChildren();
+  }
+
+  private void selectOptionInComboBox(FxRobot robot, String comboBoxQuery, String option) {
+    ComboBox<String> comboBox = robot.lookup(comboBoxQuery).queryAs(ComboBox.class);
+
+    robot.interact(() -> {
+      comboBox.getSelectionModel().select(option);
+    });
+  }
+
+  private void verifyItemsInOrder(FxRobot robot, String... itemNames) {
+    List<Node> items = findItemNodes(robot);
+    for (int i = 0; i < itemNames.length; i++) {
+      FxAssert.verifyThat(items.get(i), NodeMatchers.hasChild(itemNames[i]));
+    }
+  }
+
+  @Test
+  @DisplayName("Test sorting and searching items on name")
+  void testSortSearchItems(FxRobot robot) {
+    robot.clickOn(warehouseNewItemInputField).write("B");
+    click(robot, addItemButtonText);
+    robot.write("C");
+    click(robot, addItemButtonText);
+    robot.write("A");
+    click(robot, addItemButtonText);
+
+    robot.clickOn("Sorter");
+    selectOptionInComboBox(robot, "#sortBySelector", "Navn");
+    verifyItemsInOrder(robot, "A", "B", "C");
+    robot.clickOn("#orderByButton");
+    verifyItemsInOrder(robot, "C", "B", "A");
+
+    robot.clickOn("#searchInput");
+    robot.write("A");
+    FxAssert.verifyThat(itemList, NodeMatchers.hasChild("A"));
+    FxAssert.verifyThat(itemList, NodeMatchers.hasChildren(0, "B"));
+    FxAssert.verifyThat(itemList, NodeMatchers.hasChildren(0, "C"));
   }
 }
