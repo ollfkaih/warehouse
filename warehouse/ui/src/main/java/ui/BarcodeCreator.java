@@ -13,7 +13,7 @@ import java.nio.file.Path;
 /**
  * Wrapper class for a static function that generates an InputStream with a barcode image from a barcode string.
  */
-public abstract class BarcodeCreator {
+public interface BarcodeCreator {
   public static InputStream generateBarcodeImageInputStream(String barcodeText) throws Exception {
     Barcode barcode = BarcodeFactory.createEAN13(barcodeText);
 
