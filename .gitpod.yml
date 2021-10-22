@@ -4,7 +4,7 @@ image:
 
 tasks:
   - init: sdk use java 16.0.1.hs-adpt
-    command: cd warehouse; mvn install; cd ui; mvn javafx:run
+    command: cd warehouse; mvn install -Djdk.gtk.version=2; cd ui; mvn javafx:run
 
 ports:
   # used by virtual desktop and vnc, supports JavaFX

@@ -262,6 +262,7 @@ public class WarehouseControllerTest {
     robot.moveTo(testProductName);
     robot.clickOn("#incrementButton");
     assertEquals(1, testItem.getAmount());
+    robot.moveTo(testProductName);
     robot.clickOn("#decrementButton");
     assertEquals(0, testItem.getAmount());
   }
