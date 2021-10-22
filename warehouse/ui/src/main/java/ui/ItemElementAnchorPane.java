@@ -25,12 +25,16 @@ public class ItemElementAnchorPane extends AnchorPane {
   
   public ItemElementAnchorPane(Item item) {
     super.paddingProperty().set(new Insets(5));
+    Label nameLabel = new Label(item.getName());
+    nameLabel.setFont(boldFont);
     
-    Label brandText = new Label(item.getBrand());
-    Label nameText = new Label(item.getName());
-    nameText.setFont(boldFont);
-    brandAndNameVBox = new VBox(brandText, nameText);
-    nameText.setTextOverrun(OverrunStyle.ELLIPSIS);
+    if (item.getBrand() != null) {
+      Label brandLabel = new Label(item.getBrand());
+      brandAndNameVBox = new VBox(brandLabel, nameLabel);
+    } else {
+      brandAndNameVBox = new VBox(nameLabel);
+    }
+    nameLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
     AnchorPane.setLeftAnchor(brandAndNameVBox, 20d);
     AnchorPane.setRightAnchor(brandAndNameVBox, 200d);
     
@@ -66,11 +70,11 @@ public class ItemElementAnchorPane extends AnchorPane {
     decrementButton.setVisible(visible);
   }
   
-  public Button getDecrementButton() {
+  protected Button getDecrementButton() {
     return decrementButton;
   }
   
-  public Button getIncrementButton() {
+  protected Button getIncrementButton() {
     return incrementButton;
   }
 }
