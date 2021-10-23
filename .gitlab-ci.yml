@@ -17,7 +17,7 @@ Jacoco:
   needs: []
   script:
     - cd warehouse
-    - mvn test -DskipUiTests=true
+    - mvn test -Dtest=!WarehouseControllerTest -DfailIfNoTests=false
     - mvn jacoco:report-aggregate
     - cat $CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/report/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
   artifacts:
@@ -30,7 +30,7 @@ Verify:
   needs: []
   script:
     - cd warehouse
-    - mvn verify -DskipUiTests=true
+    - mvn verify -Dtest=!WarehouseControllerTest -DfailIfNoTests=false
   retry: 1
 
 Checkstyle:
