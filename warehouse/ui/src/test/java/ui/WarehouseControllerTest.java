@@ -213,29 +213,20 @@ public class WarehouseControllerTest {
     ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpBarcode").write("6830473201734");
     ensureVisibleClickOn(testProductViewScrollPane, robot, detailsViewSaveButton);
 
-    verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
     verifyDetailView(testItem);
 
     robot.interact(() -> ((Stage) ((robot.lookup(detailsView).query())).getScene().getWindow()).close());
 
     click(robot, testProductName);
 
-    verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
     verifyDetailView(testItem);
     
     robot.clickOn("#btnEdit");
 
-    verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
     verifyDetailView(testItem);
 
     ensureVisibleClickOn(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), robot, detailsViewDeleteButton);
     robot.clickOn("Slett");
-  }
-
-  private void verifyDetailViewContainsChildren(String... childTexts) {
-    for (String text : childTexts) {
-      FxAssert.verifyThat(detailsView, NodeMatchers.hasChild(text));
-    }
   }
 
   private void verifyDetailView(Item item) {
