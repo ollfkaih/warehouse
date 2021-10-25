@@ -20,8 +20,12 @@ Viktig å kunne gjøre:
 ## Lagerarbeider Ludvik (us-6)
 Ludvik er veldig glad i Java-applikasjonen til lagersystemet, men ettersom han har mange forskjellige elektroniske enheter som han bruker til å aksessere lagersystemet ønsker han i tillegg en enkel webapp som fungerer overalt og kan kjøres uten installasjon.
 
-Viktig å kunne se:
-- Informasjon om ting på lageret i en webapp
+Viktig å kunne se i en webapp:
+- Oversikt tingene på lageret
+- Detaljer om spesifikke ting
 
-Viktig å kunne gjøre:
-- Legge til, fjerne og endre ting igjennom en webapp
+Viktig å kunne gjøre i en webappen:
+- Søke i ting på lageret
+
+Fint å kunne gjøre i en webapp:
+- Legge til, fjerne og endre ting
