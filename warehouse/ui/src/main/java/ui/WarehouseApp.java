@@ -4,8 +4,13 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -29,9 +34,15 @@ public class WarehouseApp extends Application {
       e.printStackTrace();
       System.out.println("[WarehouseApp.java] Icon-image not found");
     }
+    WarehouseController controller = (WarehouseController) fxmlLoader.getController();
     stage.setOnCloseRequest(event -> {
       try {
-        appExit();
+        if (controller.canExit()) {
+          appExit();
+        } else {
+          closeAttemptWithChangesAlert();  
+          event.consume();
+        }
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -44,5 +55,21 @@ public class WarehouseApp extends Application {
 
   private void appExit() {
     Platform.exit();
+  }
+
+  private void closeAttemptWithChangesAlert() {
+    Alert promptCloseConfirmationAlert = new Alert(AlertType.WARNING);
+    promptCloseConfirmationAlert.setTitle("Lukk program");
+    promptCloseConfirmationAlert.setHeaderText("Vil du virkelig lukke programmet?");
+    promptCloseConfirmationAlert.setContentText("Eventuelle endringer i dine redigeringsvinduer vil ikke bli lagret.");
+    promptCloseConfirmationAlert.initStyle(StageStyle.UTILITY);
+    ButtonType dontCloseButtonType = new ButtonType("Ikke lukk", ButtonData.CANCEL_CLOSE);
+    ButtonType confirmCloseButtonType = new ButtonType("Lukk", ButtonData.OK_DONE);
+    
+    promptCloseConfirmationAlert.getButtonTypes().setAll(dontCloseButtonType, confirmCloseButtonType);
+
+    promptCloseConfirmationAlert.showAndWait()
+    .filter(response -> response == confirmCloseButtonType)
+        .ifPresent(response -> appExit());
   }
 }

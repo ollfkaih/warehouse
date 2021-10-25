@@ -33,7 +33,6 @@ import ui.validators.NotNegativeValidator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * This controller shows a separate window with all the properties of an item,
@@ -182,7 +181,11 @@ public class DetailsViewController {
     );
   }
 
-  private void close() {
+  protected boolean isEditing() {
+    return editing;
+  }
+
+  protected void close() {
     warehouseController.removeDetailsViewController(item);
     stage.close();
   }
