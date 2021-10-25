@@ -270,10 +270,9 @@ public class DetailsViewController {
     
     promptDeleteConfirmationAlert.getButtonTypes().setAll(dontDeleteButtonType, confirmDeleteButtonType);
 
-    Optional<ButtonType> result = promptDeleteConfirmationAlert.showAndWait();
-    if (result.isPresent() && result.get() == confirmDeleteButtonType) {
-      removeItem();
-    }
+    promptDeleteConfirmationAlert.showAndWait()
+    .filter(response -> response == confirmDeleteButtonType)
+        .ifPresent(response -> removeItem());
   }
 
   private void removeItem() {
