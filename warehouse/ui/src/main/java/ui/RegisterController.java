@@ -63,7 +63,7 @@ public class RegisterController {
   @FXML
   private void register() {
     userName = userNameField.getText().toLowerCase();
-    password = passwordField.getText();
+    password = User.md5Hash(passwordField.getText());
     if (!userName.equals("") && !password.equals("")) {
       if (warehouse.containsUserByUsername(userName)) {
         errorMessageEmptyField.setText("");
