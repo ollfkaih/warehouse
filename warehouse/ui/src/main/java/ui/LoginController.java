@@ -66,7 +66,7 @@ public class LoginController {
   @FXML
   private void login() {
     userName = usernameField.getText().toLowerCase();
-    password = passwordField.getText();
+    password = User.md5Hash(passwordField.getText());
     if (!userName.equals("") && !password.equals("")) {
       if (wh.containsUser(userName, password, true)) {
         currentUser = new User(userName, password, true);
