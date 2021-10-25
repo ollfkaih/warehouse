@@ -18,19 +18,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxRobotInterface;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.base.NodeMatchers;
@@ -50,7 +48,7 @@ public class WarehouseControllerTest {
   private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
   private Button addItemButtonCopy;
 
-  private final String addItemButtonText = "Legg til";
+  private final String addItemButton = "#addItemButton";
   private final String detailsViewSaveButton = "#btnSave";
   private final String detailsViewDeleteButton = "#btnDelete";
   private final String warehouseNewItemInputField  = "#newProductName";
@@ -65,7 +63,7 @@ public class WarehouseControllerTest {
     stage.setScene(new Scene(root));
     stage.show();
     
-    addItemButtonCopy = new Button(addItemButtonText);
+    addItemButtonCopy = new Button(addItemButton);
   }
 
   private void click(FxRobot robot, String string) {
@@ -125,6 +123,15 @@ public class WarehouseControllerTest {
     scrollPane.setVvalue(vValueCurrent + vValueDelta);
   }
 
+  private Node findNode(FxRobot robot, String fxid) {
+    return robot.lookup(fxid).query();
+  }
+
+  private FxRobotInterface ensureVisibleClickOn(ScrollPane scrollPane, FxRobot robot, String fxid) {
+    ensureVisible(scrollPane, findNode(robot, fxid));
+    return robot.clickOn(fxid);
+  }
+
   @BeforeEach
   void setup() {
     try {
@@ -153,7 +160,7 @@ public class WarehouseControllerTest {
   @Test
   @DisplayName("Add-item button exists")
   void testAddButtonExist() {
-    FxAssert.verifyThat(addItemButtonCopy, LabeledMatchers.hasText(addItemButtonText));
+    FxAssert.verifyThat(addItemButtonCopy, LabeledMatchers.hasText(addItemButton));
   }
 
   @Test
@@ -161,14 +168,15 @@ public class WarehouseControllerTest {
   void testAddAndDelete(FxRobot robot) {
     final String testProductName = getRandomProductName();
     robot.clickOn(warehouseNewItemInputField).write(testProductName);
-    click(robot, addItemButtonText);
+    robot.clickOn(addItemButton);
     assertNotNull(getItemFromWarehouse(testProductName), "unable to create item");
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
     click(robot, testProductName);
-    robot.clickOn("#btnEdit");
+    ScrollPane detailsViewScrollPane = getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane();
+    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnEdit");
     ensureVisible(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), getDetailsViewController(getItemFromWarehouse(testProductName)).getDeleteButton());
-    robot.clickOn(detailsViewDeleteButton);
-    robot.clickOn("Slett");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, detailsViewDeleteButton);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, "Slett");
     assertNull(getItemFromWarehouse(testProductName), "unable to delete item");
     FxAssert.verifyThat(itemList, NodeMatchers.hasChildren(0, testProductName));
   }
@@ -178,7 +186,7 @@ public class WarehouseControllerTest {
   void testAddItem(FxRobot robot) {
     final String testProductName = getRandomProductName(); 
     robot.clickOn(warehouseNewItemInputField).write(testProductName);
-    click(robot, addItemButtonText);
+    robot.clickOn(addItemButton);
 
     Item testItem = getItemFromWarehouse(testProductName);
     assertNotNull(testItem, "unable to locate the created Item");
@@ -187,24 +195,23 @@ public class WarehouseControllerTest {
     click(robot, testProductName);
     robot.clickOn("#btnEdit");
     DetailsViewController testProductViewController = getDetailsViewController(testItem);
+    ScrollPane testProductViewScrollPane = testProductViewController.getScrollPane();
     assertNotNull(testProductViewController, "unable to find the detailsViewController of the opened item");
 
-    robot.clickOn("#inpBrand").write("TestBrand");
-    robot.clickOn("#inpAmount").write("50");
-    robot.clickOn("#inpOrdinaryPrice").write("4000");
-    robot.clickOn("#inpSalesPrice").write("3000");
-    robot.clickOn("#inpRetailerPrice").write("2000");
-    robot.clickOn("#inpPlacementSection").write("B");
-    robot.clickOn("#inpPlacementRow").write("19");
-    robot.clickOn("#inpPlacementShelf").write("3");
-    robot.clickOn("#inpDimensionsLength").write("10");
-    robot.clickOn("#inpDimensionsWidth").write("20");
-    robot.clickOn("#inpDimensionsHeigth").write("4");
-    robot.clickOn("#inpWeight").write("5.0");
-    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getBarcodeTextField());
-    robot.clickOn("#inpBarcode").write("6830473201734");
-    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getSaveButton());
-    robot.clickOn(detailsViewSaveButton);
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpBrand").write("TestBrand");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpAmount").write("50");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpOrdinaryPrice").write("4000");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpSalesPrice").write("3000");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpRetailerPrice").write("2000");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpPlacementSection").write("B");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpPlacementRow").write("19");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpPlacementShelf").write("3");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpDimensionsLength").write("10");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpDimensionsWidth").write("20");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpDimensionsHeigth").write("4");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpWeight").write("5.0");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, "#inpBarcode").write("6830473201734");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, detailsViewSaveButton);
 
     verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
     verifyDetailView(testItem);
@@ -221,8 +228,7 @@ public class WarehouseControllerTest {
     verifyDetailViewContainsChildren("TestBrand", "50", "4000.0", "2000.0", "B", "19", "3", "10.0", "20.0", "4.0", "5.0", "6830473201734");
     verifyDetailView(testItem);
 
-    ensureVisible(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), getDetailsViewController(getItemFromWarehouse(testProductName)).getDeleteButton());
-    robot.clickOn(detailsViewDeleteButton);
+    ensureVisibleClickOn(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), robot, detailsViewDeleteButton);
     robot.clickOn("Slett");
   }
 
@@ -253,7 +259,7 @@ public class WarehouseControllerTest {
   void testIncrementValues(FxRobot robot) {
     final String testProductName = getRandomProductName();
     robot.clickOn(warehouseNewItemInputField).write(testProductName);
-    click(robot, addItemButtonText);
+    robot.clickOn(addItemButton);
     robot.push(KeyCode.BACK_SPACE);
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
     Item testItem = getItemFromWarehouse(testProductName);
@@ -272,28 +278,25 @@ public class WarehouseControllerTest {
   void testDetailViewIncrement(FxRobot robot) {
     final String testProductName = getRandomProductName();
     robot.clickOn(warehouseNewItemInputField).write(testProductName);
-    click(robot, addItemButtonText);
+    robot.clickOn(addItemButton);
     click(robot, testProductName);
-    DetailsViewController testProductViewController = getDetailsViewController(getItemFromWarehouse(testProductName));
     FxAssert.verifyThat(itemList, NodeMatchers.hasChild(testProductName));
     Item testItem = getItemFromWarehouse(testProductName);
+    ScrollPane detailsViewScrollPane = getDetailsViewController(testItem).getScrollPane();
     assertNotNull(testItem);
-    click(robot, testProductName);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, testProductName);
 
-    robot.clickOn("#btnEdit");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnEdit");
 
-    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getDecrementButton());
-    robot.clickOn("#btnIncrement");
-    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getSaveButton());
-    robot.clickOn("#btnSave");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnIncrement");
+    //ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getSaveButton());
+    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnSave");
     assertEquals(1, testItem.getAmount());
 
-    robot.clickOn("#btnEdit");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnEdit");
 
-    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getDecrementButton());
-    robot.clickOn("#btnDecrement");
-    ensureVisible(testProductViewController.getScrollPane(), testProductViewController.getSaveButton());
-    robot.clickOn("#btnSave");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnDecrement");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnSave");
     assertEquals(0, testItem.getAmount());
   }
 
@@ -320,11 +323,11 @@ public class WarehouseControllerTest {
   @DisplayName("Test sorting and searching items on name")
   void testSortSearchItems(FxRobot robot) {
     robot.clickOn(warehouseNewItemInputField).write("B");
-    click(robot, addItemButtonText);
+    robot.clickOn(addItemButton);
     robot.write("C");
-    click(robot, addItemButtonText);
+    robot.clickOn(addItemButton);  
     robot.write("A");
-    click(robot, addItemButtonText);
+    robot.clickOn(addItemButton);
 
     robot.clickOn("Sorter");
     selectOptionInComboBox(robot, "#sortBySelector", "Navn");
