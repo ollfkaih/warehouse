@@ -1,6 +1,13 @@
 # Brukerhistorier - lansering 3
 
-## Lagerarbeider Lars (us-4)
+## Lagersjef Lise (us-4)
+Som lagersjef ønsker Lise sikkerhet i lagersystemet slik at uvedkommende ikke kan koble seg til og gjøre endringer. Hun ønsker at alle ansatte skal ha brukerkontoer som de må logge seg inn på for å bruke systemet. 
+
+Viktig å kunne:
+- Være trygg på at informasjonen i lagersystemet er lagt inn av autoriserte ansatte
+
+
+## Lagerarbeider Lars (us-5)
 Som ansatt på lageret synes Lars det er viktig at lagersystemet hans er synkronisert med alle kollegene hans, slik at han alltid har oppdatert informasjon om tingene som finnes på lageret.
 
 Viktig å kunne se:
@@ -10,7 +17,7 @@ Viktig å kunne gjøre:
 - Oppdatere informasjonen slik at det også blir endret for andre som bruker systemet
 
 
-## Lagerarbeider Ludvik (us-4)
+## Lagerarbeider Ludvik (us-6)
 Ludvik er veldig glad i Java-applikasjonen til lagersystemet, men ettersom han har mange forskjellige elektroniske enheter som han bruker til å aksessere lagersystemet ønsker han i tillegg en enkel webapp som fungerer overalt og kan kjøres uten installasjon.
 
 Viktig å kunne se:
@@ -18,4 +25,3 @@ Viktig å kunne se:
 
 Viktig å kunne gjøre:
 - Legge til, fjerne og endre ting igjennom en webapp
-
