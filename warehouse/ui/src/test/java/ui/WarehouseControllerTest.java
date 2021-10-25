@@ -40,7 +40,7 @@ import java.util.List;
 
 @ExtendWith(ApplicationExtension.class)
 class WarehouseControllerTest {
-  
+
   private static final String INP_BARCODE = "#inpBarcode";
   private static final String INP_WEIGHT = "#inpWeight";
   private static final String INP_DIMENSIONS_HEIGTH = "#inpDimensionsHeigth";
@@ -77,10 +77,6 @@ class WarehouseControllerTest {
     stage.show();
     
     addItemButtonCopy = new Button(ADD_ITEM_BUTTON);
-  }
-
-  private void click(FxRobot robot, String string) {
-    robot.clickOn(LabeledMatchers.hasText(string));
   }
 
   private String getRandomProductName() {
@@ -182,14 +178,14 @@ class WarehouseControllerTest {
     final String testProductName = getRandomProductName();
     robot.clickOn(WAREHOUSE_NEW_ITEM_INPUTFIELD).write(testProductName);
     robot.clickOn(ADD_ITEM_BUTTON);
+    robot.push(KeyCode.BACK_SPACE);
     assertNotNull(getItemFromWarehouse(testProductName), "unable to create item");
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
-    click(robot, testProductName);
+    robot.clickOn(testProductName);
     ScrollPane detailsViewScrollPane = getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane();
     ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnEdit");
-    ensureVisible(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), getDetailsViewController(getItemFromWarehouse(testProductName)).getDeleteButton());
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_DELETE_BUTTON);
-    ensureVisibleClickOn(detailsViewScrollPane, robot, "Slett");
+    robot.clickOn("Slett");
     assertNull(getItemFromWarehouse(testProductName), "unable to delete item");
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, testProductName));
   }
@@ -205,8 +201,10 @@ class WarehouseControllerTest {
     assertNotNull(testItem, "unable to locate the created Item");
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
 
-    click(robot, testProductName);
+    robot.push(KeyCode.BACK_SPACE);
+    robot.clickOn(testProductName);
     robot.clickOn("#btnEdit");
+    robot.push(KeyCode.BACK_SPACE);
     DetailsViewController testProductViewController = getDetailsViewController(testItem);
     ScrollPane testProductViewScrollPane = testProductViewController.getScrollPane();
     assertNotNull(testProductViewController, "unable to find the detailsViewController of the opened item");
@@ -230,15 +228,13 @@ class WarehouseControllerTest {
 
     robot.interact(() -> ((Stage) ((robot.lookup(DETAILS_VIEW).query())).getScene().getWindow()).close());
 
-    click(robot, testProductName);
-
+    robot.clickOn(testProductName);
     verifyDetailView(testItem);
     
     robot.clickOn("#btnEdit");
 
     verifyDetailView(testItem);
-
-    ensureVisibleClickOn(getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane(), robot, DETAILS_VIEW_DELETE_BUTTON);
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_VIEW_DELETE_BUTTON);
     robot.clickOn("Slett");
   }
 
@@ -283,7 +279,8 @@ class WarehouseControllerTest {
     final String testProductName = getRandomProductName();
     robot.clickOn(WAREHOUSE_NEW_ITEM_INPUTFIELD).write(testProductName);
     robot.clickOn(ADD_ITEM_BUTTON);
-    click(robot, testProductName);
+    robot.push(KeyCode.BACK_SPACE);
+    robot.clickOn(testProductName);
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
     Item testItem = getItemFromWarehouse(testProductName);
     ScrollPane detailsViewScrollPane = getDetailsViewController(testItem).getScrollPane();
