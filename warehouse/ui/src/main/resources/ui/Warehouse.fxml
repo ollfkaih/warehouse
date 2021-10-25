@@ -43,7 +43,7 @@
               <children>
                 <Text text="Legg til nytt produkt" wrappingWidth="120" />
                 <TextField fx:id="newProductName" minWidth="200" prefHeight="27.0" promptText="Navn" />
-                <Button id="addItemButton" minWidth="70" onAction="#addItem" text="Legg til" />
+                <Button fx:id="addItemButton" id="addItemButton" minWidth="70" onAction="#addItem" text="Legg til" />
               </children>
           </HBox>
           <HBox fx:id="searchPane" alignment="center" minHeight="72.0" prefHeight="72.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
