@@ -135,5 +135,7 @@
         <module>data</module>
         <module>ui</module>
         <module>report</module>
+        <module>server</module>
+        <module>runserver</module>
     </modules>
 </project>

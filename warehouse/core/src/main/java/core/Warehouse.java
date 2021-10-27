@@ -51,15 +51,40 @@ public class Warehouse {
   }
 
   public Item removeItem(String id) {
-    if (!items.containsKey(id)) {
-      throw new IllegalArgumentException("Item id does not exist in warehouse");
-    }
-    Item item = items.get(id);
+    Item item = getItem(id);
     item.removeListener(itemListeners.get(item.getId()));
     itemListeners.remove(item.getId());
     items.remove(id);
     notifyItemRemoved(item);
     return item;
+  }
+
+  public Item getItem(String id) {
+    if (!items.containsKey(id)) {
+      throw new IllegalArgumentException("Item id does not exist in warehouse");
+    }
+    return items.get(id);
+  }
+
+  public boolean itemExists(String id) {
+    return items.containsKey(id);
+  }
+
+  /**
+   * Adds the item, replaces it if it already exists.
+   *
+   * @return true if it was added, false if it replaced
+   */
+  public boolean putItem(Item item) {
+    boolean itemExists = itemExists(item.getId());
+    items.put(item.getId(), item);
+    if (!itemExists) {
+      notifyItemAdded(item);
+      return true;
+    } else {
+      notifyItemsUpdated();
+      return false;
+    }
   }
 
   public Item findItem(String id) {
