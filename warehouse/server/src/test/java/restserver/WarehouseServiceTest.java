@@ -102,8 +102,6 @@ public class WarehouseServiceTest extends JerseyTest {
     
     List<Item> items = getItems();
     assertFalse(items.isEmpty());
-    System.out.println(item.getCreationDate());
-    System.out.println(items.get(0).getCreationDate());
     assertTrue(item.equals(items.get(0)));
   }
 
