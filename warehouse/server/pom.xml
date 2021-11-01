@@ -51,14 +51,13 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.9.6</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.9.6</version>
     </dependency>
+
 
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -160,7 +159,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <argLine>
-                    @{jaCoCoArgLine} --add-opens warehouse.rest/warehouse.restapi=ALL-UNNAMED
+                    @{jaCoCoArgLine} --add-opens warehouse.server/restapi=ALL-UNNAMED --add-opens warehouse.server/restserver=ALL-UNNAMED
                     </argLine>
         </configuration>
       </plugin>

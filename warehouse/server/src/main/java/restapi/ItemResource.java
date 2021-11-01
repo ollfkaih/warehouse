@@ -11,6 +11,8 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,13 +87,14 @@ public class ItemResource {
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
-  public void postItem(Item item) {
+  public Response postItem(Item item) {
     checkReceivedItem(item);
     LOG.debug("postItem({})", item);
     if (warehouse.itemExists(id)) {
       throw new IllegalStateException("Item already exists");
     }
     warehouse.addItem(item);
+    return Response.created(UriBuilder.fromPath(WarehouseService.WAREHOUSE_SERVICE_PATH).path("item").path(id).build()).build();
   }
 
   @DELETE

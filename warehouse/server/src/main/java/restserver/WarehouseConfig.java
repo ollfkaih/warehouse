@@ -40,7 +40,11 @@ public class WarehouseConfig extends ResourceConfig implements WarehouseListener
   }
 
   public WarehouseConfig() {
-    this(new WarehouseFileSaver("server-warehouse"));
+    this("server-warehouse");
+  }
+
+  public WarehouseConfig(String fileName) {
+    this(new WarehouseFileSaver(fileName));
   }
 
   private void registerSetup() {
