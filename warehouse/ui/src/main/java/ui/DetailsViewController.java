@@ -253,13 +253,14 @@ public class DetailsViewController {
 
   @FXML
   private void saveItem() {
-    toggleEditing();
-
     for (ItemField field : fields.values()) {
       field.saveField();
     }
-
+    if (!warehouse.itemExists(item.getId())) {
+      warehouse.addItem(item);
+    }
     warehouseController.saveWarehouse();
+    toggleEditing();
     update();
   }
   
@@ -296,7 +297,7 @@ public class DetailsViewController {
   }
 
   @FXML
-  private void toggleEditing() {
+  protected void toggleEditing() {
     editing = !editing;
     for (ItemField field : fields.values()) {
       field.setDisabled(!editing);

@@ -36,7 +36,6 @@ public class WarehouseController implements WarehouseListener {
   @FXML private Button loginButton;
   @FXML private AnchorPane root;
   @FXML private GridPane dividerGridPane;
-  @FXML private TextField newProductName;
   @FXML private ScrollPane itemContainer;
   @FXML private VBox itemList;
   @FXML private TextField searchInput;
@@ -66,7 +65,6 @@ public class WarehouseController implements WarehouseListener {
     loginController = new LoginController(this, warehouse);
 
     updateInventory();
-    enterPressed();
         
     List<String> displaySortStrings = List.of("Antall", "Dato", "Navn", "Pris", "Vekt");
     sortBySelector.getItems().addAll(displaySortStrings);
@@ -157,22 +155,11 @@ public class WarehouseController implements WarehouseListener {
     return warehouse.getItemsSortedAndFiltered(sortBy, ascending, searchInput.getText());
   }
 
-  private void enterPressed() {
-    newProductName.setOnKeyPressed(event -> {
-      if (event.getCode() == KeyCode.ENTER) {
-        addItem();
-      }
-    });
-  }
-
   @FXML
   private void addItem() {
-    Item item = new Item(newProductName.getText());
-    warehouse.addItem(item);
-    saveWarehouse();
-
-    newProductName.requestFocus();
-    newProductName.selectAll();
+    Item item = new Item("");
+    openDetailsView(item);
+    detailsViewControllers.get(item).toggleEditing();
   }
 
   @FXML

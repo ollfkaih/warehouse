@@ -33,12 +33,13 @@ public class Warehouse {
     if (items.containsKey(item.getId())) {
       throw new IllegalArgumentException("Item cannot be added because id is taken");
     }
-    if (!item.getName().isEmpty()) {
-      items.putIfAbsent(item.getId(), item);
-      notifyItemAdded(item);
-      itemListeners.put(item.getId(), this::notifyItemsUpdated);
-      item.addListener(itemListeners.get(item.getId()));
+    if (item.getName().isEmpty()) {
+      throw new IllegalArgumentException("Name cannot be empty");
     }
+    items.putIfAbsent(item.getId(), item);
+    notifyItemAdded(item);
+    itemListeners.put(item.getId(), this::notifyItemsUpdated);
+    item.addListener(itemListeners.get(item.getId()));
   }
 
   public void addItem(String name, int amount) {
@@ -97,10 +98,10 @@ public class Warehouse {
 
   public Collection<Item> findItemsbyPredicate(Predicate<Item> predicate) {
     return items
-        .values()
-        .stream()
-        .filter(predicate)
-        .collect(Collectors.toCollection(ArrayList::new));
+    .values()
+    .stream()
+    .filter(predicate)
+    .collect(Collectors.toCollection(ArrayList::new));
   }
 
   public Collection<Item> findItemsbyName(String name) {
@@ -130,10 +131,10 @@ public class Warehouse {
   public List<Item> getItemsSortedAndFiltered(SortOption options, boolean ascendingOrder, String filterText) {
     List<Item> sortedItems = getAllItemsSorted(options, ascendingOrder);
     return sortedItems
-        .stream()
-        .filter(item -> 
-            item.getName().toLowerCase().contains(filterText.toLowerCase()) || (item.getBarcode() != null && item.getBarcode().equals(filterText)))
-        .collect(Collectors.toList());
+    .stream()
+    .filter(item -> 
+        item.getName().toLowerCase().contains(filterText.toLowerCase()) || (item.getBarcode() != null && item.getBarcode().equals(filterText)))
+    .collect(Collectors.toList());
   }
 
   public List<Item> getAllItemsSorted(SortOption options, boolean ascendingOrder) {
@@ -161,20 +162,20 @@ public class Warehouse {
   public Map<String, Item> getAllItemsAsMap() {
     return new TreeMap<>(items);
   }
-  
+
   private void notifyItemAdded(Item item) {
     for (WarehouseListener listener : listeners) {
       listener.itemAddedToWarehouse(item);
     }
     notifyItemsUpdated();
   }
-  
+
   private void notifyItemsUpdated() {
     for (WarehouseListener listener : listeners) {
       listener.warehouseItemsUpdated();
     }
   }
-  
+
   private void notifyItemRemoved(Item item) {
     for (WarehouseListener listener : listeners) {
       listener.itemRemovedFromWarehouse(item);
@@ -211,16 +212,14 @@ public class Warehouse {
 
   public boolean containsUser(String username, String password, boolean admin) {
     return getUsers()
-        .stream()
-        .anyMatch(user -> user.getUserName().equals(username) && user.getPassword().equals(password) && user.getAdmin() == admin);
+    .stream()
+    .anyMatch(user -> user.getUserName().equals(username) && user.getPassword().equals(password) && user.getAdmin() == admin);
   }
 
   public boolean containsUserByUsername(String username) {
-    return getUsers()
-        .stream()
-        .anyMatch(user -> user.getUserName().equals(username));
+    return getUsers().stream().anyMatch(user -> user.getUserName().equals(username));
   }
-  
+
   public void addUser(User user) {
     if (containsUserByUsername(user.getUserName())) {
       throw new IllegalArgumentException("Username already taken.");
