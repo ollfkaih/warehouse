@@ -155,26 +155,6 @@ public class ItemTest {
     return UUID.randomUUID().toString();
   }
 
-  public static void assertItemsEqual(Item expected, Item actual) {
-    assertEquals(expected.getName(), actual.getName());
-    assertEquals(expected.getId(), actual.getId());
-    assertEquals(expected.getAmount(), actual.getAmount());
-    assertEquals(expected.getBarcode(), actual.getBarcode());
-    assertEquals(expected.getBrand(), actual.getBrand());
-    assertEquals(expected.getCreationDate(), actual.getCreationDate());
-    assertEquals(expected.getCurrentPrice(), actual.getCurrentPrice());
-    assertEquals(expected.getSalePrice(), actual.getSalePrice());
-    assertEquals(expected.getRegularPrice(), actual.getRegularPrice());
-    assertEquals(expected.getPurchasePrice(), actual.getPurchasePrice());
-    assertEquals(expected.getSection(), actual.getSection());
-    assertEquals(expected.getRow(), actual.getRow());
-    assertEquals(expected.getShelf(), actual.getShelf());
-    assertEquals(expected.getHeight(), actual.getHeight());
-    assertEquals(expected.getWidth(), actual.getWidth());
-    assertEquals(expected.getLength(), actual.getLength());
-    assertEquals(expected.getWeight(), actual.getWeight());
-  }
-
   static int changeCounter;
 
   @Test

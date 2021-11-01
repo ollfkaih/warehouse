@@ -6,12 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
  * Class for representing one type of item.
  */
-public class Item { 
+public class Item {
   private String id;
   private String name;
   private int amount;
@@ -31,24 +32,13 @@ public class Item {
 
   Collection<ItemListener> listeners = new ArrayList<>();
 
-  public Item(
-      @JsonProperty("id") String id,
-      @JsonProperty("name") String name,
-      @JsonProperty("amount") int amount,
-      @JsonProperty("barcode") String barcode,
-      @JsonProperty("brand") String brand,
-      @JsonProperty("regularPrice") Double regularPrice,
-      @JsonProperty("salePrice") Double salePrice,
-      @JsonProperty("purchasePrice") Double purchasePrice,
-      @JsonProperty("section") String section,
-      @JsonProperty("row") String row,
-      @JsonProperty("shelf") String shelf,
-      @JsonProperty("itemHeight") Double height,
-      @JsonProperty("itemWidth") Double width,
-      @JsonProperty("itemLength") Double length,
-      @JsonProperty("weight") Double weight,
-      @JsonProperty("creationDate") LocalDateTime creationDate
-  ) {
+  public Item(@JsonProperty("id") String id, @JsonProperty("name") String name, @JsonProperty("amount") int amount,
+      @JsonProperty("barcode") String barcode, @JsonProperty("brand") String brand,
+      @JsonProperty("regularPrice") Double regularPrice, @JsonProperty("salePrice") Double salePrice,
+      @JsonProperty("purchasePrice") Double purchasePrice, @JsonProperty("section") String section,
+      @JsonProperty("row") String row, @JsonProperty("shelf") String shelf, @JsonProperty("itemHeight") Double height,
+      @JsonProperty("itemWidth") Double width, @JsonProperty("itemLength") Double length,
+      @JsonProperty("weight") Double weight, @JsonProperty("creationDate") LocalDateTime creationDate) {
     setId(id);
     setName(name);
     setAmount(amount);
@@ -68,24 +58,8 @@ public class Item {
   }
 
   public Item(String name, int amount) {
-    this(
-        UUID.randomUUID().toString(),
-        name,
-        amount,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        LocalDateTime.now()
-    );
+    this(UUID.randomUUID().toString(), name, amount, null, null, null, null, null, null, null, null, null, null, null,
+        null, LocalDateTime.now());
   }
 
   public Item(String name) {
@@ -216,8 +190,7 @@ public class Item {
   public void setSection(String section) {
     if (section != null && (section.length() > CoreConst.MAX_SECTION_LENGTH)) {
       throw new IllegalArgumentException(
-          "Section length is too long. Max is " + CoreConst.MAX_SECTION_LENGTH + " characters"
-      );
+          "Section length is too long. Max is " + CoreConst.MAX_SECTION_LENGTH + " characters");
     }
     this.section = section;
     notifyChange();
@@ -229,9 +202,7 @@ public class Item {
 
   public void setRow(String row) {
     if (row != null && (row.length() > CoreConst.MAX_ROW_LENGTH)) {
-      throw new IllegalArgumentException(
-          "Row length is too long. Max is " + CoreConst.MAX_ROW_LENGTH + " characters"
-      );
+      throw new IllegalArgumentException("Row length is too long. Max is " + CoreConst.MAX_ROW_LENGTH + " characters");
     }
     this.row = row;
     notifyChange();
@@ -244,8 +215,7 @@ public class Item {
   public void setShelf(String shelf) {
     if (shelf != null && (shelf.length() > CoreConst.MAX_SHELF_LENGTH)) {
       throw new IllegalArgumentException(
-          "Shelf length is too long. Max is " + CoreConst.MAX_SHELF_LENGTH + " characters"
-      );
+          "Shelf length is too long. Max is " + CoreConst.MAX_SHELF_LENGTH + " characters");
     }
     this.shelf = shelf;
     notifyChange();
@@ -317,26 +287,11 @@ public class Item {
   @Override
   public String toString() {
     return String.format(
-        "Name: %s%n"
-        + "Id: %s%n"
-        + "Amount: %d%n"
-        + "Brand: %s%n"
-        + "Regular price: %f%n"
-        + "Sale price: %f%n"
-        + "Purchase price: %f%n"
-        + "Warehouse placement: %s %s %s%n"
-        + "Item dimensions: %f*%f*%f%n"
-        + "Weight: %f%n",
-        getName(),
-        getId(),
-        getAmount(),
-        getBrand(),
-        getRegularPrice(),
-        getSalePrice(),
-        getPurchasePrice(),
-        getSection(), getRow(), getShelf(),
-        getWidth(), getLength(), getHeight(),
-        getWeight());
+        "Name: %s%n" + "Id: %s%n" + "Amount: %d%n" + "Brand: %s%n" + "Regular price: %f%n" + "Sale price: %f%n"
+            + "Purchase price: %f%n" + "Warehouse placement: %s %s %s%n" + "Item dimensions: %f*%f*%f%n"
+            + "Weight: %f%n",
+        getName(), getId(), getAmount(), getBrand(), getRegularPrice(), getSalePrice(), getPurchasePrice(),
+        getSection(), getRow(), getShelf(), getWidth(), getLength(), getHeight(), getWeight());
   }
 
   private void notifyChange() {
@@ -351,5 +306,32 @@ public class Item {
 
   public void removeListener(ItemListener listener) {
     listeners.remove(listener);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(amount, barcode, brand, creationDate, height, id, length, name, purchasePrice, regularPrice,
+        row, salePrice, section, shelf, weight, width);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Item other = (Item) obj;
+    return amount == other.amount && Objects.equals(barcode, other.barcode) && Objects.equals(brand, other.brand)
+        && Objects.equals(creationDate, other.creationDate) && Objects.equals(height, other.height)
+        && Objects.equals(id, other.id) && Objects.equals(length, other.length) && Objects.equals(name, other.name)
+        && Objects.equals(purchasePrice, other.purchasePrice) && Objects.equals(regularPrice, other.regularPrice)
+        && Objects.equals(row, other.row) && Objects.equals(salePrice, other.salePrice)
+        && Objects.equals(section, other.section) && Objects.equals(shelf, other.shelf)
+        && Objects.equals(weight, other.weight) && Objects.equals(width, other.width);
   }
 }
