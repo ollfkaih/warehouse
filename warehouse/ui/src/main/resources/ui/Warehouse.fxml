@@ -36,14 +36,13 @@
                 </font>
               </Label>
               <Label fx:id="usernameLabel" layoutX="340.0" layoutY="15.0" maxWidth="50.0" prefWidth="50.0" AnchorPane.rightAnchor="110.0" />
-              <Button fx:id="loginButton" layoutX="355.0" layoutY="11.0" minWidth="70.0" onAction="#login" text="Logg inn" AnchorPane.rightAnchor="40.0" />
           </AnchorPane>
           <!-- Start of add new item box -->
-          <HBox fx:id="addItemVBox" alignment="CENTER" minHeight="50.0" spacing="5" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
+          <HBox fx:id="addItemVBox" alignment="CENTER" minHeight="50.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
               <children>
-                <Text text="Legg til nytt produkt" wrappingWidth="120" />
-                <TextField fx:id="newProductName" minWidth="200" prefHeight="27.0" promptText="Navn" />
-                <Button fx:id="addItemButton" id="addItemButton" minWidth="70" onAction="#addItem" text="Legg til" />
+                <!--<Text text="Legg til nytt produkt" wrappingWidth="120" />-->
+                <Button fx:id="addItemButton" id="addItemButton" minWidth="70" onAction="#addItem" text="Legg til produkt" />
+                <Button fx:id="loginButton" layoutX="355.0" layoutY="11.0" minWidth="70.0" onAction="#login" text="Logg inn" AnchorPane.rightAnchor="40.0" />
               </children>
           </HBox>
           <HBox fx:id="searchPane" alignment="center" minHeight="72.0" prefHeight="72.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
