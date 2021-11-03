@@ -125,7 +125,7 @@ public class Warehouse {
   }
 
   private List<Item> sortItemsByComparator(Comparator<Item> c) {
-    return items.values().stream().sorted(c).toList();
+    return items.values().stream().sorted(c).collect(Collectors.toList());
   }
 
   public List<Item> getItemsSortedAndFiltered(SortOption options, boolean ascendingOrder, String filterText) {
