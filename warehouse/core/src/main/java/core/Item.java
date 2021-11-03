@@ -4,16 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
 
 /**
  * Class for representing one type of item.
  */
-public class Item {
-  private String id;
+public class Item extends Entity<Item> {
   private String name;
   private int amount;
   private String barcode;
@@ -30,8 +27,6 @@ public class Item {
   private Double weight;
   private LocalDateTime creationDate;
 
-  Collection<ItemListener> listeners = new ArrayList<>();
-
   public Item(@JsonProperty("id") String id, @JsonProperty("name") String name, @JsonProperty("amount") int amount,
       @JsonProperty("barcode") String barcode, @JsonProperty("brand") String brand,
       @JsonProperty("regularPrice") Double regularPrice, @JsonProperty("salePrice") Double salePrice,
@@ -39,7 +34,7 @@ public class Item {
       @JsonProperty("row") String row, @JsonProperty("shelf") String shelf, @JsonProperty("itemHeight") Double height,
       @JsonProperty("itemWidth") Double width, @JsonProperty("itemLength") Double length,
       @JsonProperty("weight") Double weight, @JsonProperty("creationDate") LocalDateTime creationDate) {
-    setId(id);
+    super(id);
     setName(name);
     setAmount(amount);
     setBarcode(barcode);
@@ -66,18 +61,6 @@ public class Item {
     this(name, 0);
   }
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    if (id == null) {
-      throw new IllegalArgumentException();
-    }
-    this.id = id;
-    notifyChange();
-  }
-
   public String getName() {
     return name;
   }
@@ -87,7 +70,7 @@ public class Item {
       throw new IllegalArgumentException();
     }
     this.name = name;
-    notifyChange();
+    notifyUpdated();
   }
 
   public int getAmount() {
@@ -99,7 +82,7 @@ public class Item {
       throw new IllegalArgumentException();
     }
     this.amount = amount;
-    notifyChange();
+    notifyUpdated();
   }
 
   public void incrementAmount() {
@@ -130,7 +113,7 @@ public class Item {
       }
     }
     this.barcode = barcode;
-    notifyChange();
+    notifyUpdated();
   }
 
   public String getBrand() {
@@ -139,7 +122,7 @@ public class Item {
 
   public void setBrand(String brand) {
     this.brand = brand;
-    notifyChange();
+    notifyUpdated();
   }
 
   public Double getRegularPrice() {
@@ -151,7 +134,7 @@ public class Item {
       throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
     }
     this.regularPrice = regularPrice;
-    notifyChange();
+    notifyUpdated();
   }
 
   @JsonIgnore
@@ -168,7 +151,7 @@ public class Item {
       throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
     }
     this.salePrice = salePrice;
-    notifyChange();
+    notifyUpdated();
   }
 
   public Double getPurchasePrice() {
@@ -180,7 +163,7 @@ public class Item {
       throw new IllegalArgumentException("Price cannot be negative or larger than infinity");
     }
     this.purchasePrice = purchasePrice;
-    notifyChange();
+    notifyUpdated();
   }
 
   public String getSection() {
@@ -193,7 +176,7 @@ public class Item {
           "Section length is too long. Max is " + CoreConst.MAX_SECTION_LENGTH + " characters");
     }
     this.section = section;
-    notifyChange();
+    notifyUpdated();
   }
 
   public String getRow() {
@@ -205,7 +188,7 @@ public class Item {
       throw new IllegalArgumentException("Row length is too long. Max is " + CoreConst.MAX_ROW_LENGTH + " characters");
     }
     this.row = row;
-    notifyChange();
+    notifyUpdated();
   }
 
   public String getShelf() {
@@ -218,7 +201,7 @@ public class Item {
           "Shelf length is too long. Max is " + CoreConst.MAX_SHELF_LENGTH + " characters");
     }
     this.shelf = shelf;
-    notifyChange();
+    notifyUpdated();
   }
 
   public Double getHeight() {
@@ -230,7 +213,7 @@ public class Item {
       throw new IllegalArgumentException("Height is outside of allowed values");
     }
     this.height = height;
-    notifyChange();
+    notifyUpdated();
   }
 
   public Double getWidth() {
@@ -242,7 +225,7 @@ public class Item {
       throw new IllegalArgumentException("Width is outside of allowed values");
     }
     this.width = width;
-    notifyChange();
+    notifyUpdated();
   }
 
   public Double getLength() {
@@ -254,7 +237,7 @@ public class Item {
       throw new IllegalArgumentException("Length is outside of allowed values");
     }
     this.length = length;
-    notifyChange();
+    notifyUpdated();
   }
 
   public Double getWeight() {
@@ -266,7 +249,7 @@ public class Item {
       throw new IllegalArgumentException("Weight is outside of allowed values");
     }
     this.weight = weight;
-    notifyChange();
+    notifyUpdated();
   }
 
   public LocalDateTime getCreationDate() {
@@ -281,7 +264,11 @@ public class Item {
       throw new IllegalArgumentException("Date cannot be in the future");
     }
     this.creationDate = date;
-    notifyChange();
+    notifyUpdated();
+  }
+
+  @Override protected Item getThis() {
+    return this;
   }
 
   @Override
@@ -294,23 +281,9 @@ public class Item {
         getSection(), getRow(), getShelf(), getWidth(), getLength(), getHeight(), getWeight());
   }
 
-  private void notifyChange() {
-    for (ItemListener listener : listeners) {
-      listener.itemUpdated();
-    }
-  }
-
-  public void addListener(ItemListener listener) {
-    listeners.add(listener);
-  }
-
-  public void removeListener(ItemListener listener) {
-    listeners.remove(listener);
-  }
-
   @Override
   public int hashCode() {
-    return Objects.hash(amount, barcode, brand, creationDate, height, id, length, name, purchasePrice, regularPrice,
+    return Objects.hash(amount, barcode, brand, creationDate, height, this.getId(), length, name, purchasePrice, regularPrice,
         row, salePrice, section, shelf, weight, width);
   }
 
@@ -328,7 +301,7 @@ public class Item {
     Item other = (Item) obj;
     return amount == other.amount && Objects.equals(barcode, other.barcode) && Objects.equals(brand, other.brand)
         && Objects.equals(creationDate, other.creationDate) && Objects.equals(height, other.height)
-        && Objects.equals(id, other.id) && Objects.equals(length, other.length) && Objects.equals(name, other.name)
+        && Objects.equals(this.getId(), other.getId()) && Objects.equals(length, other.length) && Objects.equals(name, other.name)
         && Objects.equals(purchasePrice, other.purchasePrice) && Objects.equals(regularPrice, other.regularPrice)
         && Objects.equals(row, other.row) && Objects.equals(salePrice, other.salePrice)
         && Objects.equals(section, other.section) && Objects.equals(shelf, other.shelf)

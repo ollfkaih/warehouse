@@ -174,16 +174,13 @@ public class WarehouseTest {
 
     wh.addItem(item);
     assertEquals(item, addedItem);
-    assertTrue(updated);
 
     updated = false;
     item.setHeight(6.9);
     assertTrue(updated);
     
-    updated = false;
     wh.removeItem(item);
     assertEquals(item, removedItem);
-    assertTrue(updated);
 
     updated = false;
     item.setBarcode("1739280375232");;

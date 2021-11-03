@@ -20,7 +20,7 @@ public class Warehouse {
   private User currentUser;
   private Collection<User> users;
   private Collection<WarehouseListener> listeners;
-  private Map<String, ItemListener> itemListeners;
+  private Map<String, EntityListener<Item>> itemListeners;
 
   public Warehouse() {
     items = new TreeMap<>();
@@ -38,7 +38,7 @@ public class Warehouse {
     }
     items.putIfAbsent(item.getId(), item);
     notifyItemAdded(item);
-    itemListeners.put(item.getId(), this::notifyItemsUpdated);
+    itemListeners.put(item.getId(), this::notifyItemUpdated);
     item.addListener(itemListeners.get(item.getId()));
   }
 
@@ -83,7 +83,7 @@ public class Warehouse {
       notifyItemAdded(item);
       return true;
     } else {
-      notifyItemsUpdated();
+      notifyItemUpdated(item);
       return false;
     }
   }
@@ -167,10 +167,9 @@ public class Warehouse {
     for (WarehouseListener listener : listeners) {
       listener.itemAddedToWarehouse(item);
     }
-    notifyItemsUpdated();
   }
 
-  private void notifyItemsUpdated() {
+  private void notifyItemUpdated(Item item) {
     for (WarehouseListener listener : listeners) {
       listener.warehouseItemsUpdated();
     }
@@ -180,7 +179,6 @@ public class Warehouse {
     for (WarehouseListener listener : listeners) {
       listener.itemRemovedFromWarehouse(item);
     }
-    notifyItemsUpdated();
   }
 
   public void addListener(WarehouseListener listener) {
