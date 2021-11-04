@@ -38,7 +38,7 @@ public class WarehouseTest {
   @DisplayName("Test adding a new warehouse")
   public void testAddToWarehouse() {
     wh.addItem(item);
-    assertEquals(item, wh.findItem(item.getId()));
+    assertEquals(item, wh.getItem(item.getId()));
     assertTrue(wh.findItemsbyName("itemName").contains(item));
   }
 
@@ -71,8 +71,8 @@ public class WarehouseTest {
     wh.addItem(item);
 
     
-    assertEquals(item, wh.findItem(item.getId()));
-    assertThrows(IllegalArgumentException.class, () -> wh.findItem(item2.getId()));
+    assertEquals(item, wh.getItem(item.getId()));
+    assertThrows(IllegalArgumentException.class, () -> wh.getItem(item2.getId()));
 
     items.add(item);
     assertEquals(items, wh.findItemsbyName(item.getName()));
@@ -153,24 +153,24 @@ public class WarehouseTest {
   @Test
   @DisplayName("Test Warehouse listener")
   void testListener() {
-    WarehouseListener listener = new WarehouseListener(){
+    EntityCollectionListener<Item> listener = new EntityCollectionListener<Item>() {
       @Override
-      public void itemAddedToWarehouse(Item i) {
+      public void entityAdded(Item i) {
         addedItem = i;
       }
 
       @Override
-      public void warehouseItemsUpdated() {
+      public void entityUpdated(Item i) {
         updated = true;
       }
 
       @Override
-      public void itemRemovedFromWarehouse(Item i) {
+      public void entityRemoved(Item i) {
         removedItem = i;
       }
     };
 
-    wh.addListener(listener);
+    wh.addItemsListener(listener);
 
     wh.addItem(item);
     assertEquals(item, addedItem);
@@ -186,7 +186,7 @@ public class WarehouseTest {
     item.setBarcode("1739280375232");;
     assertFalse(updated); // item is no longer in warehouse
 
-    wh.removeListener(listener);
+    wh.removeItemsListener(listener);
 
     updated = false;
     Item item2 = new Item("item2", 2);

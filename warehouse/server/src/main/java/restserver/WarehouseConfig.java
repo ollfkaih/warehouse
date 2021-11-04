@@ -1,9 +1,9 @@
 package restserver;
 
+import core.EntityCollectionListener;
 import core.Item;
 import core.User;
 import core.Warehouse;
-import core.WarehouseListener;
 import data.DataPersistence;
 import data.WarehouseFileSaver;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -17,7 +17,7 @@ import java.io.IOException;
  * Configures the rest service, e.g. JSON support with Jackson and injectable
  * Warehouse and DataPersistence
  */
-public class WarehouseConfig extends ResourceConfig implements WarehouseListener {
+public class WarehouseConfig extends ResourceConfig implements EntityCollectionListener<Item> {
 
   private Warehouse warehouse;
   private DataPersistence dataPersistence;
@@ -76,7 +76,7 @@ public class WarehouseConfig extends ResourceConfig implements WarehouseListener
 
   public void setWarehouse(Warehouse warehouse) {
     this.warehouse = warehouse;
-    warehouse.addListener(this);
+    warehouse.addItemsListener(this);
   }
 
   private static Warehouse createDefaultWarehouse() {
@@ -89,17 +89,17 @@ public class WarehouseConfig extends ResourceConfig implements WarehouseListener
   }
 
   @Override
-  public void itemAddedToWarehouse(Item item) {
+  public void entityAdded(Item item) {
     saveWarehouse();
   }
 
   @Override
-  public void warehouseItemsUpdated() {
+  public void entityUpdated(Item item) {
     saveWarehouse();
   }
 
   @Override
-  public void itemRemovedFromWarehouse(Item item) {
+  public void entityRemoved(Item item) {
     saveWarehouse();
   }
 }

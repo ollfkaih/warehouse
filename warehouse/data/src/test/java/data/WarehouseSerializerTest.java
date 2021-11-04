@@ -36,7 +36,7 @@ class WarehouseSerializerTest {
 
     assertEquals(warehouse.getAllItems().size(), newWarehouse.getAllItems().size());
     for (Item item : warehouse.getAllItems()) {
-      Item newItem = newWarehouse.findItem(item.getId());
+      Item newItem = newWarehouse.getItem(item.getId());
       assertEquals(item.getId(), newItem.getId());
       assertEquals(item.getName(), newItem.getName());
       assertEquals(item.getAmount(), newItem.getAmount());
