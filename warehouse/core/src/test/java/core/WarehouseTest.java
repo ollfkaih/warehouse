@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,7 @@ public class WarehouseTest {
   User user1;
   User user2;
   User user3;
-  List<User> users;
+  Collection<User> users;
 
   @BeforeEach
   public void setup() {
@@ -214,10 +215,11 @@ public class WarehouseTest {
   @Test
   @DisplayName("Test user list")
   void testUsers() {
-    assertEquals(users, wh.getUsers());
+    assertTrue(wh.getUsers().isEmpty());
     wh.addUser(user1);
     users.add(user1);
-    assertEquals(users, wh.getUsers());
+    assertTrue(wh.getUsers().size() == 1);
+    assertTrue(wh.getUsers().contains(user1));
     assertTrue(wh.containsUser("a", "b", true));
     assertFalse(wh.containsUser("a", "d", true));
     assertFalse(wh.containsUser("c", "b", true));

@@ -38,6 +38,10 @@ public class EntityCollection<T extends Entity<T>> {
     return entities.containsKey(id);
   }
 
+  public boolean contains(Predicate<T> predicate) {
+    return entities.values().stream().anyMatch(predicate);
+  }
+
   public void add(T entity) {
     if (contains(entity.getId())) {
       throw new IllegalArgumentException("Entity with this id is already in the collection");

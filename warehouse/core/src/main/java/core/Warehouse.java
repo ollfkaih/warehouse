@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 public class Warehouse {
   private EntityCollection<Item> itemCollection;
   private User currentUser;
-  private Collection<User> users;
+  private EntityCollection<User> userCollection;
 
   public Warehouse() {
     itemCollection = new EntityCollection<Item>();
-    users = new ArrayList<>();
+    userCollection = new EntityCollection<User>();
   }
 
   public void addItem(Item item) {
@@ -141,7 +141,7 @@ public class Warehouse {
   }
 
   public Collection<User> getUsers() {
-    return users;
+    return userCollection.getAll();
   }
 
   public boolean containsUser(String username, String password, boolean admin) {
@@ -151,13 +151,13 @@ public class Warehouse {
   }
 
   public boolean containsUserByUsername(String username) {
-    return getUsers().stream().anyMatch(user -> user.getUserName().equals(username));
+    return userCollection.contains(user -> user.getUserName().equals(username));
   }
 
   public void addUser(User user) {
     if (containsUserByUsername(user.getUserName())) {
       throw new IllegalArgumentException("Username already taken.");
     }
-    users.add(user);
+    userCollection.add(user);
   }
 }
