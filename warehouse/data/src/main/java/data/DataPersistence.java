@@ -1,46 +1,35 @@
 package data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import core.Warehouse;
-import data.mapper.LocalDateTimeDeserializer;
-import data.mapper.LocalDateTimeSerializer;
-
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 /**
- * Interface for persisting warehouse data.
+ * Interface for persisting data. 
+ * NOTE: T can be a collection of objects, f.ex. if we want to save all the Items in a Warehouse.
  */
-public interface DataPersistence {
+public interface DataPersistence<T> {
   /**
-   * Get a the saved warehouse.
+   * Get a the saved object.
    *
-   * @return The Warehouse
-   * @throws IOException if the saved warehouse cannot be read from file
+   * @param key The key that the object was saved with
+   * @return The object
+   * @throws IOException if the saved object cannot be loaded
    */
-  Warehouse getWarehouse() throws IOException;
+  T load(String key) throws IOException;
 
   /**
-   * Save the warehouse.
+   * Save the object with the given key.
    *
-   * @param warehouse Warehouse to be saved
-   * @throws IOException If the warehouse can't be written to file
+   * @param object Object to be saved
+   * @param key Unique object key, used for loading the object
+   * @throws IOException If the object can't be saved
    */
-  void saveItems(Warehouse warehouse) throws IOException;
-  
-  void saveUsers(Warehouse warehouse) throws IOException;
+  void save(T object, String key) throws IOException;
 
-  static ObjectMapper createObjectMapper() {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule(getLocalDateTimeModule());
-    return mapper;
-  }
+  /**
+   * Deletes the object saved with the given key.
 
-  private static SimpleModule getLocalDateTimeModule() {
-    SimpleModule localDateTimeModule = new SimpleModule();
-    localDateTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
-    localDateTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
-    return localDateTimeModule;
-  }
+   * @param key The key to delete
+   * @throws IOException If object can't be deleted
+   */
+  void delete(String key) throws IOException;
 }

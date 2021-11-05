@@ -16,7 +16,6 @@ import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,14 @@ public class WarehouseServiceTest extends JerseyTest {
 
   @Override
   protected ResourceConfig configure() {
-    final WarehouseConfig config = new WarehouseConfig(TEST_FILE_NAME);
+    final WarehouseConfig config;
+    try {
+      config = new WarehouseConfig(TEST_FILE_NAME);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+      // TODO: Error handling
+    } 
     if (shouldLog()) {
       enable(TestProperties.LOG_TRAFFIC);
       enable(TestProperties.DUMP_ENTITY);
@@ -108,7 +114,7 @@ public class WarehouseServiceTest extends JerseyTest {
   @AfterEach
   public void afterEach() {
     try {
-      new WarehouseFileSaver(TEST_FILE_NAME).deleteWarehouse("items");
+      new WarehouseFileSaver(TEST_FILE_NAME).deleteWarehouse();
     } catch (IOException e) {
       e.printStackTrace();
     }

@@ -86,8 +86,8 @@ class WarehouseControllerTest {
   private WarehouseController warehouseController;
   private Parent root;
   private static final String FILENAME = "warehouse";
-  private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
   private static Warehouse originalWarehouse;
+  private final WarehouseFileSaver dataPersistence = new WarehouseFileSaver(FILENAME);
   private Button addItemButtonCopy;
 
   @Start
@@ -203,6 +203,7 @@ class WarehouseControllerTest {
   void teardown() {
     try {
       dataPersistence.saveItems(originalWarehouse);
+      dataPersistence.saveUsers(originalWarehouse);
     } catch (Exception e) {
       System.out.println("Unable to revert to original warehouse");
     }

@@ -1,95 +1,64 @@
 package data;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import core.Item;
+import core.User;
 import core.Warehouse;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.Collection;
+
 
 /**
  * Implementation of DataPersistence that saves warehouse to json file on disk.
  */
-public class WarehouseFileSaver implements DataPersistence {
-  private static final String WAREHOUSE_FILE_EXTENSION = "json";
-  private final String warehouseFileName;
+public class WarehouseFileSaver {
   private static final String ITEMS_FOLDERNAME = "items";
   private static final String USERS_FOLDERNAME = "users";
+  private final String warehouseFileName;
+  private final FileSaver<Collection<Item>> itemFileSaver;
+  private final FileSaver<Collection<User>> userFileSaver;
 
   public WarehouseFileSaver(String filename) {
     this.warehouseFileName = filename;
+    this.itemFileSaver = new FileSaver<Collection<Item>>(new TypeReference<Collection<Item>>() {}, ITEMS_FOLDERNAME);
+    this.userFileSaver = new FileSaver<Collection<User>>(new TypeReference<Collection<User>>() {}, USERS_FOLDERNAME);
   }
 
-  @Override
   public Warehouse getWarehouse() throws IOException {
-    Path itemsFilePath = getWarehouseFilePath(ITEMS_FOLDERNAME);
-    Path usersFilePath = getWarehouseFilePath(USERS_FOLDERNAME);
-    File itemsFile = itemsFilePath.toFile();
-    File usersFile = usersFilePath.toFile();
-    if (!itemsFile.isFile()) {
-      saveItems(new Warehouse());
-    }
-    if (!usersFile.isFile()) {
-      saveUsers(new Warehouse());
-    }
-    if (itemsFile.isFile() && usersFile.isFile()) {
-      try (var items = new FileInputStream(itemsFile); var users = new FileInputStream(usersFile)) {
-        return readWarehouse(items, users);
+    Collection<Item> warehouseItems = itemFileSaver.load(warehouseFileName);
+    Collection<User> warehouseUsers = userFileSaver.load(warehouseFileName);
+
+    Warehouse warehouse = new Warehouse();
+    if (warehouseItems != null) {
+      for (Item item : warehouseItems) {
+        warehouse.addItem(item);
       }
-    } else {
-      return null;
     }
+
+    if (warehouseUsers != null) {
+      for (User user : warehouseUsers) {
+        warehouse.addUser(user);
+      }
+    }
+
+    return warehouse;
   }
 
-  @Override
   public void saveItems(Warehouse warehouse) throws IOException {
-    var warehouseFilePath = getWarehouseFilePath(ITEMS_FOLDERNAME);
-    ensureWarehouseFolderExists(ITEMS_FOLDERNAME);
-    try (var os = new FileOutputStream(warehouseFilePath.toFile())) {
-      writeItems(warehouse, os);
-    }
+    itemFileSaver.save(warehouse.getAllItems(), warehouseFileName);
   }
 
-  @Override
   public void saveUsers(Warehouse warehouse) throws IOException {
-    var userFilePath = getWarehouseFilePath(USERS_FOLDERNAME);
-    ensureWarehouseFolderExists(USERS_FOLDERNAME);
-    try (var os = new FileOutputStream(userFilePath.toFile())) {
-      writeUsers(warehouse, os);
+    userFileSaver.save(warehouse.getUsers(), warehouseFileName);
+  }
+
+  public void deleteWarehouse() throws IOException {
+    if (userFileSaver.exists(warehouseFileName)) {
+      userFileSaver.delete(warehouseFileName);
+    }
+    if (itemFileSaver.exists(warehouseFileName)) { 
+      itemFileSaver.delete(warehouseFileName);
     }
   }
-  
-
-  public void deleteWarehouse(String folder) throws IOException {
-    Files.delete(getWarehouseFilePath(folder));
-  }
-
-  private Path getWarehouseFolderPath(String folder) {
-    return Path.of(System.getProperty("user.home"), "warehouse", folder);
-  }
-
-  private Path getWarehouseFilePath(String folder) {
-    return getWarehouseFolderPath(folder).resolve(warehouseFileName + "." + WAREHOUSE_FILE_EXTENSION);
-  }
-
-  private void ensureWarehouseFolderExists(String folder) throws IOException {
-    Files.createDirectories(getWarehouseFolderPath(folder));
-  }
-
-  private Warehouse readWarehouse(InputStream items, InputStream users) throws IOException {
-    return WarehouseSerializer.jsonToWarehouse(items, users);
-  }
-
-  private void writeItems(Warehouse warehouse, OutputStream os) throws IOException {
-    WarehouseSerializer.itemsToJson(warehouse, os);
-  }
-  
-  private void writeUsers(Warehouse warehouse, OutputStream os) throws IOException {
-    WarehouseSerializer.usersToJson(warehouse, os);
-  }
-
 }

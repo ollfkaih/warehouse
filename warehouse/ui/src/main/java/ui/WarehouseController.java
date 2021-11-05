@@ -34,7 +34,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   private static final String FILENAME = "warehouse";
 
   private Warehouse warehouse;
-  private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
+  private final WarehouseFileSaver dataPersistence = new WarehouseFileSaver(FILENAME);
 
   @FXML private Label usernameLabel;
   @FXML private Button loginButton;

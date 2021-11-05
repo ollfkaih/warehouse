@@ -4,7 +4,6 @@ import core.EntityCollectionListener;
 import core.Item;
 import core.User;
 import core.Warehouse;
-import data.DataPersistence;
 import data.WarehouseFileSaver;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -20,15 +19,17 @@ import java.io.IOException;
 public class WarehouseConfig extends ResourceConfig implements EntityCollectionListener<Item> {
 
   private Warehouse warehouse;
-  private DataPersistence dataPersistence;
+  private WarehouseFileSaver dataPersistence;
 
   public WarehouseConfig(Warehouse warehouse) {
     setWarehouse(warehouse);
     dataPersistence = new WarehouseFileSaver("server-warehouse");
+
+    // TODO: Replace WarehouseFileSaver with seperate DataPersistence objects for Items and Users and handle erros
     registerSetup();
   }
 
-  public WarehouseConfig(DataPersistence dataPersistence) {
+  public WarehouseConfig(WarehouseFileSaver dataPersistence) {
     this.dataPersistence = dataPersistence;
     try {
       setWarehouse(dataPersistence.getWarehouse());

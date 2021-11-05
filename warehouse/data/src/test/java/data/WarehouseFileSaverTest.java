@@ -45,7 +45,7 @@ class WarehouseFileSaverTest {
       assertEquals(item.getId(), newItem.getId());
       assertEquals(item.getName(), newItem.getName());
       assertEquals(item.getAmount(), newItem.getAmount());
-      assertEquals(item.getCreationDate().format(Utils.dateTimeFormatter), newItem.getCreationDate().format(Utils.dateTimeFormatter));
+      assertEquals(item.getCreationDate().format(DataUtils.dateTimeFormatter), newItem.getCreationDate().format(DataUtils.dateTimeFormatter));
     }
 
     assertEquals(warehouse.getUsers().size(), newWarehouse.getUsers().size());
@@ -60,7 +60,7 @@ class WarehouseFileSaverTest {
 
   @Test
   @DisplayName("Test that warehouseSaver can be loaded properly when no items folder exists")
-  void testWarehouseSaveNoItems() throws IOException{
+  void testWarehouseSaveNoItems() throws IOException {
     fileSaver.saveUsers(warehouse);
     newWarehouse = fileSaver.getWarehouse();
 
@@ -88,7 +88,7 @@ class WarehouseFileSaverTest {
       assertEquals(item.getId(), newItem.getId());
       assertEquals(item.getName(), newItem.getName());
       assertEquals(item.getAmount(), newItem.getAmount());
-      assertEquals(item.getCreationDate().format(Utils.dateTimeFormatter), newItem.getCreationDate().format(Utils.dateTimeFormatter));
+      assertEquals(item.getCreationDate().format(DataUtils.dateTimeFormatter), newItem.getCreationDate().format(DataUtils.dateTimeFormatter));
     }
 
     assertEquals(0, newWarehouse.getUsers().size());
@@ -105,8 +105,7 @@ class WarehouseFileSaverTest {
   @AfterEach
   private void cleanUpFiles() {
     try {
-      fileSaver.deleteWarehouse("items");
-      fileSaver.deleteWarehouse("users");
+      fileSaver.deleteWarehouse();
     } catch (Exception e) {
       fail("Couldn't delete file");
     }
