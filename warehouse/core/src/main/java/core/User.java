@@ -2,7 +2,7 @@ package core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -58,7 +58,7 @@ public class User extends Entity<User> {
     String outString = null;
     try {
       MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(password.getBytes(Charset.forName("UTF-8")));
+      md.update(password.getBytes(StandardCharsets.UTF_8));
       byte[] bytes = md.digest();
       StringBuilder sb = new StringBuilder();
 
