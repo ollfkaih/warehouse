@@ -11,11 +11,11 @@ public abstract class Entity<T extends Entity<T>> {
   private final String id;
   private final Collection<EntityListener<T>> listeners = new ArrayList<>();
 
-  public Entity(String id) {
+  protected Entity(String id) {
     this.id = id;
   }
 
-  public Entity() {
+  protected Entity() {
     this.id = UUID.randomUUID().toString();
   }
 
