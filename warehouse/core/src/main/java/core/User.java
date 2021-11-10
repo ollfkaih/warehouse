@@ -43,7 +43,7 @@ public class User {
     this.password = password;
   }
 
-  public boolean getAdmin() {
+  public boolean isAdmin() {
     return admin;
   }
 

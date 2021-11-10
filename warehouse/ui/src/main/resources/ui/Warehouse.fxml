@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -15,41 +17,38 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-border-width: 10;" stylesheets="@ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
-    <GridPane fx:id="dividerGridPane" minWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane fx:id="root" minWidth="-Infinity" prefHeight="500.0" prefWidth="624.0" style="-fx-border-width: 10;" stylesheets="@ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
+    <GridPane fx:id="dividerGridPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
       </columnConstraints>
       <rowConstraints>
-        <RowConstraints minHeight="200.0" vgrow="NEVER" />
-         <RowConstraints maxHeight="25.0" minHeight="30.0" prefHeight="25.0" vgrow="NEVER" />
+        <RowConstraints minHeight="120.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="25.0" minHeight="25.0" vgrow="NEVER" />
         <RowConstraints vgrow="SOMETIMES" />
       </rowConstraints>
         <children>
         <VBox fx:id="titleAddandSearch" prefWidth="560.0" spacing="10.0">
-          <AnchorPane id="appTitleBox">
-              <Label fx:id="appTitle" alignment="center" text="Warehouse" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                <font>
-                    <Font size="32.0" />
-                </font>
-              </Label>
-              <Label fx:id="usernameLabel" layoutX="340.0" layoutY="15.0" maxWidth="50.0" prefWidth="50.0" AnchorPane.rightAnchor="110.0" />
+          <AnchorPane id="appTitleBox" style="-fx-background-color: #840B9B;">
+               <ImageView fitHeight="50.0" fitWidth="241.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@icon/white_transparent.png" />
+                  </image>
+               </ImageView>
+              <Label fx:id="usernameLabel" layoutX="413.0" layoutY="15.0" maxWidth="140.0" prefHeight="21.0" prefWidth="140.0" style="-fx-background-color: rgba(0,0,0,0.15); -fx-background-radius: 10px; -fx-padding: 2px 2px 2px 10px;" textFill="WHITE" AnchorPane.rightAnchor="116.0" />
+             <Button fx:id="loginButton" layoutX="524.0" layoutY="12.0" minWidth="70.0" onAction="#login" styleClass="loginButton" text="Logg inn" textFill="#840b9b" AnchorPane.rightAnchor="30.0">
+                  <font>
+                     <Font name="System Bold" size="13.0" />
+                  </font></Button>
           </AnchorPane>
-          <!-- Start of add new item box -->
-          <HBox fx:id="addItemVBox" alignment="CENTER" minHeight="50.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
-              <children>
-                <!--<Text text="Legg til nytt produkt" wrappingWidth="120" />-->
-                <Button fx:id="addItemButton" id="addItemButton" minWidth="70" onAction="#addItem" text="Legg til produkt" />
-                <Button fx:id="loginButton" layoutX="355.0" layoutY="11.0" minWidth="70.0" onAction="#login" text="Logg inn" AnchorPane.rightAnchor="40.0" />
-              </children>
-          </HBox>
-          <HBox fx:id="searchPane" alignment="center" minHeight="72.0" prefHeight="72.0" spacing="20" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
-              <Text text="Søk" />
-              <TextField fx:id="searchInput" minWidth="200" prefHeight="27.0" promptText="Navn" />
-              <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sorter" />
-                  <Button fx:id="orderByButton" mnemonicParsing="false" onAction="#changeOrderBy" prefHeight="27.0" prefWidth="32.0" styleClass="orderByButton">
+          <HBox fx:id="searchPane" alignment="CENTER" minHeight="50.0" spacing="5" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
+              <TextField fx:id="searchInput" minWidth="200" prefHeight="27.0" promptText="Søk..." styleClass="searchField" stylesheets="@inputStyle.css">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets></TextField>
+              <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sorter" styleClass="sortBox" />
+                  <Button fx:id="orderByButton" onAction="#changeOrderBy" prefHeight="27.0" prefWidth="32.0" styleClass="orderByButton">
                     <graphic>
                     <VBox fx:id="sortAndOrderSelectors" alignment="center" spacing="5.0">
                           <children>
@@ -67,6 +66,11 @@
                     </VBox>
                     </graphic>
                   </Button>
+             <Button id="addItemButton" fx:id="addItemButton" minWidth="70" onAction="#addItem" style="-fx-background-color: #840B9B;" text="Legg til produkt">
+                  <HBox.margin>
+                     <Insets left="20.0" right="20.0" />
+                  </HBox.margin>
+               </Button>
           </HBox>
     </VBox>
          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #dddddd;" GridPane.rowIndex="1">
@@ -83,7 +87,7 @@
          </AnchorPane>
      <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="450.0" stylesheets="@ItemStyle.css" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
       <content>
-        <VBox fx:id="itemList" alignment="center" spacing="3" />
+        <VBox fx:id="itemList" alignment="center" />
       </content>
             <GridPane.margin>
                <Insets />

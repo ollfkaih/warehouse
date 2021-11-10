@@ -20,15 +20,18 @@ import java.io.IOException;
  */
 public class RegisterController {
   @FXML TextField userNameField;
-  @FXML PasswordField passwordField;
+  @FXML PasswordField passwordField1;
+  @FXML PasswordField passwordField2;
   @FXML Label errorMessageEmptyField;
   @FXML Label errorMessageUserTaken;
+  @FXML Label errorMessageDifferentPasswords;
 
   private static final String FILENAME = "warehouse";
   private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
 
   private String userName;
-  private String password;
+  private String password1;
+  private String password2;
 
   private Stage stage;
   private FXMLLoader loader;
@@ -63,21 +66,30 @@ public class RegisterController {
   @FXML
   private void register() {
     userName = userNameField.getText().toLowerCase();
-    password = User.md5Hash(passwordField.getText());
-    if (!userName.equals("") && !password.equals("")) {
-      if (warehouse.containsUserByUsername(userName)) {
-        errorMessageEmptyField.setText("");
-        errorMessageUserTaken.setText("Brukernavnet er allerede tatt.");
-      } else {
-        user = new User(userName, password, true);
-        warehouse.addUser(user);
-        hideRegisterView();
-        saveUsers();
-      }
-    } else {
-      errorMessageUserTaken.setText("");
-      errorMessageEmptyField.setText("Du må fylle ut alle feltene før du kan gå videre.");
+    password1 = User.md5Hash(passwordField1.getText());
+    password2 = User.md5Hash(passwordField2.getText());
+    if (warehouse.containsUserByUsername(userName)) {
+      errorMessageEmptyField.setText("");
+      errorMessageDifferentPasswords.setText("");
+      errorMessageUserTaken.setText("Brukernavnet er allerede tatt.");
+      return;
     }
+    if (userName.equals("") || passwordField1.getText().equals("") || passwordField2.getText().equals("")) {
+      errorMessageUserTaken.setText("");
+      errorMessageDifferentPasswords.setText("");
+      errorMessageEmptyField.setText("Du må fylle ut alle feltene før du kan gå videre.");
+      return;
+    }
+    if (!password1.equals(password2)) {
+      errorMessageEmptyField.setText("");
+      errorMessageUserTaken.setText("");
+      errorMessageDifferentPasswords.setText("Passordene samsvarer ikke.");
+      return;
+    }
+    user = new User(userName, password1, true);
+    warehouse.addUser(user);
+    hideRegisterView();
+    saveUsers();
   }
 
   protected void saveUsers() {
@@ -96,7 +108,10 @@ public class RegisterController {
   protected void hideRegisterView() {
     stage.hide();
     errorMessageEmptyField.setText("");
+    errorMessageUserTaken.setText("");
+    errorMessageDifferentPasswords.setText("");
     userNameField.setText("");
-    passwordField.setText("");
+    passwordField1.setText("");
+    passwordField2.setText("");
   }
 }
