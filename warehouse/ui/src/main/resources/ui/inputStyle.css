@@ -29,13 +29,17 @@ TextField:disabled {
   -fx-border-color: rgba(0,0,0,0);
   -fx-border-size:1px;
 }
+  .searchField:hover, .searchField:focused {
+    -fx-background-color: rgba(0,0,0,0.10);
+  }
 
-
-.searchField:hover, .searchField:focused {
-  -fx-background-color: rgba(0,0,0,0.10);
+.placementPane {
+  -fx-background-color: #fff; 
+  -fx-border-color: #aaa; 
+  -fx-border-radius: 8;
 }
 
-.placementTextField {
+.placementTextField{
   -fx-border-color: rgba(0,0,0,0);
   -fx-background-color: rgba(0,0,0,0);
   -fx-font-size: 20px;

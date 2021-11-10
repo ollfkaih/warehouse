@@ -66,7 +66,7 @@
                <children>
                   <HBox prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                        <VBox prefHeight="104.0" prefWidth="175.0" spacing="5.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Label text="Antall på lager">
                                  <font>
@@ -92,64 +92,73 @@
                               </BorderPane>
                            </children>
                         </VBox>
-                        <HBox spacing="10.0" HBox.hgrow="NEVER">
+                        <VBox prefHeight="0.0" prefWidth="215.0">
                            <children>
-                              <AnchorPane>
+                              <Label text="Plassering på lager">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <HBox spacing="10.0">
                                  <children>
-                                    <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
+                                    <AnchorPane>
                                        <children>
-                                          <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                          <Pane styleClass="placementPane">
                                              <children>
                                                 <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                    <children>
-                                                      <TextField fx:id="inpPlacementSection" disable="true" promptText="?" styleClass="placementTextField" />
-                                                      <Label text="Seksjon" textAlignment="CENTER" />
+                                                      <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                         <children>
+                                                            <TextField fx:id="inpPlacementSection" disable="true" promptText="?" styleClass="placementTextField" />
+                                                            <Label text="Seksjon" textAlignment="CENTER" />
+                                                         </children>
+                                                      </VBox>
                                                    </children>
                                                 </VBox>
                                              </children>
-                                          </VBox>
+                                          </Pane>
                                        </children>
-                                    </Pane>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane>
-                                 <children>
-                                    <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
+                                    </AnchorPane>
+                                    <AnchorPane>
                                        <children>
-                                          <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                          <Pane styleClass="placementPane">
                                              <children>
                                                 <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                    <children>
-                                                      <TextField fx:id="inpPlacementRow" disable="true" promptText="?" styleClass="placementTextField" />
-                                                      <Label text="Reol" textAlignment="CENTER" />
+                                                      <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                         <children>
+                                                            <TextField fx:id="inpPlacementRow" disable="true" promptText="?" styleClass="placementTextField" />
+                                                            <Label text="Reol" textAlignment="CENTER" />
+                                                         </children>
+                                                      </VBox>
                                                    </children>
                                                 </VBox>
                                              </children>
-                                          </VBox>
+                                          </Pane>
                                        </children>
-                                    </Pane>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane>
-                                 <children>
-                                    <Pane style="-fx-background-color: rgba(0,0,0,0); -fx-border-color: #aaa; -fx-border-radius: 8;">
+                                    </AnchorPane>
+                                    <AnchorPane>
                                        <children>
-                                          <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                          <Pane styleClass="placementPane">
                                              <children>
                                                 <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                    <children>
-                                                      <TextField fx:id="inpPlacementShelf" disable="true" promptText="?" styleClass="placementTextField" />
-                                                      <Label text="Hylle" textAlignment="CENTER" />
+                                                      <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                         <children>
+                                                            <TextField fx:id="inpPlacementShelf" disable="true" promptText="?" styleClass="placementTextField" />
+                                                            <Label text="Hylle" textAlignment="CENTER" />
+                                                         </children>
+                                                      </VBox>
                                                    </children>
                                                 </VBox>
                                              </children>
-                                          </VBox>
+                                          </Pane>
                                        </children>
-                                    </Pane>
+                                    </AnchorPane>
                                  </children>
-                              </AnchorPane>
+                              </HBox>
                            </children>
-                        </HBox>
+                        </VBox>
                      </children>
                   </HBox>
                </children>
@@ -196,53 +205,6 @@
                                     <Label text="Innkjøpspris" />
                                     <TextField fx:id="inpRetailerPrice" disable="true" promptText="Innkjøpspris" />
                                     <Label text="eks.mva">
-                                       <font>
-                                          <Font size="10.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="39.0" prefWidth="420.0">
-               <children>
-                  <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                     <children>
-                        <Label text="Plassering på lager">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                           <children>
-                              <VBox prefHeight="200.0">
-                                 <children>
-                                    <TextField disable="true" promptText="Seksjon" />
-                                    <Label text="Seksjon">
-                                       <font>
-                                          <Font size="10.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="200.0">
-                                 <children>
-                                    <TextField disable="true" promptText="Reol" />
-                                    <Label text="Reol">
-                                       <font>
-                                          <Font size="10.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="200.0">
-                                 <children>
-                                    <TextField disable="true" promptText="Hylle" />
-                                    <Label text="Hylle">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
