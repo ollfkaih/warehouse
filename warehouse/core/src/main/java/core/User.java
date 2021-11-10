@@ -45,6 +45,10 @@ public class User extends Entity<User> {
     notifyUpdated();
   }
 
+  public boolean checkPassword(String password) {
+    return md5Hash(password).equals(this.password);
+  }
+
   public boolean isAdmin() {
     return admin;
   }

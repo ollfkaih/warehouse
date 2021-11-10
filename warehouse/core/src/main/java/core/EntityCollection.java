@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,10 @@ public class EntityCollection<T extends Entity<T>> {
     return entities.values().stream().anyMatch(predicate);
   }
 
+  public Optional<T> find(Predicate<T> predicate) {
+    return entities.values().stream().filter(predicate).findAny();
+  }
+
   public void add(T entity) {
     if (contains(entity.getId())) {
       throw new IllegalArgumentException("Entity with this id is already in the collection");
@@ -64,6 +69,7 @@ public class EntityCollection<T extends Entity<T>> {
       removeEntityListener(old);
       entities.put(entity.getId(), entity);
       addEntityListener(entity);
+      notifyUpdated(entity);
       return false;
     } else {
       add(entity);

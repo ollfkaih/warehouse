@@ -41,7 +41,6 @@ public class ItemTest {
     assertNotNull(item.getCreationDate());
 
     assertThrows(IllegalArgumentException.class, () -> new Item(null, 10));
-    assertThrows(IllegalArgumentException.class, () -> new Item(null));
   }
 
   @Test

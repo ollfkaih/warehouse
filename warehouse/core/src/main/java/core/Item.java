@@ -61,6 +61,11 @@ public class Item extends Entity<Item> {
     this(name, 0);
   }
 
+  public Item(Item item) {
+    this(item.getId(), item.name, item.amount, item.barcode, item.brand, item.regularPrice, item.salePrice, item.purchasePrice, item.section,
+        item.row, item.shelf, item.height, item.width, item.length, item.weight, item.creationDate);
+  }
+
   public String getName() {
     return name;
   }
