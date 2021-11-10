@@ -47,7 +47,6 @@ public class ItemTest {
   @Test
   @DisplayName("Test validation in setters")
   void testSetterValidation() {
-    assertThrows(IllegalArgumentException.class, () -> item.setId(null));
     assertThrows(IllegalArgumentException.class, () -> item.setName(null));
     assertThrows(IllegalArgumentException.class, () -> item.setAmount(CoreConst.MIN_AMOUNT-1));
     assertThrows(IllegalArgumentException.class, () -> item.setAmount(CoreConst.MAX_AMOUNT+1));
@@ -89,10 +88,6 @@ public class ItemTest {
   @DisplayName("Test setters")
   void testSetters() {
     Random rnd = new Random();
-
-    String itemId = getRandomString();
-    item.setId(itemId);
-    assertEquals(itemId, item.getId());
 
     String itemName = getRandomString();
     item.setName(itemName);
@@ -160,12 +155,8 @@ public class ItemTest {
   @Test
   @DisplayName("Test listener")
   void testListener() {
-    ItemListener listener = () -> changeCounter++;
+    EntityListener<Item> listener = (item) -> changeCounter++;
     item.addListener(listener);
-
-    changeCounter = 0;
-    item.setId("itemId");
-    assertEquals(changeCounter, 1);
 
     changeCounter = 0;
     item.setName("name");

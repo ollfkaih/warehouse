@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,7 @@ public class WarehouseTest {
   User user1;
   User user2;
   User user3;
-  List<User> users;
+  Collection<User> users;
 
   @BeforeEach
   public void setup() {
@@ -38,7 +39,7 @@ public class WarehouseTest {
   @DisplayName("Test adding a new warehouse")
   public void testAddToWarehouse() {
     wh.addItem(item);
-    assertEquals(item, wh.findItem(item.getId()));
+    assertEquals(item, wh.getItem(item.getId()));
     assertTrue(wh.findItemsbyName("itemName").contains(item));
   }
 
@@ -71,8 +72,8 @@ public class WarehouseTest {
     wh.addItem(item);
 
     
-    assertEquals(item, wh.findItem(item.getId()));
-    assertThrows(IllegalArgumentException.class, () -> wh.findItem(item2.getId()));
+    assertEquals(item, wh.getItem(item.getId()));
+    assertThrows(IllegalArgumentException.class, () -> wh.getItem(item2.getId()));
 
     items.add(item);
     assertEquals(items, wh.findItemsbyName(item.getName()));
@@ -153,43 +154,40 @@ public class WarehouseTest {
   @Test
   @DisplayName("Test Warehouse listener")
   void testListener() {
-    WarehouseListener listener = new WarehouseListener(){
+    EntityCollectionListener<Item> listener = new EntityCollectionListener<Item>() {
       @Override
-      public void itemAddedToWarehouse(Item i) {
+      public void entityAdded(Item i) {
         addedItem = i;
       }
 
       @Override
-      public void warehouseItemsUpdated() {
+      public void entityUpdated(Item i) {
         updated = true;
       }
 
       @Override
-      public void itemRemovedFromWarehouse(Item i) {
+      public void entityRemoved(Item i) {
         removedItem = i;
       }
     };
 
-    wh.addListener(listener);
+    wh.addItemsListener(listener);
 
     wh.addItem(item);
     assertEquals(item, addedItem);
-    assertTrue(updated);
 
     updated = false;
     item.setHeight(6.9);
     assertTrue(updated);
     
-    updated = false;
     wh.removeItem(item);
     assertEquals(item, removedItem);
-    assertTrue(updated);
 
     updated = false;
     item.setBarcode("1739280375232");;
     assertFalse(updated); // item is no longer in warehouse
 
-    wh.removeListener(listener);
+    wh.removeItemsListener(listener);
 
     updated = false;
     Item item2 = new Item("item2", 2);
@@ -217,10 +215,11 @@ public class WarehouseTest {
   @Test
   @DisplayName("Test user list")
   void testUsers() {
-    assertEquals(users, wh.getUsers());
+    assertTrue(wh.getUsers().isEmpty());
     wh.addUser(user1);
     users.add(user1);
-    assertEquals(users, wh.getUsers());
+    assertTrue(wh.getUsers().size() == 1);
+    assertTrue(wh.getUsers().contains(user1));
     assertTrue(wh.containsUser("a", "b", true));
     assertFalse(wh.containsUser("a", "d", true));
     assertFalse(wh.containsUser("c", "b", true));

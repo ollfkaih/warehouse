@@ -1,9 +1,9 @@
 package ui;
 
 import core.CoreConst.SortOption;
+import core.EntityCollectionListener;
 import core.Item;
 import core.Warehouse;
-import core.WarehouseListener;
 import data.DataPersistence;
 import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
@@ -30,11 +30,11 @@ import java.util.Map;
 /**
  * Main Controller class. Controls the main Warehouse view.
  */
-public class WarehouseController implements WarehouseListener {
+public class WarehouseController implements EntityCollectionListener<Item> {
   private static final String FILENAME = "warehouse";
 
   private Warehouse warehouse;
-  private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
+  private final WarehouseFileSaver dataPersistence = new WarehouseFileSaver(FILENAME);
 
   @FXML private Label usernameLabel;
   @FXML private Button loginButton;
@@ -75,8 +75,7 @@ public class WarehouseController implements WarehouseListener {
     sortBySelector.getItems().addAll(displaySortStrings);
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
-    
-    warehouse.addListener(this);
+    warehouse.addItemsListener(this);
   }
 
   @FXML
@@ -129,7 +128,8 @@ public class WarehouseController implements WarehouseListener {
         itemElement.getIncrementButton().setDisable(true);
         addItemButton.setVisible(false);
       }
-      if (warehouse.findItem(id).getAmount() == 0) {
+
+      if (warehouse.getItem(id).getAmount() == 0) {
         itemElement.getDecrementButton().setDisable(true);
       }
 
@@ -200,20 +200,20 @@ public class WarehouseController implements WarehouseListener {
 
   @FXML
   protected void removeItem(String id) {
-    warehouse.removeItem(warehouse.findItem(id));
+    warehouse.removeItem(warehouse.getItem(id));
     saveWarehouse();
   }
 
   protected void incrementAmount(String id) {
     if (warehouse.isAdmin()) {
-      warehouse.findItem(id).incrementAmount();
+      warehouse.getItem(id).incrementAmount();
       saveWarehouse();
     }
   }
 
   protected void decrementAmount(String id) {
     if (warehouse.isAdmin()) {
-      warehouse.findItem(id).decrementAmount();
+      warehouse.getItem(id).decrementAmount();
       saveWarehouse();
     }
   }
@@ -287,17 +287,17 @@ public class WarehouseController implements WarehouseListener {
   }
 
   @Override
-  public void itemAddedToWarehouse(Item item) {
+  public void entityAdded(Item item) {
     updateInventory();
   }
 
   @Override
-  public void warehouseItemsUpdated() {
+  public void entityUpdated(Item item) {
     updateInventory();
   }
 
   @Override
-  public void itemRemovedFromWarehouse(Item item) {
+  public void entityRemoved(Item item) {
     updateInventory();
   }
 

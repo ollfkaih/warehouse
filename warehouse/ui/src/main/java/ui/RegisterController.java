@@ -27,7 +27,7 @@ public class RegisterController {
   @FXML Label errorMessageDifferentPasswords;
 
   private static final String FILENAME = "warehouse";
-  private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
+  private final WarehouseFileSaver dataPersistence = new WarehouseFileSaver(FILENAME);
 
   private String userName;
   private String password1;

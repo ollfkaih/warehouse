@@ -2,14 +2,14 @@ package core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
  * Class for representing one type of user.
  */
-public class User {
+public class User extends Entity<User> {
   String userName;
   String password;
   boolean admin;
@@ -30,6 +30,7 @@ public class User {
       throw new IllegalArgumentException("Username cannot be empty");
     }
     this.userName = userName;
+    notifyUpdated();
   }
 
   public String getPassword() {
@@ -41,6 +42,7 @@ public class User {
       throw new IllegalArgumentException("Password cannot be empty");
     }
     this.password = password;
+    notifyUpdated();
   }
 
   public boolean isAdmin() {
@@ -49,13 +51,14 @@ public class User {
 
   public void setAdmin(boolean admin) {
     this.admin = admin;
+    notifyUpdated();
   }
 
   public static String md5Hash(String password) {
     String outString = null;
     try {
       MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(password.getBytes(Charset.forName("UTF-8")));
+      md.update(password.getBytes(StandardCharsets.UTF_8));
       byte[] bytes = md.digest();
       StringBuilder sb = new StringBuilder();
 
@@ -72,5 +75,10 @@ public class User {
   @Override
   public String toString() {
     return "Username: " + userName + " Password: " + password + " Admin: " + admin;
+  }
+
+  @Override
+  protected User getThis() {
+    return this;
   }
 }

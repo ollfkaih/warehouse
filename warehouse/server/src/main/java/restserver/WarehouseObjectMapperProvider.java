@@ -1,7 +1,7 @@
 package restserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import data.DataPersistence;
+import data.DataUtils;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -19,7 +19,7 @@ public class WarehouseObjectMapperProvider implements ContextResolver<ObjectMapp
   private final ObjectMapper objectMapper;
 
   public WarehouseObjectMapperProvider() {
-    objectMapper = DataPersistence.createObjectMapper();
+    objectMapper = DataUtils.createObjectMapper();
   }
 
   @Override
