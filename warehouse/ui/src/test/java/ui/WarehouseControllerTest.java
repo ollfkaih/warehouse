@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import core.Item;
-import core.Warehouse;
 import data.DataPersistence;
+import data.FileSaver;
 import data.WarehouseFileSaver;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +36,7 @@ import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,34 +85,29 @@ class WarehouseControllerTest {
 
   private String testUserName;
   private WarehouseController warehouseController;
-  private Parent root;
-  private static final String FILENAME = "warehouse";
-  private static Warehouse originalWarehouse;
-  private final WarehouseFileSaver dataPersistence = new WarehouseFileSaver(FILENAME);
   private Button addItemButtonCopy;
 
   @Start
   public void start(Stage stage) throws IOException {
     FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Warehouse.fxml"));
-    root = loader.load();
+    Parent root = loader.load();
     warehouseController = loader.getController();
     stage.setScene(new Scene(root));
     stage.show();
-    originalWarehouse = dataPersistence.getWarehouse();
 
     addItemButtonCopy = new Button(ADD_ITEM_BUTTON);
   }
 
   private String getRandomProductName() {
-    return String.valueOf("TEST" + ((int) (Math.random() * (900000000)) + 100000000)); 
+    return "TEST" + ((int) (Math.random() * (900000000)) + 100000000);
   }
 
   private Item getItemFromWarehouse(String name) {
     List<Item> itemList = warehouseController.getItems();
     Item testItem = null;
-    for (int i = 0; i < itemList.size(); i++) {
-      if (itemList.get(i).getName().equals(name)) {
-        testItem = itemList.get(i);
+    for (Item item : itemList) {
+      if (item.getName().equals(name)) {
+        testItem = item;
       }
     }
     return testItem;
@@ -126,15 +122,12 @@ class WarehouseControllerTest {
 
   private void removeAllItems() {
     // Creating a new runner to avoid updating GUI while Stage is not running
-    Platform.runLater(new Runnable() {
-      @Override
-      public void run() {
-        List<Item> allItems = warehouseController.getItems();
-        for (int i = 0; i < allItems.size(); i++) {
-          warehouseController.removeItem(allItems.get(i).getId());
-        }   
+    Platform.runLater(() -> {
+      List<Item> allItems = warehouseController.getItems();
+      for (Item item : allItems) {
+        warehouseController.removeItem(item.getId());
       }
-    }); 
+    });
   } 
         
   // Thanks to Marcos Supridatta and Joel Stevick for this superb solution: https://stackoverflow.com/questions/12837592/how-to-scroll-to-make-a-node-within-the-content-of-a-scrollpane-visible
@@ -171,7 +164,7 @@ class WarehouseControllerTest {
     ensureVisibleClickOn(detailsViewScrollPane, robot, WAREHOUSE_NEW_ITEM_INPUTFIELD).write(testProductName);
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
     Stage stage = ((Stage) ((robot.lookup(DETAILS_VIEW).query())).getScene().getWindow());
-    robot.interact(() -> stage.close());
+    robot.interact(stage::close);
   }
 
   private void login(FxRobot robot) {
@@ -196,17 +189,15 @@ class WarehouseControllerTest {
 
   @BeforeEach
   void setup() {
-    removeAllItems();
+    Platform.runLater(() -> {
+      warehouseController.loadPersistedData("ui_test");
+      removeAllItems();
+    });
   }
 
   @AfterEach
   void teardown() {
-    try {
-      dataPersistence.saveItems(originalWarehouse);
-      dataPersistence.saveUsers(originalWarehouse);
-    } catch (Exception e) {
-      System.out.println("Unable to revert to original warehouse");
-    }
+    removeAllItems();
   }
 
   @Test

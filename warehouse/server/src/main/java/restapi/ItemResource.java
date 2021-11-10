@@ -1,7 +1,8 @@
 package restapi;
 
+import core.ClientWarehouse;
 import core.Item;
-import core.Warehouse;
+import core.ServerWarehouse;
 import data.DataPersistence;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -26,18 +27,11 @@ public class ItemResource {
 
   private static final Logger LOG = LoggerFactory.getLogger(ItemResource.class);
 
-  private final Warehouse warehouse;
+  private final ServerWarehouse warehouse;
   private final String id;
   private final Item item;
 
-  @Context
-  private DataPersistence dataPersistence;
-
-  public void setDataPersistence(DataPersistence dataPersistence) {
-    this.dataPersistence = dataPersistence;
-  }
-  
-  public ItemResource(Warehouse warehouse, String id, Item item) {
+  public ItemResource(ServerWarehouse warehouse, String id, Item item) {
     this.warehouse = warehouse;
     this.id = id;
     this.item = item;
@@ -90,7 +84,7 @@ public class ItemResource {
   public Response postItem(Item item) {
     checkReceivedItem(item);
     LOG.debug("postItem({})", item);
-    if (warehouse.itemExists(id)) {
+    if (warehouse.containsItem(id)) {
       throw new IllegalStateException("Item already exists");
     }
     warehouse.addItem(item);

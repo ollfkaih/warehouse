@@ -2,8 +2,8 @@ package ui;
 
 import static java.util.Map.entry;
 
+import core.ClientWarehouse;
 import core.Item;
-import core.Warehouse;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,7 +40,7 @@ import java.util.Map;
  */
 public class DetailsViewController {
   @FXML private ScrollPane detailsViewScrollPane;
-  
+
   @FXML private TextField inpName;
   @FXML private TextField inpBrand;
   @FXML private TextField inpAmount;
@@ -67,7 +67,7 @@ public class DetailsViewController {
   private Parent detailsRoot;
 
   private final Item item;
-  private final Warehouse warehouse;
+  private final ClientWarehouse warehouse;
   private final WarehouseController warehouseController;
 
   private static final int SAFEBOUND_TOP = 30;
@@ -82,7 +82,7 @@ public class DetailsViewController {
 
   private Map<Field, ItemField> fields;
 
-  public DetailsViewController(Item item, Warehouse warehouse, WarehouseController warehouseController) {
+  public DetailsViewController(Item item, ClientWarehouse warehouse, WarehouseController warehouseController) {
     if (item == null || warehouseController == null || warehouse == null) {
       throw new IllegalArgumentException();
     }
@@ -115,7 +115,7 @@ public class DetailsViewController {
       e.printStackTrace();
     }
 
-    if (!warehouse.isAdmin()) {
+    if (!warehouse.getCurrentUser().isAdmin()) {
       btnEdit.setVisible(false);
     }
   }
@@ -244,10 +244,9 @@ public class DetailsViewController {
     for (ItemField field : fields.values()) {
       field.saveField();
     }
-    if (!warehouse.itemExists(item.getId())) {
+    if (!warehouse.containsItem(item.getId())) {
       warehouse.addItem(item);
     }
-    warehouseController.saveWarehouse();
     toggleEditing();
     update();
   }
@@ -274,7 +273,6 @@ public class DetailsViewController {
 
   private void removeItem() {
     warehouse.removeItem(item.getId());
-    warehouseController.saveWarehouse();
     warehouseController.removeDetailsViewController(item);
     stage.close();
   }

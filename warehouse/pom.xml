@@ -154,6 +154,7 @@
         <module>core</module>
         <module>data</module>
         <module>ui</module>
+        <module>localserver</module>
         <module>report</module>
         <module>server</module>
         <module>runserver</module>

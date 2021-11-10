@@ -1,7 +1,6 @@
 package ui;
 
-import core.User;
-import core.Warehouse;
+import core.ClientWarehouse;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * This controller shows a separate window for loggin in.
@@ -22,28 +22,20 @@ public class LoginController {
   @FXML
   PasswordField passwordField;
   @FXML
-  Label errorMessageEmptyField;
-  @FXML
-  Label errorMessageUserNotFound;
-
-  private String userName;
-  private String password;
+  Label errorMessageField;
 
   private Stage stage;
-  private FXMLLoader loader;
-  private Parent loginRoot;
 
-  private RegisterController registerController;
+  private final RegisterController registerController;
 
-  private WarehouseController whController;
-  private Warehouse wh;
-  private User currentUser;
+  private final WarehouseController whController;
+  private final ClientWarehouse wh;
 
-  public LoginController(WarehouseController whController, Warehouse wh) {
+  public LoginController(WarehouseController whController, ClientWarehouse wh) {
     try {
-      loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
       loader.setController(this);
-      loginRoot = loader.load();
+      Parent loginRoot = loader.load();
       stage = new Stage();
       stage.setScene(new Scene(loginRoot));
       stage.setTitle("Login");
@@ -65,21 +57,21 @@ public class LoginController {
   
   @FXML
   private void login() {
-    userName = usernameField.getText().toLowerCase();
-    password = User.md5Hash(passwordField.getText());
-    if (!userName.equals("") && !password.equals("")) {
-      if (wh.containsUser(userName, password, true)) {
-        currentUser = new User(userName, password, true);
-        wh.setCurrentUser(currentUser);
+    String userName = usernameField.getText().toLowerCase();
+    String password = passwordField.getText();
+
+    if (!userName.isEmpty() && !password.isEmpty()) {
+      CompletableFuture<Void> loginFuture = wh.login(userName, password);
+      loginFuture.thenApply(x -> {
         whController.updateUser();
         hideLoginView();
-      } else {
-        errorMessageEmptyField.setText("");
-        errorMessageUserNotFound.setText("Bruker finnes ikke i systemet.");
-      }
+        return null;
+      }).exceptionally(e -> {
+        errorMessageField.setText(e.getCause().getMessage());
+        return null;
+      });
     } else {
-      errorMessageUserNotFound.setText("");
-      errorMessageEmptyField.setText("Du må fylle ut alle feltene før du kan gå videre.");
+      errorMessageField.setText("Du må fylle ut alle feltene før du kan gå videre.");
     }
   }
 
@@ -97,13 +89,9 @@ public class LoginController {
   protected void hideLoginView() {
     stage.hide();
     resetLoginView();
-
   }
 
   private void resetLoginView() {
-    errorMessageEmptyField.setText("");
-    errorMessageUserNotFound.setText("");
-    usernameField.setText("");
-    passwordField.setText("");
+    errorMessageField.setText("");
   }
 }

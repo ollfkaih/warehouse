@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
  * Class for containing a collection of entities, f.eks. Items or Users.
  */
 public class EntityCollection<T extends Entity<T>> {
-  private Map<String, T> entities;
-  private Collection<EntityCollectionListener<T>> listeners;
-  private Map<String, EntityListener<T>> entityListeners;
+  private final Map<String, T> entities;
+  private final Collection<EntityCollectionListener<T>> listeners;
+  private final Map<String, EntityListener<T>> entityListeners;
 
   public EntityCollection() {
-    entities = new HashMap<String, T>();
-    listeners = new ArrayList<EntityCollectionListener<T>>();
-    entityListeners = new HashMap<String, EntityListener<T>>();
+    entities = new HashMap<>();
+    listeners = new ArrayList<>();
+    entityListeners = new HashMap<>();
   }
 
   private void removeEntityListener(T entity) {
@@ -30,7 +30,7 @@ public class EntityCollection<T extends Entity<T>> {
   }
 
   private void addEntityListener(T entity) {
-    EntityListener<T> listener = (T updated) -> notifyUpdated(updated);
+    EntityListener<T> listener = this::notifyUpdated;
     entity.addListener(listener);
     entityListeners.put(entity.getId(), listener);
   }
@@ -58,6 +58,12 @@ public class EntityCollection<T extends Entity<T>> {
     notifyAdded(entity);
   }
 
+  public void addAll(Collection<T> entities) {
+    for (T entity : entities) {
+      add(entity);
+    }
+  }
+
   /**
    * Adds the entity or replaces it if it already exists.
    *
@@ -66,10 +72,12 @@ public class EntityCollection<T extends Entity<T>> {
   public boolean put(T entity) {
     if (contains(entity.getId())) {
       T old = get(entity.getId());
-      removeEntityListener(old);
-      entities.put(entity.getId(), entity);
-      addEntityListener(entity);
-      notifyUpdated(entity);
+      if (!old.equals(entity)) {
+        removeEntityListener(old);
+        entities.put(entity.getId(), entity);
+        addEntityListener(entity);
+        notifyUpdated(entity);
+      }
       return false;
     } else {
       add(entity);

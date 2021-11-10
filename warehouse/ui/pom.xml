@@ -26,6 +26,11 @@
             <artifactId>warehouse-data</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>it1901</groupId>
+            <artifactId>warehouse-localserver</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <!-- javafx -->
         <dependency>
