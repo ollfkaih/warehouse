@@ -4,7 +4,6 @@ import core.CoreConst.SortOption;
 import core.EntityCollectionListener;
 import core.Item;
 import core.Warehouse;
-import data.DataPersistence;
 import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -52,7 +51,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   private SortOption sortBy = SortOption.DATE;
   private boolean ascending = true;
 
-  private Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
+  private final Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
   private LoginController loginController;
 
   @FXML
@@ -179,9 +178,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   }
 
   protected void removeDetailsViewController(Item item) {
-    if (detailsViewControllers.containsKey(item)) {
-      detailsViewControllers.remove(item);
-    }
+    detailsViewControllers.remove(item);
     updateInventory();
   }
 
@@ -227,29 +224,27 @@ public class WarehouseController implements EntityCollectionListener<Item> {
     }
 
     switch (value) {
-      case "Dato":
+      case "Dato" -> {
         sortBy = SortOption.DATE;
         ascending = true;
-        break;
-      case "Antall":
+      }
+      case "Antall" -> {
         sortBy = SortOption.AMOUNT;
         ascending = false;
-        break;
-      case "Navn":
+      }
+      case "Navn" -> {
         sortBy = SortOption.NAME;
         ascending = true;
-        break;
-      case "Pris":
+      }
+      case "Pris" -> {
         sortBy = SortOption.PRICE;
         ascending = true;
-        break;
-      case "Vekt":
+      }
+      case "Vekt" -> {
         sortBy = SortOption.WEIGHT;
         ascending = true;
-        break;
-      default:
-        sortBy = SortOption.NAME;
-        break;
+      }
+      default -> sortBy = SortOption.NAME;
     }
     updateInventory();
   }
@@ -281,6 +276,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
     for (DetailsViewController controller : detailsViewControllers.values()) {
       if (controller.isEditing()) {
         currentlyEditing = true;
+        break;
       }
     }
     return !currentlyEditing;

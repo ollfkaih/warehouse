@@ -63,13 +63,12 @@ public class DetailsViewController {
   @FXML private Button btnDelete;
   @FXML private ImageView barcodeImageView;
 
-  private FXMLLoader loader;
-  private Stage stage;
+  private final Stage stage;
   private Parent detailsRoot;
 
-  private Item item;
-  private Warehouse warehouse;
-  private WarehouseController warehouseController;
+  private final Item item;
+  private final Warehouse warehouse;
+  private final WarehouseController warehouseController;
 
   private static final int SAFEBOUND_TOP = 30;
   private static final int SAFEBOUND_BOTTOM = 75;
@@ -93,7 +92,7 @@ public class DetailsViewController {
     this.warehouseController = warehouseController;
 
     try {
-      loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailsView.fxml"));
       loader.setController(this);
       detailsRoot = loader.load();
     } catch (IOException e) {
