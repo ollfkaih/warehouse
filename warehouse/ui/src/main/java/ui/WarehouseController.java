@@ -8,15 +8,19 @@ import data.DataPersistence;
 import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.StageStyle;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,6 +38,7 @@ public class WarehouseController implements WarehouseListener {
 
   @FXML private Label usernameLabel;
   @FXML private Button loginButton;
+  @FXML private Button addItemButton;
   @FXML private AnchorPane root;
   @FXML private GridPane dividerGridPane;
   @FXML private ScrollPane itemContainer;
@@ -63,14 +68,14 @@ public class WarehouseController implements WarehouseListener {
     }
 
     loginController = new LoginController(this, warehouse);
-
+    usernameLabel.setVisible(false);
     updateInventory();
         
     List<String> displaySortStrings = List.of("Antall", "Dato", "Navn", "Pris", "Vekt");
     sortBySelector.getItems().addAll(displaySortStrings);
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
-
+    
     warehouse.addListener(this);
   }
 
@@ -79,15 +84,33 @@ public class WarehouseController implements WarehouseListener {
     if (warehouse.getCurrentUser() == null) {
       loginController.showLoginView();
     } else {
-      warehouse.removeCurrentUser();
-      usernameLabel.setText("");
-      loginButton.setText("Logg inn");
+      Alert promptLogoutConfirmationAlert = new Alert(AlertType.WARNING);
+      promptLogoutConfirmationAlert.setHeaderText("Er du sikker på at du vil logge ut?");
+      promptLogoutConfirmationAlert.initStyle(StageStyle.UTILITY);
+      ButtonType cancelLoginButton = new ButtonType("Nei", ButtonData.CANCEL_CLOSE);
+      ButtonType confirmLoginButton = new ButtonType("Ja", ButtonData.OK_DONE);
+     
+      promptLogoutConfirmationAlert.getButtonTypes().setAll(cancelLoginButton, confirmLoginButton);
+
+      promptLogoutConfirmationAlert.showAndWait()
+      .filter(response -> response == confirmLoginButton)
+              .ifPresent(response -> confirmLogout());
     }
+    updateInventory();
+  }
+
+  private void confirmLogout() {
+    warehouse.removeCurrentUser();
+    usernameLabel.setVisible(false);
+    usernameLabel.setText("");
+    loginButton.setText("Logg inn");
   }
 
   protected void updateUser() {
     usernameLabel.setText(warehouse.getCurrentUser().getUserName());
+    usernameLabel.setVisible(true);
     loginButton.setText("Logg ut");
+    updateInventory();
   }
 
   @FXML
@@ -98,21 +121,32 @@ public class WarehouseController implements WarehouseListener {
       ItemElementAnchorPane itemElement = new ItemElementAnchorPane(items.get(i));
 
       String id = items.get(i).getId();
-      itemElement.getDecrementButton().setOnAction(e -> decrementAmount(id));
-      itemElement.getIncrementButton().setOnAction(e -> incrementAmount(id));
-      
+      if (warehouse.isAdmin()) {
+        itemElement.getDecrementButton().setOnAction(e -> decrementAmount(id));
+        itemElement.getIncrementButton().setOnAction(e -> incrementAmount(id));
+      } else {
+        itemElement.getDecrementButton().setDisable(true);
+        itemElement.getIncrementButton().setDisable(true);
+        addItemButton.setVisible(false);
+      }
       if (warehouse.findItem(id).getAmount() == 0) {
         itemElement.getDecrementButton().setDisable(true);
       }
 
       itemList.getChildren().add(itemElement);
-            
+
       int index = i;
 
       itemElement.setOnMouseClicked(e -> openDetailsView(items.get(index)));
       itemElement.setOnMouseEntered(e -> hover(itemElement, index));
       itemElement.setOnMouseExited(e -> notHover(itemElement, index));
       notHover(itemElement, index);
+    }
+
+    if (warehouse.getCurrentUser() != null) {
+      addItemButton.setVisible(true);
+    } else {
+      addItemButton.setVisible(false);
     }
   }
 
@@ -157,9 +191,11 @@ public class WarehouseController implements WarehouseListener {
 
   @FXML
   private void addItem() {
-    Item item = new Item("");
-    openDetailsView(item);
-    detailsViewControllers.get(item).toggleEditing();
+    if (warehouse.isAdmin()) {
+      Item item = new Item("");
+      openDetailsView(item);
+      detailsViewControllers.get(item).toggleEditing();
+    }
   }
 
   @FXML
@@ -169,13 +205,17 @@ public class WarehouseController implements WarehouseListener {
   }
 
   protected void incrementAmount(String id) {
-    warehouse.findItem(id).incrementAmount();
-    saveWarehouse();
+    if (warehouse.isAdmin()) {
+      warehouse.findItem(id).incrementAmount();
+      saveWarehouse();
+    }
   }
 
   protected void decrementAmount(String id) {
-    warehouse.findItem(id).decrementAmount();
-    saveWarehouse();
+    if (warehouse.isAdmin()) {
+      warehouse.findItem(id).decrementAmount();
+      saveWarehouse();
+    }
   }
 
   @FXML

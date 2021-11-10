@@ -1,22 +1,28 @@
-.button
-{
+.button{
     -fx-text-fill: WHITE;
-    -fx-background-color: #5CA0D9;
-    
+    -fx-background-color: #840B9B; 
 }
 
-#btnDelete
-{
-    -fx-background-color: rgb(255,5,5);
+  .button:hover {
+    -fx-cursor: hand;
+  }
 
+#btnSave {
+    -fx-background-color: #5CA0D9;
+  }
+
+#btnDelete {
+    -fx-background-color: rgb(255,5,5);
 }
 
 .orderByButton {
     -fx-text-fill: BLACK;
-    -fx-background-color: WHITE;
-    -fx-border-color: GRAY;
-    -fx-border-radius: 3;
+    -fx-background-color: rgba(0,0,0,0.05);
 }
+
+.orderByButton:hover, .orderByButton:focus {
+    -fx-background-color: rgba(0,0,0,0.10);
+  }
 
 .orderByButton .orderByUp {
     -fx-background-color: BLACK;
@@ -33,3 +39,24 @@
 .orderByButton.descending .orderByDown {
     -fx-background-color: BLACK;
 }
+
+.sortBox {
+    -fx-background-color: rgba(0,0,0,0.05);
+    -fx-prompt-text-fill:  rgba(1,1,1,0.7);
+    -fx-border-color: rgba(0,0,0,0);
+    -fx-border-size:2px;
+  }
+  
+  .sortBox:hover {
+    -fx-background-color: rgba(0,0,0,0.10);
+    -fx-cursor: hand;
+  }
+
+.loginButton {
+    -fx-background-color:#fff;
+    -fx-text-fill:  #840B9B;
+}
+
+  .loginButton:hover {
+    -fx-background-color:#f1f1f1;
+  }

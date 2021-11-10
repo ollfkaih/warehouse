@@ -16,8 +16,8 @@
       </Label>
       <TextField fx:id="usernameField" layoutX="126.0" layoutY="85.0" promptText="Brukernavn" />
       <PasswordField fx:id="passwordField" layoutX="126.0" layoutY="120.0" promptText="Passord" />
-      <Button layoutX="169.0" layoutY="163.0" onAction="#login" text="Logg inn" />
-      <Button layoutX="142.0" layoutY="200.0" onAction="#register" text="Registrer ny bruker" />
+      <Button fx:id="loginUserButton" layoutX="169.0" layoutY="160.0" onAction="#login" text="Logg inn" />
+      <Button fx:id="registerNewUserButton" layoutX="142.0" layoutY="200.0" onAction="#register" text="Registrer ny bruker" />
       <Label fx:id="errorMessageEmptyField" layoutX="87.0" layoutY="240.0" text="" textFill="RED" />
       <Label fx:id="errorMessageUserNotFound" layoutX="125.0" layoutY="240.0" text="" textFill="RED" />
    </children>

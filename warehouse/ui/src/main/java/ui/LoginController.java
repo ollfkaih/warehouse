@@ -86,6 +86,7 @@ public class LoginController {
   @FXML
   private void register() {
     registerController.showRegisterView();
+    resetLoginView();
   }
 
   protected void showLoginView() {
@@ -95,10 +96,14 @@ public class LoginController {
 
   protected void hideLoginView() {
     stage.hide();
+    resetLoginView();
+
+  }
+
+  private void resetLoginView() {
     errorMessageEmptyField.setText("");
     errorMessageUserNotFound.setText("");
     usernameField.setText("");
     passwordField.setText("");
-
   }
 }

@@ -52,7 +52,7 @@ class WarehouseFileSaverTest {
     for (User user : warehouse.getUsers()) {
       String username = user.getUserName();
       String password = user.getPassword();
-      Boolean admin = user.getAdmin();
+      Boolean admin = user.isAdmin();
       assertTrue(newWarehouse.containsUserByUsername(username));
       assertTrue(newWarehouse.containsUser(username, password, admin));
     }
@@ -70,7 +70,7 @@ class WarehouseFileSaverTest {
     for (User user : warehouse.getUsers()) {
       String username = user.getUserName();
       String password = user.getPassword();
-      Boolean admin = user.getAdmin();
+      Boolean admin = user.isAdmin();
       assertTrue(newWarehouse.containsUserByUsername(username));
       assertTrue(newWarehouse.containsUser(username, password, admin));
     }
@@ -101,7 +101,7 @@ class WarehouseFileSaverTest {
     assertEquals(0, newWarehouse.getAllItems().size());
     assertEquals(0, newWarehouse.getUsers().size());
   }
-
+  
   @AfterEach
   private void cleanUpFiles() {
     try {

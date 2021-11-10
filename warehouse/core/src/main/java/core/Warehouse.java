@@ -196,10 +196,18 @@ public class Warehouse {
   }
 
   public void setCurrentUser(User currentUser) {
-    if (!containsUser(currentUser.getUserName(), currentUser.getPassword(), currentUser.getAdmin())) {
+    if (!containsUser(currentUser.getUserName(), currentUser.getPassword(), currentUser.isAdmin())) {
       throw new IllegalArgumentException("The user list does not contain this user.");
     }
     this.currentUser = currentUser;
+  }
+
+  public boolean isAdmin() {
+    if (currentUser == null) {
+      return false;
+    } else {
+      return currentUser.isAdmin();
+    }
   }
 
   public void removeCurrentUser() {
@@ -212,8 +220,8 @@ public class Warehouse {
 
   public boolean containsUser(String username, String password, boolean admin) {
     return getUsers()
-    .stream()
-    .anyMatch(user -> user.getUserName().equals(username) && user.getPassword().equals(password) && user.getAdmin() == admin);
+      .stream()
+      .anyMatch(user -> user.getUserName().equals(username) && user.getPassword().equals(password) && user.isAdmin() == admin);
   }
 
   public boolean containsUserByUsername(String username) {

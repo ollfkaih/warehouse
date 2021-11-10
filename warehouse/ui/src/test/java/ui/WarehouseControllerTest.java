@@ -55,18 +55,39 @@ class WarehouseControllerTest {
   private static final String INP_ORDINARY_PRICE = "#inpOrdinaryPrice";
   private static final String INP_AMOUNT = "#inpAmount";
   private static final String INP_BRAND = "#inpBrand";
-  private static final String ADD_ITEM_BUTTON = "#addItemButton";
+  private static final String DETAILS_VIEW_INCREMENT_BUTTON = "#btnIncrement";
+  private static final String DETAILS_VIEW_DECREMENT_BUTTON = "#btnDecrement";
   private static final String DETAILS_VIEW_SAVE_BUTTON = "#btnSave";
   private static final String DETAILS_VIEW_DELETE_BUTTON = "#btnDelete";
+
+  private static final String WAREHOUSE_INCREMENT_BUTTON = "#incrementButton";
+  private static final String WAREHOUSE_DECREMENT_BUTTON = "#decrementButton";
+  private static final String INP_SEARCH = "#searchInput";
+  private static final String ORDER_BY_BUTTON = "#orderByButton";
+  private static final String SORT_OPTIONS_DROPDOWN = "#sortBySelector";
+  private static final String ADD_ITEM_BUTTON = "#addItemButton";
   private static final String WAREHOUSE_NEW_ITEM_INPUTFIELD  = "#inpName";
   private static final String ITEM_LIST = "#itemList";
   private static final String DETAILS_VIEW = "#detailsViewScrollPane";
+  private static final String LOGIN_BUTTON = "#loginButton";
+  private static final String EDIT_BUTTON = "#btnEdit";
 
+  private static final String LOGIN_USERFIELD = "#usernameField";
+  private static final String LOGIN_PASSWORDFIELD = "#passwordField";
+  private static final String LOGIN_LOGINBUTTON = "#loginUserButton";
+  private static final String REGISTER_BUTTON = "#registerNewUserButton";
+  private static final String REGISTER_USERFIELD = "#userNameField";
+  private static final String REGISTER_PASSWORDFIELD_1 = "#passwordField1";
+  private static final String REGISTER_PASSWORDFIELD_2 = "#passwordField2";
+  private static final String REGISTER_REGISTERBUTTON = "#btnRegister";
+  private static final String CONFIRM_BOX_APPROVE_TEXT = "Slett";  
+
+  private String testUserName;
   private WarehouseController warehouseController;
   private Parent root;
-  private Warehouse originalWarehouse;
   private static final String FILENAME = "warehouse";
   private final DataPersistence dataPersistence = new WarehouseFileSaver(FILENAME);
+  private static Warehouse originalWarehouse;
   private Button addItemButtonCopy;
 
   @Start
@@ -76,7 +97,8 @@ class WarehouseControllerTest {
     warehouseController = loader.getController();
     stage.setScene(new Scene(root));
     stage.show();
-    
+    originalWarehouse = dataPersistence.getWarehouse();
+
     addItemButtonCopy = new Button(ADD_ITEM_BUTTON);
   }
 
@@ -152,13 +174,28 @@ class WarehouseControllerTest {
     robot.interact(() -> stage.close());
   }
 
+  private void login(FxRobot robot) {
+    robot.clickOn(LOGIN_BUTTON);
+    if (testUserName == null) {
+      register(robot);
+    }
+    robot.clickOn(LOGIN_USERFIELD).write(testUserName);
+    robot.clickOn(LOGIN_PASSWORDFIELD).write("passord");
+    robot.clickOn(LOGIN_LOGINBUTTON);
+  }
+
+  private void register(FxRobot robot) {
+    testUserName = getRandomProductName();
+    robot.clickOn(LOGIN_BUTTON);
+    robot.clickOn(REGISTER_BUTTON);
+    robot.clickOn(REGISTER_USERFIELD).write(testUserName);
+    robot.clickOn(REGISTER_PASSWORDFIELD_1).write("passord");
+    robot.clickOn(REGISTER_PASSWORDFIELD_2).write("passord");
+    robot.clickOn(REGISTER_REGISTERBUTTON);
+  }
+
   @BeforeEach
   void setup() {
-    try {
-      originalWarehouse = dataPersistence.getWarehouse();
-    } catch (Exception e) {
-      System.out.println("Unable to save loaded file");
-    }
     removeAllItems();
   }
 
@@ -186,15 +223,16 @@ class WarehouseControllerTest {
   @Test
   @DisplayName("Test add and remove item")
   void testAddAndDelete(FxRobot robot) {
+    login(robot);
     final String testProductName = getRandomProductName();
     createNewItem(robot, testProductName);
     assertNotNull(getItemFromWarehouse(testProductName), "unable to create item");
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
     robot.clickOn(testProductName);
     ScrollPane detailsViewScrollPane = getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane();
-    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnEdit");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, EDIT_BUTTON);
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_DELETE_BUTTON);
-    robot.clickOn("Slett");
+    robot.clickOn(CONFIRM_BOX_APPROVE_TEXT);
     assertNull(getItemFromWarehouse(testProductName), "unable to delete item");
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, testProductName));
   }
@@ -202,6 +240,8 @@ class WarehouseControllerTest {
   @Test
   @DisplayName("Test add item to warehouse and alter its properties")
   void testAddItem(FxRobot robot) {
+    login(robot);
+
     final String testProductName = getRandomProductName(); 
     createNewItem(robot, testProductName);
 
@@ -211,7 +251,7 @@ class WarehouseControllerTest {
 
     robot.push(KeyCode.BACK_SPACE);
     robot.clickOn(testProductName);
-    robot.clickOn("#btnEdit");
+    robot.clickOn(EDIT_BUTTON);
     robot.push(KeyCode.BACK_SPACE);
     DetailsViewController testProductViewController = getDetailsViewController(testItem);
     ScrollPane testProductViewScrollPane = testProductViewController.getScrollPane();
@@ -239,11 +279,11 @@ class WarehouseControllerTest {
     robot.clickOn(testProductName);
     verifyDetailView(testItem);
     
-    robot.clickOn("#btnEdit");
+    robot.clickOn(EDIT_BUTTON);
 
     verifyDetailView(testItem);
     ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_VIEW_DELETE_BUTTON);
-    robot.clickOn("Slett");
+    robot.clickOn(CONFIRM_BOX_APPROVE_TEXT);
   }
 
   private void verifyDetailView(Item item) {
@@ -265,6 +305,7 @@ class WarehouseControllerTest {
   @Test
   @DisplayName("Test incrementButtons on frontpage")
   void testIncrementValues(FxRobot robot) {
+    login(robot);
     final String testProductName = getRandomProductName();
     createNewItem(robot, testProductName);
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
@@ -272,16 +313,18 @@ class WarehouseControllerTest {
     assertNotNull(testItem);
     assertEquals(0, testItem.getAmount());
     robot.moveTo(testProductName);
-    robot.clickOn("#incrementButton");
+    robot.clickOn(WAREHOUSE_INCREMENT_BUTTON);
     assertEquals(1, testItem.getAmount());
     robot.moveTo(testProductName);
-    robot.clickOn("#decrementButton");
+    robot.clickOn(WAREHOUSE_DECREMENT_BUTTON);
     assertEquals(0, testItem.getAmount());
   }
 
   @Test
   @DisplayName("Test incrementButtons on detailsView")
   void testDetailViewIncrement(FxRobot robot) {
+    login(robot);
+
     final String testProductName = getRandomProductName();
     createNewItem(robot, testProductName);
     robot.clickOn(testProductName);
@@ -290,16 +333,16 @@ class WarehouseControllerTest {
     ScrollPane detailsViewScrollPane = getDetailsViewController(testItem).getScrollPane();
     assertNotNull(testItem);
 
-    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnEdit");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, EDIT_BUTTON);
 
-    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnIncrement");
-    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnSave");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_INCREMENT_BUTTON);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
     assertEquals(1, testItem.getAmount());
 
-    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnEdit");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, EDIT_BUTTON);
 
-    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnDecrement");
-    ensureVisibleClickOn(detailsViewScrollPane, robot, "#btnSave");
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_DECREMENT_BUTTON);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
     assertEquals(0, testItem.getAmount());
   }
 
@@ -325,20 +368,21 @@ class WarehouseControllerTest {
   @Test
   @DisplayName("Test sorting and searching items on name")
   void testSortSearchItems(FxRobot robot) {
+    login(robot);
     createNewItem(robot, "A");
     createNewItem(robot, "B");
     createNewItem(robot, "C");
 
-    robot.clickOn("Sorter");
-    selectOptionInComboBox(robot, "#sortBySelector", "Navn");
+    robot.clickOn(SORT_OPTIONS_DROPDOWN);
+    selectOptionInComboBox(robot, SORT_OPTIONS_DROPDOWN, "Navn");
     verifyItemsInOrder(robot, "A", "B", "C");
-    robot.clickOn("#orderByButton");
+    robot.clickOn(ORDER_BY_BUTTON);
     verifyItemsInOrder(robot, "C", "B", "A");
 
-    robot.clickOn("#searchInput");
-    robot.write("A");
+    robot.clickOn(INP_SEARCH).write("A");
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild("A"));
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, "B"));
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, "C"));
+    robot.clickOn(INP_SEARCH).push(KeyCode.BACK_SPACE);
   }
 }
