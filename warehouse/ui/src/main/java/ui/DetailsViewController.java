@@ -100,8 +100,8 @@ public class DetailsViewController {
       close();
     }
     double height = Screen.getPrimary().getBounds().getHeight() - SAFEBOUND_BOTTOM;
-    if (height > 815) {
-      height = 815;
+    if (height > 740) {
+      height = 740;
     }
     stage = new Stage();
     stage.setScene(new Scene(detailsRoot, 450, height));
@@ -254,6 +254,11 @@ public class DetailsViewController {
   }
   
   @FXML private void promptRemoveItem() {
+    if (item.getName().equals("")) {
+      stage.close();
+      return;
+    }
+
     Alert promptDeleteConfirmationAlert = new Alert(AlertType.WARNING);
     promptDeleteConfirmationAlert.setHeaderText("Er du sikker på at du vil slette " + item.getName() + "?");
     promptDeleteConfirmationAlert.setContentText("Denne handlingen kan ikke angres");
