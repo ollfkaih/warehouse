@@ -34,3 +34,14 @@ TextField:disabled {
 .searchField:hover, .searchField:focused {
   -fx-background-color: rgba(0,0,0,0.10);
 }
+
+.placementTextField {
+  -fx-border-color: rgba(0,0,0,0);
+  -fx-background-color: rgba(0,0,0,0);
+  -fx-font-size: 20px;
+  -fx-alignment: center;
+}
+
+  .placementTextField:disabled {
+    -fx-prompt-text-fill: rgb(0,0,0);
+  }

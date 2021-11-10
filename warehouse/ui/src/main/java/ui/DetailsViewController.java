@@ -46,16 +46,13 @@ public class DetailsViewController {
   @FXML private TextField inpAmount;
   @FXML private Button btnIncrement;
   @FXML private Button btnDecrement;
-  @FXML private Label placementSection;
-  @FXML private Label placementRow;
-  @FXML private Label placementShelf;
+  @FXML private TextField inpPlacementSection;
+  @FXML private TextField inpPlacementRow;
+  @FXML private TextField inpPlacementShelf;
   @FXML private TextField inpOrdinaryPrice;
   @FXML private TextField inpSalesPrice;
   @FXML private TextField inpRetailerPrice;
   @FXML private ComboBox<String> comboBoxSalesTax;
-  @FXML private TextField inpPlacementSection;
-  @FXML private TextField inpPlacementRow;
-  @FXML private TextField inpPlacementShelf;
   @FXML private TextField inpDimensionsLength;
   @FXML private TextField inpDimensionsWidth;
   @FXML private TextField inpDimensionsHeigth;
@@ -224,25 +221,13 @@ public class DetailsViewController {
   }
 
   private void update() {
-    updatePlacementLabels();
-
     for (ItemField field : fields.values()) {
       field.updateField();
     }
-
+    
     if (item.getBarcode() != null) {
       generateBarcodeImage();
     }
-  }
-
-  private void updatePlacementLabels() {
-    updatePlacementLabel(placementSection, item.getSection());
-    updatePlacementLabel(placementRow, item.getRow());
-    updatePlacementLabel(placementShelf, item.getShelf());
-  }
-
-  private void updatePlacementLabel(Label label, String placement) {
-    label.setText(placement == null ? "?" : placement);
   }
 
   private void generateBarcodeImage() {

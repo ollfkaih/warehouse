@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" stylesheets="@inputStyle.css, @ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" stylesheets="@inputStyle.css, @ButtonStyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox fx:id="itemList1" alignment="center">
          <children>
@@ -36,12 +36,12 @@
                      <children>
                         <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <children>
-                              <Label text="Produsent">
+                              <Label text="Produktnavn">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="inpBrand" disable="true" promptText="merke" text="dasf" />
+                              <TextField fx:id="inpName" disable="true" promptText="Produktnavn" text="" />
                            </children>
                         </VBox>
                      </children>
@@ -50,12 +50,12 @@
                      <children>
                         <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <children>
-                              <Label text="Produktnavn">
+                              <Label text="Produsent">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="inpName" disable="true" promptText="navn" />
+                              <TextField fx:id="inpBrand" disable="true" promptText="Produsent" />
                            </children>
                         </VBox>
                      </children>
@@ -81,7 +81,7 @@
                                        </font></Button>
                                  </left>
                                  <center>
-                                    <TextField fx:id="inpAmount" disable="true" minHeight="30.0" promptText="antall" style="-fx-background-color: #fff; -fx-border-radius: 0;" BorderPane.alignment="CENTER" />
+                                    <TextField fx:id="inpAmount" disable="true" minHeight="30.0" promptText="0" style="-fx-background-color: #fff; -fx-border-radius: 0;" BorderPane.alignment="CENTER" />
                                  </center>
                                  <right>
                                     <Button fx:id="btnIncrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" onAction="#increment" prefHeight="29.0" prefWidth="29.0" text="+" textOverrun="CLIP" BorderPane.alignment="CENTER">
@@ -102,12 +102,8 @@
                                              <children>
                                                 <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                    <children>
-                                                      <Label fx:id="placementSection" prefHeight="43.0" text="" textAlignment="CENTER">
-                                                         <font>
-                                                            <Font size="35.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="seksjon" textAlignment="CENTER" />
+                                                      <TextField fx:id="inpPlacementSection" disable="true" promptText="?" styleClass="placementTextField" />
+                                                      <Label text="Seksjon" textAlignment="CENTER" />
                                                    </children>
                                                 </VBox>
                                              </children>
@@ -124,12 +120,8 @@
                                              <children>
                                                 <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                    <children>
-                                                      <Label fx:id="placementRow" prefHeight="43.0" text="" textAlignment="CENTER">
-                                                         <font>
-                                                            <Font size="35.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="reol" textAlignment="CENTER" />
+                                                      <TextField fx:id="inpPlacementRow" disable="true" promptText="?" styleClass="placementTextField" />
+                                                      <Label text="Reol" textAlignment="CENTER" />
                                                    </children>
                                                 </VBox>
                                              </children>
@@ -146,12 +138,8 @@
                                              <children>
                                                 <VBox alignment="TOP_CENTER" prefWidth="63.0">
                                                    <children>
-                                                      <Label fx:id="placementShelf" prefHeight="43.0" text="" textAlignment="CENTER">
-                                                         <font>
-                                                            <Font size="35.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="hylle" textAlignment="CENTER" />
+                                                      <TextField fx:id="inpPlacementShelf" disable="true" promptText="?" styleClass="placementTextField" />
+                                                      <Label text="Hylle" textAlignment="CENTER" />
                                                    </children>
                                                 </VBox>
                                              </children>
@@ -184,7 +172,7 @@
                                           <Font name="System Font" size="13.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="inpOrdinaryPrice" disable="true" promptText="0" />
+                                    <TextField fx:id="inpOrdinaryPrice" disable="true" promptText="Ordinærpris" />
                                     <Label text="ink.mva">
                                        <font>
                                           <Font size="10.0" />
@@ -195,7 +183,7 @@
                               <VBox prefHeight="200.0">
                                  <children>
                                     <Label text="Utsalgspris" />
-                                    <TextField fx:id="inpSalesPrice" disable="true" promptText="0" />
+                                    <TextField fx:id="inpSalesPrice" disable="true" promptText="Utsalgspris" />
                                     <Label text="ink.mva">
                                        <font>
                                           <Font size="10.0" />
@@ -206,7 +194,7 @@
                               <VBox prefHeight="200.0">
                                  <children>
                                     <Label text="Innkjøpspris" />
-                                    <TextField fx:id="inpRetailerPrice" disable="true" promptText="0" />
+                                    <TextField fx:id="inpRetailerPrice" disable="true" promptText="Innkjøpspris" />
                                     <Label text="eks.mva">
                                        <font>
                                           <Font size="10.0" />
@@ -233,7 +221,7 @@
                            <children>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpPlacementSection" disable="true" promptText="A-Å" />
+                                    <TextField disable="true" promptText="Seksjon" />
                                     <Label text="Seksjon">
                                        <font>
                                           <Font size="10.0" />
@@ -243,7 +231,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpPlacementRow" disable="true" promptText="0" />
+                                    <TextField disable="true" promptText="Reol" />
                                     <Label text="Reol">
                                        <font>
                                           <Font size="10.0" />
@@ -253,7 +241,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpPlacementShelf" disable="true" promptText="0" />
+                                    <TextField disable="true" promptText="Hylle" />
                                     <Label text="Hylle">
                                        <font>
                                           <Font size="10.0" />
@@ -280,7 +268,7 @@
                            <children>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionsLength" disable="true" promptText="0" />
+                                    <TextField fx:id="inpDimensionsLength" disable="true" promptText="Lengde" />
                                     <Label text="Lengde">
                                        <font>
                                           <Font size="10.0" />
@@ -290,7 +278,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionsWidth" disable="true" promptText="0" />
+                                    <TextField fx:id="inpDimensionsWidth" disable="true" promptText="Bredde" />
                                     <Label text="Bredde">
                                        <font>
                                           <Font size="10.0" />
@@ -300,7 +288,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionsHeigth" disable="true" promptText="0" />
+                                    <TextField fx:id="inpDimensionsHeigth" disable="true" promptText="Høyde" />
                                     <Label text="Høyde">
                                        <font>
                                           <Font size="10.0" />
@@ -323,7 +311,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="inpWeight" disable="true" promptText="0" />
+                        <TextField fx:id="inpWeight" disable="true" promptText="Vekt (kg)" />
                      </children>
                   </VBox>
                </children>
@@ -337,7 +325,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="inpBarcode" disable="true" promptText="0000000000000" />
+                        <TextField fx:id="inpBarcode" disable="true" promptText="Barcode" />
                      </children>
                   </VBox>
                </children>
