@@ -6,7 +6,6 @@ import core.ClientWarehouse;
 import core.EntityCollectionListener;
 import core.Item;
 import core.ServerInterface;
-import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;

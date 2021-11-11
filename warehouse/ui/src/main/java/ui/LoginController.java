@@ -57,7 +57,7 @@ public class LoginController {
   
   @FXML
   private void login() {
-    String userName = usernameField.getText().toLowerCase();
+    String userName = usernameField.getText();
     String password = passwordField.getText();
 
     if (!userName.isEmpty() && !password.isEmpty()) {

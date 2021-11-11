@@ -28,28 +28,26 @@ public class ClientWarehouse extends BaseWarehouse {
     return removeItem(item.getId());
   }
 
-  @Override
-  public List<Item> getAllItems() {
-    return getAllItemsSorted(SortOption.DATE, true);
-  }
-
   public List<Item> getItemsSortedAndFiltered(SortOption options, boolean ascendingOrder, String filterText) {
-    List<Item> sortedItems = getAllItemsSorted(options, ascendingOrder);
-    return sortedItems
-    .stream()
-    .filter(item ->
-        item.getName().toLowerCase().contains(filterText.toLowerCase()) || (item.getBarcode() != null && item.getBarcode().equals(filterText)))
-    .collect(Collectors.toList());
+    if (filterText.isEmpty()) {
+      return getAllItemsSorted(options, ascendingOrder);
+    }
+    return getAllItemsSorted(options, ascendingOrder)
+        .stream()
+        .filter(item ->
+            item.getName().toLowerCase().contains(filterText.toLowerCase())
+            || (item.getBarcode() != null && item.getBarcode().equals(filterText)))
+       .collect(Collectors.toList());
   }
 
-  public List<Item> getAllItemsSorted(SortOption options, boolean ascendingOrder) {
+  private List<Item> getAllItemsSorted(SortOption options, boolean ascendingOrder) {
     Comparator<Item> comparator = switch (options) {
       case NAME -> Comparator.comparing(Item::getName, String::compareToIgnoreCase);
       case AMOUNT -> Comparator.comparingInt(Item::getAmount);
       case PRICE -> Comparator.comparing(Item::getCurrentPrice, Comparator.nullsLast(Comparator.naturalOrder()));
       case WEIGHT -> Comparator.comparing(Item::getWeight, Comparator.nullsLast(Comparator.naturalOrder()));
       case DATE -> Comparator.comparing(Item::getCreationDate);
-      default -> Comparator.comparing(Item::getCreationDate);
+      default -> throw new IllegalArgumentException("SortOption " + options + " not supported");
     };
     Comparator<Item> nameComparator = Comparator.comparing(Item::getName);
     Comparator<Item> creationDateComparator = Comparator.comparing(Item::getCreationDate);

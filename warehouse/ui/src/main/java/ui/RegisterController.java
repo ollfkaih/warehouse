@@ -57,7 +57,7 @@ public class RegisterController {
 
   @FXML
   private void register() {
-    userName = userNameField.getText().toLowerCase();
+    userName = userNameField.getText();
     password1 = passwordField1.getText();
     password2 = passwordField2.getText();
 

@@ -28,7 +28,7 @@ public class ServerWarehouse extends BaseWarehouse {
   }
 
   public boolean containsUserByUsername(String username) {
-    return userCollection.contains(user -> user.getUserName().equals(username));
+    return userCollection.contains(user -> user.getUserName().equalsIgnoreCase(username));
   }
 
   private Optional<User> findUserByUsername(String username) {

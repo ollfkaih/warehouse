@@ -9,6 +9,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -185,15 +186,46 @@ public class ClientWarehouseTest {
     List<Item> itemsWeightSortedAscending = List.of(item5, item2, item6, item3, item1, item4);
     List<Item> itemsWeightSortedDescending = List.of(item4, item1, item3, item6, item2, item5);
 
-    assertEquals(itemsPriceSortedAscending, wh.getAllItemsSorted(SortOption.PRICE, true));
+    assertEquals(itemsPriceSortedAscending, wh.getItemsSortedAndFiltered(SortOption.PRICE, true, ""));
+    assertEquals(itemsNameSortedAscending, wh.getItemsSortedAndFiltered(SortOption.NAME, true, ""));
+    assertEquals(itemsNameSortedDescending, wh.getItemsSortedAndFiltered(SortOption.NAME, false, ""));
+    assertEquals(itemsAmountSortedAscending, wh.getItemsSortedAndFiltered(SortOption.AMOUNT, true, ""));
+    assertEquals(itemsAmountSortedDescending, wh.getItemsSortedAndFiltered(SortOption.AMOUNT, false, ""));
+    assertEquals(itemsPriceSortedDescending, wh.getItemsSortedAndFiltered(SortOption.PRICE, false, ""));
+    assertEquals(itemsWeightSortedAscending, wh.getItemsSortedAndFiltered(SortOption.WEIGHT, true, ""));
+    assertEquals(itemsWeightSortedDescending, wh.getItemsSortedAndFiltered(SortOption.WEIGHT, false, ""));
 
-    assertEquals(itemsNameSortedAscending, wh.getAllItemsSorted(SortOption.NAME, true));
-    assertEquals(itemsNameSortedDescending, wh.getAllItemsSorted(SortOption.NAME, false));
-    assertEquals(itemsAmountSortedAscending, wh.getAllItemsSorted(SortOption.AMOUNT, true));
-    assertEquals(itemsAmountSortedDescending, wh.getAllItemsSorted(SortOption.AMOUNT, false));
-    assertEquals(itemsPriceSortedDescending, wh.getAllItemsSorted(SortOption.PRICE, false));
-    assertEquals(itemsWeightSortedAscending, wh.getAllItemsSorted(SortOption.WEIGHT, true));
-    assertEquals(itemsWeightSortedDescending, wh.getAllItemsSorted(SortOption.WEIGHT, false));
+    assertThrows(IllegalArgumentException.class, () -> wh.getItemsSortedAndFiltered(SortOption.STATUS, true, ""));
+  }
+
+  @Test
+  @DisplayName("Test filtering method")
+  public void testGetAllItemsFiltered() {
+    Item itemAA = new Item("AA");
+    Item itemAB = new Item("AB");
+    Item itemAC = new Item("AC");
+    Item itemC = new Item("C");
+    Item itemBA = new Item("BA");
+    Item itemBB = new Item("BB");
+
+    itemC.setBarcode("7946385610287");
+
+    CompletableFuture<Collection<Item>> getItemsFuture = CompletableFuture.completedFuture(List.of(itemAA, itemAB, itemAC, itemC, itemBA, itemBB));
+    when(server.getItems()).thenReturn(getItemsFuture);
+
+    wh = new ClientWarehouse(server);
+
+    List<Item> itemsSortedNameFilteredA = List.of(itemAA, itemAB, itemAC, itemBA);
+    assertEquals(itemsSortedNameFilteredA, wh.getItemsSortedAndFiltered(SortOption.NAME, true, "A"));
+
+    List<Item> itemsSortedDescendingNameFilteredA = List.of(itemBA, itemAC, itemAB, itemAA);
+    assertEquals(itemsSortedDescendingNameFilteredA, wh.getItemsSortedAndFiltered(SortOption.NAME, false, "A"));
+
+    List<Item> itemsSortedNameFilteredC = List.of(itemAC, itemC);
+    assertEquals(itemsSortedNameFilteredC, wh.getItemsSortedAndFiltered(SortOption.NAME, true, "C"));
+
+    List<Item> itemsFilteredBarcode = List.of(itemC);
+    assertEquals(itemsFilteredBarcode, wh.getItemsSortedAndFiltered(SortOption.NAME, true, "7946385610287"));
   }
 
   static Item addedItem;
@@ -238,7 +270,8 @@ public class ClientWarehouseTest {
     assertEquals(item, removedItem);
 
     updated = false;
-    item.setBarcode("1739280375232");;
+    item.setBarcode("1739280375232");
+    ;
     assertFalse(updated);
 
     // test removing items listener
@@ -248,5 +281,33 @@ public class ClientWarehouseTest {
     Item item2 = new Item("item2", 2);
     wh.addItem(item2);
     assertFalse(updated);
+  }
+
+  @Test
+  @DisplayName("Test login")
+  void testLogin() {
+    User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), true);
+
+    CompletableFuture<Void> registerFuture = new CompletableFuture<>();
+    when(server.register(user)).thenReturn(registerFuture);
+
+    CompletableFuture<AuthSession> loginFuture = new CompletableFuture<>();
+    when(server.login(user.userName, user.password)).thenReturn(loginFuture);
+
+    wh.register(user);
+
+    verify(server, times(1)).register(user);
+    registerFuture.complete(null);
+
+    wh.login(user.userName, user.password);
+
+    verify(server, times(1)).login(user.userName, user.password);
+    AuthSession authSession = new AuthSession(user);
+    loginFuture.complete(authSession);
+    assertEquals(user, wh.getCurrentUser());
+
+    wh.logout();
+
+    assertNull(wh.getCurrentUser());
   }
 }
