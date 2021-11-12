@@ -38,7 +38,10 @@ function App() {
                   sm="12"
                   md={currentItem == null ? 12 : 6}
                 >
-                  <ItemList setCurrentItem={setCurrentItem} />
+                  <ItemList
+                    currentItem={currentItem}
+                    setCurrentItem={setCurrentItem}
+                  />
                 </Col>
               </Row>
             </Container>

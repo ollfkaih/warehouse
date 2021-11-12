@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { Col, Container, Form, InputGroup, Row } from 'react-bootstrap'
 
 interface IProps {
+  currentItem?: Item
   setCurrentItem: (item: Item) => void
 }
 
@@ -48,6 +49,7 @@ const ItemList = (props: IProps) => {
             <ItemElement
               key={item.id}
               item={item}
+              selected={props.currentItem === item ? true : false}
               setCurrentItem={props.setCurrentItem}
             />
           ))}

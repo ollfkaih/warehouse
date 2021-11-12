@@ -4,12 +4,16 @@ import Item from '../modules/Item'
 interface IProps {
   item: Item
   setCurrentItem: (item: Item) => void
+  selected: boolean
 }
 
-const ItemElement = ({ item, setCurrentItem }: IProps) => {
+const ItemElement = ({ item, setCurrentItem, selected }: IProps) => {
   return (
     <Row
-      className="mb-3 bg-secondary flex-nowrap rounded-3 bg-secondary m-0 p-2 item-list-element"
+      className={
+        'mb-3 bg-secondary flex-nowrap rounded-3 bg-secondary m-0 p-2 ' +
+        (selected ? 'selected' : 'item-list-element')
+      }
       onClick={() => setCurrentItem(item)}
     >
       <Col className="text-truncate">{item.brand}</Col>

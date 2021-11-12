@@ -45,3 +45,12 @@ $form-floating-input-padding-b: 1.625rem;
   background-color: $light !important;
   color: $primary;
 }
+
+.selected {
+  background-color: $primary !important;
+  color: white;
+}
+
+.selected:hover {
+  opacity: 0.8;
+}
