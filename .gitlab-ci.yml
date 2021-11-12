@@ -1,19 +1,26 @@
-image: maven:3-openjdk-16
+stages:
+  - Java build
+  - Java test
+  - Webapp build
+  - Webapp lint
 
 cache:
   paths:
     - .m2/repository/
     - target/
+    - .yarn
 
 Build:
-  stage: build
+  image: maven:3-openjdk-16
+  stage: Java build
   script:
     - cd warehouse
     - mvn compile
   retry: 1
 
 Jacoco:
-  stage: test
+  image: maven:3-openjdk-16
+  stage: Java test
   needs: []
   script:
     - cd warehouse
@@ -23,20 +30,42 @@ Jacoco:
   artifacts:
     paths:
       - $CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/report/target/site/jacoco-aggregate/*
-  retry: 1
+  retry: 2
 
-Verify:
-  stage: test
+Spotbugs:
+  image: maven:3-openjdk-16
+  stage: Java test
   needs: []
   script:
     - cd warehouse
-    - mvn verify -Dtest=!WarehouseControllerTest -DfailIfNoTests=false
-  retry: 1
+    - mvn install -DskipTests -DskipUiTests -DfailIfNoTests=false
+    - mvn spotbugs:check
+  retry: 2
 
 Checkstyle:
-  stage: test
+  image: maven:3-openjdk-16
+  stage: Java test
   needs: []
   script:
     - cd warehouse
     - mvn checkstyle:check
+  retry: 2
+
+Yarn Build:
+  image: node:16.3.0
+  stage: Webapp build
+  needs: []
+  script:
+    - cd webapp
+    - yarn install --frozen-lockfile --cache-folder .yarn
+    - yarn build
+  retry: 1
+
+Prettier check:
+  image: node:16.3.0
+  stage: Webapp lint
+  needs: []
+  script:
+    - cd webapp
+    - npx prettier --check .
   retry: 1

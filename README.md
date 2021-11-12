@@ -4,11 +4,17 @@
 Project repo for IT1901 - group 38.
 Documentation is found in the [docs](/docs) directory and its subdirectories for each release.
 The Java project is found in the [warehouse](/warehouse) directory, and a readme describing the application is also found [there](/warehouse/README.md).
+The web application is found in the [webapp](/webapp) directory.
 
-## Trying it out
+## Running the java project
 
-1. Change directory from source root to warehouse
+1. Change directory from source root to `warehouse`
 2. run `mvn install` (If some tests fail, use `mvn install "-DskipTests"`)
 3. Change directory to ui, and
 4. run with `mvn javafx:run`
- 
+
+## Running the web app
+
+1. Change directory to `webapp`
+2. Run `yarn`
+3. Run `yarn start`
