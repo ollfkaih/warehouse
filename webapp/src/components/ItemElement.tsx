@@ -9,8 +9,7 @@ interface IProps {
 const ItemElement = ({ item, setCurrentItem }: IProps) => {
   return (
     <Row
-      md="12"
-      className="mb-3 bg-secondary flex-nowrap rounded-3"
+      className="mb-3 bg-secondary flex-nowrap rounded-3 bg-secondary m-0 p-2 item-list-element"
       onClick={() => setCurrentItem(item)}
     >
       <Col className="text-truncate">{item.brand}</Col>
