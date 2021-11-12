@@ -53,8 +53,24 @@ public class Item extends Entity<Item> {
   }
 
   public Item(String name, int amount) {
-    this(UUID.randomUUID().toString(), name, amount, null, null, null, null, null, null, null, null, null, null, null,
-        null, LocalDateTime.now());
+    this(
+        UUID.randomUUID().toString(),
+        name,
+        amount,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        LocalDateTime.now()
+    );
   }
 
   public Item(String name) {
@@ -62,8 +78,24 @@ public class Item extends Entity<Item> {
   }
 
   public Item(Item item) {
-    this(item.getId(), item.name, item.amount, item.barcode, item.brand, item.regularPrice, item.salePrice, item.purchasePrice, item.section,
-        item.row, item.shelf, item.height, item.width, item.length, item.weight, item.creationDate);
+    this(
+        item.getId(),
+        item.name,
+        item.amount,
+        item.barcode,
+        item.brand,
+        item.regularPrice,
+        item.salePrice,
+        item.purchasePrice,
+        item.section,
+        item.row,
+        item.shelf,
+        item.height,
+        item.width,
+        item.length,
+        item.weight,
+        item.creationDate
+    );
   }
 
   public String getName() {
