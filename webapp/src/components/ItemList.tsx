@@ -38,8 +38,11 @@ const ItemList = (props: IProps) => {
       </Row>
       <Container fluid className="overflow-auto w-auto item-list m-0 p-0">
         {items
-          .filter((item) =>
-            item.name.toLowerCase().match(searchText.toLowerCase())
+          .filter(
+            (item) =>
+              item.name.toLowerCase().match(searchText.toLowerCase()) ||
+              item.brand?.toLowerCase().match(searchText.toLowerCase()) ||
+              item.barcode?.toString() === searchText
           )
           .map((item) => (
             <ItemElement

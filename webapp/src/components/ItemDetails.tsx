@@ -89,7 +89,9 @@ const ItemDetails = ({ item }: IProps) => {
             </Col>
           </Row>
           <Row className="m-1">
-            <label className="h5" htmlFor="amount-control">Antall</label>
+            <label className="h5" htmlFor="amount-control">
+              Antall
+            </label>
           </Row>
           <Row className="m-1">
             <Form.Group as={Col}>
@@ -196,7 +198,9 @@ const ItemDetails = ({ item }: IProps) => {
             </Form.Floating>
           </Row>
           <Row className="m-1">
-            <label className="h5" htmlFor="barcode-control">Strekkode</label>
+            <label className="h5" htmlFor="barcode-control">
+              Strekkode
+            </label>
           </Row>
           <Row className="m-1">
             <Form.Group as={Col}>
