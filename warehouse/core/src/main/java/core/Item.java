@@ -27,13 +27,24 @@ public class Item extends Entity<Item> {
   private Double weight;
   private LocalDateTime creationDate;
 
-  public Item(@JsonProperty("id") String id, @JsonProperty("name") String name, @JsonProperty("amount") int amount,
-      @JsonProperty("barcode") String barcode, @JsonProperty("brand") String brand,
-      @JsonProperty("regularPrice") Double regularPrice, @JsonProperty("salePrice") Double salePrice,
-      @JsonProperty("purchasePrice") Double purchasePrice, @JsonProperty("section") String section,
-      @JsonProperty("row") String row, @JsonProperty("shelf") String shelf, @JsonProperty("itemHeight") Double height,
-      @JsonProperty("itemWidth") Double width, @JsonProperty("itemLength") Double length,
-      @JsonProperty("weight") Double weight, @JsonProperty("creationDate") LocalDateTime creationDate) {
+  public Item(
+      @JsonProperty("id") String id,
+      @JsonProperty("name") String name,
+      @JsonProperty("amount") int amount,
+      @JsonProperty("barcode") String barcode,
+      @JsonProperty("brand") String brand,
+      @JsonProperty("regularPrice") Double regularPrice,
+      @JsonProperty("salePrice") Double salePrice,
+      @JsonProperty("purchasePrice") Double purchasePrice,
+      @JsonProperty("section") String section,
+      @JsonProperty("row") String row,
+      @JsonProperty("shelf") String shelf,
+      @JsonProperty("itemHeight") Double height,
+      @JsonProperty("itemWidth") Double width,
+      @JsonProperty("itemLength") Double length,
+      @JsonProperty("weight") Double weight,
+      @JsonProperty("creationDate") LocalDateTime creationDate
+  ) {
     super(id);
     setName(name);
     setAmount(amount);
