@@ -24,8 +24,8 @@ const ItemList = (props: IProps) => {
     setSearchText(e.target.value)
 
   const renderItems = () => (
-    <Container fluid className="itemlist-height w-auto p-0">
-      <Row className="text-primary bg-secondary text-bold rounded-1 mb-1 m-0">
+    <Container fluid className="item-list w-auto p-0">
+      <Row className="text-primary bg-secondary text-bold rounded-1 mb-1 m-0 p-1">
         <Col>
           <strong>Produsent</strong>
         </Col>
@@ -36,7 +36,7 @@ const ItemList = (props: IProps) => {
           <strong>Antall</strong>
         </Col>
       </Row>
-      <Container fluid className="overflow-auto w-auto itemlist-height m-0 p-0">
+      <Container fluid className="overflow-auto w-auto item-list m-0 p-0">
         {items
           .filter((item) =>
             item.name.toLowerCase().match(searchText.toLowerCase())
@@ -46,7 +46,7 @@ const ItemList = (props: IProps) => {
               key={item.id}
               item={item}
               setCurrentItem={props.setCurrentItem}
-            ></ItemElement>
+            />
           ))}
       </Container>
     </Container>
@@ -55,7 +55,7 @@ const ItemList = (props: IProps) => {
   return (
     <>
       <InputGroup>
-        <InputGroup.Text className="p-0 pb-1 container-fluid bg-white border-white placeholder-primary">
+        <InputGroup.Text className="p-0 mb-2 container-fluid border-white placeholder-primary">
           <Form.Control
             className="bg-light text-primary form-control"
             type="text"

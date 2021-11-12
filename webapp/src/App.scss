@@ -1,12 +1,14 @@
 $primary: rgb(132, 0, 155);
-$secondary: rgb(236, 223, 233);
+$secondary: rgb(231, 231, 231);
+$light: rgba(228, 206, 233, 0.89);
+$dark: rgb(76, 4, 88);
 
 // change the theme
 $theme-colors: (
   'primary': $primary,
   'secondary': $secondary,
-  'light': rgba(228, 206, 233, 0.89),
-  'dark': rgb(76, 4, 88),
+  'light': $light,
+  'dark': $dark,
 );
 
 $form-floating-padding-x: 1rem;
@@ -35,6 +37,11 @@ $form-floating-input-padding-b: 1.625rem;
   max-height: calc(100vh - 85px);
 }
 
-.itemlist-height {
+.item-list {
   max-height: calc(100vh - 160px);
+}
+
+.item-list-element:hover {
+  background-color: $light !important;
+  color: $primary;
 }
