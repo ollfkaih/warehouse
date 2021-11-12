@@ -1,0 +1,238 @@
+[
+  {
+    "id": "41fce26f-29be-42ad-9bc8-8d2a0d836d33",
+    "name": "6",
+    "amount": 4,
+    "barcode": 1234567890128,
+    "brand": "5",
+    "regularPrice": 56,
+    "salePrice": 65,
+    "purchasePrice": 54,
+    "section": "10",
+    "row": "12",
+    "shelf": "10",
+    "weight": 50,
+    "creationDate": "2021-11-09T09:28:34.937471",
+    "height": 5,
+    "width": 2,
+    "length": 1
+  },
+  {
+    "id": "20299d3a-6476-4c56-928a-5a2c7203663b",
+    "name": "Produktnavn",
+    "amount": 500000000,
+    "brand": "Produsent",
+    "regularPrice": 50,
+    "salePrice": 10,
+    "purchasePrice": 1000,
+    "section": "AE",
+    "row": "BE",
+    "shelf": "FC",
+    "weight": 156,
+    "creationDate": "2021-11-09T09:29:46.954000",
+    "height": 88,
+    "width": 60,
+    "length": 10
+  },
+  {
+    "id": "0bfdc60b-b004-4003-98c7-1b6a699e687b",
+    "name": "ger",
+    "amount": 0,
+    "brand": "ferg",
+    "creationDate": "2021-11-09T09:30:34.870078"
+  },
+  {
+    "id": "c00d7425-f307-4526-9275-1f3067cbd549",
+    "name": "fd",
+    "amount": 0,
+    "brand": "fd",
+    "creationDate": "2021-11-09T09:30:38.715724"
+  },
+  {
+    "id": "1fd095ea-4fd9-4c8f-8fee-386396888b87",
+    "name": "fg",
+    "amount": 0,
+    "brand": "fdg",
+    "creationDate": "2021-11-09T09:30:41.662078"
+  },
+  {
+    "id": "d8647f4d-865b-4000-bc74-7e82e97b5718",
+    "name": "Verylongproductnamefortestingoverflowinwebapp",
+    "amount": 10000,
+    "brand": "VerylongbrandnamefortestingoverflowinWebappwithverylongtext",
+    "regularPrice": 10,
+    "salePrice": 10,
+    "purchasePrice": 10,
+    "section": "10",
+    "row": "10",
+    "shelf": "10",
+    "weight": 5,
+    "creationDate": "2021-11-09T09:30:44.139116",
+    "height": 50,
+    "width": 50,
+    "length": 50
+  },
+  {
+    "id": "900d7f3a-4f25-4b5a-beac-bc033756e4e6",
+    "name": "test",
+    "amount": 0,
+    "brand": "test",
+    "creationDate": "2021-11-09T09:32:13.843229"
+  },
+  {
+    "id": "070b3f7e-0f1d-4e9d-bfe9-31a18cf249ab",
+    "name": "test",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:18.634888"
+  },
+  {
+    "id": "792df1e2-be80-46ca-977c-36fd929a85e9",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:23.389287"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "5f4c4549-c914-4c14-8733-b7c187b2b073",
+    "name": "test",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:30.136899"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  },
+  {
+    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
+    "name": "name",
+    "amount": 0,
+    "creationDate": "2021-11-09T09:32:26.916084"
+  }
+]

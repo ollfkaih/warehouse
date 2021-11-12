@@ -1,0 +1,40 @@
+$primary: rgb(132, 0, 155);
+$secondary: rgb(236, 223, 233);
+
+// change the theme
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'light': rgba(228, 206, 233, 0.89),
+  'dark': rgb(76, 4, 88),
+);
+
+$form-floating-padding-x: 1rem;
+$form-floating-label-transform: scale(0.85) translateY(1.5rem);
+$form-floating-input-padding-t: 0.625rem;
+$form-floating-input-padding-b: 1.625rem;
+
+// Import Bootstrap and its default variables
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+//OTHER styling of app goes here
+.btn-outline-primary {
+  border-radius: 999em;
+  margin: 5px;
+}
+
+.title {
+  color: $primary;
+}
+
+.placeholder-primary input::placeholder {
+  color: $primary;
+}
+
+.fit-to-height {
+  max-height: calc(100vh - 85px);
+}
+
+.itemlist-height {
+  max-height: calc(100vh - 160px);
+}
