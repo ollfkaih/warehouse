@@ -1,9 +1,9 @@
 package restapi;
 
+import core.ClientWarehouse;
 import core.Item;
-import core.Warehouse;
+import core.ServerWarehouse;
 import data.DataPersistence;
-import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -13,6 +13,7 @@ import jakarta.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -27,14 +28,11 @@ public class WarehouseService {
   private static final Logger LOG = LoggerFactory.getLogger(WarehouseService.class);
 
   @Context
-  private Warehouse warehouse;
-
-  @Context
-  private DataPersistence dataPersistence;
+  private ServerWarehouse warehouse;
 
   @GET
   @Path("/items")
-  public List<Item> getItems() {
+  public Collection<Item> getItems() {
     LOG.debug("getItems: " + warehouse);
     return warehouse.getAllItems();
   }
@@ -54,8 +52,6 @@ public class WarehouseService {
       item = null;
     }
     LOG.debug("Sub-resource for Item " + id + ": " + item);
-    ItemResource itemResource = new ItemResource(warehouse, id, item);
-    itemResource.setDataPersistence(dataPersistence);
-    return itemResource;
+    return new ItemResource(warehouse, id, item);
   }
 }

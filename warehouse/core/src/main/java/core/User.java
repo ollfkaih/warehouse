@@ -14,8 +14,16 @@ public class User extends Entity<User> {
   String password;
   boolean admin;
 
-  public User(@JsonProperty("userName") String userName, @JsonProperty("password") String password,
+  public User(@JsonProperty("id") String id, @JsonProperty("userName") String userName, @JsonProperty("password") String password,
       @JsonProperty("admin") boolean admin) {
+    super(id);
+    setUserName(userName);
+    this.password = password; // needs to set directly to avoid double hashing
+    setAdmin(admin);
+  }
+
+  public User(String userName, String password, boolean admin) {
+    super();
     setUserName(userName);
     setPassword(password);
     setAdmin(admin);
@@ -32,17 +40,17 @@ public class User extends Entity<User> {
     this.userName = userName;
     notifyUpdated();
   }
-
-  public String getPassword() {
-    return password;
-  }
-
+  
   public void setPassword(String password) {
     if (password.equals("")) {
       throw new IllegalArgumentException("Password cannot be empty");
     }
-    this.password = password;
+    this.password = md5Hash(password);
     notifyUpdated();
+  }
+
+  public boolean checkPassword(String password) {
+    return md5Hash(password).equals(this.password);
   }
 
   public boolean isAdmin() {
@@ -54,7 +62,7 @@ public class User extends Entity<User> {
     notifyUpdated();
   }
 
-  public static String md5Hash(String password) {
+  private static String md5Hash(String password) {
     String outString = null;
     try {
       MessageDigest md = MessageDigest.getInstance("MD5");

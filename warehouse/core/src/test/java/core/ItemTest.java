@@ -1,16 +1,13 @@
 package core;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.Random;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemTest {
   Item item;
@@ -41,7 +38,6 @@ public class ItemTest {
     assertNotNull(item.getCreationDate());
 
     assertThrows(IllegalArgumentException.class, () -> new Item(null, 10));
-    assertThrows(IllegalArgumentException.class, () -> new Item(null));
   }
 
   @Test
@@ -220,5 +216,34 @@ public class ItemTest {
     changeCounter = 0;
     item.setLength(53.0);
     assertEquals(changeCounter, 0);
+  }
+
+  @Test
+  @DisplayName("Test equals function")
+  void testEquals() {
+    Item item1 = new Item("ost");
+    Item item2 = new Item("brød");
+
+    assertEquals(item1, item1);
+    assertNotEquals(item2, item1);
+    assertNotEquals(item1, null);
+
+    Item item1copy = new Item(item1);
+
+    assertEquals(item1, item1copy);
+
+    Item itemWithSameNameAs1 = new Item(item1.getName());
+
+    assertNotEquals(item1, itemWithSameNameAs1);
+
+    class ItemExtension extends Item {
+      public ItemExtension(Item item) {
+        super(item);
+      }
+    }
+
+    ItemExtension itemExtension = new ItemExtension(item1);
+
+    assertNotEquals(itemExtension, item1);
   }
 }

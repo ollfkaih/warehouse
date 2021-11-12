@@ -17,8 +17,8 @@ import javafx.scene.text.Font;
  */
 public class ItemElementAnchorPane extends AnchorPane {
   final Font boldFont = new Font("Arial Bold", 13);
-  private HBox textAmountAndButtonsHBox;
-  private VBox brandAndNameVBox;
+  private final HBox textAmountAndButtonsHBox;
+  private final VBox brandAndNameVBox;
   
   private final Button incrementButton;
   private final Button decrementButton;

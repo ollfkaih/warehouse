@@ -1,11 +1,11 @@
 package ui;
 
-import core.CoreConst.SortOption;
+import static core.CoreConst.SortOption;
+
+import core.ClientWarehouse;
 import core.EntityCollectionListener;
 import core.Item;
-import core.Warehouse;
-import data.DataPersistence;
-import data.WarehouseFileSaver;
+import core.ServerInterface;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
+import localserver.LocalServer;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,10 +32,7 @@ import java.util.Map;
  * Main Controller class. Controls the main Warehouse view.
  */
 public class WarehouseController implements EntityCollectionListener<Item> {
-  private static final String FILENAME = "warehouse";
-
-  private Warehouse warehouse;
-  private final WarehouseFileSaver dataPersistence = new WarehouseFileSaver(FILENAME);
+  private ClientWarehouse warehouse;
 
   @FXML private Label usernameLabel;
   @FXML private Button loginButton;
@@ -52,30 +50,29 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   private SortOption sortBy = SortOption.DATE;
   private boolean ascending = true;
 
-  private Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
+  private final Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
   private LoginController loginController;
 
   @FXML
   void initialize() {
-    try {
-      warehouse = dataPersistence.getWarehouse();
-    } catch (Exception e) {
-      System.out.println("Could not load saved warehouse");
-      System.out.println(e.toString());
-    }
-    if (warehouse == null) {
-      warehouse = new Warehouse();
-    }
-
-    loginController = new LoginController(this, warehouse);
-    usernameLabel.setVisible(false);
-    updateInventory();
-        
     List<String> displaySortStrings = List.of("Antall", "Dato", "Navn", "Pris", "Vekt");
     sortBySelector.getItems().addAll(displaySortStrings);
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
+
+    loadPersistedData("local_server");
+  }
+
+  public void loadPersistedData(String prefix) {
+    if (warehouse != null) {
+      warehouse.removeItemsListener(this);
+    }
+
+    ServerInterface server = new LocalServer(prefix);
+    warehouse = new ClientWarehouse(server);
     warehouse.addItemsListener(this);
+    loginController = new LoginController(this, warehouse);
+    updateInventory();
   }
 
   @FXML
@@ -91,15 +88,16 @@ public class WarehouseController implements EntityCollectionListener<Item> {
      
       promptLogoutConfirmationAlert.getButtonTypes().setAll(cancelLoginButton, confirmLoginButton);
 
-      promptLogoutConfirmationAlert.showAndWait()
-      .filter(response -> response == confirmLoginButton)
-              .ifPresent(response -> confirmLogout());
+      promptLogoutConfirmationAlert
+          .showAndWait()
+          .filter(response -> response == confirmLoginButton)
+          .ifPresent(response -> confirmLogout());
     }
     updateInventory();
   }
 
   private void confirmLogout() {
-    warehouse.removeCurrentUser();
+    warehouse.logout();
     usernameLabel.setVisible(false);
     usernameLabel.setText("");
     loginButton.setText("Logg inn");
@@ -120,7 +118,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
       ItemElementAnchorPane itemElement = new ItemElementAnchorPane(items.get(i));
 
       String id = items.get(i).getId();
-      if (warehouse.isAdmin()) {
+      if (warehouse.getCurrentUser() != null && warehouse.getCurrentUser().isAdmin()) {
         itemElement.getDecrementButton().setOnAction(e -> decrementAmount(id));
         itemElement.getIncrementButton().setOnAction(e -> incrementAmount(id));
       } else {
@@ -179,9 +177,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   }
 
   protected void removeDetailsViewController(Item item) {
-    if (detailsViewControllers.containsKey(item)) {
-      detailsViewControllers.remove(item);
-    }
+    detailsViewControllers.remove(item);
     updateInventory();
   }
 
@@ -191,7 +187,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
 
   @FXML
   private void addItem() {
-    if (warehouse.isAdmin()) {
+    if (warehouse.getCurrentUser().isAdmin()) {
       Item item = new Item("");
       openDetailsView(item);
       detailsViewControllers.get(item).toggleEditing();
@@ -201,20 +197,17 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   @FXML
   protected void removeItem(String id) {
     warehouse.removeItem(warehouse.getItem(id));
-    saveWarehouse();
   }
 
   protected void incrementAmount(String id) {
-    if (warehouse.isAdmin()) {
+    if (warehouse.getCurrentUser().isAdmin()) {
       warehouse.getItem(id).incrementAmount();
-      saveWarehouse();
     }
   }
 
   protected void decrementAmount(String id) {
-    if (warehouse.isAdmin()) {
+    if (warehouse.getCurrentUser().isAdmin()) {
       warehouse.getItem(id).decrementAmount();
-      saveWarehouse();
     }
   }
 
@@ -223,33 +216,31 @@ public class WarehouseController implements EntityCollectionListener<Item> {
 
     String value = "";
     if (sortBySelector.getValue() != null) {
-      value = sortBySelector.getValue().toString();
+      value = sortBySelector.getValue();
     }
 
     switch (value) {
-      case "Dato":
+      case "Dato" -> {
         sortBy = SortOption.DATE;
         ascending = true;
-        break;
-      case "Antall":
+      }
+      case "Antall" -> {
         sortBy = SortOption.AMOUNT;
         ascending = false;
-        break;
-      case "Navn":
+      }
+      case "Navn" -> {
         sortBy = SortOption.NAME;
         ascending = true;
-        break;
-      case "Pris":
+      }
+      case "Pris" -> {
         sortBy = SortOption.PRICE;
         ascending = true;
-        break;
-      case "Vekt":
+      }
+      case "Vekt" -> {
         sortBy = SortOption.WEIGHT;
         ascending = true;
-        break;
-      default:
-        sortBy = SortOption.NAME;
-        break;
+      }
+      default -> sortBy = SortOption.NAME;
     }
     updateInventory();
   }
@@ -268,19 +259,12 @@ public class WarehouseController implements EntityCollectionListener<Item> {
     updateInventory();
   }
 
-  protected void saveWarehouse() {
-    try {
-      dataPersistence.saveItems(warehouse);
-    } catch (Exception e) {
-      System.out.println(e.toString());
-    }
-  }
-
   protected boolean canExit() {
     boolean currentlyEditing = false;
     for (DetailsViewController controller : detailsViewControllers.values()) {
       if (controller.isEditing()) {
         currentlyEditing = true;
+        break;
       }
     }
     return !currentlyEditing;

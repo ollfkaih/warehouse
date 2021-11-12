@@ -2,8 +2,8 @@ package restserver;
 
 import core.EntityCollectionListener;
 import core.Item;
+import core.ServerWarehouse;
 import core.User;
-import core.Warehouse;
 import data.WarehouseFileSaver;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -18,10 +18,10 @@ import java.io.IOException;
  */
 public class WarehouseConfig extends ResourceConfig implements EntityCollectionListener<Item> {
 
-  private Warehouse warehouse;
+  private ServerWarehouse warehouse;
   private WarehouseFileSaver dataPersistence;
 
-  public WarehouseConfig(Warehouse warehouse) {
+  public WarehouseConfig(ServerWarehouse warehouse) {
     setWarehouse(warehouse);
     dataPersistence = new WarehouseFileSaver("server-warehouse");
 
@@ -64,24 +64,24 @@ public class WarehouseConfig extends ResourceConfig implements EntityCollectionL
   private void saveWarehouse() {
     if (dataPersistence != null) {
       try {
-        dataPersistence.saveItems(warehouse);
+        dataPersistence.saveItems(warehouse.getAllItems());
       } catch (IllegalStateException | IOException e) {
         System.err.println("Couldn't save");
       }
     }
   }
 
-  public Warehouse getWarehouse() {
+  public ServerWarehouse getWarehouse() {
     return warehouse;
   }
 
-  public void setWarehouse(Warehouse warehouse) {
+  public void setWarehouse(ServerWarehouse warehouse) {
     this.warehouse = warehouse;
     warehouse.addItemsListener(this);
   }
 
-  private static Warehouse createDefaultWarehouse() {
-    Warehouse warehouse = new Warehouse();
+  private static ServerWarehouse createDefaultWarehouse() {
+    ServerWarehouse warehouse = new ServerWarehouse();
 
     User defaultUser = new User("admin", "password", true);
     warehouse.addUser(defaultUser);

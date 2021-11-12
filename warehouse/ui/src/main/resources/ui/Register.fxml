@@ -20,8 +20,6 @@
       <PasswordField fx:id="passwordField1" layoutX="127.0" layoutY="160.0" promptText="Passord" />
       <PasswordField fx:id="passwordField2" layoutX="128.0" layoutY="190.0" promptText="Gjenta passord" />
       <Button fx:id="btnRegister" layoutX="142.0" layoutY="240.0" onAction="#register" text="Registrer ny bruker" />
-      <Label fx:id="errorMessageEmptyField" layoutX="87.0" layoutY="280.0" text="" textFill="RED" />
-      <Label fx:id="errorMessageUserTaken" layoutX="31.0" layoutY="280.0" textFill="RED" />
-      <Label fx:id="errorMessageDifferentPasswords" layoutX="132.0" layoutY="280.0" textFill="RED" />
+      <Label fx:id="errorMessageField" layoutX="87.0" layoutY="240.0" text="" textFill="RED" />
    </children>
 </AnchorPane>

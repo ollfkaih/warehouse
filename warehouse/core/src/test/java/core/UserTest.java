@@ -1,7 +1,9 @@
 package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,11 +24,13 @@ public class UserTest {
     @DisplayName("Test constructor")
     void testContructor() {
         assertEquals("a", user1.getUserName());
-        assertEquals("b", user1.getPassword());
-        assertEquals(true, user1.isAdmin());
+        assertTrue(user1.checkPassword("b"));
+        assertFalse(user1.checkPassword("d"));
+        assertTrue(user1.isAdmin());
         assertEquals("c", user2.getUserName());
-        assertEquals("d", user2.getPassword());
-        assertEquals(false, user2.isAdmin()); 
+        assertTrue(user2.checkPassword("d"));
+        assertFalse(user2.checkPassword("b"));
+        assertFalse(user2.isAdmin());
     }
 
     @Test

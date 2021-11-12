@@ -1,9 +1,7 @@
 package ui;
 
+import core.ClientWarehouse;
 import core.User;
-import core.Warehouse;
-import data.DataPersistence;
-import data.WarehouseFileSaver;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * This controller shows a separate window for registering a user.
@@ -22,29 +21,23 @@ public class RegisterController {
   @FXML TextField userNameField;
   @FXML PasswordField passwordField1;
   @FXML PasswordField passwordField2;
-  @FXML Label errorMessageEmptyField;
-  @FXML Label errorMessageUserTaken;
-  @FXML Label errorMessageDifferentPasswords;
+  @FXML Label errorMessageField;
 
   private static final String FILENAME = "warehouse";
-  private final WarehouseFileSaver dataPersistence = new WarehouseFileSaver(FILENAME);
 
   private String userName;
   private String password1;
   private String password2;
 
   private Stage stage;
-  private FXMLLoader loader;
-  private Parent loginRoot;
 
-  private Warehouse warehouse;
-  private User user;
+  private final ClientWarehouse warehouse;
 
-  public RegisterController(Warehouse warehouse) {
+  public RegisterController(ClientWarehouse warehouse) {
     try {
-      loader = new FXMLLoader(getClass().getResource("Register.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("Register.fxml"));
       loader.setController(this);
-      loginRoot = loader.load();
+      Parent loginRoot = loader.load();
       stage = new Stage();
       stage.setScene(new Scene(loginRoot));
       stage.setTitle("Register");
@@ -60,44 +53,29 @@ public class RegisterController {
       }
     });
     this.warehouse = warehouse;
-
   }
 
   @FXML
   private void register() {
-    userName = userNameField.getText().toLowerCase();
-    password1 = User.md5Hash(passwordField1.getText());
-    password2 = User.md5Hash(passwordField2.getText());
-    if (warehouse.containsUserByUsername(userName)) {
-      errorMessageEmptyField.setText("");
-      errorMessageDifferentPasswords.setText("");
-      errorMessageUserTaken.setText("Brukernavnet er allerede tatt.");
-      return;
-    }
-    if (userName.equals("") || passwordField1.getText().equals("") || passwordField2.getText().equals("")) {
-      errorMessageUserTaken.setText("");
-      errorMessageDifferentPasswords.setText("");
-      errorMessageEmptyField.setText("Du må fylle ut alle feltene før du kan gå videre.");
-      return;
+    userName = userNameField.getText();
+    password1 = passwordField1.getText();
+    password2 = passwordField2.getText();
+
+    if (userName.isEmpty() || password1.isEmpty() || password2.isEmpty()) {
+      errorMessageField.setText("Passordene er ikke like.");
     }
     if (!password1.equals(password2)) {
-      errorMessageEmptyField.setText("");
-      errorMessageUserTaken.setText("");
-      errorMessageDifferentPasswords.setText("Passordene samsvarer ikke.");
-      return;
+      errorMessageField.setText("Passordene er ikke like.");
     }
-    user = new User(userName, password1, true);
-    warehouse.addUser(user);
-    hideRegisterView();
-    saveUsers();
-  }
 
-  protected void saveUsers() {
-    try {
-      dataPersistence.saveUsers(warehouse);
-    } catch (Exception e) {
-      System.out.println(e.toString());
-    }
+    User user = new User(userName, password1, true);
+    CompletableFuture<Void> registerFuture = warehouse.register(user);
+    registerFuture.thenAccept(x -> {
+      hideRegisterView();
+    }).exceptionally(e -> {
+      errorMessageField.setText(e.getCause().getMessage());
+      return null;
+    });
   }
 
   protected void showRegisterView() {
@@ -107,9 +85,8 @@ public class RegisterController {
 
   protected void hideRegisterView() {
     stage.hide();
-    errorMessageEmptyField.setText("");
-    errorMessageUserTaken.setText("");
-    errorMessageDifferentPasswords.setText("");
+
+    errorMessageField.setText("");
     userNameField.setText("");
     passwordField1.setText("");
     passwordField2.setText("");

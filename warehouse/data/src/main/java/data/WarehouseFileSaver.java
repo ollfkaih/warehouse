@@ -2,8 +2,8 @@ package data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import core.Item;
+import core.ServerWarehouse;
 import core.User;
-import core.Warehouse;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -25,11 +25,11 @@ public class WarehouseFileSaver {
     this.userFileSaver = new FileSaver<Collection<User>>(new TypeReference<Collection<User>>() {}, USERS_FOLDERNAME);
   }
 
-  public Warehouse getWarehouse() throws IOException {
+  public ServerWarehouse getWarehouse() throws IOException {
     Collection<Item> warehouseItems = itemFileSaver.load(warehouseFileName);
     Collection<User> warehouseUsers = userFileSaver.load(warehouseFileName);
 
-    Warehouse warehouse = new Warehouse();
+    ServerWarehouse warehouse = new ServerWarehouse();
     if (warehouseItems != null) {
       for (Item item : warehouseItems) {
         warehouse.addItem(item);
@@ -45,11 +45,11 @@ public class WarehouseFileSaver {
     return warehouse;
   }
 
-  public void saveItems(Warehouse warehouse) throws IOException {
-    itemFileSaver.save(warehouse.getAllItems(), warehouseFileName);
+  public void saveItems(Collection<Item> items) throws IOException {
+    itemFileSaver.save(items, warehouseFileName);
   }
 
-  public void saveUsers(Warehouse warehouse) throws IOException {
+  public void saveUsers(ServerWarehouse warehouse) throws IOException {
     userFileSaver.save(warehouse.getUsers(), warehouseFileName);
   }
 
