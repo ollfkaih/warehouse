@@ -49,6 +49,15 @@ public class User extends Entity<User> {
     notifyUpdated();
   }
 
+  /**
+   * Get the password hash. Used when serializing users for persistence.
+   *
+   * @return Hashed password
+   */
+  public String getPassword() {
+    return password;
+  }
+
   public boolean checkPassword(String password) {
     return md5Hash(password).equals(this.password);
   }
