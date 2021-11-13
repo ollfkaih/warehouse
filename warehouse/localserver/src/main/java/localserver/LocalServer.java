@@ -2,13 +2,14 @@ package localserver;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import core.AuthSession;
+import core.Entity;
 import core.EntityCollection;
-import core.EntityCollectionListener;
 import core.Item;
 import core.ServerInterface;
 import core.ServerWarehouse;
 import core.User;
 import data.DataPersistence;
+import data.EntityCollectionAutoPersistence;
 import data.FileSaver;
 
 import java.util.Collection;
@@ -18,22 +19,12 @@ import java.util.concurrent.CompletableFuture;
  * An implementation of ServerInterface that uses a local WarehouseServer instance.
  */
 public class LocalServer implements ServerInterface {
-  private static final DataPersistence<Collection<Item>> itemPersistence = new FileSaver<>(new TypeReference<>() {}, "items");
-  private static final DataPersistence<Collection<User>> userPersistence = new FileSaver<>(new TypeReference<>() {}, "users");
-  private static final String ITEM_KEY_POSTFIX = "_items";
-  private static final String USER_KEY_POSTFIX = "_users";
-  private final String itemKey;
-  private final String userKey;
   private final ServerWarehouse warehouse;
 
-  public LocalServer(String persistenceKeyPrefix) {
-    this(new ServerWarehouse(getItemCollection(persistenceKeyPrefix), getUserCollection(persistenceKeyPrefix)), persistenceKeyPrefix);
-  }
-
-  private static EntityCollection<Item> getItemCollection(String itemKeyPrefix) {
+  private static <T extends Entity<T>> EntityCollection<T> getEntityCollection(DataPersistence<T> dataPersistence) {
     try {
-      EntityCollection<Item> itemEntityCollection = new EntityCollection<>();
-      itemEntityCollection.addAll(itemPersistence.load(itemKeyPrefix + ITEM_KEY_POSTFIX));
+      EntityCollection<T> itemEntityCollection = new EntityCollection<>();
+      itemEntityCollection.addAll(dataPersistence.loadAll());
       return itemEntityCollection;
     } catch (Exception e) {
       System.out.println("LOADING SAVED ITEMS FAILED");
@@ -41,71 +32,17 @@ public class LocalServer implements ServerInterface {
     }
   }
 
-  private static EntityCollection<User> getUserCollection(String userKeyPrefix) {
-    try {
-      EntityCollection<User> userEntityCollection = new EntityCollection<>();
-      userEntityCollection.addAll(userPersistence.load(userKeyPrefix + USER_KEY_POSTFIX));
-      return userEntityCollection;
-    } catch (Exception e) {
-      System.out.println("LOADING SAVED USERS FAILED");
-      return new EntityCollection<>();
-    }
-  }
+  public LocalServer(String folderName) {
+    DataPersistence<Item> itemPersistence = new FileSaver<>(new TypeReference<>() {}, folderName + "-items");
+    DataPersistence<User> userPersistence = new FileSaver<>(new TypeReference<>() {}, folderName + "-users");
 
-  public LocalServer(ServerWarehouse warehouse, String persistenceKeyPrefix) {
-    this.itemKey = persistenceKeyPrefix + ITEM_KEY_POSTFIX;
-    this.userKey = persistenceKeyPrefix + USER_KEY_POSTFIX;
-    this.warehouse = warehouse;
+    warehouse = new ServerWarehouse(getEntityCollection(itemPersistence), getEntityCollection(userPersistence));
 
-    warehouse.addItemsListener(new EntityCollectionListener<>() {
-      @Override
-      public void entityAdded(Item entity) {
-        saveItems();
-      }
+    EntityCollectionAutoPersistence<Item> autoItemPersistence = new EntityCollectionAutoPersistence<>(itemPersistence);
+    warehouse.addItemsListener(autoItemPersistence);
 
-      @Override
-      public void entityUpdated(Item entity) {
-        saveItems();
-      }
-
-      @Override
-      public void entityRemoved(Item entity) {
-        saveItems();
-      }
-    });
-
-    warehouse.addUserListener(new EntityCollectionListener<>() {
-      @Override
-      public void entityAdded(User entity) {
-        saveUsers();
-      }
-
-      @Override
-      public void entityUpdated(User entity) {
-        saveUsers();
-      }
-
-      @Override
-      public void entityRemoved(User entity) {
-        saveUsers();
-      }
-    });
-  }
-
-  private void saveItems() {
-    try {
-      itemPersistence.save(warehouse.getAllItems(), itemKey);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  private void saveUsers() {
-    try {
-      userPersistence.save(warehouse.getUsers(), userKey);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    EntityCollectionAutoPersistence<User> autoUserPersistence = new EntityCollectionAutoPersistence<>(userPersistence);
+    warehouse.addUserListener(autoUserPersistence);
   }
 
   @Override
