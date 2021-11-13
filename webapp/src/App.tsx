@@ -4,15 +4,20 @@ import { Route } from 'react-router-dom'
 import SplashPage from './components/SplashPage'
 import Navbar from './components/Navbar'
 import ItemDetails from './components/ItemDetails'
+import SearchBar from './components/SearchBar'
 import ItemList from './components/ItemList'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { Container } from 'react-bootstrap'
 import Item from './modules/Item'
+import SortButtons from './components/SortButtons'
+import SortOption from './modules/SortOption'
 
 function App() {
   const [login, setLogin] = useState(true)
   const [currentItem, setCurrentItem] = useState<Item>()
+  const [searchText, setSearchText] = useState('')
+  const [sortOption, setSortOption] = useState<SortOption>(SortOption.Name)
 
   function showDetailsCol(): React.ReactNode {
     return currentItem != null ? (
@@ -38,7 +43,17 @@ function App() {
                   sm="12"
                   md={currentItem == null ? 12 : 6}
                 >
+                  <SearchBar
+                    searchText={searchText}
+                    setSearchText={setSearchText}
+                  />
+                  <SortButtons
+                    sortOption={sortOption}
+                    setSortOption={setSortOption}
+                  />
                   <ItemList
+                    searchText={searchText}
+                    sortOption={sortOption}
                     currentItem={currentItem}
                     setCurrentItem={setCurrentItem}
                   />

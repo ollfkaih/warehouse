@@ -1,12 +1,15 @@
+import React, { useState } from 'react'
 import ItemElement from './ItemElement'
 import Item from '../modules/Item'
 import warehouseItems from '../warehouse.json'
-import React, { useState } from 'react'
-import { Col, Container, Form, InputGroup, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
+import SortOption from '../modules/SortOption'
 
 interface IProps {
   currentItem?: Item
   setCurrentItem: (item: Item) => void
+  searchText: string
+  sortOption: SortOption
 }
 
 const ItemList = (props: IProps) => {
@@ -19,10 +22,6 @@ const ItemList = (props: IProps) => {
   )
   // eslint-disable-next-line
   const [newItem, setNewItem] = useState()
-  const [searchText, setSearchText] = useState('')
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setSearchText(e.target.value)
 
   const renderItems = () => (
     <Container fluid className="item-list w-auto p-0">
@@ -41,9 +40,9 @@ const ItemList = (props: IProps) => {
         {items
           .filter(
             (item) =>
-              item.name.toLowerCase().match(searchText.toLowerCase()) ||
-              item.brand?.toLowerCase().match(searchText.toLowerCase()) ||
-              item.barcode?.toString() === searchText
+              item.name.toLowerCase().match(props.searchText.toLowerCase()) ||
+              item.brand?.toLowerCase().match(props.searchText.toLowerCase()) ||
+              item.barcode?.toString() === props.searchText
           )
           .map((item) => (
             <ItemElement
@@ -57,22 +56,6 @@ const ItemList = (props: IProps) => {
     </Container>
   )
 
-  return (
-    <>
-      <InputGroup>
-        <InputGroup.Text className="p-0 mb-2 container-fluid border-white placeholder-primary">
-          <Form.Control
-            className="bg-light text-primary form-control"
-            type="text"
-            placeholder="Søk..."
-            value={searchText}
-            onChange={handleSearch}
-          />
-        </InputGroup.Text>
-      </InputGroup>
-
-      {renderItems()}
-    </>
-  )
+  return <>{renderItems()}</>
 }
 export default ItemList
