@@ -1,15 +1,13 @@
 package server;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import core.Entity;
+import core.EntityCollection;
 import core.Item;
 import core.ServerWarehouse;
 import core.User;
 import data.DataPersistence;
-import data.FileSaver;
+import data.EntityCollectionAutoPersistence;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.Collection;
 
 /**
  * Configures the warehouse service,
@@ -17,45 +15,30 @@ import java.util.Collection;
  */
 @Service
 public class WarehouseService {
-  private ServerWarehouse warehouse;
-  private final DataPersistence<Collection<Item>> itemDataPersistence;
-  private final DataPersistence<Collection<User>> userDataPersistence;
+  private final ServerWarehouse warehouse;
 
-  public WarehouseService(ServerWarehouse warehouse) {
-    this.warehouse = warehouse;
-    this.itemDataPersistence = new FileSaver<>(new TypeReference<>() {}, "items");
-    this.userDataPersistence = new FileSaver<>(new TypeReference<>() {}, "users");
+  private static <T extends Entity<T>> EntityCollection<T> getEntityCollection(DataPersistence<T> dataPersistence) {
+    try {
+      EntityCollection<T> itemEntityCollection = new EntityCollection<>();
+      itemEntityCollection.addAll(dataPersistence.loadAll());
+      return itemEntityCollection;
+    } catch (Exception e) {
+      System.out.println("LOADING SAVED ITEMS FAILED");
+      return new EntityCollection<>();
+    }
   }
 
-  public WarehouseService() {
-    this(new ServerWarehouse());
+  public WarehouseService(DataPersistence<Item> itemPersistence, DataPersistence<User> userPersistence) {
+    warehouse = new ServerWarehouse(getEntityCollection(itemPersistence), getEntityCollection(userPersistence));
+
+    EntityCollectionAutoPersistence<Item> autoItemPersistence = new EntityCollectionAutoPersistence<>(itemPersistence);
+    warehouse.addItemsListener(autoItemPersistence);
+
+    EntityCollectionAutoPersistence<User> autoUserPersistence = new EntityCollectionAutoPersistence<>(userPersistence);
+    warehouse.addUserListener(autoUserPersistence);
   }
 
   public ServerWarehouse getWarehouse() {
     return warehouse;
-  }
-
-  public void setWarehouse(ServerWarehouse warehouse) {
-    this.warehouse = warehouse;
-  }
-
-  public void saveItems() {
-    if (warehouse != null) {
-      try {
-        itemDataPersistence.save(warehouse.getAllItems(), "warehouse-server");
-      } catch (IllegalStateException | IOException e) {
-        System.err.println("Couldn't save Items: " + e);
-      }
-    }
-  }
-
-  public void saveUsers() {
-    if (warehouse != null) {
-      try {
-        userDataPersistence.save(warehouse.getUsers(), "warehouse-server");
-      } catch (IllegalStateException | IOException e) {
-        System.err.println("Couldn't save Items: " + e);
-      }
-    }
   }
 }

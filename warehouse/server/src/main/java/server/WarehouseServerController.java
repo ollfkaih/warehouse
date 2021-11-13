@@ -5,6 +5,7 @@ import core.ServerWarehouse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +17,13 @@ import java.util.Collection;
  * WarehouseController contains the main REST-API methods.
  */
 @RestController
-@RequestMapping(WarehouseController.WAREHOUSE_SERVICE_PATH)
-public class WarehouseController {
+@RequestMapping(WarehouseServerController.WAREHOUSE_SERVICE_PATH)
+public class WarehouseServerController {
   public static final String WAREHOUSE_SERVICE_PATH = "springboot/warehouse";
 
   private final WarehouseService warehouseService;
 
-  public WarehouseController(WarehouseService warehouseService) {
+  public WarehouseServerController(WarehouseService warehouseService) {
     this.warehouseService = warehouseService;
   }
 
@@ -30,17 +31,12 @@ public class WarehouseController {
     return warehouseService.getWarehouse();
   }
 
-  private void saveWarehouse() {
-    warehouseService.saveItems();
-    warehouseService.saveUsers();
-  }
-
   /**
    * Gets all items.
    *
    * @return all items
    */
-  @GetMapping(path = "")
+  @GetMapping(path = "items")
   public Collection<Item> getItems() {
     return getWarehouse().getAllItems();
   }
@@ -51,9 +47,21 @@ public class WarehouseController {
    * @param id items id
    * @return the item
    */
-  @GetMapping(path = "/{id}")
+  @GetMapping(path = "item/{id}")
   public Item getItem(@PathVariable("id") String id) {
     return getWarehouse().getItem(id);
+  }
+
+  /**
+   * Adds an Item.
+   *
+   * @param id the id of the Item
+   * @param item the item to add
+   * @return true if it was added, false if it replaced
+   */
+  @PostMapping(path = "item/{id}")
+  public boolean postItem(@PathVariable("id") String id, @RequestBody Item item) {
+    return getWarehouse().putItem(item);
   }
 
   /**
@@ -63,12 +71,9 @@ public class WarehouseController {
    * @param item the item to add
    * @return true if it was added, false if it replaced
    */
-  @PutMapping(path = "/{id}")
-  public boolean putTodoList(@PathVariable("id") String id,
-                             @RequestBody Item item) {
-    boolean added = getWarehouse().putItem(item);
-    saveWarehouse();
-    return added;
+  @PutMapping(path = "item/{id}")
+  public boolean putItem(@PathVariable("id") String id, @RequestBody Item item) {
+    return getWarehouse().putItem(item);
   }
 
   /**
@@ -77,11 +82,9 @@ public class WarehouseController {
    * @param id the id of the item.
    * @return the deleted item.
    */
-  @DeleteMapping(path = "/{id}")
-  public Item removeTodoList(@PathVariable("id") String id) {
-    Item deleted = getWarehouse().removeItem(id);
-    saveWarehouse();
-    return deleted;
+  @DeleteMapping(path = "item/{id}")
+  public Item removeItem(@PathVariable("id") String id) {
+    return getWarehouse().removeItem(id);
   }
 }
 
