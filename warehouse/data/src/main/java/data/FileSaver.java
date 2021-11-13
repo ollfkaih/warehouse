@@ -11,6 +11,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * General file-saving class that will work for any object type, given a working ObjectMapper.
@@ -39,9 +44,30 @@ public class FileSaver<T> implements DataPersistence<T> {
   }
 
   @Override
+  public Collection<T> loadAll() throws IOException {
+    return Files.walk(getFolderPath())
+        .filter(Files::isRegularFile)
+        .map(Path::toFile)
+        .map(file -> {
+          try {
+            return this.loadFromFile(file);
+          } catch (IOException e) {
+            System.out.println("ERROR: could not load from file '" + file.getAbsolutePath() + "'");
+            e.printStackTrace();
+            return null;
+          }
+        })
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
+  }
+
+  @Override
   public T load(String key) throws IOException {
     Path path = getFilePath(key);   
-    File file = path.toFile(); 
+    return loadFromFile(path.toFile());
+  }
+
+  private T loadFromFile(File file) throws IOException {
     if (!file.exists()) {
       return null;
     }

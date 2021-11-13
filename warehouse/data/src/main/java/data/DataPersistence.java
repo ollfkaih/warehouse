@@ -1,12 +1,21 @@
 package data;
 
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * Interface for persisting data. 
  * NOTE: T can be a collection of objects, f.ex. if we want to save all the Items in a Warehouse.
  */
 public interface DataPersistence<T> {
+  /**
+   * Get all the saved objects.
+   *
+   * @return The object
+   * @throws IOException if the saved object cannot be loaded
+   */
+  Collection<T> loadAll() throws IOException;
+
   /**
    * Get a the saved object.
    *
