@@ -3,9 +3,9 @@
     -fx-background-color: #840B9B; 
 }
 
-  .button:hover {
-    -fx-cursor: hand;
-  }
+.button:hover {
+  -fx-cursor: hand;
+}
 
 #btnSave {
     -fx-background-color: #5CA0D9;
@@ -45,18 +45,27 @@
     -fx-prompt-text-fill:  rgba(1,1,1,0.7);
     -fx-border-color: rgba(0,0,0,0);
     -fx-border-size:2px;
-  }
+}
   
-  .sortBox:hover, .sortBox:showing {
+.sortBox:hover, .sortBox:showing {
     -fx-background-color: rgba(0,0,0,0.10);
     -fx-cursor: hand;
-  }
+}
+
+.sortBox .list-view .list-cell:hover {
+    -fx-background-color: #840B9B;
+}
+
+.sortBox .list-view .list-cell:filled:selected {
+  -fx-background-color: #840B9B;
+}
+
 
 .loginButton {
     -fx-background-color:#fff;
     -fx-text-fill:  #840B9B;
 }
 
-  .loginButton:hover {
-    -fx-background-color:#f1f1f1;
-  }
+.loginButton:hover {
+  -fx-background-color:#f1f1f1;
+}
