@@ -13,6 +13,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import core.server.AuthSession;
+import core.server.LoginRequest;
 import core.server.ServerInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -294,7 +295,7 @@ public class ClientWarehouseTest {
     when(server.register(user)).thenReturn(registerFuture);
 
     CompletableFuture<AuthSession> loginFuture = new CompletableFuture<>();
-    when(server.login(user.userName, user.password)).thenReturn(loginFuture);
+    when(server.login(any())).thenReturn(loginFuture);
 
     wh.register(user);
 
@@ -303,7 +304,7 @@ public class ClientWarehouseTest {
 
     wh.login(user.userName, user.password);
 
-    verify(server, times(1)).login(user.userName, user.password);
+    verify(server, times(1)).login(any());
     AuthSession authSession = new AuthSession(user);
     loginFuture.complete(authSession);
     assertEquals(user, wh.getCurrentUser());

@@ -2,6 +2,7 @@ package core;
 
 import core.CoreConst.SortOption;
 import core.server.AuthSession;
+import core.server.LoginRequest;
 import core.server.ServerInterface;
 
 import java.util.ArrayList;
@@ -65,9 +66,12 @@ public class ClientWarehouse extends BaseWarehouse {
   }
 
   public CompletableFuture<Void> login(String username, String password) {
-    return server
-        .login(username, password)
+    System.out.println(new LoginRequest(username, password).getUsername());
+    CompletableFuture<Void> voidCompletableFuture = server
+        .login(new LoginRequest(username, password))
         .thenAccept(authSession -> this.authSession = authSession);
+    System.out.println(voidCompletableFuture);
+    return voidCompletableFuture;
   }
 
   public User getCurrentUser() {

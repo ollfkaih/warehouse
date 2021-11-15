@@ -21,7 +21,7 @@ public interface ServerInterface {
 
   CompletableFuture<Item> removeItem(String id);
 
-  CompletableFuture<AuthSession> login(String username, String password);
+  CompletableFuture<AuthSession> login(LoginRequest loginRequest);
 
   CompletableFuture<Void> register(User user);
 }
