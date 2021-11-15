@@ -157,6 +157,5 @@
         <module>localserver</module>
         <module>report</module>
         <module>server</module>
-        <module>runserver</module>
     </modules>
 </project>
