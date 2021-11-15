@@ -26,6 +26,7 @@ const Navbar = (props: IProps) => (
       {props.login ? (
         <Link to="/">
           <Button
+            className="rounded-pill"
             variant="outline-primary"
             onClick={() => props.onLogin(false)}
           >
@@ -36,6 +37,7 @@ const Navbar = (props: IProps) => (
         <>
           <Link to="/">
             <Button
+              className="rounded-pill"
               variant="outline-primary"
               onClick={() => props.onLogin(true)}
             >

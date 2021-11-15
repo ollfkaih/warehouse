@@ -12,7 +12,7 @@
     "row": "12",
     "shelf": "10",
     "weight": 50,
-    "creationDate": "2021-11-09T09:28:34.937471",
+    "creationDate": "2020-05-09T09:28:34.937471",
     "height": 5,
     "width": 2,
     "length": 1
@@ -36,23 +36,23 @@
   },
   {
     "id": "0bfdc60b-b004-4003-98c7-1b6a699e687b",
-    "name": "ger",
+    "name": "Seng",
     "amount": 0,
-    "brand": "ferg",
-    "creationDate": "2021-11-09T09:30:34.870078"
+    "brand": "Møbelselskapet",
+    "creationDate": "2019-11-09T09:30:34.870078"
   },
   {
     "id": "c00d7425-f307-4526-9275-1f3067cbd549",
-    "name": "fd",
+    "name": "Dobbeltseng",
     "amount": 0,
-    "brand": "fd",
-    "creationDate": "2021-11-09T09:30:38.715724"
+    "brand": "Produsentprodusenten",
+    "creationDate": "2015-11-09T09:30:38.715724"
   },
   {
     "id": "1fd095ea-4fd9-4c8f-8fee-386396888b87",
-    "name": "fg",
+    "name": "Bord",
     "amount": 0,
-    "brand": "fdg",
+    "brand": "Føderasjonen de generøse",
     "creationDate": "2021-11-09T09:30:41.662078"
   },
   {
@@ -77,162 +77,34 @@
     "name": "test",
     "amount": 0,
     "brand": "test",
-    "creationDate": "2021-11-09T09:32:13.843229"
+    "creationDate": "2001-11-12T09:32:13.843229"
   },
   {
     "id": "070b3f7e-0f1d-4e9d-bfe9-31a18cf249ab",
     "name": "test",
     "amount": 0,
+    "brand": "oooooooooo",
     "creationDate": "2021-11-09T09:32:18.634888"
   },
   {
     "id": "792df1e2-be80-46ca-977c-36fd929a85e9",
     "name": "name",
     "amount": 0,
+    "brand": "hihihihihi",
     "creationDate": "2021-11-09T09:32:23.389287"
   },
   {
     "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
     "name": "name",
     "amount": 0,
+    "brand": "sssssssssssssssss",
     "creationDate": "2021-11-09T09:32:26.916084"
   },
   {
     "id": "5f4c4549-c914-4c14-8733-b7c187b2b073",
-    "name": "test",
+    "name": "Seng",
     "amount": 0,
+    "brand": "Møbelmannen",
     "creationDate": "2021-11-09T09:32:30.136899"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
-  },
-  {
-    "id": "cfe6c356-ad8d-49cc-8047-5a5350bd85ea",
-    "name": "name",
-    "amount": 0,
-    "creationDate": "2021-11-09T09:32:26.916084"
   }
 ]
