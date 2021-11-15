@@ -1,5 +1,7 @@
 package core;
 
+import core.server.ServerInterface;
+
 /**
  * Listens to changes in the ClientWarehouse, sends all changes to the server and updates Warehouse items with data fetched from the server.
  */
@@ -17,7 +19,7 @@ public class ClientWarehouseUpdater {
       @Override
       public void entityAdded(Item item) {
         if (sendUpdates) {
-          server.addItem(item).thenAccept(unused -> loadItems());
+          server.putItem(item).thenAccept(unused -> loadItems());
         }
       }
 

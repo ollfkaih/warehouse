@@ -1,4 +1,10 @@
-package core;
+package core.server;
+
+import core.BaseWarehouse;
+import core.EntityCollection;
+import core.EntityCollectionListener;
+import core.Item;
+import core.User;
 
 import java.util.Collection;
 import java.util.HashMap;

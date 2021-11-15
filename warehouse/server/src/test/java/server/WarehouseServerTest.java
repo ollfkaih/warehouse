@@ -1,14 +1,17 @@
 package server;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import core.Item;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.User;
+import core.server.AuthSession;
+import core.server.LoginRequest;
 import data.DataPersistence;
 import data.DataUtils;
 import data.FileSaver;
@@ -28,6 +31,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.io.IOException;
 import java.util.Collection;
 
 @AutoConfigureMockMvc
@@ -35,6 +39,8 @@ import java.util.Collection;
 @WebMvcTest
 public class WarehouseServerTest {
   public static final String TEST_FILE_NAME = "test-server-warehouse";
+  private static final DataPersistence<Item> itemPersistence = new FileSaver<>(new TypeReference<>() {}, TEST_FILE_NAME + "-items");
+  private static final DataPersistence<User> userPersistence = new FileSaver<>(new TypeReference<>() {}, TEST_FILE_NAME + "-users");
 
   @Autowired
   private MockMvc mockMvc;
@@ -43,8 +49,6 @@ public class WarehouseServerTest {
 
   @TestConfiguration
   public static class TestApplicationConfig {
-    private final DataPersistence<Item> itemPersistence = new FileSaver<>(new TypeReference<>() {}, TEST_FILE_NAME + "-items");
-    private final DataPersistence<User> userPersistence = new FileSaver<>(new TypeReference<>() {}, TEST_FILE_NAME + "-users");
     private final ObjectMapper objectMapper = DataUtils.createObjectMapper();
 
     @Bean
@@ -66,12 +70,17 @@ public class WarehouseServerTest {
 
   @BeforeEach
   public void setup() throws Exception {
-    removeAllItems();
+    clearSavedFiles();
   }
 
   @AfterEach
   public void cleanup() throws Exception {
-    removeAllItems();
+    clearSavedFiles();
+  }
+
+  private void clearSavedFiles() throws IOException {
+    itemPersistence.deleteAll();
+    userPersistence.deleteAll();
   }
 
   private String warehouseUrl(String... segments) {
@@ -143,10 +152,54 @@ public class WarehouseServerTest {
     assertEquals(item, returnedItem);
   }
 
-  private void removeAllItems() throws Exception {
-    Collection<Item> allItems = getItems();
-    for (Item item : allItems) {
-      removeItem(item);
+  private void register(User user) throws Exception {
+    String json;
+    try {
+      json = objectMapper.writeValueAsString(user);
+    } catch (Exception e) {
+      fail(e.getMessage());
+      return;
     }
+    mockMvc.perform(MockMvcRequestBuilders
+        .post(warehouseUrl("user", "register"))
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andReturn();
+  }
+
+  private AuthSession login(LoginRequest request) throws Exception {
+    String json;
+    try {
+      json = objectMapper.writeValueAsString(request);
+    } catch (Exception e) {
+      fail(e.getMessage());
+      return null;
+    }
+    MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+        .post(warehouseUrl("user", "login"))
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andReturn();
+
+    return objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+  }
+
+  @Test
+  void testLoginRegister() throws Exception {
+    String password = "password123";
+    User user = new User("TestUser", password, true);
+
+    register(user);
+
+    AuthSession authSession = login(new LoginRequest(user.getUserName(), password));
+
+    assertNotNull(authSession);
+    assertNotNull(authSession.getUser());
+    assertNotNull(authSession.getToken());
+    assertEquals(user, authSession.getUser());
   }
 }

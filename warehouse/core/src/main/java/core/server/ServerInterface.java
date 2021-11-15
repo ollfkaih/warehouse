@@ -1,4 +1,7 @@
-package core;
+package core.server;
+
+import core.Item;
+import core.User;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
@@ -12,13 +15,11 @@ public interface ServerInterface {
 
   CompletableFuture<Item> getItem(String id);
 
-  CompletableFuture<Void> addItem(Item item);
-
   CompletableFuture<Boolean> putItem(Item item);
 
   CompletableFuture<Item> removeItem(String id);
 
-  CompletableFuture<AuthSession> login(String username, String password);
+  CompletableFuture<AuthSession> login(LoginRequest loginRequest);
 
   CompletableFuture<Void> register(User user);
 }

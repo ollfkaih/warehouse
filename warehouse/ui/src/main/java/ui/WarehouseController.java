@@ -5,7 +5,7 @@ import static core.CoreConst.SortOption;
 import core.ClientWarehouse;
 import core.EntityCollectionListener;
 import core.Item;
-import core.ServerInterface;
+import core.server.ServerInterface;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;

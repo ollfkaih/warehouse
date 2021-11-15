@@ -1,13 +1,14 @@
 package localserver;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import core.AuthSession;
 import core.Entity;
 import core.EntityCollection;
 import core.Item;
-import core.ServerInterface;
-import core.ServerWarehouse;
 import core.User;
+import core.server.AuthSession;
+import core.server.LoginRequest;
+import core.server.ServerInterface;
+import core.server.ServerWarehouse;
 import data.DataPersistence;
 import data.EntityCollectionAutoPersistence;
 import data.FileSaver;
@@ -60,12 +61,6 @@ public class LocalServer implements ServerInterface {
   }
 
   @Override
-  public CompletableFuture<Void> addItem(Item item) {
-    warehouse.addItem(item);
-    return new CompletableFuture<>();
-  }
-
-  @Override
   public CompletableFuture<Boolean> putItem(Item item) {
     CompletableFuture<Boolean> future = new CompletableFuture<>();
     future.complete(warehouse.putItem(item));
@@ -80,10 +75,10 @@ public class LocalServer implements ServerInterface {
   }
 
   @Override
-  public CompletableFuture<AuthSession> login(String username, String password) {
+  public CompletableFuture<AuthSession> login(LoginRequest loginRequest) {
     CompletableFuture<AuthSession> future = new CompletableFuture<>();
     try {
-      future.complete(warehouse.login(username, password));
+      future.complete(warehouse.login(loginRequest.getUsername(), loginRequest.getPassword()));
     } catch (Exception e) {
       future.completeExceptionally(e);
     }
