@@ -61,12 +61,6 @@ public class LocalServer implements ServerInterface {
   }
 
   @Override
-  public CompletableFuture<Void> addItem(Item item) {
-    warehouse.addItem(item);
-    return new CompletableFuture<>();
-  }
-
-  @Override
   public CompletableFuture<Boolean> putItem(Item item) {
     CompletableFuture<Boolean> future = new CompletableFuture<>();
     future.complete(warehouse.putItem(item));

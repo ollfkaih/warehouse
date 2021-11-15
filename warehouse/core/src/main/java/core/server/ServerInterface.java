@@ -15,8 +15,6 @@ public interface ServerInterface {
 
   CompletableFuture<Item> getItem(String id);
 
-  CompletableFuture<Void> addItem(Item item);
-
   CompletableFuture<Boolean> putItem(Item item);
 
   CompletableFuture<Item> removeItem(String id);

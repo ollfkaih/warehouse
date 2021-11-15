@@ -19,7 +19,7 @@ public class ClientWarehouseUpdater {
       @Override
       public void entityAdded(Item item) {
         if (sendUpdates) {
-          server.addItem(item).thenAccept(unused -> loadItems());
+          server.putItem(item).thenAccept(unused -> loadItems());
         }
       }
 

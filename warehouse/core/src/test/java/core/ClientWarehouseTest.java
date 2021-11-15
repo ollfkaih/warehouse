@@ -55,12 +55,12 @@ public class ClientWarehouseTest {
     CompletableFuture<Collection<Item>> getItemsFuture = new CompletableFuture<>();
     when(server.getItems()).thenReturn(getItemsFuture);
 
-    CompletableFuture<Void> addItemFuture = new CompletableFuture<>();
-    when(server.addItem(item)).thenReturn(addItemFuture);
+    CompletableFuture<Boolean> putItemFuture = new CompletableFuture<>();
+    when(server.putItem(item)).thenReturn(putItemFuture);
 
-    wh.addItem(item);
+    wh.putItem(item);
 
-    verify(server, times(1)).addItem(item);
+    verify(server, times(1)).putItem(item);
     verify(server, times(0)).getItems();
 
     // item should be added locally even though the future is not completed
@@ -68,7 +68,7 @@ public class ClientWarehouseTest {
     assertTrue(wh.getAllItems().contains(item));
 
     // complete adding item
-    addItemFuture.complete(null);
+    putItemFuture.complete(true);
     verify(server, times(1)).getItems();
 
     // getting from server returns a second item :O
@@ -84,22 +84,19 @@ public class ClientWarehouseTest {
     CompletableFuture<Collection<Item>> getItemsFuture = new CompletableFuture<>();
     when(server.getItems()).thenReturn(getItemsFuture);
 
-    CompletableFuture<Void> addItemFuture = new CompletableFuture<>();
-    when(server.addItem(any())).thenReturn(addItemFuture);
-
-    CompletableFuture<Boolean> putItemFuture = new CompletableFuture<>();
-    when(server.putItem(any())).thenReturn(putItemFuture);
+    CompletableFuture<Boolean> addItemFuture = new CompletableFuture<>();
+    when(server.putItem(any())).thenReturn(addItemFuture);
 
     wh.putItem(item);
 
-    verify(server, times(1)).addItem(item);
+    verify(server, times(1)).putItem(item);
 
     // item should be added locally even though the future is not completed
     assertEquals(1, wh.getAllItems().size());
     assertTrue(wh.getAllItems().contains(item));
 
     // complete adding item
-    addItemFuture.complete(null);
+    addItemFuture.complete(true);
     verify(server, times(1)).getItems();
 
     getItemsFuture.complete(List.of(item));
@@ -109,10 +106,13 @@ public class ClientWarehouseTest {
     // warehouse should put changes after update
     item.setWidth(10.0);
 
-    verify(server, times(1)).putItem(item);
+    verify(server, times(2)).putItem(item);
 
     Item itemCopy = new Item(item);
     itemCopy.setWidth(5.0);
+
+    CompletableFuture<Boolean> updateItemFuture = new CompletableFuture<>();
+    when(server.putItem(any())).thenReturn(updateItemFuture);
 
     wh.putItem(itemCopy);
 
@@ -125,12 +125,12 @@ public class ClientWarehouseTest {
     CompletableFuture<Collection<Item>> getItemsFuture = new CompletableFuture<>();
     when(server.getItems()).thenReturn(getItemsFuture);
 
-    CompletableFuture<Void> addItemFuture = new CompletableFuture<>();
-    when(server.addItem(item)).thenReturn(addItemFuture);
+    CompletableFuture<Boolean> addItemFuture = new CompletableFuture<>();
+    when(server.putItem(item)).thenReturn(addItemFuture);
 
-    wh.addItem(item);
+    wh.putItem(item);
 
-    verify(server, times(1)).addItem(item);
+    verify(server, times(1)).putItem(item);
     verify(server, times(0)).getItems();
 
     // item should be added locally even though the future is not completed
@@ -138,7 +138,7 @@ public class ClientWarehouseTest {
     assertTrue(wh.getAllItems().contains(item));
 
     // complete adding item
-    addItemFuture.complete(null);
+    addItemFuture.complete(true);
     verify(server, times(1)).getItems();
 
     // getting from server returns a second item :O
@@ -238,8 +238,7 @@ public class ClientWarehouseTest {
   @Test
   @DisplayName("Test Warehouse listener")
   void testListener() {
-    when(server.addItem(any())).thenReturn(CompletableFuture.completedFuture(null));
-    when(server.putItem(any())).thenReturn(CompletableFuture.completedFuture(null));
+    when(server.putItem(any())).thenReturn(CompletableFuture.completedFuture(true));
     when(server.removeItem(any())).thenReturn(CompletableFuture.completedFuture(null));
 
     EntityCollectionListener<Item> listener = new EntityCollectionListener<>() {
@@ -261,7 +260,7 @@ public class ClientWarehouseTest {
 
     wh.addItemsListener(listener);
 
-    wh.addItem(item);
+    wh.putItem(item);
     assertEquals(item, addedItem);
 
     updated = false;
@@ -282,7 +281,7 @@ public class ClientWarehouseTest {
 
     updated = false;
     Item item2 = new Item("item2", 2);
-    wh.addItem(item2);
+    wh.putItem(item2);
     assertFalse(updated);
   }
 
