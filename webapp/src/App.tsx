@@ -13,12 +13,17 @@ import Item from './modules/Item'
 import SortButtons from './components/SortButtons'
 import SortOption from './modules/SortOption'
 
+const REACT_APP_DOMAIN = 'http://localhost:8080'
+
 function App() {
   const [login, setLogin] = useState(true)
   const [currentItem, setCurrentItem] = useState<Item>()
   const [searchText, setSearchText] = useState('')
   const [sortOption, setSortOption] = useState<SortOption>(SortOption.Name)
   const [sortAscendingOrder, setSortAscendingOrder] = useState<boolean>(false)
+
+  if (!REACT_APP_DOMAIN)
+    return <p>Domain for server not set, configure REACT_APP_DOMAIN variable</p>
 
   function showDetailsCol(): React.ReactNode {
     return currentItem != null ? (
@@ -52,6 +57,7 @@ function App() {
                     setSortAscendingOrder={setSortAscendingOrder}
                   />
                   <ItemList
+                    domain={REACT_APP_DOMAIN}
                     searchText={searchText}
                     sortOption={sortOption}
                     currentItem={currentItem}
