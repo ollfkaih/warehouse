@@ -12,6 +12,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -46,6 +48,12 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   @FXML private Button orderByButton;
   @FXML private VBox sortAndOrderSelectors;
   @FXML private VBox titleAddandSearch;
+  @FXML private AnchorPane statusAnchorPane;
+  @FXML private Label statusLabel;
+  @FXML private ImageView statusImage;
+
+  private Image emptySearch = new Image(getClass().getResourceAsStream("icons/search-minus.png"));
+  private Image emptyDolly = new Image(getClass().getResourceAsStream("icons/person-dolly-empty.png"));
 
   private SortOption sortBy = SortOption.DATE;
   private boolean ascending = true;
@@ -112,8 +120,10 @@ public class WarehouseController implements EntityCollectionListener<Item> {
 
   @FXML
   private void updateInventory() {
+    addItemButton.setVisible(warehouse.getCurrentUser() != null); // set "Legg til produkt" visible when user is logged in
     itemList.getChildren().clear();
     List<Item> items = getItems();
+
     for (int i = 0; i < items.size(); i++) {
       ItemElementAnchorPane itemElement = new ItemElementAnchorPane(items.get(i));
 
@@ -141,10 +151,17 @@ public class WarehouseController implements EntityCollectionListener<Item> {
       notHover(itemElement, index);
     }
 
-    if (warehouse.getCurrentUser() != null) {
-      addItemButton.setVisible(true);
+    if (items.isEmpty()) {
+      statusAnchorPane.setVisible(true);
+      if (searchInput.getText().equals("")) {
+        statusLabel.setText("warehouse har ingen elementer");
+        statusImage.setImage(emptyDolly);
+      } else {
+        statusImage.setImage(emptySearch);
+        statusLabel.setText("ingen resultater");
+      }
     } else {
-      addItemButton.setVisible(false);
+      statusAnchorPane.setVisible(false);
     }
   }
 
