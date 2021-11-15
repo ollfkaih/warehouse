@@ -86,7 +86,25 @@ public class FileSaver<T> implements DataPersistence<T> {
 
   @Override
   public void delete(String key) throws IOException {
-    Files.delete(getFilePath(key)); 
+    deleteFile(getFilePath(key));
+  }
+
+  @Override
+  public void deleteAll() throws IOException {
+    Files.walk(getFolderPath())
+        .filter(Files::isRegularFile)
+        .forEach(filePath -> {
+          try {
+            deleteFile(filePath);
+          } catch (IOException e) {
+            System.out.println("ERROR: Could not delete file: " + filePath.toString());
+            e.printStackTrace();
+          }
+        });
+  }
+
+  private void deleteFile(Path filePath) throws IOException {
+    Files.delete(filePath);
   }
 
   private Path getFilePath(String fileName) {

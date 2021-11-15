@@ -41,4 +41,11 @@ public interface DataPersistence<T> {
    * @throws IOException If object can't be deleted
    */
   void delete(String key) throws IOException;
+
+  /**
+   * Deletes all objects.
+
+   * @throws IOException If objects can't be deleted
+   */
+  void deleteAll() throws IOException;
 }
