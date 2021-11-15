@@ -1,6 +1,6 @@
 $primary: rgb(132, 0, 155);
 $secondary: rgb(231, 231, 231);
-$light: rgba(228, 206, 233, 0.89);
+$light: rgba(213, 169, 223);
 $dark: rgb(76, 4, 88);
 
 // change the theme
@@ -20,12 +20,12 @@ $form-floating-input-padding-b: 1.625rem;
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
 //OTHER styling of app goes here
-.btn-outline-primary {
-  border-radius: 999em;
-  margin: 5px;
+.btn-outline {
+  border-radius: 2em;
+  margin: 2px;
 }
 
-.title {
+.title .text-primary {
   color: $primary;
 }
 

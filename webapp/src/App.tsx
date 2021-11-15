@@ -18,6 +18,7 @@ function App() {
   const [currentItem, setCurrentItem] = useState<Item>()
   const [searchText, setSearchText] = useState('')
   const [sortOption, setSortOption] = useState<SortOption>(SortOption.Name)
+  const [sortAscendingOrder, setSortAscendingOrder] = useState<boolean>(false)
 
   function showDetailsCol(): React.ReactNode {
     return currentItem != null ? (
@@ -50,12 +51,15 @@ function App() {
                   <SortButtons
                     sortOption={sortOption}
                     setSortOption={setSortOption}
+                    sortAscendingOrder={sortAscendingOrder}
+                    setSortAscendingOrder={setSortAscendingOrder}
                   />
                   <ItemList
                     searchText={searchText}
                     sortOption={sortOption}
                     currentItem={currentItem}
                     setCurrentItem={setCurrentItem}
+                    sortAscendingOrder={sortAscendingOrder}
                   />
                 </Col>
               </Row>
