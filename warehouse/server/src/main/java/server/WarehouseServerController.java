@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 /**
- * WarehouseController contains the main REST-API methods.
+ * Contains the main REST-API methods.
  */
 @RestController
 @RequestMapping(WarehouseServerController.WAREHOUSE_SERVICE_PATH)
