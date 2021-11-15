@@ -1,5 +1,8 @@
 package core.server;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Data class for sending login requests to API.
  */
@@ -7,7 +10,8 @@ public class LoginRequest {
   private final String username;
   private final String password;
 
-  public LoginRequest(String username, String password) {
+  @JsonCreator
+  public LoginRequest(@JsonProperty("username") String username, @JsonProperty("password") String password) {
     this.username = username;
     this.password = password;
   }

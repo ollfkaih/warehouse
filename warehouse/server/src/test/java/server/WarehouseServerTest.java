@@ -10,6 +10,8 @@ import core.Item;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.User;
+import core.server.AuthSession;
+import core.server.LoginRequest;
 import data.DataPersistence;
 import data.DataUtils;
 import data.FileSaver;
@@ -150,6 +152,54 @@ public class WarehouseServerTest {
     assertEquals(item, returnedItem);
   }
 
+  private void register(User user) throws Exception {
+    String json;
+    try {
+      json = objectMapper.writeValueAsString(user);
+    } catch (Exception e) {
+      fail(e.getMessage());
+      return;
     }
+    mockMvc.perform(MockMvcRequestBuilders
+        .post(warehouseUrl("user", "register"))
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andReturn();
+  }
+
+  private AuthSession login(LoginRequest request) throws Exception {
+    String json;
+    try {
+      json = objectMapper.writeValueAsString(request);
+    } catch (Exception e) {
+      fail(e.getMessage());
+      return null;
+    }
+    MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+        .post(warehouseUrl("user", "login"))
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andReturn();
+
+    return objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+  }
+
+  @Test
+  void testLoginRegister() throws Exception {
+    String password = "password123";
+    User user = new User("TestUser", password, true);
+
+    register(user);
+
+    AuthSession authSession = login(new LoginRequest(user.getUserName(), password));
+
+    assertNotNull(authSession);
+    assertNotNull(authSession.getUser());
+    assertNotNull(authSession.getToken());
+    assertEquals(user, authSession.getUser());
   }
 }

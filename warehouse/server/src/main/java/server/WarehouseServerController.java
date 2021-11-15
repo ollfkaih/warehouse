@@ -1,11 +1,15 @@
 package server;
 
 import core.Item;
+import core.User;
+import core.server.AuthSession;
+import core.server.LoginRequest;
 import core.server.ServerWarehouse;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,6 +78,27 @@ public class WarehouseServerController {
   @DeleteMapping(path = "item/{id}")
   public Item removeItem(@PathVariable("id") String id) {
     return getWarehouse().removeItem(id);
+  }
+
+  /**
+   * Registers a new user.
+   *
+   * @param user the user to add
+   */
+  @PostMapping(path = "user/register")
+  public void registerUser(@RequestBody User user) {
+    getWarehouse().addUser(user);
+  }
+
+  /**
+   * Logs in a user.
+   *
+   * @param loginRequest request containing the username and password
+   * @return AuthSession with token and the signed-in user
+   */
+  @PostMapping(path = "user/login")
+  public AuthSession loginUser(@RequestBody LoginRequest loginRequest) {
+    return getWarehouse().login(loginRequest.getUsername(), loginRequest.getPassword());
   }
 }
 

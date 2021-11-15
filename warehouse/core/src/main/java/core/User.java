@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 /**
  * Class for representing one type of user.
@@ -92,6 +93,19 @@ public class User extends Entity<User> {
   @Override
   public String toString() {
     return "Username: " + userName + " Password: " + password + " Admin: " + admin;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return admin == user.admin && userName.equals(user.userName) && password.equals(user.password);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(userName, password, admin);
   }
 
   @Override

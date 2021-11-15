@@ -1,5 +1,8 @@
 package core.server;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import core.User;
 
 import java.util.UUID;
@@ -10,6 +13,12 @@ import java.util.UUID;
 public class AuthSession {
   private final User user;
   private final String token;
+
+  @JsonCreator
+  public AuthSession(@JsonProperty("user") User user, @JsonProperty("token") String token) {
+    this.user = user;
+    this.token = token;
+  }
 
   public AuthSession(User user) {
     this.user = user;
@@ -24,6 +33,7 @@ public class AuthSession {
     return token;
   }
 
+  @JsonIgnore
   public boolean isValid() {
     return true;
   }
