@@ -7,7 +7,7 @@ interface IProps {
   selected: boolean
 }
 
-const ItemElement = ({ item, setCurrentItem, selected }: IProps) => {
+const ItemListElement = ({ item, setCurrentItem, selected }: IProps) => {
   return (
     <Row
       className={
@@ -22,4 +22,4 @@ const ItemElement = ({ item, setCurrentItem, selected }: IProps) => {
     </Row>
   )
 }
-export default ItemElement
+export default ItemListElement

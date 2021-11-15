@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ItemElement from './ItemElement'
+import ItemListElement from './ItemListElement'
 import Item from '../modules/Item'
 import { Col, Container, Row } from 'react-bootstrap'
 import SortOption from '../modules/SortOption'
@@ -95,7 +95,7 @@ const ItemList = (props: IProps) => {
             )
             .sort((item1, item2) => sortingComparator(item1, item2, ascending))
             .map((item) => (
-              <ItemElement
+              <ItemListElement
                 key={item.id}
                 item={item}
                 selected={props.currentItem === item ? true : false}
