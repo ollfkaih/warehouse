@@ -1,4 +1,7 @@
-package core;
+package core.server;
+
+import core.Item;
+import core.User;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;

@@ -1,4 +1,6 @@
-package core;
+package core.server;
+
+import core.User;
 
 import java.util.UUID;
 

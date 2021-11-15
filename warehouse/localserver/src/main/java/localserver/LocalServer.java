@@ -1,12 +1,12 @@
 package localserver;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import core.AuthSession;
+import core.server.AuthSession;
 import core.Entity;
 import core.EntityCollection;
 import core.Item;
-import core.ServerInterface;
-import core.ServerWarehouse;
+import core.server.ServerInterface;
+import core.server.ServerWarehouse;
 import core.User;
 import data.DataPersistence;
 import data.EntityCollectionAutoPersistence;

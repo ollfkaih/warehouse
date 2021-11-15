@@ -1,4 +1,6 @@
-package core;
+package core.server;
+
+import core.*;
 
 import java.util.Collection;
 import java.util.HashMap;

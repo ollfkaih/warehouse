@@ -3,7 +3,7 @@ package server;
 import core.Entity;
 import core.EntityCollection;
 import core.Item;
-import core.ServerWarehouse;
+import core.server.ServerWarehouse;
 import core.User;
 import data.DataPersistence;
 import data.EntityCollectionAutoPersistence;

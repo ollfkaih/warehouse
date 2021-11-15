@@ -1,6 +1,8 @@
 package core;
 
 import core.CoreConst.SortOption;
+import core.server.AuthSession;
+import core.server.ServerInterface;
 
 import java.util.ArrayList;
 import java.util.Comparator;
