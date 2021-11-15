@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button'
-import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
+import { Image, ToggleButton, ToggleButtonGroup } from 'react-bootstrap'
 import SortOption from '../modules/SortOption'
 
 interface IProps {
@@ -66,9 +66,14 @@ const SortButtons = (props: IProps) => {
       </ToggleButtonGroup>
       <Button
         variant="secondary"
+        className="m-0 pe-2 pb-1 ps-2 pt-1"
         onClick={() => props.setSortAscendingOrder(!props.sortAscendingOrder)}
       >
-        {props.sortAscendingOrder ? 'Opp' : 'Ned'}-pil
+        {props.sortAscendingOrder ? (
+          <Image fluid src="icon/sort/sort-up.svg" width="15em" height="24em" />
+        ) : (
+          <Image fluid src="icon/sort/sort-down.svg" width="15em" height="24em" />
+        )}
       </Button>
     </div>
   )

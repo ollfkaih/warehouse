@@ -44,10 +44,7 @@ function App() {
                   sm="12"
                   md={currentItem == null ? 12 : 6}
                 >
-                  <SearchBar
-                    searchText={searchText}
-                    setSearchText={setSearchText}
-                  />
+                  <SearchBar searchText={searchText} setSearchText={setSearchText} />
                   <SortButtons
                     sortOption={sortOption}
                     setSortOption={setSortOption}

@@ -24,11 +24,7 @@ const ItemList = (props: IProps) => {
   // eslint-disable-next-line
   const [newItem, setNewItem] = useState()
 
-  const sortingComparator = (
-    item1: Item,
-    item2: Item,
-    ascending: boolean
-  ): number => {
+  const sortingComparator = (item1: Item, item2: Item, ascending: boolean): number => {
     const ascendingFactor = ascending ? 1 : -1
     switch (props.sortOption) {
       case SortOption.Brand: {
@@ -60,9 +56,7 @@ const ItemList = (props: IProps) => {
       }
       case SortOption.Date: {
         if (item1.creationDate === item2.creationDate) return 0
-        return (
-          ascendingFactor * (item1.creationDate < item2.creationDate ? 1 : -1)
-        )
+        return ascendingFactor * (item1.creationDate < item2.creationDate ? 1 : -1)
       }
       default: {
         return 0
@@ -89,9 +83,7 @@ const ItemList = (props: IProps) => {
             .filter(
               (item) =>
                 item.name.toLowerCase().match(props.searchText.toLowerCase()) ||
-                item.brand
-                  ?.toLowerCase()
-                  .match(props.searchText.toLowerCase()) ||
+                item.brand?.toLowerCase().match(props.searchText.toLowerCase()) ||
                 item.barcode?.toString() === props.searchText
             )
             .sort((item1, item2) => sortingComparator(item1, item2, ascending))
