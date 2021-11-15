@@ -19,7 +19,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping(WarehouseServerController.WAREHOUSE_SERVICE_PATH)
 public class WarehouseServerController {
-  public static final String WAREHOUSE_SERVICE_PATH = "springboot/warehouse";
+  public static final String WAREHOUSE_SERVICE_PATH = "warehouse";
 
   private final WarehouseService warehouseService;
 

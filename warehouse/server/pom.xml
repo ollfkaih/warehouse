@@ -101,7 +101,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <argLine>
-            @{jaCoCoArgLine} --add-opens warehouse.server/warehouse.server=ALL-UNNAMED
+            @{jaCoCoArgLine} --add-opens warehouse.server/server=ALL-UNNAMED
           </argLine>
         </configuration>
       </plugin>
