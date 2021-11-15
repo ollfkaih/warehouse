@@ -53,18 +53,6 @@ public class WarehouseServerController {
   }
 
   /**
-   * Adds an Item.
-   *
-   * @param id the id of the Item
-   * @param item the item to add
-   * @return true if it was added, false if it replaced
-   */
-  @PostMapping(path = "item/{id}")
-  public boolean postItem(@PathVariable("id") String id, @RequestBody Item item) {
-    return getWarehouse().putItem(item);
-  }
-
-  /**
    * Replaces or adds an Item.
    *
    * @param id the id of the Item
