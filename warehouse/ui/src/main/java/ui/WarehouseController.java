@@ -6,6 +6,7 @@ import core.ClientWarehouse;
 import core.EntityCollectionListener;
 import core.Item;
 import core.server.ServerInterface;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
@@ -22,8 +23,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import localserver.LocalServer;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,6 +54,8 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   @FXML private ImageView statusImage;
   @FXML private ImageView userImage;
 
+  private Stage stage;
+
   private Image emptySearch = new Image(getClass().getResourceAsStream("icons/search-minus.png"));
   private Image emptyDolly = new Image(getClass().getResourceAsStream("icons/person-dolly-empty.png"));
   private Image userEdit = new Image(getClass().getResourceAsStream("icons/user-edit-white.png")); 
@@ -63,6 +66,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
 
   private final Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
   private LoginController loginController;
+  private ServerSelectController serverSelectController;
 
   @FXML
   void initialize() {
@@ -70,17 +74,30 @@ public class WarehouseController implements EntityCollectionListener<Item> {
     sortBySelector.getItems().addAll(displaySortStrings);
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
-    loadPersistedData("local_server");
+
     statusLabel.setWrapText(true);
+    serverSelectController = new ServerSelectController(this);
+    serverSelectController.showView();
   }
 
-  public void loadPersistedData(String prefix) {
+  protected void setStage(Stage stage) {
+    this.stage = stage;
+  }
+
+  protected void showView() {
+    stage.show();
+    stage.requestFocus();
+  }
+
+  protected void hideView() {
+    stage.hide();
+  }
+
+  public void loadPersistedData(ServerInterface server) {
     if (warehouse != null) {
       warehouse.removeItemsListener(this);
     }
 
-    //ServerInterface server = new RemoteWarehouseServer("http://localhost:8080");
-    ServerInterface server = new LocalServer(prefix);
     warehouse = new ClientWarehouse(server);
     warehouse.addItemsListener(this);
     loginController = new LoginController(this, warehouse);
@@ -122,6 +139,10 @@ public class WarehouseController implements EntityCollectionListener<Item> {
     loginButton.setText("Logg ut");
     userImage.setImage(userEdit);
     updateInventory();
+  }
+
+  protected void close() {
+    stage.close();
   }
 
   @FXML
@@ -297,17 +318,17 @@ public class WarehouseController implements EntityCollectionListener<Item> {
 
   @Override
   public void entityAdded(Item item) {
-    updateInventory();
+    Platform.runLater(this::updateInventory);
   }
 
   @Override
   public void entityUpdated(Item item) {
-    updateInventory();
+    Platform.runLater(this::updateInventory);
   }
 
   @Override
   public void entityRemoved(Item item) {
-    updateInventory();
+    Platform.runLater(this::updateInventory);
   }
 
   // for testing purposes only
