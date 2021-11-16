@@ -36,7 +36,14 @@
                      <Image url="@appIcon/white_transparent.png" />
                   </image>
                </ImageView>
-              <Label fx:id="usernameLabel" layoutX="413.0" layoutY="15.0" maxWidth="140.0" prefHeight="21.0" prefWidth="140.0" style="-fx-background-color: rgba(0,0,0,0.15); -fx-background-radius: 10px; -fx-padding: 2px 2px 2px 10px;" textFill="WHITE" AnchorPane.rightAnchor="116.0" />
+              <Label fx:id="usernameLabel" layoutX="413.0" layoutY="15.0" maxWidth="140.0" prefHeight="21.0" style="-fx-background-color: rgba(0,0,0,0.15); -fx-background-radius: 10px; -fx-padding: 2px 10px 2px 10px;" textFill="WHITE" AnchorPane.rightAnchor="116.0">
+                  <graphic>
+                     <ImageView fx:id="userImage" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@icons/user-lock-white.png" />
+                        </image>
+                     </ImageView>
+                  </graphic></Label>
              <Button fx:id="loginButton" layoutX="524.0" layoutY="12.0" minWidth="70.0" onAction="#login" styleClass="loginButton" text="Logg inn" textFill="#840b9b" AnchorPane.rightAnchor="30.0">
                   <font>
                      <Font name="System Bold" size="13.0" />
@@ -110,7 +117,7 @@
                      </ImageView>
                   </children>
                </HBox>
-               <Label fx:id="statusLabel" alignment="CENTER" prefHeight="37.0" prefWidth="473.0" text="warehouse is empty" textAlignment="CENTER" textFill="#85129c">
+               <Label fx:id="statusLabel" alignment="CENTER" prefHeight="137.0" text="warehouse is empty" textAlignment="CENTER" textFill="#85129c">
                   <font>
                      <Font name="System Bold" size="30.0" />
                   </font>
