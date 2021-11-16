@@ -1,6 +1,7 @@
 TextField {
   -fx-border-width: 2px;
   -fx-border-color: lightgrey;
+  -fx-focus-color: #840B9B;
 }
 
 TextField:disabled {

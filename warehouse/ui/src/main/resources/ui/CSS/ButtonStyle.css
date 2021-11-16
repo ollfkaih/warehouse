@@ -8,16 +8,16 @@
 }
 
 #btnSave {
-    -fx-background-color: #5CA0D9;
+    -fx-background-color: #850B9C;
   }
 
 #btnDelete {
-    -fx-background-color: rgb(255,5,5);
+    -fx-background-color: #DB1818;
 }
 
 .orderByButton {
     -fx-text-fill: BLACK;
-    -fx-background-color: rgba(0,0,0,0.05);
+    -fx-background-color: rgba(0,0,0, 0.05);
 }
 
 .orderByButton:hover, .orderByButton:focus {
@@ -68,4 +68,14 @@
 
 .loginButton:hover {
   -fx-background-color:#f1f1f1;
+}
+
+.btnIncrementA {
+    -fx-graphic: url("../icons/plus-circle.png");
+    -fx-background-color:rgba(0,0,0,0);
+}
+
+.btnDecrementA {
+    -fx-graphic: url("../icons/minus-circle.png");
+    -fx-background-color:rgba(0,0,0,0);
 }

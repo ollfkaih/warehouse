@@ -1,182 +1,285 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" stylesheets="@CSS/inputStyle.css, @CSS/ButtonStyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" stylesheets="@CSS/inputStyle.css, @CSS/ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox fx:id="itemList1" alignment="center">
          <children>
-            <AnchorPane prefHeight="50.0" prefWidth="200.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
-                  <Label alignment="CENTER" layoutX="158.0" layoutY="17.0" text="Detaljer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="btnEdit" alignment="CENTER" onAction="#toggleEditing" prefHeight="38.0" prefWidth="131.0" text="Rediger" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Button>
+                  <VBox prefHeight="84.0" prefWidth="400.0" AnchorPane.bottomAnchor="-32.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <children>
+                        <AnchorPane fx:id="anchorPaneEdit" prefHeight="42.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="btnEdit" alignment="CENTER" onAction="#toggleEditing" prefHeight="42.0" prefWidth="366.0" text="Rediger" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Arial Bold" size="16.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@icons/edit.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <HBox fx:id="sectionSaveDelete" maxHeight="59.0" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" spacing="20.0">
+                           <children>
+                              <Button fx:id="btnSave" alignment="CENTER" disable="true" onAction="#saveItem" prefHeight="42.0" prefWidth="190.0" text="LAGRE" visible="false" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Arial Bold" size="16.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@icons/save.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnDelete" disable="true" onAction="#promptRemoveItem" prefHeight="42.0" prefWidth="190.0" text="SLETT" visible="false" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Arial Bold" size="16.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@icons/trash-alt.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <AnchorPane>
                <children>
-                  <AnchorPane prefHeight="39.0" prefWidth="420.0">
+                  <VBox prefWidth="400.0" styleClass="inputGroup" stylesheets="@CSS/inputGroup.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <Label text="Produktinfo">
+                           <font>
+                              <Font name="Arial Bold" size="13.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/box-full.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefWidth="380.0" stylesheets="@CSS/inputGroup.css">
                            <children>
-                              <Label text="Produktnavn">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="inpName" disable="true" promptText="Produktnavn" text="" />
+                              <AnchorPane prefWidth="420.0">
+                                 <children>
+                                    <VBox prefWidth="190.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                       <children>
+                                          <Label text="Produktnavn">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@icons/tag.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <TextField fx:id="inpName" disable="true" prefWidth="190.0" promptText="Produktnavn" text="" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="39.0" prefWidth="420.0">
+                                 <children>
+                                    <VBox prefHeight="52.0" prefWidth="170.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                       <children>
+                                          <Label text="Produsent">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@icons/industry-alt.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <TextField fx:id="inpBrand" disable="true" promptText="Produsent" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
                            </children>
-                        </VBox>
+                        </HBox>
                      </children>
-                  </AnchorPane>
-                  <AnchorPane prefHeight="39.0" prefWidth="420.0">
-                     <children>
-                        <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                           <children>
-                              <Label text="Produsent">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="inpBrand" disable="true" promptText="Produsent" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
+                  </VBox>
                </children>
-            </HBox>
+            </AnchorPane>
             <AnchorPane prefWidth="420.0">
                <children>
-                  <HBox prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <VBox prefWidth="100.0" spacing="5.0" styleClass="inputGroup" stylesheets="@CSS/inputGroup.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <VBox prefHeight="104.0" prefWidth="175.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                        <Label text="Lagerbeholdning">
+                           <font>
+                              <Font name="Arial Bold" size="13.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/inventory.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefWidth="200.0" spacing="10.0" stylesheets="@CSS/inputGroup.css">
                            <children>
-                              <Label text="Antall på lager">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                              <BorderPane prefHeight="30.0" prefWidth="200.0">
-                                 <left>
-                                    <Button fx:id="btnDecrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" onAction="#decrement" prefHeight="29.0" prefWidth="29.0" text="-" BorderPane.alignment="CENTER">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font></Button>
-                                 </left>
-                                 <center>
-                                    <TextField fx:id="inpAmount" disable="true" minHeight="30.0" promptText="0" style="-fx-background-color: #fff; -fx-border-radius: 0;" BorderPane.alignment="CENTER" />
-                                 </center>
-                                 <right>
-                                    <Button fx:id="btnIncrement" disable="true" maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" onAction="#increment" prefHeight="29.0" prefWidth="29.0" text="+" textOverrun="CLIP" BorderPane.alignment="CENTER">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font></Button>
-                                 </right>
-                              </BorderPane>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="0.0" prefWidth="215.0">
-                           <children>
-                              <Label text="Plassering på lager">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                              <HBox spacing="10.0">
+                              <VBox prefHeight="79.0" spacing="5.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <AnchorPane>
+                                    <Label text="Antall på lager">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefWidth="155.0">
                                        <children>
-                                          <Pane styleClass="placementPane">
-                                             <children>
-                                                <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                                                   <children>
-                                                      <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                                                         <children>
-                                                            <TextField fx:id="inpPlacementSection" disable="true" promptText="?" styleClass="placementTextField" />
-                                                            <Label text="Seksjon" textAlignment="CENTER" />
-                                                         </children>
-                                                      </VBox>
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </Pane>
+                                          <Button fx:id="btnDecrement" alignment="CENTER" contentDisplay="CENTER" disable="true" ellipsisString="" graphicTextGap="0.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onAction="#decrement" prefHeight="30.0" prefWidth="30.0" style="-fx-padding: 0;" styleClass="btnDecrementA" stylesheets="@CSS/ButtonStyle.css" textOverrun="CLIP">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Button>
+                                          <TextField fx:id="inpAmount" alignment="CENTER" disable="true" minHeight="30.0" prefHeight="30.0" prefWidth="96.0" promptText="0" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
+                                          <Button fx:id="btnIncrement" alignment="CENTER" disable="true" ellipsisString="" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onAction="#increment" prefHeight="30.0" prefWidth="30.0" styleClass="btnIncrementA" stylesheets="@CSS/ButtonStyle.css" textOverrun="CLIP">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Button>
                                        </children>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <children>
-                                          <Pane styleClass="placementPane">
-                                             <children>
-                                                <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                                                   <children>
-                                                      <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                                                         <children>
-                                                            <TextField fx:id="inpPlacementRow" disable="true" promptText="?" styleClass="placementTextField" />
-                                                            <Label text="Reol" textAlignment="CENTER" />
-                                                         </children>
-                                                      </VBox>
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </Pane>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <children>
-                                          <Pane styleClass="placementPane">
-                                             <children>
-                                                <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                                                   <children>
-                                                      <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                                                         <children>
-                                                            <TextField fx:id="inpPlacementShelf" disable="true" promptText="?" styleClass="placementTextField" />
-                                                            <Label text="Hylle" textAlignment="CENTER" />
-                                                         </children>
-                                                      </VBox>
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </Pane>
-                                       </children>
-                                    </AnchorPane>
+                                    </HBox>
                                  </children>
-                              </HBox>
+                              </VBox>
+                              <VBox prefHeight="0.0" prefWidth="215.0">
+                                 <children>
+                                    <Label text="Plassering på lager">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <AnchorPane>
+                                             <children>
+                                                <Pane styleClass="placementPane">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                         <children>
+                                                            <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                               <children>
+                                                                  <TextField fx:id="inpPlacementSection" disable="true" promptText="?" styleClass="placementTextField" />
+                                                                  <Label text="Seksjon" textAlignment="CENTER" />
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </Pane>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane>
+                                             <children>
+                                                <Pane styleClass="placementPane">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                         <children>
+                                                            <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                               <children>
+                                                                  <TextField fx:id="inpPlacementRow" disable="true" promptText="?" styleClass="placementTextField" />
+                                                                  <Label text="Reol" textAlignment="CENTER" />
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </Pane>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane>
+                                             <children>
+                                                <Pane styleClass="placementPane">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                         <children>
+                                                            <VBox alignment="TOP_CENTER" prefWidth="63.0">
+                                                               <children>
+                                                                  <TextField fx:id="inpPlacementShelf" disable="true" promptText="?" styleClass="placementTextField" />
+                                                                  <Label text="Hylle" textAlignment="CENTER" />
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </Pane>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                            </children>
-                        </VBox>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="39.0" prefWidth="420.0">
                <children>
-                  <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <VBox spacing="5.0" styleClass="inputGroup" stylesheets="@CSS/inputGroup.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
                         <Label text="Prisdata">
                            <font>
                               <Font name="Arial Bold" size="13.0" />
                            </font>
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/coins.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
                         </Label>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                            <children>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <Label text="Ordinær pris">
+                                    <Label text="Ordinær">
                                        <font>
                                           <Font name="System Font" size="13.0" />
                                        </font>
@@ -191,7 +294,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <Label text="Utsalgspris" />
+                                    <Label text="Utsalg" />
                                     <TextField fx:id="inpSalesPrice" disable="true" promptText="Utsalgspris" />
                                     <Label text="ink.mva">
                                        <font>
@@ -202,7 +305,7 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <Label text="Innkjøpspris" />
+                                    <Label text="Innkjøp" />
                                     <TextField fx:id="inpRetailerPrice" disable="true" promptText="Innkjøpspris" />
                                     <Label text="eks.mva">
                                        <font>
@@ -219,20 +322,35 @@
             </AnchorPane>
             <AnchorPane prefHeight="39.0" prefWidth="420.0">
                <children>
-                  <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <VBox spacing="5.0" styleClass="inputGroup" stylesheets="@CSS/inputGroup.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Label text="Dimensjoner (cm)">
+                        <Label text="Dimensjoner">
                            <font>
-                              <Font name="System Bold" size="13.0" />
+                              <Font name="Arial Bold" size="13.0" />
                            </font>
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/box.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
                         </Label>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                            <children>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionsLength" disable="true" promptText="Lengde" />
                                     <Label text="Lengde">
                                        <font>
+                                          <Font name="System Font" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="inpDimensionsLength" disable="true" promptText="Lengde" />
+                                    <Label text="cm">
+                                       <font>
                                           <Font size="10.0" />
                                        </font>
                                     </Label>
@@ -240,9 +358,14 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionsWidth" disable="true" promptText="Bredde" />
                                     <Label text="Bredde">
                                        <font>
+                                          <Font name="System Font" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="inpDimensionsWidth" disable="true" promptText="Bredde" />
+                                    <Label text="cm">
+                                       <font>
                                           <Font size="10.0" />
                                        </font>
                                     </Label>
@@ -250,10 +373,30 @@
                               </VBox>
                               <VBox prefHeight="200.0">
                                  <children>
-                                    <TextField fx:id="inpDimensionsHeigth" disable="true" promptText="Høyde" />
                                     <Label text="Høyde">
                                        <font>
+                                          <Font name="System Font" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="inpDimensionsHeigth" disable="true" promptText="Høyde" />
+                                    <Label text="cm">
+                                       <font>
                                           <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0">
+                                 <children>
+                                    <Label text="Vekt">
+                                       <font>
+                                          <Font name="System Font" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="inpWeight" disable="true" promptText="Vekt (kg)" />
+                                    <Label text="kg">
+                                       <font>
+                                          <Font name="System Bold" size="10.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -266,47 +409,40 @@
             </AnchorPane>
             <AnchorPane prefHeight="39.0" prefWidth="420.0">
                <children>
-                  <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <HBox prefWidth="200.0" styleClass="inputGroup" stylesheets="@CSS/inputGroup.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Label text="Vekt (kg)">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="inpWeight" disable="true" promptText="Vekt (kg)" />
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="39.0" prefWidth="420.0">
-               <children>
-                  <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                     <children>
-                        <Label text="Barcode">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="inpBarcode" disable="true" promptText="Barcode" />
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            <ImageView fx:id="barcodeImageView" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
-            <AnchorPane minHeight="0.0" minWidth="0.0">
-               <children>
-                  <HBox maxHeight="0.0" maxWidth="0.0" minHeight="0.0" minWidth="0.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                     <children>
-                        <Button fx:id="btnSave" alignment="CENTER" disable="true" onAction="#saveItem" prefHeight="42.0" prefWidth="192.0" text="LAGRE" visible="false">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnDelete" disable="true" onAction="#promptRemoveItem" prefHeight="42.0" prefWidth="192.0" text="SLETT" visible="false">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
+                        <VBox prefWidth="200.0" spacing="5.0">
+                           <children>
+                              <Label text="Barcode">
+                                 <font>
+                                    <Font name="Arial Bold" size="13.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@icons/scanner.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="inpBarcode" disable="true" promptText="Barcode">
+                                 <font>
+                                    <Font name="Arial" size="13.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets right="10.0" />
+                                 </VBox.margin>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <AnchorPane prefWidth="200.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;">
+                           <children>
+                              <ImageView fx:id="barcodeImageView" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </HBox>
                </children>
