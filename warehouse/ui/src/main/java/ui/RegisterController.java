@@ -2,6 +2,7 @@ package ui;
 
 import core.ClientWarehouse;
 import core.User;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -83,9 +84,10 @@ public class RegisterController {
       User user = new User(username, password1, true);
       CompletableFuture<Void> registerFuture = warehouse.register(user);
       registerFuture.thenAccept(x -> {
-        hideRegisterView();
+        Platform.runLater(this::hideRegisterView);
       }).exceptionally(e -> {
-        errorMessageField.setText(e.getCause().getMessage());
+        e.printStackTrace();
+        Platform.runLater(() -> errorMessageField.setText(e.getCause().getMessage()));
         return null;
       });
     }

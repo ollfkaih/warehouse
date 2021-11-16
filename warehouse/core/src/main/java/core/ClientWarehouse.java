@@ -66,12 +66,9 @@ public class ClientWarehouse extends BaseWarehouse {
   }
 
   public CompletableFuture<Void> login(String username, String password) {
-    System.out.println(new LoginRequest(username, password).getUsername());
-    CompletableFuture<Void> voidCompletableFuture = server
+    return server
         .login(new LoginRequest(username, password))
-        .thenAccept(authSession -> this.authSession = authSession);
-    System.out.println(voidCompletableFuture);
-    return voidCompletableFuture;
+        .thenAccept(authSession1 -> this.authSession = authSession1);
   }
 
   public User getCurrentUser() {

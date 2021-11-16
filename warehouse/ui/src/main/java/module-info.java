@@ -6,6 +6,7 @@ module warehouse.ui {
   requires javafx.controls;
   requires javafx.fxml;
   requires barbecue;
+  requires java.net.http;
 
   opens ui to javafx.graphics, javafx.fxml;
   opens ui.validators;

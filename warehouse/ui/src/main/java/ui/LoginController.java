@@ -1,6 +1,7 @@
 package ui;
 
 import core.ClientWarehouse;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -74,11 +75,14 @@ public class LoginController {
     if (!userName.isEmpty() && !password.isEmpty()) {
       CompletableFuture<Void> loginFuture = wh.login(userName, password);
       loginFuture.thenApply(x -> {
-        whController.updateUser();
-        hideLoginView();
+        Platform.runLater(() -> {
+          whController.updateUser();
+          hideLoginView();
+        });
         return null;
       }).exceptionally(e -> {
-        errorMessageField.setText(e.getCause().getMessage());
+        e.printStackTrace();
+        Platform.runLater(() -> errorMessageField.setText(e.getCause().getMessage()));
         return null;
       });
     } else {

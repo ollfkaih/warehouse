@@ -79,6 +79,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
       warehouse.removeItemsListener(this);
     }
 
+    //ServerInterface server = new RemoteWarehouseServer("http://localhost:8080");
     ServerInterface server = new LocalServer(prefix);
     warehouse = new ClientWarehouse(server);
     warehouse.addItemsListener(this);
