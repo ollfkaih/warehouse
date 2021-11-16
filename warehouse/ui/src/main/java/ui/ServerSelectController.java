@@ -58,7 +58,13 @@ public class ServerSelectController {
       errorMessageField.setText("Du må velge en server URL før du kan koble til.");
     }
 
-    whController.loadPersistedData(new RemoteWarehouseServer(serverUrl));
+    try {
+      whController.loadPersistedData(new RemoteWarehouseServer(serverUrl));
+    } catch (Exception e) {
+      errorMessageField.setText(e.getMessage());
+      return;
+    }
+
     hideView();
     resetView();
     whController.showView();
