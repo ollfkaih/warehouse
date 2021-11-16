@@ -56,6 +56,10 @@ public class RemoteWarehouseServer implements ServerInterface {
   }
 
   private HttpResponse<String> errorThrower(HttpResponse<String> response) {
+    if (response.statusCode() >= 200 && response.statusCode() < 300) {
+      return response;
+    }
+
     HashMap<String, String> bodyMap;
     try {
       bodyMap = readBody(response.body(), new TypeReference<>() {});
