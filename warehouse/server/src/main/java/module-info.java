@@ -5,6 +5,7 @@ module warehouse.server {
   requires spring.beans;
   requires spring.boot;
   requires spring.context;
+  requires spring.core;
   requires spring.boot.autoconfigure;
 
   requires warehouse.core;
