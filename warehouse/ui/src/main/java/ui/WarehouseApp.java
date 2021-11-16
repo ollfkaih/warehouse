@@ -35,6 +35,8 @@ public class WarehouseApp extends Application {
       System.out.println("[WarehouseApp.java] Icon-image not found");
     }
     WarehouseController controller = (WarehouseController) fxmlLoader.getController();
+    controller.setStage(stage);
+    controller.hideView();
     stage.setOnCloseRequest(event -> {
       try {
         if (controller.canExit()) {

@@ -54,7 +54,11 @@ public class ClientWarehouseUpdater {
           }
           // update/add items
           for (Item loadedItem : loadedItems) {
-            warehouse.putItem(loadedItem);
+            try {
+              warehouse.putItem(loadedItem);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
           }
           sendUpdates = true;
         });
