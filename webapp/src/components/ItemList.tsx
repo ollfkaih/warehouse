@@ -3,32 +3,28 @@ import ItemListElement from './ItemListElement'
 import Item from '../modules/Item'
 import { Col, Container, Row } from 'react-bootstrap'
 import SortOption from '../modules/SortOption'
-import useSWR from 'swr'
-
-const GET_ALL_ITEMS_ENDPOINT = '/warehouse/items'
 
 interface IProps {
-  domain: string
   currentItem?: Item
   setCurrentItem: (item: Item) => void
   searchText: string
   sortOption: SortOption
   sortAscendingOrder: boolean
+  swrData: any
+  swrError: any
 }
 
 const ItemList = (props: IProps) => {
-  const getItems = async (url: string) => fetch(url).then((res) => res.json())
-  const { data, error } = useSWR(props.domain + GET_ALL_ITEMS_ENDPOINT, getItems)
-  const [items, setItems] = useState<[Item]>(data)
+  const [items, setItems] = useState<[Item]>(props.swrData)
   // eslint-disable-next-line
   const [newItem, setNewItem] = useState()
 
   useEffect(() => {
-    setItems(data)
-  }, [data])
+    setItems(props.swrData)
+  }, [props.swrData])
 
-  if (error) return <p>Error</p>
-  if (!data) return <p>Loading</p>
+  if (props.swrError) return <p>Could not load items</p>
+  if (!props.swrData) return <p>Loading</p>
   if (!items) return <p>Could not load items</p>
 
   const sortingComparator = (item1: Item, item2: Item, ascending: boolean): number => {
