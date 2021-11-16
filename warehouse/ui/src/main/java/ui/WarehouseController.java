@@ -51,9 +51,12 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   @FXML private AnchorPane statusAnchorPane;
   @FXML private Label statusLabel;
   @FXML private ImageView statusImage;
+  @FXML private ImageView userImage;
 
   private Image emptySearch = new Image(getClass().getResourceAsStream("icons/search-minus.png"));
   private Image emptyDolly = new Image(getClass().getResourceAsStream("icons/person-dolly-empty.png"));
+  private Image userEdit = new Image(getClass().getResourceAsStream("icons/user-edit-white.png")); 
+  private Image userLock = new Image(getClass().getResourceAsStream("icons/user-lock-white.png")); 
 
   private SortOption sortBy = SortOption.DATE;
   private boolean ascending = true;
@@ -69,6 +72,7 @@ public class WarehouseController implements EntityCollectionListener<Item> {
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
 
     loadPersistedData("local_server");
+    statusLabel.setWrapText(true);
   }
 
   public void loadPersistedData(String prefix) {
@@ -106,15 +110,17 @@ public class WarehouseController implements EntityCollectionListener<Item> {
 
   private void confirmLogout() {
     warehouse.logout();
-    usernameLabel.setVisible(false);
+    userImage.setImage(userLock);
     usernameLabel.setText("");
     loginButton.setText("Logg inn");
+    userImage.setImage(userLock);
   }
 
   protected void updateUser() {
     usernameLabel.setText(warehouse.getCurrentUser().getUserName());
     usernameLabel.setVisible(true);
     loginButton.setText("Logg ut");
+    userImage.setImage(userEdit);
     updateInventory();
   }
 
