@@ -110,7 +110,7 @@ public class DetailsViewController {
     stage.setOnCloseRequest(e -> close());
 
     try {
-      stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("icon/1-rounded.png")));
+      stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("appIcon/1-rounded.png")));
     } catch (Exception e) {
       e.printStackTrace();
     }
