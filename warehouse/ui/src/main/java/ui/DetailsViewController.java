@@ -14,11 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -62,6 +62,7 @@ public class DetailsViewController {
   @FXML private Button btnSave;
   @FXML private Button btnDelete;
   @FXML private ImageView barcodeImageView;
+  @FXML private HBox sectionSaveDelete;
 
   private final Stage stage;
   private Parent detailsRoot;
@@ -293,18 +294,21 @@ public class DetailsViewController {
     for (ItemField field : fields.values()) {
       field.setDisabled(!editing);
     }
-
-    setRegionVisibility(btnDecrement, editing);
-    setRegionVisibility(btnIncrement, editing);
+    
+    btnIncrement.setDisable(!editing);
+    btnDecrement.setDisable(!editing);
 
     setRegionVisibility((Region) btnSave.getParent(), editing);
+    setRegionVisibility((Region) btnEdit.getParent(), !editing);
 
     btnEdit.setVisible(!editing);
-
     btnSave.setVisible(editing);
     btnSave.setDisable(!editing);
     btnDelete.setVisible(editing);
     btnDelete.setDisable(!editing);
+
+    btnDelete.prefWidthProperty().bind(sectionSaveDelete.widthProperty().divide(2));
+    btnSave.prefWidthProperty().bind(sectionSaveDelete.widthProperty().divide(2));
   }
 
   private void setRegionVisibility(Region region, boolean visible) {

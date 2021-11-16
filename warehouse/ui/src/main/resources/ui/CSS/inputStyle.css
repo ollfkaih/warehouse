@@ -1,6 +1,7 @@
 TextField {
   -fx-border-width: 2px;
   -fx-border-color: lightgrey;
+  -fx-focus-color: #840B9B;
 }
 
 TextField:disabled {
@@ -37,6 +38,7 @@ TextField:disabled {
   -fx-background-color: #fff; 
   -fx-border-color: #aaa; 
   -fx-border-radius: 8;
+  -fx-background-radius: 8;
 }
 
 .placementTextField{
