@@ -13,7 +13,7 @@ const Navbar = (props: IProps) => (
     <BootstrapNavbar.Brand className="navbar-left ms-3">
       <Link to="/">
         <Image
-          className="title"
+          className="text-primary"
           alt="Warehouse"
           height="80em"
           src="/icon/purple_logo.svg"
