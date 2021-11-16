@@ -37,6 +37,7 @@ TextField:disabled {
   -fx-background-color: #fff; 
   -fx-border-color: #aaa; 
   -fx-border-radius: 8;
+  -fx-background-radius: 8;
 }
 
 .placementTextField{
