@@ -105,7 +105,7 @@
                   <children>
                      <ImageView fx:id="statusImage" fitHeight="55.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@icons/dolly-empty.png" />
+                           <Image url="@icons/person-dolly-empty.png" />
                         </image>
                      </ImageView>
                   </children>
