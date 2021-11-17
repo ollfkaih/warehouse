@@ -13,4 +13,9 @@ public class DoubleValidator implements InputValidator {
       return false;
     }
   }
+
+  @Override
+  public String getErrorMessage() {
+    return "Number format error";
+  }
 }

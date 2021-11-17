@@ -114,7 +114,7 @@ public class Item extends Entity<Item> {
   }
 
   public void setName(String name) {
-    if (name == null) {
+    if (name == null || name.isEmpty()) {
       throw new IllegalArgumentException();
     }
     this.name = name;

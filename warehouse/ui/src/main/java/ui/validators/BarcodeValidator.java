@@ -5,7 +5,7 @@ package ui.validators;
  */
 public class BarcodeValidator implements InputValidator {
   private static MinLengthValidator minLengthValidator = new MinLengthValidator(13);
-  private static MaxLengthValidator maxLengthValidator = new MaxLengthValidator(13);
+  private static MaxValueValidator maxLengthValidator = new MaxValueValidator(13);
 
   @Override
   public boolean validateInput(String input) {
@@ -20,5 +20,10 @@ public class BarcodeValidator implements InputValidator {
       }
     }
     return false;
+  }
+
+  @Override
+  public String getErrorMessage() {
+    return "Barcode format is wrong";
   }
 }

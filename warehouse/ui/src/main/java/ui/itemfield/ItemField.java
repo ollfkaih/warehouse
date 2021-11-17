@@ -1,6 +1,8 @@
 package ui.itemfield;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import ui.WarehouseController;
 import ui.validators.InputValidator;
 import ui.validators.NotEmptyValidatior;
 
@@ -16,7 +18,7 @@ public class ItemField {
    * Interface for a function that saves an itemField textField value to the
    * corresponding item property.
    */
-  public static interface Saver {
+  public static interface SaveFunction {
     void saveItemField(ItemField itemField);
   }
 
@@ -24,21 +26,24 @@ public class ItemField {
    * Interface for a function that gets the item property value for the property
    * the field corresponds to.
    */
-  public static interface Getter {
+  public static interface GetFunction {
     Object getItemValue();
   }
 
   protected final TextField textField;
-  protected final Saver saver;
-  protected final Getter getter;
+  protected final SaveFunction saveFunction;
+  protected final GetFunction getFunction;
   protected final boolean nullable;
+  protected final Label errorLabel;
+  protected String errorMessage;
   protected List<InputValidator> validators = new ArrayList<>();
 
-  public ItemField(TextField textField, boolean nullable, Saver saver, Getter getter) {
+  public ItemField(TextField textField, boolean nullable, SaveFunction saveFunction, GetFunction getFunction, Label errorLbael) {
     this.textField = textField;
     this.nullable = nullable;
-    this.saver = saver;
-    this.getter = getter;
+    this.saveFunction = saveFunction;
+    this.getFunction = getFunction;
+    this.errorLabel = errorLbael;
 
     addChangeValidator();
   }
@@ -49,46 +54,57 @@ public class ItemField {
 
   private void handleChange(String value) {
     InputValidator notEmptyValidator = new NotEmptyValidatior();
-
-    boolean valid;
-
     boolean isEmpty = !notEmptyValidator.validateInput(value);
     if (!nullable && isEmpty) {
-      valid = false;
+      setError("Feltet kan ikke være tomt");
+      return;
     } else if (nullable && isEmpty) {
-      valid = true;
-    } else {
-      valid = true;
+      setError(null);
+      return;
+    }
 
-      for (InputValidator validator : validators) {
-        if (!validator.validateInput(value)) {
-          valid = false;
-          break;
-        }
+    for (InputValidator validator : validators) {
+      if (!validator.validateInput(value)) {
+        setError(validator.getErrorMessage());
+        return;
       }
     }
-    
-    setFieldValidity(valid);
+
+    setError(null);
   }
 
   public void saveField() {
     try {
-      saver.saveItemField(this);
-      setFieldValidity(true);
+      saveFunction.saveItemField(this);
+      setError(null);
     } catch (Exception e) {
-      setFieldValidity(false);
+      setError(e.getMessage());
     }
   }
 
   public void updateField() {
-    Object itemProperty = getter.getItemValue();
+    Object itemProperty = getFunction.getItemValue();
     textField.setText(itemProperty == null ? "" : String.valueOf(itemProperty));
   }
 
-  private void setFieldValidity(boolean legal) {
+  public boolean isValid() {
+    return this.errorMessage == null;
+  }
+
+  public String getErrorMessage() {
+    return this.errorMessage;
+  }
+
+  private void setError(String error) {
+    boolean legal = error == null;
+    errorMessage = error;
     textField.getStyleClass().removeAll(Arrays.asList("illegalInput"));
     if (!legal) {
       textField.getStyleClass().add("illegalInput");
+      errorLabel.setText(error);
+      WarehouseController.setRegionVisibility(errorLabel, true);
+    } else {
+      WarehouseController.setRegionVisibility(errorLabel, false);
     }
   }
 

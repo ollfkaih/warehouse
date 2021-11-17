@@ -30,7 +30,8 @@ import ui.itemfield.ItemField;
 import ui.validators.BarcodeValidator;
 import ui.validators.DoubleValidator;
 import ui.validators.IntegerValidator;
-import ui.validators.MaxLengthValidator;
+import ui.validators.MaxValueValidator;
+import ui.validators.NotEmptyValidatior;
 import ui.validators.NotNegativeValidator;
 
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class DetailsViewController {
 
   @FXML private ScrollPane detailsViewScrollPane;
 
+  @FXML private Label sharedErrorLabel;
   @FXML private TextField inpName;
   @FXML private Label nameErrorLabel;
   @FXML private TextField inpBrand;
@@ -181,59 +183,59 @@ public class DetailsViewController {
     fields = Map.ofEntries(
         entry(Field.NAME,
             new ItemField(inpName, false, itemField -> item.setName(itemField.getStringValue()),
-                item::getName)),
+                item::getName, nameErrorLabel)),
 
         entry(Field.BRAND,
             new ItemField(inpBrand, true, itemField -> item.setBrand(itemField.getStringValue()),
-                item::getBrand)),
+                item::getBrand, sharedErrorLabel)),
 
         entry(Field.AMOUNT,
             new ItemField(inpAmount, false, itemField -> item.setAmount(itemField.getIntegerValue()),
-                item::getAmount)),
+                item::getAmount, sharedErrorLabel)),
 
         entry(Field.REGULAR_PRICE,
             new ItemField(inpOrdinaryPrice, true, itemField -> item.setRegularPrice(itemField.getDoubleValue()),
-                item::getRegularPrice)),
+                item::getRegularPrice, sharedErrorLabel)),
 
         entry(Field.SALE_PRICE,
             new ItemField(inpSalesPrice, true, itemField -> item.setSalePrice(itemField.getDoubleValue()),
-                item::getSalePrice)),
+                item::getSalePrice, sharedErrorLabel)),
 
         entry(Field.PURCHASE_PRICE,
             new ItemField(inpRetailerPrice, true, itemField -> item.setPurchasePrice(itemField.getDoubleValue()),
-                item::getPurchasePrice)),
+                item::getPurchasePrice, sharedErrorLabel)),
 
         entry(Field.SECTION,
             new ItemField(inpPlacementSection, true, itemField -> item.setSection(itemField.getStringValue()),
-                item::getSection)),
+                item::getSection, sharedErrorLabel)),
 
         entry(Field.ROW,
             new ItemField(inpPlacementRow, true, itemField -> item.setRow(itemField.getStringValue()),
-                item::getRow)),
+                item::getRow, sharedErrorLabel)),
 
         entry(Field.SHELF,
             new ItemField(inpPlacementShelf, true, itemField -> item.setShelf(itemField.getStringValue()),
-                item::getShelf)),
+                item::getShelf, sharedErrorLabel)),
 
         entry(Field.HEIGHT,
             new ItemField(inpDimensionsHeigth, true, itemField -> item.setHeight(itemField.getDoubleValue()),
-                item::getHeight)),
+                item::getHeight, sharedErrorLabel)),
 
         entry(Field.WIDTH,
             new ItemField(inpDimensionsWidth, true, itemField -> item.setWidth(itemField.getDoubleValue()),
-                item::getWidth)),
+                item::getWidth, sharedErrorLabel)),
 
         entry(Field.LENGTH,
             new ItemField(inpDimensionsLength, true, itemField -> item.setLength(itemField.getDoubleValue()),
-                item::getLength)),
+                item::getLength, sharedErrorLabel)),
 
         entry(Field.WEIGHT,
             new ItemField(inpWeight, true, itemField -> item.setWeight(itemField.getDoubleValue()),
-                item::getWeight)),
+                item::getWeight, sharedErrorLabel)),
 
         entry(Field.BARCODE, 
             new ItemField(inpBarcode, true, itemField -> item.setBarcode(itemField.getStringValue()),
-                item::getBarcode))
+                item::getBarcode, sharedErrorLabel))
     );
   }
 
@@ -255,17 +257,17 @@ public class DetailsViewController {
   }
 
   private void addInputValidationListeners() {
-    fields.get(Field.NAME).addValidators();
+    fields.get(Field.NAME).addValidators(new NotEmptyValidatior());
     fields.get(Field.BRAND).addValidators();
-    fields.get(Field.AMOUNT).addValidators(new IntegerValidator(), new NotNegativeValidator());
+    fields.get(Field.AMOUNT).addValidators(new IntegerValidator(), new NotNegativeValidator(), new MaxValueValidator(CoreConst.MAX_AMOUNT));
 
     fields.get(Field.REGULAR_PRICE).addValidators(new DoubleValidator(), new NotNegativeValidator());
     fields.get(Field.SALE_PRICE).addValidators(new DoubleValidator(), new NotNegativeValidator());
     fields.get(Field.PURCHASE_PRICE).addValidators(new DoubleValidator(), new NotNegativeValidator());
 
-    fields.get(Field.SECTION).addValidators(new MaxLengthValidator(placementMaxLength));
-    fields.get(Field.ROW).addValidators(new MaxLengthValidator(placementMaxLength));
-    fields.get(Field.SHELF).addValidators(new MaxLengthValidator(placementMaxLength));
+    fields.get(Field.SECTION).addValidators(new MaxValueValidator(placementMaxLength));
+    fields.get(Field.ROW).addValidators(new MaxValueValidator(placementMaxLength));
+    fields.get(Field.SHELF).addValidators(new MaxValueValidator(placementMaxLength));
 
     fields.get(Field.HEIGHT).addValidators(new DoubleValidator(), new NotNegativeValidator());
     fields.get(Field.LENGTH).addValidators(new DoubleValidator(), new NotNegativeValidator());
@@ -297,25 +299,26 @@ public class DetailsViewController {
 
   @FXML
   private void saveItem() {
-    boolean saveFailed = true;
     nameErrorLabel.setText("");
     barcodeErrorLabel.setText("");
     if (fields.get(Field.NAME).getStringValue() == null) {
       nameErrorLabel.setText("Legg til produktnavn for å lagre.");
-      saveFailed = false;
+      return;
     }
     String barcode = inpBarcode.getText();
     barcodeValidator = new BarcodeValidator();
     if (barcode.length() > 0 && barcode.length() < 13) {
       barcodeErrorLabel.setText("Barcode må inneholde 13 tall.");
-      saveFailed = false;
+      return;
     } else if (barcode.length() != 0 && !barcodeValidator.validateInput(barcode)) {
       barcodeErrorLabel.setText("Kontrolltallet stemmet ikke med de 12 første tallene.");
-      saveFailed = false;
-    }
-    if (!saveFailed) {
       return;
     }
+    for (ItemField field : fields.values()) {
+      if (!field.isValid()) {
+        return;
+      }
+    }    
     for (ItemField field : fields.values()) {
       field.saveField();
     }
@@ -373,8 +376,8 @@ public class DetailsViewController {
     btnIncrement.setDisable(!editing);
     btnDecrement.setDisable(!editing);
 
-    setRegionVisibility((Region) btnSave.getParent(), editing);
-    setRegionVisibility((Region) btnEdit.getParent(), !editing);
+    WarehouseController.setRegionVisibility((Region) btnSave.getParent(), editing);
+    WarehouseController.setRegionVisibility((Region) btnEdit.getParent(), !editing);
 
     btnEdit.setVisible(!editing);
     btnSave.setVisible(editing);
@@ -384,15 +387,6 @@ public class DetailsViewController {
 
     btnDelete.prefWidthProperty().bind(sectionSaveDelete.widthProperty().divide(2));
     btnSave.prefWidthProperty().bind(sectionSaveDelete.widthProperty().divide(2));
-  }
-
-  private void setRegionVisibility(Region region, boolean visible) {
-    region.setDisable(!visible);
-    region.setVisible(visible);
-    region.setMinWidth(visible ? -1 : 0);
-    region.setMinHeight(visible ? -1 : 0);
-    region.setMaxWidth(visible ? -1 : 0);
-    region.setMaxHeight(visible ? -1 : 0);
   }
 
   public String toString() {

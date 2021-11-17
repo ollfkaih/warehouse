@@ -14,4 +14,9 @@ public class MaxLengthValidator implements InputValidator {
   public boolean validateInput(String input) {
     return input.length() <= maxLength;
   }
+
+  @Override
+  public String getErrorMessage() {
+    return "Length is too long";
+  }
 }
