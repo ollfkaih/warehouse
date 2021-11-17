@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
-import ItemElement from './ItemElement'
+import React, { useEffect, useState } from 'react'
+import ItemListElement from './ItemListElement'
 import Item from '../modules/Item'
-import warehouseItems from '../warehouse.json'
 import { Col, Container, Row } from 'react-bootstrap'
 import SortOption from '../modules/SortOption'
 
@@ -11,18 +10,22 @@ interface IProps {
   searchText: string
   sortOption: SortOption
   sortAscendingOrder: boolean
+  swrData: any
+  swrError: any
 }
 
 const ItemList = (props: IProps) => {
-  // eslint-disable-next-line
-  const [items, setItems] = useState(
-    warehouseItems.map((item) => ({
-      ...item,
-      creationDate: new Date(item.creationDate),
-    }))
-  )
+  const [items, setItems] = useState<[Item]>(props.swrData)
   // eslint-disable-next-line
   const [newItem, setNewItem] = useState()
+
+  useEffect(() => {
+    setItems(props.swrData)
+  }, [props.swrData])
+
+  if (props.swrError) return <p>Could not load items</p>
+  if (!props.swrData) return <p>Loading</p>
+  if (!items) return <p>Could not load items</p>
 
   const sortingComparator = (item1: Item, item2: Item, ascending: boolean): number => {
     const ascendingFactor = ascending ? 1 : -1
@@ -88,7 +91,7 @@ const ItemList = (props: IProps) => {
             )
             .sort((item1, item2) => sortingComparator(item1, item2, ascending))
             .map((item) => (
-              <ItemElement
+              <ItemListElement
                 key={item.id}
                 item={item}
                 selected={props.currentItem === item ? true : false}

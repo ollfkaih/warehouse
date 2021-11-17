@@ -2,6 +2,9 @@ $primary: rgb(132, 0, 155);
 $secondary: rgb(231, 231, 231);
 $light: rgba(213, 169, 223);
 $dark: rgb(76, 4, 88);
+$danger: rgb(224, 34, 20);
+$success: rgb(3, 122, 3);
+$info: rgb(116, 82, 114);
 
 // change the theme
 $theme-colors: (
@@ -9,6 +12,9 @@ $theme-colors: (
   'secondary': $secondary,
   'light': $light,
   'dark': $dark,
+  'danger': $danger,
+  'success': $success,
+  'info': $info,
 );
 
 $form-floating-padding-x: 1rem;
@@ -25,20 +31,16 @@ $form-floating-input-padding-b: 1.625rem;
   margin: 2px;
 }
 
-.title .text-primary {
-  color: $primary;
-}
-
 .placeholder-primary input::placeholder {
   color: $primary;
 }
 
 .fit-to-height {
-  max-height: calc(100vh - 85px);
+  max-height: calc(100vh - 8.5em);
 }
 
 .item-list {
-  max-height: calc(100vh - 210px);
+  max-height: calc(100vh - 14.5em);
 }
 
 .item-list-element:hover {

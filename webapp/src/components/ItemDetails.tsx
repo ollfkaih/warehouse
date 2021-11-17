@@ -2,18 +2,13 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Item from '../modules/Item'
-import { useEffect, useState } from 'react'
 
 interface IProps {
-  item: Item
+  editingItem: Item
+  setEditingItem: (item: Item | undefined) => void
 }
 
-const ItemDetails = ({ item }: IProps) => {
-  const [openItem, setOpenItem] = useState<Item>(item)
-  useEffect(() => {
-    setOpenItem(item)
-  }, [item])
-
+const ItemDetails = (props: IProps) => {
   const changeValue: (e: any, propertyName: keyof Item) => void = (
     e: any,
     propertyName: keyof Item
@@ -22,32 +17,32 @@ const ItemDetails = ({ item }: IProps) => {
     const returnLegalNumberOrOldValue =
       !isNaN(number) && number > 0 && number < Number.MAX_SAFE_INTEGER
         ? Number(e.target.value)
-        : openItem[propertyName]
-    setOpenItem({
-      ...openItem,
+        : props.editingItem[propertyName]
+    props.setEditingItem({
+      ...props.editingItem,
       [propertyName]: e.target.value === '' ? '' : returnLegalNumberOrOldValue,
     })
   }
 
   return (
     <>
-      {openItem && (
+      {props.editingItem && (
         <Form className="overflow-auto h-100">
           <Row md="12" className="m-0">
             <Col md="6">
               <h5
                 className="p-1 text-truncate"
                 data-toggle="tooltip"
-                title={openItem.brand}
+                title={props.editingItem.brand}
               >
-                {openItem.brand?.substring(0, 30)}
+                {props.editingItem.brand?.substring(0, 30)}
               </h5>
               <h2
                 className="p-1 text-truncate"
                 data-toggle="tooltip"
-                title={openItem.name}
+                title={props.editingItem.name}
               >
-                {openItem.name.substring(0, 30)}
+                {props.editingItem.name.substring(0, 30)}
               </h2>
             </Col>
             <Col md="6" className="p-1">
@@ -60,7 +55,7 @@ const ItemDetails = ({ item }: IProps) => {
                     id="section-control"
                     className="bg-secondary"
                     placeholder="AB"
-                    value={openItem.section ?? ''}
+                    value={props.editingItem.section ?? ''}
                     onChange={(e) => changeValue(e, 'section')}
                   />
                   <label htmlFor="section-control">Seksjon</label>
@@ -70,7 +65,7 @@ const ItemDetails = ({ item }: IProps) => {
                     id="row-control"
                     className="bg-secondary"
                     placeholder="AB"
-                    value={openItem.row ?? ''}
+                    value={props.editingItem.row ?? ''}
                     onChange={(e) => changeValue(e, 'row')}
                   />
                   <label htmlFor="row-control">Reol</label>
@@ -80,7 +75,7 @@ const ItemDetails = ({ item }: IProps) => {
                     id="shelf-control"
                     className="bg-secondary"
                     placeholder="AB"
-                    value={openItem.shelf ?? ''}
+                    value={props.editingItem.shelf ?? ''}
                     onChange={(e) => changeValue(e, 'shelf')}
                   />
                   <label htmlFor="shelf-control">Hylle</label>
@@ -99,7 +94,7 @@ const ItemDetails = ({ item }: IProps) => {
                 id="amount-control"
                 className="bg-secondary"
                 placeholder="0"
-                value={openItem.amount ?? ''}
+                value={props.editingItem.amount ?? ''}
                 type="text"
                 onChange={(e) => changeValue(e, 'amount')}
               />
@@ -114,7 +109,7 @@ const ItemDetails = ({ item }: IProps) => {
                 id="regularPrice-control"
                 className="bg-secondary"
                 placeholder="0.0"
-                value={openItem.regularPrice ?? ''}
+                value={props.editingItem.regularPrice ?? ''}
                 type="text"
                 onChange={(e) => changeValue(e, 'regularPrice')}
               />
@@ -125,7 +120,7 @@ const ItemDetails = ({ item }: IProps) => {
                 id="salePrice-control"
                 className="bg-secondary"
                 placeholder="0.0"
-                value={openItem.salePrice ?? ''}
+                value={props.editingItem.salePrice ?? ''}
                 type="text"
                 onChange={(e) => changeValue(e, 'salePrice')}
               />
@@ -136,7 +131,7 @@ const ItemDetails = ({ item }: IProps) => {
                 id="purchasePrice-control"
                 className="bg-secondary"
                 placeholder="0.0"
-                value={openItem.purchasePrice ?? ''}
+                value={props.editingItem.purchasePrice ?? ''}
                 type="text"
                 onChange={(e) => changeValue(e, 'purchasePrice')}
               />
@@ -152,7 +147,7 @@ const ItemDetails = ({ item }: IProps) => {
                 id="length-control"
                 className="bg-secondary"
                 placeholder="0.0"
-                value={openItem.length ?? ''}
+                value={props.editingItem.length ?? ''}
                 type="text"
                 onChange={(e) => changeValue(e, 'length')}
               />
@@ -163,7 +158,7 @@ const ItemDetails = ({ item }: IProps) => {
                 id="width-control"
                 className="bg-secondary"
                 placeholder="0.0"
-                value={openItem.width ?? ''}
+                value={props.editingItem.width ?? ''}
                 type="text"
                 onChange={(e) => changeValue(e, 'width')}
               />
@@ -174,7 +169,7 @@ const ItemDetails = ({ item }: IProps) => {
                 id="height-control"
                 className="bg-secondary"
                 placeholder="0.0"
-                value={openItem.height ?? ''}
+                value={props.editingItem.height ?? ''}
                 type="text"
                 onChange={(e) => changeValue(e, 'height')}
               />
@@ -190,7 +185,7 @@ const ItemDetails = ({ item }: IProps) => {
                 id="weight-control"
                 className="bg-secondary"
                 placeholder="0.0"
-                value={openItem.weight ?? ''}
+                value={props.editingItem.weight ?? ''}
                 type="text"
                 onChange={(e) => changeValue(e, 'weight')}
               />
@@ -208,7 +203,7 @@ const ItemDetails = ({ item }: IProps) => {
                 id="barcode-control"
                 className="bg-secondary"
                 placeholder="0360002914522"
-                value={openItem.barcode ?? ''}
+                value={props.editingItem.barcode ?? ''}
                 type="text"
                 onChange={(e) => changeValue(e, 'barcode')}
               />
