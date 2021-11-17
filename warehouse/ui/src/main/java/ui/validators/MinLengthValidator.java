@@ -14,4 +14,9 @@ public class MinLengthValidator implements InputValidator {
   public boolean validateInput(String input) {
     return input.length() >= minLength;
   }
+
+  @Override
+  public String getErrorMessage() {
+    return "Length is too short";
+  }
 }

@@ -14,4 +14,9 @@ public class MinValueValidator implements InputValidator {
   public boolean validateInput(String input) {
     return Double.parseDouble(input) >= minValue;
   }
+
+  @Override
+  public String getErrorMessage() {
+    return "Value is too low";
+  }
 }

@@ -69,6 +69,11 @@
                   </VBox>
                </children>
             </AnchorPane>
+            <AnchorPane prefWidth="200.0">
+               <children>
+                  <Label fx:id="sharedErrorLabel" alignment="CENTER" textFill="RED" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               </children>
+            </AnchorPane>
             <AnchorPane>
                <children>
                   <VBox prefWidth="400.0" styleClass="inputGroup" stylesheets="@CSS/inputGroup.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">

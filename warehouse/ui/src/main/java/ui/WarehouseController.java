@@ -24,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -250,7 +251,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
   @FXML
   private void addItem() {
     if (warehouse.getCurrentUser() != null) {
-      Item item = new Item("");
+      Item item = new Item("Nytt produkt");
       openDetailsView(item);
       detailsViewControllers.get(item).toggleEditing();
     }
@@ -360,5 +361,14 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
   @Override
   public void stoppedLoading() {
     Platform.runLater(() -> loadingLabel.setVisible(false));
+  }
+
+  public static void setRegionVisibility(Region region, boolean visible) {
+    region.setDisable(!visible);
+    region.setVisible(visible);
+    region.setMinWidth(visible ? -1 : 0);
+    region.setMinHeight(visible ? -1 : 0);
+    region.setMaxWidth(visible ? -1 : 0);
+    region.setMaxHeight(visible ? -1 : 0);
   }
 } 
