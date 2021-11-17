@@ -115,8 +115,9 @@ public class Item extends Entity<Item> {
 
   public void setName(String name) {
     if (name == null || name.isEmpty()) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Name must be set");
     }
+
     this.name = name;
     notifyUpdated();
   }
@@ -127,7 +128,7 @@ public class Item extends Entity<Item> {
 
   public void setAmount(int amount) {
     if (amount < CoreConst.MIN_AMOUNT || amount > CoreConst.MAX_AMOUNT) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Amount is outside of allowed interval");
     }
     this.amount = amount;
     notifyUpdated();
@@ -158,6 +159,9 @@ public class Item extends Entity<Item> {
       }
       if (!barcode.matches("^[0-9]+$")) {
         throw new IllegalArgumentException("Barcode can only contain numbers");
+      }
+      if (!BarcodeUtils.validateBarcode(barcode)) {
+        throw new IllegalArgumentException("Barcode is invalid");
       }
     }
     this.barcode = barcode;
@@ -220,8 +224,7 @@ public class Item extends Entity<Item> {
 
   public void setSection(String section) {
     if (section != null && (section.length() > CoreConst.MAX_POSITION_LENGTH)) {
-      throw new IllegalArgumentException(
-          "Section length is too long. Max is " + CoreConst.MAX_POSITION_LENGTH + " characters");
+      throw new IllegalArgumentException("Section length is too long. Max is " + CoreConst.MAX_POSITION_LENGTH + " characters");
     }
     this.section = section;
     notifyUpdated();
@@ -245,8 +248,7 @@ public class Item extends Entity<Item> {
 
   public void setShelf(String shelf) {
     if (shelf != null && (shelf.length() > CoreConst.MAX_POSITION_LENGTH)) {
-      throw new IllegalArgumentException(
-          "Shelf length is too long. Max is " + CoreConst.MAX_POSITION_LENGTH + " characters");
+      throw new IllegalArgumentException("Shelf length is too long. Max is " + CoreConst.MAX_POSITION_LENGTH + " characters");
     }
     this.shelf = shelf;
     notifyUpdated();

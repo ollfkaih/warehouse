@@ -290,8 +290,8 @@ public class ClientWarehouseTest {
     assertEquals(item, removedItem);
 
     updated = false;
-    item.setBarcode("1739280375232");
-    ;
+    item.setBarcode("7453928692308");
+
     assertFalse(updated);
 
     // test removing items listener
