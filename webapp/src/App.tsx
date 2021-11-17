@@ -63,7 +63,7 @@ const App = () => {
     return <p>Domain for server not set, configure REACT_APP_DOMAIN variable</p>
 
   function showDetailsCol(): React.ReactNode {
-    return currentItem != null && editingItem != null ? (
+    return editingItem != null ? (
       <Col
         className="overflow-auto fit-to-height col-md-pull-6 detailsView"
         xs="12"
@@ -71,7 +71,7 @@ const App = () => {
       >
         <div className="detailsViewInsideDiv">
           <ItemDetailsButtons
-            setCurrentItem={setCurrentItem}
+            setEditingItem={setEditingItem}
             editingItem={editingItem}
             saveItem={saveItem}
             deleteItem={deleteItem}
@@ -129,6 +129,7 @@ const App = () => {
                     swrError={error}
                   />
                   <Button
+                    id="addNewItemButton"
                     className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg btn"
                     onClick={() =>
                       setEditingItem({
