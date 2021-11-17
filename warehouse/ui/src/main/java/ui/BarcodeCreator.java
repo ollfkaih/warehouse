@@ -22,11 +22,7 @@ public interface BarcodeCreator {
 
     File file = barcodesFolder.resolve(barcodeText + ".png").toFile();
     if (file.createNewFile()) {
-      System.out.println("File created: " + file.getName());
-
       BarcodeImageHandler.savePNG(barcode, file);
-    } else {
-      System.out.println("File already exists.");
     }
 
     return new FileInputStream(file);

@@ -354,13 +354,11 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
 
   @Override
   public void startedLoading() {
-    System.out.println("Loading");
     Platform.runLater(() -> loadingLabel.setVisible(true));
   }
 
   @Override
   public void stoppedLoading() {
-    System.out.println("Stopped Loading");
     Platform.runLater(() -> loadingLabel.setVisible(false));
   }
 } 

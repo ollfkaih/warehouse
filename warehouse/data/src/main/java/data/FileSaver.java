@@ -50,7 +50,7 @@ public class FileSaver<T> implements DataPersistence<T> {
           try {
             return this.loadFromFile(file);
           } catch (IOException e) {
-            System.out.println("ERROR: could not load from file '" + file.getAbsolutePath() + "'");
+            System.err.println("ERROR: could not load from file '" + file.getAbsolutePath() + "'");
             e.printStackTrace();
             return null;
           }
@@ -95,7 +95,7 @@ public class FileSaver<T> implements DataPersistence<T> {
           try {
             deleteFile(filePath);
           } catch (IOException e) {
-            System.out.println("ERROR: Could not delete file: " + filePath.toString());
+            System.err.println("ERROR: Could not delete file: " + filePath.toString());
             e.printStackTrace();
           }
         });
