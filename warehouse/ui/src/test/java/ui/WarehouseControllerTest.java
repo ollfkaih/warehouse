@@ -18,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import localserver.LocalServer;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -134,15 +133,14 @@ class WarehouseControllerTest {
     double nodeMinY = node.localToScene(node.getBoundsInLocal()).getMinY();
     double nodeMaxY = node.localToScene(node.getBoundsInLocal()).getMaxY();
 
-    double vValueDelta = 0;
-    double vValueCurrent = scrollPane.getVvalue();
+    double verticalValueDelta = 0;
 
     if (nodeMaxY < 0) {
-        vValueDelta = (nodeMinY - viewport.getHeight()) / contentHeight;
+      verticalValueDelta = (nodeMinY - viewport.getHeight()) / contentHeight;
     } else if (nodeMinY > viewport.getHeight()) {
-        vValueDelta = (nodeMinY + viewport.getHeight()) / contentHeight;
+      verticalValueDelta = (nodeMinY + viewport.getHeight()) / contentHeight;
     }
-    scrollPane.setVvalue(vValueCurrent + vValueDelta);
+    scrollPane.setVvalue(scrollPane.getVvalue() + verticalValueDelta);
   }
 
   private Node findNode(FxRobot robot, String fxid) {
@@ -156,7 +154,12 @@ class WarehouseControllerTest {
 
   private void createNewItem(FxRobot robot, final String testProductName) {
     robot.clickOn(ADD_ITEM_BUTTON);
-    List<DetailsViewController> detailsViewControllers = warehouseController.getDetailViewControllers().values().stream().collect(Collectors.toList());
+    List<DetailsViewController> detailsViewControllers = warehouseController
+        .getDetailViewControllers()
+        .values()
+        .stream()
+        .collect(Collectors.toList());
+    
     ScrollPane detailsViewScrollPane = detailsViewControllers.get(detailsViewControllers.size() - 1).getScrollPane();
     ensureVisibleClickOn(detailsViewScrollPane, robot, WAREHOUSE_NEW_ITEM_INPUTFIELD).write(testProductName);
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);

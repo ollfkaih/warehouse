@@ -5,20 +5,24 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-
+import core.CoreConst.SortOption;
 import core.server.AuthSession;
 import core.server.ServerInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import core.CoreConst.SortOption;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class ClientWarehouseTest {
 
@@ -151,24 +155,27 @@ public class ClientWarehouseTest {
   @DisplayName("Test sorting method")
   public void testGetAllItemsSorted() {
     Item item1 = new Item("aa");
-    Item item2 = new Item("ab");
-    Item item3 = new Item("ac");
-    Item item4 = new Item("c");
-    Item item5 = new Item("ba");
-    Item item6 = new Item("bb");
-
-    item2.incrementAmount();
-    item2.incrementAmount();
-    item3.incrementAmount();
-
     item1.setRegularPrice(20.0);
-    item3.setRegularPrice(30.0);
-    item5.setRegularPrice(5.0);
-    item6.setRegularPrice(15.0);
 
+    Item item2 = new Item("ab");
+    item2.incrementAmount();
+    item2.incrementAmount();
     item2.setWeight(10.0);
+
+    Item item3 = new Item("ac");
+    item3.incrementAmount();
+    item3.setRegularPrice(30.0);
     item3.setWeight(40.0);
+
+    Item item4 = new Item("c");
+    item4.setBarcode("1234567890128");
+
+    Item item5 = new Item("ba");
+    item5.setRegularPrice(5.0);
     item5.setWeight(5.0);
+
+    Item item6 = new Item("bb");
+    item6.setRegularPrice(15.0);
     item6.setWeight(30.0);
 
     CompletableFuture<Collection<Item>> getItemsFuture = CompletableFuture.completedFuture(List.of(item1, item2, item3, item4, item5, item6));
@@ -179,21 +186,24 @@ public class ClientWarehouseTest {
     List<Item> itemsNameSortedAscending = List.of(item1, item2, item3, item5, item6, item4);
     List<Item> itemsNameSortedDescending = List.of(item4, item6, item5, item3, item2, item1);
 
+    assertEquals(itemsNameSortedAscending, wh.getItemsSortedAndFiltered(SortOption.NAME, true, ""));
+    assertEquals(itemsNameSortedDescending, wh.getItemsSortedAndFiltered(SortOption.NAME, false, ""));
+
     List<Item> itemsAmountSortedAscending = List.of(item1, item5, item6, item4, item3, item2);
     List<Item> itemsAmountSortedDescending = List.of(item2, item3, item4, item6, item5, item1);
+
+    assertEquals(itemsAmountSortedAscending, wh.getItemsSortedAndFiltered(SortOption.AMOUNT, true, ""));
+    assertEquals(itemsAmountSortedDescending, wh.getItemsSortedAndFiltered(SortOption.AMOUNT, false, ""));
 
     List<Item> itemsPriceSortedAscending = List.of(item5, item6, item1, item3, item2, item4);
     List<Item> itemsPriceSortedDescending = List.of(item4, item2, item3, item1, item6, item5);
 
+    assertEquals(itemsPriceSortedAscending, wh.getItemsSortedAndFiltered(SortOption.PRICE, true, ""));
+    assertEquals(itemsPriceSortedDescending, wh.getItemsSortedAndFiltered(SortOption.PRICE, false, ""));
+
     List<Item> itemsWeightSortedAscending = List.of(item5, item2, item6, item3, item1, item4);
     List<Item> itemsWeightSortedDescending = List.of(item4, item1, item3, item6, item2, item5);
 
-    assertEquals(itemsPriceSortedAscending, wh.getItemsSortedAndFiltered(SortOption.PRICE, true, ""));
-    assertEquals(itemsNameSortedAscending, wh.getItemsSortedAndFiltered(SortOption.NAME, true, ""));
-    assertEquals(itemsNameSortedDescending, wh.getItemsSortedAndFiltered(SortOption.NAME, false, ""));
-    assertEquals(itemsAmountSortedAscending, wh.getItemsSortedAndFiltered(SortOption.AMOUNT, true, ""));
-    assertEquals(itemsAmountSortedDescending, wh.getItemsSortedAndFiltered(SortOption.AMOUNT, false, ""));
-    assertEquals(itemsPriceSortedDescending, wh.getItemsSortedAndFiltered(SortOption.PRICE, false, ""));
     assertEquals(itemsWeightSortedAscending, wh.getItemsSortedAndFiltered(SortOption.WEIGHT, true, ""));
     assertEquals(itemsWeightSortedDescending, wh.getItemsSortedAndFiltered(SortOption.WEIGHT, false, ""));
 
