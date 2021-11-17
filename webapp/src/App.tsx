@@ -8,13 +8,14 @@ import SearchBar from './components/SearchBar'
 import ItemList from './components/ItemList'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import { Container } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 import Item from './modules/Item'
 import SortButtons from './components/SortButtons'
 import SortOption from './modules/SortOption'
 import ItemDetailsButtons from './components/ItemDetailsButtons'
 import { deleteRequest, saveRequest, getRequest } from './asyncRequests'
 import useSWR from 'swr'
+import { v4 as uuidv4 } from 'uuid'
 
 const REACT_APP_DOMAIN = 'http://localhost:8080'
 const REACT_APP_SERVER_PATH = '/warehouse/item/'
@@ -49,10 +50,9 @@ const App = () => {
     return <p>Domain for server not set, configure REACT_APP_DOMAIN variable</p>
 
   function showDetailsCol(): React.ReactNode {
-    return currentItem != null && editingItem != null ? (
+    return editingItem != null ? (
       <Col className="fit-to-height col-md-pull-6" xs="12" md="6">
         <ItemDetailsButtons
-          currentItem={currentItem}
           setCurrentItem={setCurrentItem}
           editingItem={editingItem}
           saveItem={saveItem}
@@ -74,7 +74,11 @@ const App = () => {
             <Container className="p-3 pe-0 pt-0 m-0 mw-100 h-100">
               <Row className="h-100 flex-nowrap flex-row-reverse rb">
                 {showDetailsCol()}
-                <Col className="fit-to-height ps-4 col-md-push-6" xs="12" md="6">
+                <Col
+                  className="fit-to-height ps-4 col-md-push-6 align-items-end align"
+                  xs="12"
+                  md="6"
+                >
                   <SearchBar searchText={searchText} setSearchText={setSearchText} />
                   <SortButtons
                     sortOption={sortOption}
@@ -91,6 +95,19 @@ const App = () => {
                     swrData={data}
                     swrError={error}
                   />
+                  <Button
+                    className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg btn"
+                    onClick={() =>
+                      setEditingItem({
+                        name: '',
+                        id: uuidv4(),
+                        amount: 0,
+                        creationDate: new Date(),
+                      })
+                    }
+                  >
+                    <i className="fal fa-plus me-2"></i>Legg til produkt
+                  </Button>
                 </Col>
               </Row>
             </Container>

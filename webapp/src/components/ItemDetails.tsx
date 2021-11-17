@@ -16,11 +16,7 @@ const ItemDetails = (props: IProps) => {
       : props.editingItem[propertyName]
   }
 
-  const changeValue: (e: any, propertyName: keyof Item, isNumber: boolean) => void = (
-    e: any,
-    propertyName: keyof Item,
-    isNumber: boolean
-  ) => {
+  const changeValue = (e: any, propertyName: keyof Item, isNumber: boolean) => {
     const legalValue = isNumber ? validateNumber(e, propertyName) : e.target.value
 
     props.setEditingItem({

@@ -3,9 +3,8 @@ import { Col, Row } from 'react-bootstrap'
 import Item from '../modules/Item'
 
 interface IProps {
-  currentItem: Item
   setCurrentItem: (item: Item | undefined) => void
-  editingItem: Item | undefined
+  editingItem: Item
   saveItem: (item: Item | undefined) => void
   deleteItem: (id: string) => void
 }
@@ -38,7 +37,7 @@ const ItemDetailsButtons = (props: IProps) => {
           variant="danger-light "
           className="text-danger danger-light border-none"
           id="delete-button"
-          onClick={() => props.deleteItem(props.currentItem.id)}
+          onClick={() => props.deleteItem(props.editingItem.id)}
         >
           Slett
         </Button>
