@@ -1,19 +1,15 @@
 package ui;
 
-import core.ClientWarehouse;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import localserver.LocalServer;
 
 import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * This controller shows a separate window for selecting what server to connect to.
