@@ -5,13 +5,14 @@
     <properties>
       <itext.version>7.1.16</itext.version>
       <skipUiTests>false</skipUiTests>
+      <serverUrl/>
     </properties>
 
     <parent>
         <groupId>it1901</groupId>
         <artifactId>warehouse</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>
@@ -98,6 +99,9 @@
                     <argLine>
                         @{jaCoCoArgLine} --add-opens warehouse.ui/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
+                    <systemPropertyVariables>
+                        <serverUrl>${serverUrl}</serverUrl>
+                    </systemPropertyVariables>
                 </configuration>
 	        </plugin>
 
