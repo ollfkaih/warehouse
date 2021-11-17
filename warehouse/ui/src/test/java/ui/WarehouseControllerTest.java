@@ -17,6 +17,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import localserver.LocalServer;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -186,7 +187,7 @@ class WarehouseControllerTest {
   @BeforeEach
   void setup() {
     Platform.runLater(() -> {
-      warehouseController.loadPersistedData("ui_test");
+      warehouseController.loadPersistedData(new LocalServer("ui_test"));
       removeAllItems();
     });
   }

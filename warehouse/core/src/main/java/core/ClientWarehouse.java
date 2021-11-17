@@ -65,13 +65,10 @@ public class ClientWarehouse extends BaseWarehouse {
     return new ArrayList<>(itemCollection.getAllSorted(comparator));
   }
 
-  public CompletableFuture<Void> login(String username, String password) {
-    System.out.println(new LoginRequest(username, password).getUsername());
-    CompletableFuture<Void> voidCompletableFuture = server
+  public CompletableFuture<Void>  login(String username, String password) {
+    return server
         .login(new LoginRequest(username, password))
-        .thenAccept(authSession -> this.authSession = authSession);
-    System.out.println(voidCompletableFuture);
-    return voidCompletableFuture;
+        .thenAccept(authSession1 -> this.authSession = authSession1);
   }
 
   public User getCurrentUser() {
@@ -87,5 +84,13 @@ public class ClientWarehouse extends BaseWarehouse {
 
   public void logout() {
     this.authSession = null;
+  }
+
+  public void addLoadingListener(LoadingListener listener) {
+    updater.addLoadingListener(listener);
+  }
+
+  public void removeLoadingListener(LoadingListener listener) {
+    updater.removeLoadingListener(listener);
   }
 }

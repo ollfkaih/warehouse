@@ -5,6 +5,7 @@ import core.User;
 import core.server.AuthSession;
 import core.server.LoginRequest;
 import core.server.ServerWarehouse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 
@@ -87,7 +89,11 @@ public class WarehouseServerController {
    */
   @PostMapping(path = "user/register")
   public void registerUser(@RequestBody User user) {
-    getWarehouse().addUser(user);
+    try {
+      getWarehouse().addUser(user);
+    } catch (IllegalArgumentException e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
   }
 
   /**
@@ -98,7 +104,11 @@ public class WarehouseServerController {
    */
   @PostMapping(path = "user/login")
   public AuthSession loginUser(@RequestBody LoginRequest loginRequest) {
-    return getWarehouse().login(loginRequest.getUsername(), loginRequest.getPassword());
+    try {
+      return getWarehouse().login(loginRequest.getUsername(), loginRequest.getPassword());
+    } catch (IllegalArgumentException e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
   }
 }
 
