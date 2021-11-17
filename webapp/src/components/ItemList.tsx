@@ -16,8 +16,6 @@ interface IProps {
 
 const ItemList = (props: IProps) => {
   const [items, setItems] = useState<[Item]>(props.swrData)
-  // eslint-disable-next-line
-  const [newItem, setNewItem] = useState()
 
   useEffect(() => {
     setItems(props.swrData)
