@@ -1,15 +1,21 @@
 package core;
 
-import java.util.Random;
-import java.util.UUID;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Random;
+import java.util.UUID;
 
 public class ItemTest {
+  static int changeCounter;
+
   Item item;
 
   @BeforeEach
@@ -44,20 +50,20 @@ public class ItemTest {
   @DisplayName("Test validation in setters")
   void testSetterValidation() {
     assertThrows(IllegalArgumentException.class, () -> item.setName(null));
-    assertThrows(IllegalArgumentException.class, () -> item.setAmount(CoreConst.MIN_AMOUNT-1));
-    assertThrows(IllegalArgumentException.class, () -> item.setAmount(CoreConst.MAX_AMOUNT+1));
+    assertThrows(IllegalArgumentException.class, () -> item.setAmount(CoreConst.MIN_AMOUNT - 1));
+    assertThrows(IllegalArgumentException.class, () -> item.setAmount(CoreConst.MAX_AMOUNT + 1));
     assertThrows(IllegalArgumentException.class, () -> item.setBarcode("abcabcabcabca"));
     assertThrows(IllegalArgumentException.class, () -> item.setBarcode("12345678"));
-    assertThrows(IllegalArgumentException.class, () -> item.setRegularPrice(CoreConst.MIN_PRICE-1));
-    assertThrows(IllegalArgumentException.class, () -> item.setSalePrice(CoreConst.MIN_PRICE-1));
-    assertThrows(IllegalArgumentException.class, () -> item.setPurchasePrice(CoreConst.MIN_PRICE-1));
-    assertThrows(IllegalArgumentException.class, () -> item.setSection("A".repeat(CoreConst.MAX_POSITION_LENGTH+1)));
-    assertThrows(IllegalArgumentException.class, () -> item.setRow("A".repeat(CoreConst.MAX_POSITION_LENGTH+1)));
-    assertThrows(IllegalArgumentException.class, () -> item.setShelf("A".repeat(CoreConst.MAX_POSITION_LENGTH+1)));
-    assertThrows(IllegalArgumentException.class, () -> item.setHeight(CoreConst.MIN_ITEM_DIMENSION-1));
-    assertThrows(IllegalArgumentException.class, () -> item.setWidth(CoreConst.MIN_ITEM_DIMENSION-1));
-    assertThrows(IllegalArgumentException.class, () -> item.setLength(CoreConst.MIN_ITEM_DIMENSION-1));
-    assertThrows(IllegalArgumentException.class, () -> item.setWeight(CoreConst.MIN_WEIGHT-1));
+    assertThrows(IllegalArgumentException.class, () -> item.setRegularPrice(CoreConst.MIN_PRICE - 1));
+    assertThrows(IllegalArgumentException.class, () -> item.setSalePrice(CoreConst.MIN_PRICE - 1));
+    assertThrows(IllegalArgumentException.class, () -> item.setPurchasePrice(CoreConst.MIN_PRICE - 1));
+    assertThrows(IllegalArgumentException.class, () -> item.setSection("A".repeat(CoreConst.MAX_POSITION_LENGTH + 1)));
+    assertThrows(IllegalArgumentException.class, () -> item.setRow("A".repeat(CoreConst.MAX_POSITION_LENGTH + 1)));
+    assertThrows(IllegalArgumentException.class, () -> item.setShelf("A".repeat(CoreConst.MAX_POSITION_LENGTH + 1)));
+    assertThrows(IllegalArgumentException.class, () -> item.setHeight(CoreConst.MIN_ITEM_DIMENSION - 1));
+    assertThrows(IllegalArgumentException.class, () -> item.setWidth(CoreConst.MIN_ITEM_DIMENSION - 1));
+    assertThrows(IllegalArgumentException.class, () -> item.setLength(CoreConst.MIN_ITEM_DIMENSION - 1));
+    assertThrows(IllegalArgumentException.class, () -> item.setWeight(CoreConst.MIN_WEIGHT - 1));
   }
 
   @Test
@@ -145,8 +151,6 @@ public class ItemTest {
   private String getRandomString() {
     return UUID.randomUUID().toString();
   }
-
-  static int changeCounter;
 
   @Test
   @DisplayName("Test listener")

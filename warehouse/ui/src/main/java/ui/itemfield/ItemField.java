@@ -13,19 +13,21 @@ import java.util.List;
  */
 public class ItemField {
   /**
-   * Interface for a function that saves an itemField textField value to the corresponding item property.
+   * Interface for a function that saves an itemField textField value to the
+   * corresponding item property.
    */
   public static interface Saver {
     void saveItemField(ItemField itemField);
   }
 
   /**
-   * Interface for a function that gets the item property value for the property the field corresponds to. 
+   * Interface for a function that gets the item property value for the property
+   * the field corresponds to.
    */
   public static interface Getter {
     Object getItemValue();
   }
-  
+
   protected final TextField textField;
   protected final Saver saver;
   protected final Getter getter;
@@ -42,28 +44,31 @@ public class ItemField {
   }
 
   private void addChangeValidator() {
+    textField.textProperty().addListener((observableValue, oldValue, newValue) -> this.handleChange(newValue));
+  }
+
+  private void handleChange(String value) {
     InputValidator notEmptyValidator = new NotEmptyValidatior();
-    textField.textProperty().addListener((obs, oldv, value) -> {
-      boolean valid;
 
-      boolean isEmpty = !notEmptyValidator.validateInput(value);
-      if (!nullable && isEmpty) {
-        valid = false;
-      } else if (nullable && isEmpty) {
-        valid = true;
-      } else {
-        valid = true;
+    boolean valid;
 
-        for (InputValidator validator : validators) {
-          if (!validator.validateInput(value)) {
-            valid = false;
-            break;
-          }
+    boolean isEmpty = !notEmptyValidator.validateInput(value);
+    if (!nullable && isEmpty) {
+      valid = false;
+    } else if (nullable && isEmpty) {
+      valid = true;
+    } else {
+      valid = true;
+
+      for (InputValidator validator : validators) {
+        if (!validator.validateInput(value)) {
+          valid = false;
+          break;
         }
       }
-      
-      setFieldValidity(valid);
-    });
+    }
+    
+    setFieldValidity(valid);
   }
 
   public void saveField() {
@@ -87,7 +92,7 @@ public class ItemField {
       textField.getStyleClass().add("illegalInput");
     }
   }
-  
+
   public void addValidators(InputValidator... validators) {
     for (InputValidator validator : validators) {
       this.validators.add(validator);

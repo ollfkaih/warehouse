@@ -89,6 +89,7 @@
                     </dependencies>
                     <configuration>
                         <configLocation>checkstyle_checks.xml</configLocation>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
                         <encoding>UTF-8</encoding>
                         <consoleOutput>true</consoleOutput>
                         <failsOnError>true</failsOnError>
@@ -111,7 +112,6 @@
                     <version>4.4.1</version>
                     <configuration>
                         <xmlOutput>false</xmlOutput>
-                        <htmlOutput>true</htmlOutput>
                         <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
                     </configuration>
                     <executions>

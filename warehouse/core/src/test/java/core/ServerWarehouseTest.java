@@ -1,8 +1,11 @@
 package core;
 
-import static org.junit.jupiter.api.Assertions.*;
-import java.util.Random;
-import java.util.UUID;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import core.server.AuthSession;
 import core.server.ServerWarehouse;
@@ -10,12 +13,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ServerWarehouseTest {
-  ServerWarehouse wh;
+import java.util.Random;
+import java.util.UUID;
 
+public class ServerWarehouseTest {
   static User addedUser;
   static User removedUser;
   static User updatedUser;
+  
+  ServerWarehouse wh;
 
   @BeforeEach
   public void setup() {
@@ -73,9 +79,9 @@ public class ServerWarehouseTest {
     User user = new User(username, password, false);
     wh.addUser(user);
 
-    assertThrows(IllegalArgumentException.class, () -> wh.login(username+"-wrong", password+"-wrong"));
-    assertThrows(IllegalArgumentException.class, () -> wh.login(username, password+"-wrong"));
-    assertThrows(IllegalArgumentException.class, () -> wh.login(username+"-wrong", password));
+    assertThrows(IllegalArgumentException.class, () -> wh.login(username + "-wrong", password + "-wrong"));
+    assertThrows(IllegalArgumentException.class, () -> wh.login(username, password + "-wrong"));
+    assertThrows(IllegalArgumentException.class, () -> wh.login(username + "-wrong", password));
 
     AuthSession loggedInSession = wh.login(username, password);
     assertEquals(user, loggedInSession.getUser());

@@ -42,6 +42,11 @@ import java.util.Map;
  * and the possibilty to change propeties of the selected item.
  */
 public class DetailsViewController {
+  private static final int SAFEBOUND_TOP = 30;
+  private static final int SAFEBOUND_BOTTOM = 75;
+  private static final int placementMaxLength = CoreConst.MAX_POSITION_LENGTH;
+  private static BarcodeValidator barcodeValidator;
+
   @FXML private ScrollPane detailsViewScrollPane;
 
   @FXML private TextField inpName;
@@ -75,12 +80,7 @@ public class DetailsViewController {
   private final ClientWarehouse warehouse;
   private final WarehouseController warehouseController;
 
-  private static final int SAFEBOUND_TOP = 30;
-  private static final int SAFEBOUND_BOTTOM = 75;
-  private static final int placementMaxLength = CoreConst.MAX_POSITION_LENGTH;
-
   private boolean editing = false;
-  private static BarcodeValidator barcodeValidator;
 
   private enum Field {
     NAME, BRAND, AMOUNT, REGULAR_PRICE, SALE_PRICE, PURCHASE_PRICE, SECTION, ROW, SHELF, HEIGHT, WIDTH, LENGTH, WEIGHT,

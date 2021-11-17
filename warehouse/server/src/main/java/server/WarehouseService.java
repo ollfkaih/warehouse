@@ -17,6 +17,16 @@ import org.springframework.stereotype.Service;
 public class WarehouseService {
   private final ServerWarehouse warehouse;
 
+  public WarehouseService(DataPersistence<Item> itemPersistence, DataPersistence<User> userPersistence) {
+    warehouse = new ServerWarehouse(getEntityCollection(itemPersistence), getEntityCollection(userPersistence));
+
+    EntityCollectionAutoPersistence<Item> autoItemPersistence = new EntityCollectionAutoPersistence<>(itemPersistence);
+    warehouse.addItemsListener(autoItemPersistence);
+
+    EntityCollectionAutoPersistence<User> autoUserPersistence = new EntityCollectionAutoPersistence<>(userPersistence);
+    warehouse.addUserListener(autoUserPersistence);
+  }
+
   private static <T extends Entity<T>> EntityCollection<T> getEntityCollection(DataPersistence<T> dataPersistence) {
     try {
       EntityCollection<T> itemEntityCollection = new EntityCollection<>();
@@ -26,16 +36,6 @@ public class WarehouseService {
       System.out.println("LOADING SAVED ITEMS FAILED");
       return new EntityCollection<>();
     }
-  }
-
-  public WarehouseService(DataPersistence<Item> itemPersistence, DataPersistence<User> userPersistence) {
-    warehouse = new ServerWarehouse(getEntityCollection(itemPersistence), getEntityCollection(userPersistence));
-
-    EntityCollectionAutoPersistence<Item> autoItemPersistence = new EntityCollectionAutoPersistence<>(itemPersistence);
-    warehouse.addItemsListener(autoItemPersistence);
-
-    EntityCollectionAutoPersistence<User> autoUserPersistence = new EntityCollectionAutoPersistence<>(userPersistence);
-    warehouse.addUserListener(autoUserPersistence);
   }
 
   public ServerWarehouse getWarehouse() {

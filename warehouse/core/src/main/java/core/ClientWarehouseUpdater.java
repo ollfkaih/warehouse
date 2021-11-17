@@ -7,7 +7,8 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Listens to changes in the ClientWarehouse, sends all changes to the server and updates Warehouse items with data fetched from the server.
+ * Listens to changes in the ClientWarehouse, sends all changes to the server
+ * and updates Warehouse items with data fetched from the server.
  */
 public class ClientWarehouseUpdater {
   private final ServerInterface server;
@@ -52,30 +53,31 @@ public class ClientWarehouseUpdater {
     } else {
       notifyLoading();
     }
-    loader = server
-        .getItems()
-        .thenAccept(loadedItems -> {
-          // disable sending updates to the server as these updates are fetched from the server
-          sendUpdates = false;
+    loader = server.getItems().thenAccept(this::handleLoadedItems);
+  }
 
-          // remove ghost items
-          for (Item item : warehouse.getAllItems()) {
-            if (!loadedItems.contains(item)) {
-              warehouse.removeItem(item);
-            }
-          }
-          // update/add items
-          for (Item loadedItem : loadedItems) {
-            try {
-              warehouse.putItem(loadedItem);
-            } catch (Exception e) {
-              e.printStackTrace();
-            }
-          }
-          sendUpdates = true;
+  private void handleLoadedItems(Collection<Item> loadedItems) {
+    // disable sending updates to the server as these updates are fetched from the
+    // server
+    sendUpdates = false;
 
-          notifyStoppedLoading();
-        });
+    // remove ghost items
+    for (Item item : warehouse.getAllItems()) {
+      if (!loadedItems.contains(item)) {
+        warehouse.removeItem(item);
+      }
+    }
+    // update/add items
+    for (Item loadedItem : loadedItems) {
+      try {
+        warehouse.putItem(loadedItem);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    sendUpdates = true;
+
+    notifyStoppedLoading();
   }
 
   private void notifyLoading() {
