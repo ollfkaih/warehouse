@@ -161,7 +161,9 @@ class WarehouseControllerTest {
         .collect(Collectors.toList());
     
     ScrollPane detailsViewScrollPane = detailsViewControllers.get(detailsViewControllers.size() - 1).getScrollPane();
-    ensureVisibleClickOn(detailsViewScrollPane, robot, WAREHOUSE_NEW_ITEM_INPUTFIELD).write(testProductName);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, WAREHOUSE_NEW_ITEM_INPUTFIELD)
+        .press(KeyCode.SHIFT, KeyCode.UP, KeyCode.BACK_SPACE)
+        .write(testProductName);
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
     Stage stage = ((Stage) ((robot.lookup(DETAILS_VIEW).query())).getScene().getWindow());
     robot.interact(stage::close);
