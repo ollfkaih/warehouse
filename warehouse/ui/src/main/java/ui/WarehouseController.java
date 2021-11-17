@@ -139,20 +139,22 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
     updateInventory();
   }
 
+  protected void confirmLogin() {
+    usernameLabel.setText(warehouse.getCurrentUser().getUserName());
+    usernameLabel.setVisible(true);
+    loginButton.setText("Logg ut");
+    userImage.setImage(userEdit);
+    updateInventory();
+    detailsViewControllers.values().forEach((DetailsViewController detailsViewController) -> detailsViewController.close());
+  }
+
   private void confirmLogout() {
     warehouse.logout();
     userImage.setImage(userLock);
     usernameLabel.setText("");
     loginButton.setText("Logg inn");
     userImage.setImage(userLock);
-  }
-
-  protected void updateUser() {
-    usernameLabel.setText(warehouse.getCurrentUser().getUserName());
-    usernameLabel.setVisible(true);
-    loginButton.setText("Logg ut");
-    userImage.setImage(userEdit);
-    updateInventory();
+    detailsViewControllers.values().forEach((DetailsViewController detailsViewController) -> detailsViewController.close());
   }
 
   protected void close() {

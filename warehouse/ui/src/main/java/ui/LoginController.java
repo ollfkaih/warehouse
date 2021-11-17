@@ -76,7 +76,7 @@ public class LoginController {
       CompletableFuture<Void> loginFuture = wh.login(userName, password);
       loginFuture.thenApply(x -> {
         Platform.runLater(() -> {
-          whController.updateUser();
+          whController.confirmLogin();
           hideLoginView();
         });
         return null;
