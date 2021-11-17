@@ -11,7 +11,7 @@ const ItemListElement = ({ item, setCurrentItem, selected }: IProps) => {
   return (
     <Row
       className={
-        'mb-3 bg-secondary flex-nowrap rounded-3 bg-secondary m-0 p-2 ' +
+        'mb-1 bg-secondary flex-nowrap rounded-3 bg-secondary m-0 p-2 ' +
         (selected ? 'selected' : 'item-list-element')
       }
       onClick={() => setCurrentItem(item)}

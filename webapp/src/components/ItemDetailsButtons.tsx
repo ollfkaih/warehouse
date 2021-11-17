@@ -11,35 +11,35 @@ interface IProps {
 
 const ItemDetailsButtons = (props: IProps) => {
   return (
-    <Row>
-      <Col xs="4" md={{ span: 3, offset: 1 }} className="">
+    <Row className="px-3 pb-3">
+      <Col xs="4" className="">
         <Button
           variant="light"
-          className="text-primary"
+          className="text-primary backButton"
           id="back-button"
           onClick={() => props.setCurrentItem(undefined)}
         >
-          Tilbake
+          <i className="far fa-arrow-left"></i> Tilbake
         </Button>
       </Col>
-      <Col xs="4" md={{ span: 3, offset: 1 }}>
+      <Col xs="4">
         <Button
           variant="success-light"
-          className="text-success success-light border-none"
+          className="text-success success-light border-none saveButton"
           id="save-button"
           onClick={() => props.saveItem(props.editingItem)}
         >
-          Lagre
+         <i className="far fa-save"></i> Lagre
         </Button>
       </Col>
-      <Col xs="4" md={{ span: 3, offset: 1 }}>
+      <Col xs="4">
         <Button
           variant="danger-light "
-          className="text-danger danger-light border-none"
+          className="text-danger danger-light border-none deleteButton"
           id="delete-button"
           onClick={() => props.deleteItem(props.editingItem.id)}
         >
-          Slett
+          <i className="far fa-trash-alt"></i> Slett
         </Button>
       </Col>
     </Row>

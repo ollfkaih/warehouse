@@ -50,15 +50,17 @@ const App = () => {
     return <p>Domain for server not set, configure REACT_APP_DOMAIN variable</p>
 
   function showDetailsCol(): React.ReactNode {
-    return editingItem != null ? (
-      <Col className="fit-to-height col-md-pull-6" xs="12" md="6">
-        <ItemDetailsButtons
-          setCurrentItem={setCurrentItem}
-          editingItem={editingItem}
-          saveItem={saveItem}
-          deleteItem={deleteItem}
-        />
-        <ItemDetails editingItem={editingItem} setEditingItem={setEditingItem} />
+    return currentItem != null && editingItem != null ? (
+      <Col className="fit-to-height col-md-pull-6 detailsView" xs="12" lg="7">
+        <div className="detailsViewInsideDiv">
+          <ItemDetailsButtons
+            setCurrentItem={setCurrentItem}
+            editingItem={editingItem}
+            saveItem={saveItem}
+            deleteItem={deleteItem}
+          />
+          <ItemDetails editingItem={editingItem} setEditingItem={setEditingItem} />
+        </div>
       </Col>
     ) : (
       <Col></Col>
@@ -66,7 +68,7 @@ const App = () => {
   }
 
   return (
-    <Col className="vh-100 overflow-hidden">
+    <Col className="vh-100">
       <Navbar login={login} onLogin={setLogin} />
       <Row className="Content d-flex m-0 flex-shrink-1 h-100">
         <Route path="/" exact>
@@ -74,11 +76,7 @@ const App = () => {
             <Container className="p-3 pe-0 pt-0 m-0 mw-100 h-100">
               <Row className="h-100 flex-nowrap flex-row-reverse rb">
                 {showDetailsCol()}
-                <Col
-                  className="fit-to-height ps-4 col-md-push-6 align-items-end align"
-                  xs="12"
-                  md="6"
-                >
+                <Col className="fit-to-height ps-4 col-md-push-5 align-items-end align" xs="12" lg="5">
                   <SearchBar searchText={searchText} setSearchText={setSearchText} />
                   <SortButtons
                     sortOption={sortOption}
