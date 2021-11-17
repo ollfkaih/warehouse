@@ -128,6 +128,8 @@
       <message key="ws.notPreceded"
               value="WhitespaceAround: ''{0}'' is not preceded with whitespace."/>
     </module>
+    <module name="NestedForDepth"/>
+    <module name="NestedIfDepth"/>
     <module name="OneStatementPerLine"/>
     <module name="DeclarationOrder"/>
     <module name="MultipleVariableDeclarations"/>
@@ -318,6 +320,7 @@
     </module>
     <module name="JavadocParagraph"/>
     <module name="LambdaBodyLength"/>
+    <module name="MethodLength" />
     <module name="RequireEmptyLineBeforeBlockTagGroup"/>
     <module name="AtclauseOrder">
       <property name="tagOrder" value="@param, @return, @throws, @deprecated"/>
