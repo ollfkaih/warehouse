@@ -36,6 +36,15 @@
                      <Image url="@appIcon/white_transparent.png" />
                   </image>
                </ImageView>
+               <Label fx:id="loadingLabel" layoutX="199.0" layoutY="15.0" maxWidth="140.0" prefHeight="21.0" text="Loading..." textFill="WHITE" AnchorPane.leftAnchor="200.0">
+                  <graphic>
+                     <ImageView fx:id="loadingImage" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@icons/search.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+               </Label>
               <Label fx:id="usernameLabel" layoutX="413.0" layoutY="15.0" maxWidth="140.0" prefHeight="21.0" style="-fx-background-color: rgba(0,0,0,0.15); -fx-background-radius: 10px; -fx-padding: 2px 10px 2px 10px;" textFill="WHITE" AnchorPane.rightAnchor="116.0">
                   <graphic>
                      <ImageView fx:id="userImage" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

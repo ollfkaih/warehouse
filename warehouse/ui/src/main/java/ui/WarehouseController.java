@@ -5,6 +5,7 @@ import static core.CoreConst.SortOption;
 import core.ClientWarehouse;
 import core.EntityCollectionListener;
 import core.Item;
+import core.LoadingListener;
 import core.server.ServerInterface;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -34,7 +35,7 @@ import java.util.Map;
 /**
  * Main Controller class. Controls the main Warehouse view.
  */
-public class WarehouseController implements EntityCollectionListener<Item> {
+public class WarehouseController implements EntityCollectionListener<Item>, LoadingListener {
   private ClientWarehouse warehouse;
 
   @FXML private Label usernameLabel;
@@ -53,6 +54,8 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   @FXML private Label statusLabel;
   @FXML private ImageView statusImage;
   @FXML private ImageView userImage;
+  @FXML private Label loadingLabel;
+  @FXML private ImageView loadingImage;
 
   private Stage stage;
 
@@ -96,10 +99,12 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   public void loadPersistedData(ServerInterface server) {
     if (warehouse != null) {
       warehouse.removeItemsListener(this);
+      warehouse.removeLoadingListener(this);
     }
 
     warehouse = new ClientWarehouse(server);
     warehouse.addItemsListener(this);
+    warehouse.addLoadingListener(this);
     loginController = new LoginController(this, warehouse);
     updateInventory();
   }
@@ -334,5 +339,17 @@ public class WarehouseController implements EntityCollectionListener<Item> {
   // for testing purposes only
   protected HashMap<Item, DetailsViewController> getDetailViewControllers() {
     return new HashMap<>(detailsViewControllers);
+  }
+
+  @Override
+  public void startedLoading() {
+    System.out.println("Loading");
+    Platform.runLater(() -> loadingLabel.setVisible(true));
+  }
+
+  @Override
+  public void stoppedLoading() {
+    System.out.println("Stopped Loading");
+    Platform.runLater(() -> loadingLabel.setVisible(false));
   }
 } 

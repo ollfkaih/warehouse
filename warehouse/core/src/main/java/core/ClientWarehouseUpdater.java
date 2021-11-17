@@ -2,12 +2,19 @@ package core;
 
 import core.server.ServerInterface;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.CompletableFuture;
+
 /**
  * Listens to changes in the ClientWarehouse, sends all changes to the server and updates Warehouse items with data fetched from the server.
  */
 public class ClientWarehouseUpdater {
   private final ServerInterface server;
   private final ClientWarehouse warehouse;
+
+  private final Collection<LoadingListener> loadingListeners = new ArrayList<>();
+  private CompletableFuture<Void> loader;
 
   private boolean sendUpdates = true;
 
@@ -40,7 +47,12 @@ public class ClientWarehouseUpdater {
   }
 
   public void loadItems() {
-    server
+    if (loader != null && !loader.isDone()) {
+      loader.cancel(true);
+    } else {
+      notifyLoading();
+    }
+    loader = server
         .getItems()
         .thenAccept(loadedItems -> {
           // disable sending updates to the server as these updates are fetched from the server
@@ -61,6 +73,28 @@ public class ClientWarehouseUpdater {
             }
           }
           sendUpdates = true;
+
+          notifyStoppedLoading();
         });
+  }
+
+  private void notifyLoading() {
+    for (LoadingListener listener : loadingListeners) {
+      listener.startedLoading();
+    }
+  }
+
+  private void notifyStoppedLoading() {
+    for (LoadingListener listener : loadingListeners) {
+      listener.stoppedLoading();
+    }
+  }
+
+  public void addLoadingListener(LoadingListener listener) {
+    this.loadingListeners.add(listener);
+  }
+
+  public void removeLoadingListener(LoadingListener listener) {
+    this.loadingListeners.remove(listener);
   }
 }
