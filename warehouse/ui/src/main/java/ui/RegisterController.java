@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,14 +19,12 @@ import java.util.concurrent.CompletableFuture;
  * This controller shows a separate window for registering a user.
  */
 public class RegisterController {
-  @FXML TextField userNameField;
+  @FXML TextField usernameField;
   @FXML PasswordField passwordField1;
   @FXML PasswordField passwordField2;
   @FXML Label errorMessageField;
 
-  private static final String FILENAME = "warehouse";
-
-  private String userName;
+  private String username;
   private String password1;
   private String password2;
 
@@ -52,30 +51,44 @@ public class RegisterController {
         e.printStackTrace();
       }
     });
+    usernameField.setOnKeyPressed(e -> {
+      if (e.getCode() == KeyCode.ENTER) {
+        register();
+      }
+    });
+    passwordField1.setOnKeyPressed(e -> {
+      if (e.getCode() == KeyCode.ENTER) {
+        register();
+      }
+    });
+    passwordField2.setOnKeyPressed(e -> {
+      if (e.getCode() == KeyCode.ENTER) {
+        register();
+      }
+    });
     this.warehouse = warehouse;
   }
 
   @FXML
   private void register() {
-    userName = userNameField.getText();
+    username = usernameField.getText();
     password1 = passwordField1.getText();
     password2 = passwordField2.getText();
 
-    if (userName.isEmpty() || password1.isEmpty() || password2.isEmpty()) {
+    if (username.isEmpty() || password1.isEmpty() || password2.isEmpty()) {
+      errorMessageField.setText("Du må fylle ut alle feltene før du kan gå videre.");
+    } else if (!password1.equals(password2)) {
       errorMessageField.setText("Passordene er ikke like.");
+    } else {
+      User user = new User(username, password1, true);
+      CompletableFuture<Void> registerFuture = warehouse.register(user);
+      registerFuture.thenAccept(x -> {
+        hideRegisterView();
+      }).exceptionally(e -> {
+        errorMessageField.setText(e.getCause().getMessage());
+        return null;
+      });
     }
-    if (!password1.equals(password2)) {
-      errorMessageField.setText("Passordene er ikke like.");
-    }
-
-    User user = new User(userName, password1, true);
-    CompletableFuture<Void> registerFuture = warehouse.register(user);
-    registerFuture.thenAccept(x -> {
-      hideRegisterView();
-    }).exceptionally(e -> {
-      errorMessageField.setText(e.getCause().getMessage());
-      return null;
-    });
   }
 
   protected void showRegisterView() {
@@ -85,10 +98,9 @@ public class RegisterController {
 
   protected void hideRegisterView() {
     stage.hide();
-
-    errorMessageField.setText("");
-    userNameField.setText("");
+    usernameField.setText("");
     passwordField1.setText("");
     passwordField2.setText("");
+    errorMessageField.setText("");
   }
 }

@@ -43,7 +43,7 @@ public class ServerWarehouse extends BaseWarehouse {
 
   public void addUser(User user) {
     if (containsUserByUsername(user.getUserName())) {
-      throw new IllegalArgumentException("Username already taken.");
+      throw new IllegalArgumentException("Brukernavnet er allerede i bruk.");
     }
     userCollection.add(user);
   }
@@ -51,7 +51,7 @@ public class ServerWarehouse extends BaseWarehouse {
   public AuthSession login(String username, String password) {
     User user = findUserByUsername(username).orElseThrow(() -> new IllegalArgumentException("User does not exist"));
     if (!user.checkPassword(password)) {
-      throw new IllegalArgumentException("Username or password is incorrect");
+      throw new IllegalArgumentException("Brukernavn eller passord er feil.");
     }
     AuthSession authSession = new AuthSession(user);
     authSessions.put(authSession.getToken(), authSession);

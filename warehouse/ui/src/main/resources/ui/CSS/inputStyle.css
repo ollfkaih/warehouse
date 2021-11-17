@@ -44,7 +44,8 @@ TextField:disabled {
 .placementTextField{
   -fx-border-color: rgba(0,0,0,0);
   -fx-background-color: rgba(0,0,0,0);
-  -fx-font-size: 20px;
+  -fx-font-size: 18px;
+  -fx-padding: 5 0 5 0;
   -fx-alignment: center;
 }
 

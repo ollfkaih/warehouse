@@ -3,7 +3,10 @@ package ui;
 import static java.util.Map.entry;
 
 import core.ClientWarehouse;
+import core.CoreConst;
 import core.Item;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -42,6 +45,7 @@ public class DetailsViewController {
   @FXML private ScrollPane detailsViewScrollPane;
 
   @FXML private TextField inpName;
+  @FXML private Label nameErrorLabel;
   @FXML private TextField inpBrand;
   @FXML private TextField inpAmount;
   @FXML private Button btnIncrement;
@@ -52,7 +56,6 @@ public class DetailsViewController {
   @FXML private TextField inpOrdinaryPrice;
   @FXML private TextField inpSalesPrice;
   @FXML private TextField inpRetailerPrice;
-  @FXML private ComboBox<String> comboBoxSalesTax;
   @FXML private TextField inpDimensionsLength;
   @FXML private TextField inpDimensionsWidth;
   @FXML private TextField inpDimensionsHeigth;
@@ -63,6 +66,7 @@ public class DetailsViewController {
   @FXML private Button btnDelete;
   @FXML private ImageView barcodeImageView;
   @FXML private HBox sectionSaveDelete;
+  @FXML private Label barcodeErrorLabel;
 
   private final Stage stage;
   private Parent detailsRoot;
@@ -73,8 +77,10 @@ public class DetailsViewController {
 
   private static final int SAFEBOUND_TOP = 30;
   private static final int SAFEBOUND_BOTTOM = 75;
+  private static final int placementMaxLength = CoreConst.MAX_POSITION_LENGTH;
 
   private boolean editing = false;
+  private static BarcodeValidator barcodeValidator;
 
   private enum Field {
     NAME, BRAND, AMOUNT, REGULAR_PRICE, SALE_PRICE, PURCHASE_PRICE, SECTION, ROW, SHELF, HEIGHT, WIDTH, LENGTH, WEIGHT,
@@ -116,9 +122,58 @@ public class DetailsViewController {
       e.printStackTrace();
     }
 
-    if (!warehouse.getCurrentUser().isAdmin()) {
+    if (warehouse.getCurrentUser() == null || !warehouse.getCurrentUser().isAdmin()) {
       btnEdit.setVisible(false);
     }
+    maxCharsLimiter(inpPlacementSection, placementMaxLength);
+    maxCharsLimiter(inpPlacementRow, placementMaxLength);
+    maxCharsLimiter(inpPlacementShelf, placementMaxLength);
+    onlyIntLimiter(inpAmount);
+    onlyFloatLimiter(inpOrdinaryPrice);
+    onlyFloatLimiter(inpSalesPrice);
+    onlyFloatLimiter(inpRetailerPrice);
+    onlyFloatLimiter(inpDimensionsHeigth);
+    onlyFloatLimiter(inpDimensionsLength);
+    onlyFloatLimiter(inpDimensionsWidth);
+    onlyFloatLimiter(inpWeight);
+    maxCharsLimiter(inpBarcode, CoreConst.MAX_BARCODE_LENGTH);
+    onlyIntLimiter(inpBarcode);
+  }
+  
+  private static void onlyIntLimiter(TextField textField) {
+    textField.textProperty().addListener(new ChangeListener<String>() {
+      @Override
+      public void changed(ObservableValue<? extends String> observable, String oldValue, 
+          String newValue) {
+        if (!newValue.matches("\\d*")) {
+            textField.setText(newValue.replaceAll("[^\\d]", ""));
+        }
+      }
+    });
+  }
+
+  private static void onlyFloatLimiter(TextField textField) {
+    textField.textProperty().addListener(new ChangeListener<String>() {
+      @Override
+      public void changed(ObservableValue<? extends String> observable, String oldValue, 
+          String newValue) {
+        if (!newValue.matches("[0-9]*\\.?[0-9]*")) {
+            textField.setText(newValue.replaceAll("[^[0-9]|\\.]", ""));
+        }
+      }
+    });
+  }
+
+  private static void maxCharsLimiter(TextField textField, final int maxLength) {
+    textField.textProperty().addListener(new ChangeListener<String>() {
+      @Override
+      public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+        if (textField.getText().length() > maxLength) {
+          String s = textField.getText().substring(0, maxLength);
+          textField.setText(s);
+        }
+      }
+    });
   }
 
   @FXML
@@ -208,9 +263,9 @@ public class DetailsViewController {
     fields.get(Field.SALE_PRICE).addValidators(new DoubleValidator(), new NotNegativeValidator());
     fields.get(Field.PURCHASE_PRICE).addValidators(new DoubleValidator(), new NotNegativeValidator());
 
-    fields.get(Field.SECTION).addValidators(new MaxLengthValidator(2));
-    fields.get(Field.ROW).addValidators(new MaxLengthValidator(2));
-    fields.get(Field.SHELF).addValidators(new MaxLengthValidator(2));
+    fields.get(Field.SECTION).addValidators(new MaxLengthValidator(placementMaxLength));
+    fields.get(Field.ROW).addValidators(new MaxLengthValidator(placementMaxLength));
+    fields.get(Field.SHELF).addValidators(new MaxLengthValidator(placementMaxLength));
 
     fields.get(Field.HEIGHT).addValidators(new DoubleValidator(), new NotNegativeValidator());
     fields.get(Field.LENGTH).addValidators(new DoubleValidator(), new NotNegativeValidator());
@@ -242,10 +297,30 @@ public class DetailsViewController {
 
   @FXML
   private void saveItem() {
+    boolean saveFailed = true;
+    nameErrorLabel.setText("");
+    barcodeErrorLabel.setText("");
+    if (fields.get(Field.NAME).getStringValue() == null) {
+      nameErrorLabel.setText("Legg til produktnavn for å lagre.");
+      saveFailed = false;
+    }
+    String barcode = inpBarcode.getText();
+    barcodeValidator = new BarcodeValidator();
+    if (barcode.length() > 0 && barcode.length() < 13) {
+      barcodeErrorLabel.setText("Barcode må inneholde 13 tall.");
+      saveFailed = false;
+    } else if (barcode.length() != 0 && !barcodeValidator.validateInput(barcode)) {
+      barcodeErrorLabel.setText("Kontrolltallet stemmet ikke med de 12 første tallene.");
+      saveFailed = false;
+    }
+    if (!saveFailed) {
+      return;
+    }
     for (ItemField field : fields.values()) {
       field.saveField();
     }
     if (!warehouse.containsItem(item.getId())) {
+      barcodeErrorLabel.setText("");
       warehouse.addItem(item);
     }
     toggleEditing();
@@ -329,7 +404,9 @@ public class DetailsViewController {
   }
 
   
+  
   protected ScrollPane getScrollPane() {
     return detailsViewScrollPane;
   }
+  
 }

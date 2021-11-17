@@ -70,7 +70,6 @@ public class WarehouseController implements EntityCollectionListener<Item> {
     sortBySelector.getItems().addAll(displaySortStrings);
 
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
-
     loadPersistedData("local_server");
     statusLabel.setWrapText(true);
   }
@@ -160,11 +159,11 @@ public class WarehouseController implements EntityCollectionListener<Item> {
     if (items.isEmpty()) {
       statusAnchorPane.setVisible(true);
       if (searchInput.getText().equals("")) {
-        statusLabel.setText("warehouse har ingen elementer");
+        statusLabel.setText("Warehouse har ingen elementer");
         statusImage.setImage(emptyDolly);
       } else {
         statusImage.setImage(emptySearch);
-        statusLabel.setText("ingen resultater");
+        statusLabel.setText("Ingen resultater");
       }
     } else {
       statusAnchorPane.setVisible(false);
@@ -196,7 +195,9 @@ public class WarehouseController implements EntityCollectionListener<Item> {
     } else { 
       itemElement.getStyleClass().add("hoverOverDark");
     }
-    itemElement.setButtonsVisible(true);
+    if (warehouse.getCurrentUser() != null && warehouse.getCurrentUser().isAdmin()) {
+      itemElement.setButtonsVisible(true);
+    }
   }
 
   protected void removeDetailsViewController(Item item) {
