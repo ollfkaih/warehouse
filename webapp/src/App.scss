@@ -1,6 +1,6 @@
 $primary: rgb(132, 0, 155);
-$secondary: #F4F4F4;
-$light: #F3E7F5;
+$secondary: #f4f4f4;
+$light: #f3e7f5;
 $dark: rgb(76, 4, 88);
 $danger: #b13a3a;
 $success: rgb(3, 122, 3);
@@ -113,9 +113,8 @@ $form-floating-input-padding-b: 1.625rem;
 .detailsViewInsideDiv {
   padding: 24px 10px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
-  0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin-bottom:10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 10px;
 }
 
 .input-section {
@@ -128,7 +127,7 @@ $form-floating-input-padding-b: 1.625rem;
 }
 
 .input-section:focus {
-  border:0px;
+  border: 0px;
 
   background-color: #f4f4f4;
 }
@@ -141,11 +140,11 @@ $form-floating-input-padding-b: 1.625rem;
   padding: 0px;
   background-color: $secondary;
   border-radius: 7px;
-  margin:3px;
+  margin: 3px;
 }
 
 .inputSectionDiv > p {
   text-align: center;
-  color:#505050;
+  color: #505050;
   font-size: 10px;
 }

@@ -3,7 +3,6 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Item from '../modules/Item'
 
-
 interface IProps {
   editingItem: Item
   setEditingItem: (item: Item | undefined) => void
@@ -28,11 +27,13 @@ const ItemDetails = (props: IProps) => {
 
   return (
     <>
-      {props.editingItem && ( 
+      {props.editingItem && (
         <Form className="overflow-auto h-100">
           <Row md="12" className="m-0">
             <Row className="m-1 pt-4">
-              <h5><i className="far fa-tag"></i> Produktinfo</h5>
+              <h5>
+                <i className="far fa-tag"></i> Produktinfo
+              </h5>
             </Row>
             <Row className="m-1">
               <Form.Floating className="my-1" as={Col}>
@@ -62,7 +63,7 @@ const ItemDetails = (props: IProps) => {
                 <label className="h5" htmlFor="amount-control">
                   <i className="far fa-inventory"></i> Lagerbeholdning
                 </label>
-                </Row>
+              </Row>
               <Col md="6" className="p-0">
                 <Row className="m-1">
                   <Form.Group as={Col}>
@@ -120,9 +121,11 @@ const ItemDetails = (props: IProps) => {
                 </Row>
               </Col>
             </Row>
-          
+
             <Row className="m-1">
-              <h5><i className="far fa-coins"></i> Pris</h5>
+              <h5>
+                <i className="far fa-coins"></i> Pris
+              </h5>
             </Row>
             <Row className="m-1">
               <Form.Floating as={Col}>
@@ -161,7 +164,10 @@ const ItemDetails = (props: IProps) => {
             </Row>
 
             <Row className="m-1 pt-4">
-              <h5><i className="far fa-box"></i> Dimensjoner <i style={{fontWeight:300}}>(cm)</i></h5>
+              <h5>
+                <i className="far fa-box"></i> Dimensjoner{' '}
+                <i style={{ fontWeight: 300 }}>(cm)</i>
+              </h5>
             </Row>
             <Row className="m-1">
               <Form.Floating as={Col}>
@@ -200,7 +206,9 @@ const ItemDetails = (props: IProps) => {
             </Row>
 
             <Row className="m-1 pt-4">
-              <h5><i className="far fa-weight-hanging"></i> Vekt</h5>
+              <h5>
+                <i className="far fa-weight-hanging"></i> Vekt
+              </h5>
             </Row>
             <Row className="m-1">
               <Form.Floating as={Col}>
@@ -232,9 +240,9 @@ const ItemDetails = (props: IProps) => {
                 />
               </Form.Group>
             </Row>
-        </Row>
-        </Form> 
-      )} 
+          </Row>
+        </Form>
+      )}
     </>
   )
 }

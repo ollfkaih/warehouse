@@ -76,7 +76,11 @@ const App = () => {
             <Container className="p-3 pe-0 pt-0 m-0 mw-100 h-100">
               <Row className="h-100 flex-nowrap flex-row-reverse rb">
                 {showDetailsCol()}
-                <Col className="fit-to-height ps-4 col-md-push-5 align-items-end align" xs="12" lg="5">
+                <Col
+                  className="fit-to-height ps-4 col-md-push-5 align-items-end align"
+                  xs="12"
+                  lg="5"
+                >
                   <SearchBar searchText={searchText} setSearchText={setSearchText} />
                   <SortButtons
                     sortOption={sortOption}

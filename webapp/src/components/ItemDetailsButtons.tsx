@@ -29,7 +29,7 @@ const ItemDetailsButtons = (props: IProps) => {
           id="save-button"
           onClick={() => props.saveItem(props.editingItem)}
         >
-         <i className="far fa-save"></i> Lagre
+          <i className="far fa-save"></i> Lagre
         </Button>
       </Col>
       <Col xs="4">

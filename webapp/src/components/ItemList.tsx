@@ -70,13 +70,19 @@ const ItemList = (props: IProps) => {
       <Container fluid className="item-list w-auto mt-3 p-0">
         <Row className="text-primary bg-secondary text-bold rounded-1 mb-2 m-0 p-2">
           <Col>
-            <strong><i className="fad fa-industry"></i> Produsent</strong>
+            <strong>
+              <i className="fad fa-industry"></i> Produsent
+            </strong>
           </Col>
           <Col>
-            <strong><i className="fad fa-box"></i> Produkt</strong>
+            <strong>
+              <i className="fad fa-box"></i> Produkt
+            </strong>
           </Col>
           <Col>
-            <strong><i className="fad fa-inventory"></i> Antall</strong>
+            <strong>
+              <i className="fad fa-inventory"></i> Antall
+            </strong>
           </Col>
         </Row>
         <Container fluid className="overflow-auto w-auto item-list m-0 p-0">
