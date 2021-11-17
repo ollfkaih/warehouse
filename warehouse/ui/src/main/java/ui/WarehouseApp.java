@@ -11,6 +11,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -18,7 +19,8 @@ import java.io.IOException;
  * JavaFX App.
  */
 public class WarehouseApp extends Application {
-  FXMLLoader fxmlLoader;
+  private FXMLLoader fxmlLoader;
+  private WarehouseController warehouseController;
     
   @Override
   public void start(Stage stage) throws IOException {
@@ -34,21 +36,23 @@ public class WarehouseApp extends Application {
       e.printStackTrace();
       System.out.println("[WarehouseApp.java] Icon-image not found");
     }
-    WarehouseController controller = (WarehouseController) fxmlLoader.getController();
-    controller.setStage(stage);
-    controller.hideView();
-    stage.setOnCloseRequest(event -> {
-      try {
-        if (controller.canExit()) {
-          appExit();
-        } else {
-          closeAttemptWithChangesAlert();  
-          event.consume();
-        }
-      } catch (Exception e) {
-        e.printStackTrace();
+    warehouseController = (WarehouseController) fxmlLoader.getController();
+    warehouseController.setStage(stage);
+    warehouseController.hideView();
+    stage.setOnCloseRequest(this::handleCloseRequest);
+  }
+
+  private void handleCloseRequest(WindowEvent event) {
+    try {
+      if (warehouseController.canExit()) {
+        appExit();
+      } else {
+        closeAttemptWithChangesAlert();  
+        event.consume();
       }
-    });
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public static void main(String[] args) {
