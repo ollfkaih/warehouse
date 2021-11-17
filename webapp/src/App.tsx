@@ -53,7 +53,7 @@ const App = () => {
     return editingItem != null ? (
       <Col className="fit-to-height col-md-pull-6" xs="12" md="6">
         <ItemDetailsButtons
-          setCurrentItem={setCurrentItem}
+          setEditingItem={setEditingItem}
           editingItem={editingItem}
           saveItem={saveItem}
           deleteItem={deleteItem}
@@ -96,6 +96,7 @@ const App = () => {
                     swrError={error}
                   />
                   <Button
+                    id="addNewItemButton"
                     className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg btn"
                     onClick={() =>
                       setEditingItem({

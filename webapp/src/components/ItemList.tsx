@@ -67,7 +67,7 @@ const ItemList = (props: IProps) => {
 
   const renderItems = (ascending: boolean) => {
     return (
-      <Container fluid className="item-list w-auto p-0">
+      <Container id="itemList" fluid className="item-list w-auto p-0">
         <Row className="text-primary bg-secondary text-bold rounded-1 mb-1 m-0 p-1">
           <Col>
             <strong>Produsent</strong>
