@@ -73,7 +73,7 @@ class WarehouseControllerTest {
   private static final String LOGIN_PASSWORDFIELD = "#passwordField";
   private static final String LOGIN_LOGINBUTTON = "#loginUserButton";
   private static final String REGISTER_BUTTON = "#registerNewUserButton";
-  private static final String REGISTER_USERFIELD = "#userNameField";
+  private static final String REGISTER_USERFIELD = "#usernameField";
   private static final String REGISTER_PASSWORDFIELD_1 = "#passwordField1";
   private static final String REGISTER_PASSWORDFIELD_2 = "#passwordField2";
   private static final String REGISTER_REGISTERBUTTON = "#btnRegister";

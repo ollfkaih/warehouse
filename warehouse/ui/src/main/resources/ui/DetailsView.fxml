@@ -107,6 +107,7 @@
                                              </graphic>
                                           </Label>
                                           <TextField fx:id="inpName" disable="true" prefWidth="190.0" promptText="Produktnavn" text="" />
+                                          <Label fx:id="nameErrorLabel" textFill="RED" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -413,7 +414,7 @@
                      <children>
                         <VBox prefWidth="200.0" spacing="5.0">
                            <children>
-                              <Label text="Barcode">
+                              <Label text="Barcode (13 sifre)">
                                  <font>
                                     <Font name="Arial Bold" size="13.0" />
                                  </font>
@@ -428,7 +429,7 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField fx:id="inpBarcode" disable="true" promptText="Barcode">
+                              <TextField fx:id="inpBarcode" disable="true" promptText="0000000000000">
                                  <font>
                                     <Font name="Arial" size="13.0" />
                                  </font>
@@ -436,6 +437,7 @@
                                     <Insets right="10.0" />
                                  </VBox.margin>
                               </TextField>
+                              <Label fx:id="barcodeErrorLabel" textFill="RED" />
                            </children>
                         </VBox>
                         <AnchorPane prefWidth="200.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;">

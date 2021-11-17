@@ -219,9 +219,9 @@ public class Item extends Entity<Item> {
   }
 
   public void setSection(String section) {
-    if (section != null && (section.length() > CoreConst.MAX_SECTION_LENGTH)) {
+    if (section != null && (section.length() > CoreConst.MAX_POSITION_LENGTH)) {
       throw new IllegalArgumentException(
-          "Section length is too long. Max is " + CoreConst.MAX_SECTION_LENGTH + " characters");
+          "Section length is too long. Max is " + CoreConst.MAX_POSITION_LENGTH + " characters");
     }
     this.section = section;
     notifyUpdated();
@@ -232,8 +232,8 @@ public class Item extends Entity<Item> {
   }
 
   public void setRow(String row) {
-    if (row != null && (row.length() > CoreConst.MAX_ROW_LENGTH)) {
-      throw new IllegalArgumentException("Row length is too long. Max is " + CoreConst.MAX_ROW_LENGTH + " characters");
+    if (row != null && (row.length() > CoreConst.MAX_POSITION_LENGTH)) {
+      throw new IllegalArgumentException("Row length is too long. Max is " + CoreConst.MAX_POSITION_LENGTH + " characters");
     }
     this.row = row;
     notifyUpdated();
@@ -244,9 +244,9 @@ public class Item extends Entity<Item> {
   }
 
   public void setShelf(String shelf) {
-    if (shelf != null && (shelf.length() > CoreConst.MAX_SHELF_LENGTH)) {
+    if (shelf != null && (shelf.length() > CoreConst.MAX_POSITION_LENGTH)) {
       throw new IllegalArgumentException(
-          "Shelf length is too long. Max is " + CoreConst.MAX_SHELF_LENGTH + " characters");
+          "Shelf length is too long. Max is " + CoreConst.MAX_POSITION_LENGTH + " characters");
     }
     this.shelf = shelf;
     notifyUpdated();

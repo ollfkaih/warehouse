@@ -51,9 +51,9 @@ public class ItemTest {
     assertThrows(IllegalArgumentException.class, () -> item.setRegularPrice(CoreConst.MIN_PRICE-1));
     assertThrows(IllegalArgumentException.class, () -> item.setSalePrice(CoreConst.MIN_PRICE-1));
     assertThrows(IllegalArgumentException.class, () -> item.setPurchasePrice(CoreConst.MIN_PRICE-1));
-    assertThrows(IllegalArgumentException.class, () -> item.setSection("A".repeat(CoreConst.MAX_SECTION_LENGTH+1)));
-    assertThrows(IllegalArgumentException.class, () -> item.setRow("A".repeat(CoreConst.MAX_ROW_LENGTH+1)));
-    assertThrows(IllegalArgumentException.class, () -> item.setShelf("A".repeat(CoreConst.MAX_SHELF_LENGTH+1)));
+    assertThrows(IllegalArgumentException.class, () -> item.setSection("A".repeat(CoreConst.MAX_POSITION_LENGTH+1)));
+    assertThrows(IllegalArgumentException.class, () -> item.setRow("A".repeat(CoreConst.MAX_POSITION_LENGTH+1)));
+    assertThrows(IllegalArgumentException.class, () -> item.setShelf("A".repeat(CoreConst.MAX_POSITION_LENGTH+1)));
     assertThrows(IllegalArgumentException.class, () -> item.setHeight(CoreConst.MIN_ITEM_DIMENSION-1));
     assertThrows(IllegalArgumentException.class, () -> item.setWidth(CoreConst.MIN_ITEM_DIMENSION-1));
     assertThrows(IllegalArgumentException.class, () -> item.setLength(CoreConst.MIN_ITEM_DIMENSION-1));

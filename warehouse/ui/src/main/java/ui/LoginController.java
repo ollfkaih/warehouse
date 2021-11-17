@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -50,11 +51,21 @@ public class LoginController {
         e.printStackTrace();
       }
     });
+    usernameField.setOnKeyPressed(e -> {
+      if (e.getCode() == KeyCode.ENTER) {
+        login();
+      }
+    });
+    passwordField.setOnKeyPressed(e -> {
+      if (e.getCode() == KeyCode.ENTER) {
+        login();
+      }
+    });
     registerController = new RegisterController(wh);
     this.whController = whController;
     this.wh = wh;
   }
-  
+
   @FXML
   private void login() {
     String userName = usernameField.getText();
@@ -92,6 +103,8 @@ public class LoginController {
   }
 
   private void resetLoginView() {
+    usernameField.setText("");
+    passwordField.setText("");
     errorMessageField.setText("");
   }
 }

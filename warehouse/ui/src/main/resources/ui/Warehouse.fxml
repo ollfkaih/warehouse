@@ -25,8 +25,8 @@
       </columnConstraints>
       <rowConstraints>
         <RowConstraints minHeight="120.0" vgrow="NEVER" />
-        <RowConstraints maxHeight="25.0" minHeight="25.0" vgrow="NEVER" />
-        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="91.0" minHeight="25.0" prefHeight="47.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="349.0" minHeight="289.0" prefHeight="333.0" vgrow="SOMETIMES" />
       </rowConstraints>
         <children>
         <VBox fx:id="titleAddandSearch" prefWidth="560.0" spacing="10.0">
@@ -80,11 +80,15 @@
                </Button>
           </HBox>
     </VBox>
-         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #dddddd;" GridPane.rowIndex="1">
+         <AnchorPane prefHeight="23.0" prefWidth="624.0" style="-fx-background-color: #dddddd;" GridPane.rowIndex="1">
             <children>
-               <Label alignment="CENTER" contentDisplay="CENTER" text="Merke/Navn" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="0.0">
+               <Label contentDisplay="CENTER" layoutX="9.0" layoutY="3.0" prefHeight="23.0" prefWidth="72.0" text="Merke" AnchorPane.leftAnchor="25.0">
                   <font>
                      <Font size="14.0" />
+                  </font></Label>
+               <Label layoutX="12.0" layoutY="23.0" prefHeight="20.0" prefWidth="72.0" text="Navn" AnchorPane.leftAnchor="25.0">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
                   </font>
                </Label>
                <Label alignment="CENTER" contentDisplay="CENTER" text="Antall" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="0.0">
