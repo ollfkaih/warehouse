@@ -17,11 +17,11 @@ import java.util.Random;
 import java.util.UUID;
 
 public class ServerWarehouseTest {
-  ServerWarehouse wh;
-
   static User addedUser;
   static User removedUser;
   static User updatedUser;
+  
+  ServerWarehouse wh;
 
   @BeforeEach
   public void setup() {

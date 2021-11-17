@@ -14,6 +14,8 @@ import java.util.Random;
 import java.util.UUID;
 
 public class ItemTest {
+  static int changeCounter;
+
   Item item;
 
   @BeforeEach
@@ -149,8 +151,6 @@ public class ItemTest {
   private String getRandomString() {
     return UUID.randomUUID().toString();
   }
-
-  static int changeCounter;
 
   @Test
   @DisplayName("Test listener")

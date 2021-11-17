@@ -22,17 +22,6 @@ import java.util.concurrent.CompletableFuture;
 public class LocalServer implements ServerInterface {
   private final ServerWarehouse warehouse;
 
-  private static <T extends Entity<T>> EntityCollection<T> getEntityCollection(DataPersistence<T> dataPersistence) {
-    try {
-      EntityCollection<T> itemEntityCollection = new EntityCollection<>();
-      itemEntityCollection.addAll(dataPersistence.loadAll());
-      return itemEntityCollection;
-    } catch (Exception e) {
-      System.out.println("LOADING SAVED ITEMS FAILED");
-      return new EntityCollection<>();
-    }
-  }
-
   public LocalServer(String folderName) {
     DataPersistence<Item> itemPersistence = new FileSaver<>(new TypeReference<>() {}, folderName + "-items");
     DataPersistence<User> userPersistence = new FileSaver<>(new TypeReference<>() {}, folderName + "-users");
@@ -44,6 +33,17 @@ public class LocalServer implements ServerInterface {
 
     EntityCollectionAutoPersistence<User> autoUserPersistence = new EntityCollectionAutoPersistence<>(userPersistence);
     warehouse.addUserListener(autoUserPersistence);
+  }
+  
+  private static <T extends Entity<T>> EntityCollection<T> getEntityCollection(DataPersistence<T> dataPersistence) {
+    try {
+      EntityCollection<T> itemEntityCollection = new EntityCollection<>();
+      itemEntityCollection.addAll(dataPersistence.loadAll());
+      return itemEntityCollection;
+    } catch (Exception e) {
+      System.out.println("LOADING SAVED ITEMS FAILED");
+      return new EntityCollection<>();
+    }
   }
 
   @Override

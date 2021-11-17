@@ -25,6 +25,9 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class ClientWarehouseTest {
+  static Item addedItem;
+  static Item removedItem;
+  static boolean updated = false;
 
   ServerInterface server = mock(ServerInterface.class);
 
@@ -239,10 +242,6 @@ public class ClientWarehouseTest {
     List<Item> itemsFilteredBarcode = List.of(itemC);
     assertEquals(itemsFilteredBarcode, wh.getItemsSortedAndFiltered(SortOption.NAME, true, "7946385610287"));
   }
-
-  static Item addedItem;
-  static Item removedItem;
-  static boolean updated = false;
 
   @Test
   @DisplayName("Test Warehouse listener")
