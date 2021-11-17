@@ -54,7 +54,7 @@ const App = () => {
         <ItemDetailsButtons
           currentItem={currentItem}
           setCurrentItem={setCurrentItem}
-          openItem={editingItem}
+          editingItem={editingItem}
           saveItem={saveItem}
           deleteItem={deleteItem}
         />

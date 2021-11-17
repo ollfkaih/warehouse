@@ -5,7 +5,7 @@ import Item from '../modules/Item'
 interface IProps {
   currentItem: Item
   setCurrentItem: (item: Item | undefined) => void
-  openItem: Item | undefined
+  editingItem: Item | undefined
   saveItem: (item: Item | undefined) => void
   deleteItem: (id: string) => void
 }
@@ -13,7 +13,7 @@ interface IProps {
 const ItemDetailsButtons = (props: IProps) => {
   return (
     <Row>
-      <Col md={{ span: 3, offset: 1 }} className="">
+      <Col xs="4" md={{ span: 3, offset: 1 }} className="">
         <Button
           variant="light"
           className="text-primary"
@@ -23,17 +23,17 @@ const ItemDetailsButtons = (props: IProps) => {
           Tilbake
         </Button>
       </Col>
-      <Col md={{ span: 3, offset: 1 }}>
+      <Col xs="4" md={{ span: 3, offset: 1 }}>
         <Button
           variant="success"
           className=""
           id="save-button"
-          onClick={() => props.saveItem(props.openItem)}
+          onClick={() => props.saveItem(props.editingItem)}
         >
           Lagre
         </Button>
       </Col>
-      <Col md={{ span: 3, offset: 1 }}>
+      <Col xs="4" md={{ span: 3, offset: 1 }}>
         <Button
           variant="danger"
           className=""
