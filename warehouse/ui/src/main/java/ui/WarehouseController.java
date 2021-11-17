@@ -7,6 +7,7 @@ import core.EntityCollectionListener;
 import core.Item;
 import core.LoadingListener;
 import core.server.ServerInterface;
+import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -26,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -81,6 +83,13 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
     statusLabel.setWrapText(true);
     serverSelectController = new ServerSelectController(this);
     serverSelectController.showView();
+
+    RotateTransition rt = new RotateTransition(Duration.millis(1000), loadingImage);
+    rt.setByAngle(360);
+    rt.setCycleCount(-1);
+    rt.setAutoReverse(false);
+
+    rt.play();
   }
 
   protected void setStage(Stage stage) {
