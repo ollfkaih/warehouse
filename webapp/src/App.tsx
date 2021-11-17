@@ -50,7 +50,7 @@ const App = () => {
 
   function showDetailsCol(): React.ReactNode {
     return currentItem != null && editingItem != null ? (
-      <Col className="fit-to-height col-md-pull-6" sm="12" md="6">
+      <Col className="fit-to-height col-md-pull-6" xs="12" md="6">
         <ItemDetailsButtons
           currentItem={currentItem}
           setCurrentItem={setCurrentItem}
@@ -61,7 +61,7 @@ const App = () => {
         <ItemDetails editingItem={editingItem} setEditingItem={setEditingItem} />
       </Col>
     ) : (
-      <></>
+      <Col></Col>
     )
   }
 
@@ -74,11 +74,7 @@ const App = () => {
             <Container className="p-3 pe-0 pt-0 m-0 mw-100 h-100">
               <Row className="h-100 flex-nowrap flex-row-reverse rb">
                 {showDetailsCol()}
-                <Col
-                  className="fit-to-height col-md-push-6"
-                  sm="12"
-                  md={currentItem == null ? 12 : 6}
-                >
+                <Col className="fit-to-height ps-4 col-md-push-6" xs="12" md="6">
                   <SearchBar searchText={searchText} setSearchText={setSearchText} />
                   <SortButtons
                     sortOption={sortOption}

@@ -2,9 +2,11 @@ $primary: rgb(132, 0, 155);
 $secondary: rgb(231, 231, 231);
 $light: rgba(213, 169, 223);
 $dark: rgb(76, 4, 88);
-$danger: rgb(224, 34, 20);
+$danger: #b13a3a;
 $success: rgb(3, 122, 3);
 $info: rgb(116, 82, 114);
+$danger-light: #ffdddd;
+$success-light: #e2f0e2;
 
 // change the theme
 $theme-colors: (
@@ -55,4 +57,22 @@ $form-floating-input-padding-b: 1.625rem;
 
 .selected:hover {
   opacity: 0.8;
+}
+
+.danger-light {
+  background: $danger-light;
+}
+
+.danger-light:hover {
+  background: rgb(231, 63, 63);
+  color: white !important;
+}
+
+.success-light {
+  background: $success-light;
+}
+
+.success-light:hover {
+  background: $success;
+  color: white !important;
 }
