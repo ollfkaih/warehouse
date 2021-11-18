@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,6 +37,12 @@ public class WarehouseServerController {
 
   private ServerWarehouse getWarehouse() {
     return warehouseService.getWarehouse();
+  }
+
+  private void verifyAuthentication(String token) {
+    if (!getWarehouse().isValidAuthToken(token)) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Auth token is invalid");
+    }
   }
 
   /**
@@ -67,7 +74,8 @@ public class WarehouseServerController {
    * @return true if it was added, false if it replaced
    */
   @PutMapping(path = "item/{id}")
-  public boolean putItem(@PathVariable("id") String id, @RequestBody Item item) {
+  public boolean putItem(@PathVariable("id") String id, @RequestBody Item item, @RequestHeader("auth-token") String token) {
+    verifyAuthentication(token);
     return getWarehouse().putItem(item);
   }
 
@@ -78,7 +86,8 @@ public class WarehouseServerController {
    * @return the deleted item.
    */
   @DeleteMapping(path = "item/{id}")
-  public Item removeItem(@PathVariable("id") String id) {
+  public Item removeItem(@PathVariable("id") String id, @RequestHeader("auth-token") String token) {
+    verifyAuthentication(token);
     return getWarehouse().removeItem(id);
   }
 
@@ -111,4 +120,3 @@ public class WarehouseServerController {
     }
   }
 }
-

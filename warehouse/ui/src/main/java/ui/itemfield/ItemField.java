@@ -76,7 +76,6 @@ public class ItemField {
       saver.saveItemField(this);
       setFieldValidity(true);
     } catch (Exception e) {
-      // TODO(eikhr): Give user feedback on what the problem is
       setFieldValidity(false);
     }
   }

@@ -42,6 +42,8 @@ public class WarehouseServerTest {
   private static final DataPersistence<Item> itemPersistence = new FileSaver<>(new TypeReference<>() {}, TEST_FILE_NAME + "-items");
   private static final DataPersistence<User> userPersistence = new FileSaver<>(new TypeReference<>() {}, TEST_FILE_NAME + "-users");
 
+  private AuthSession auth;
+
   @Autowired
   private MockMvc mockMvc;
 
@@ -110,7 +112,8 @@ public class WarehouseServerTest {
   private Item removeItem(Item item) throws Exception {
     MvcResult result = mockMvc.perform(MockMvcRequestBuilders
         .delete(warehouseUrl("item", item.getId()))
-        .accept(MediaType.APPLICATION_JSON))
+        .accept(MediaType.APPLICATION_JSON)
+        .header("auth-token", auth.getToken()))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andReturn();
 
@@ -125,10 +128,11 @@ public class WarehouseServerTest {
       fail(e.getMessage());
       return;
     }
-    MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+    mockMvc.perform(MockMvcRequestBuilders
         .put(warehouseUrl("item", item.getId()))
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON)
+        .header("auth-token", auth.getToken())
         .content(itemJson))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andReturn();
@@ -136,6 +140,8 @@ public class WarehouseServerTest {
 
   @Test
   void testAddAndRemoveItem() throws Exception {
+    registerAndLogin();
+
     Item item = new Item("TestItem", 0);
 
     addItem(item);
@@ -188,8 +194,7 @@ public class WarehouseServerTest {
     return objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
   }
 
-  @Test
-  void testLoginRegister() throws Exception {
+  void registerAndLogin() throws Exception {
     String password = "password123";
     User user = new User("TestUser", password, true);
 
@@ -201,5 +206,7 @@ public class WarehouseServerTest {
     assertNotNull(authSession.getUser());
     assertNotNull(authSession.getToken());
     assertEquals(user, authSession.getUser());
+
+    auth = authSession;
   }
 }

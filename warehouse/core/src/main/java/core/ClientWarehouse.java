@@ -78,6 +78,10 @@ public class ClientWarehouse extends BaseWarehouse {
     return authSession.getUser();
   }
 
+  public AuthSession getAuthSession() {
+    return authSession;
+  }
+
   public CompletableFuture<Void> register(User currentUser) {
     return server.register(currentUser);
   }

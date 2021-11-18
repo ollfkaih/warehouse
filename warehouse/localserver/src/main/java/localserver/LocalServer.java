@@ -46,6 +46,12 @@ public class LocalServer implements ServerInterface {
     }
   }
 
+  private void verifyAuthentication(String token) {
+    if (!warehouse.isValidAuthToken(token)) {
+      throw new IllegalArgumentException("Auth token is invalid");
+    }
+  }
+
   @Override
   public CompletableFuture<Collection<Item>> getItems() {
     CompletableFuture<Collection<Item>> future = new CompletableFuture<>();
@@ -61,14 +67,18 @@ public class LocalServer implements ServerInterface {
   }
 
   @Override
-  public CompletableFuture<Boolean> putItem(Item item) {
+  public CompletableFuture<Boolean> putItem(Item item, AuthSession auth) {
+    verifyAuthentication(auth.getToken());
+
     CompletableFuture<Boolean> future = new CompletableFuture<>();
     future.complete(warehouse.putItem(item));
     return future;
   }
 
   @Override
-  public CompletableFuture<Item> removeItem(String id) {
+  public CompletableFuture<Item> removeItem(String id, AuthSession auth) {
+    verifyAuthentication(auth.getToken());
+
     CompletableFuture<Item> future = new CompletableFuture<>();
     future.complete(warehouse.removeItem(id));
     return future;

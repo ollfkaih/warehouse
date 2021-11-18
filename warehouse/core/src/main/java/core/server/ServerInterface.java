@@ -15,9 +15,9 @@ public interface ServerInterface {
 
   CompletableFuture<Item> getItem(String id);
 
-  CompletableFuture<Boolean> putItem(Item item);
+  CompletableFuture<Boolean> putItem(Item item, AuthSession auth);
 
-  CompletableFuture<Item> removeItem(String id);
+  CompletableFuture<Item> removeItem(String id, AuthSession auth);
 
   CompletableFuture<AuthSession> login(LoginRequest loginRequest);
 
