@@ -40,7 +40,11 @@ const App = () => {
   )
   const deleteItem = async (id: string) => {
     if (!loginSession) return
-    await deleteRequest(REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + id, loginSession)
+    if (editingItem !== currentItem) {
+      setEditingItem(undefined)
+    } else {
+      await deleteRequest(REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + id, loginSession)
+    }
     mutate()
     setCurrentItem(undefined)
   }
