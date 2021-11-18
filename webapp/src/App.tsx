@@ -33,7 +33,11 @@ const App = () => {
     getRequest
   )
   const deleteItem = async (id: string) => {
-    await deleteRequest(REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + id)
+    if (editingItem !== currentItem) {
+      setEditingItem(undefined)
+    } else {
+      await deleteRequest(REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + id)
+    }
     mutate()
     setCurrentItem(undefined)
   }

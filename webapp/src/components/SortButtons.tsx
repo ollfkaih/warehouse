@@ -65,6 +65,7 @@ const SortButtons = (props: IProps) => {
         </ToggleButton>
       </ToggleButtonGroup>
       <Button
+        id="sortDirectionButton"
         variant="secondary"
         className="m-0 pe-2 pb-1 ps-2 pt-1"
         onClick={() => props.setSortAscendingOrder(!props.sortAscendingOrder)}
