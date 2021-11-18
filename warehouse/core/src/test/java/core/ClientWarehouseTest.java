@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -36,6 +37,7 @@ public class ClientWarehouseTest {
   Item anotherItem;
   User admin;
   User user;
+  AuthSession adminAuth;
 
   @BeforeEach
   public void setup() {
@@ -47,12 +49,20 @@ public class ClientWarehouseTest {
     wh = new ClientWarehouse(server);
 
     verify(server, times(1)).getItems();
-    reset(server);
 
     item = new Item("itemName");
     anotherItem = new Item("secondItem");
     admin = new User("admin", "password123", true);
     user = new User("user", "superSecure", false);
+
+    adminAuth = new AuthSession(admin);
+
+    CompletableFuture<AuthSession> loginFuture = new CompletableFuture<>();
+    when(server.login(any())).thenReturn(loginFuture);
+    wh.login(admin.getUserName(), admin.getPassword());
+
+    loginFuture.complete(adminAuth);
+    reset(server);
   }
 
   @Test
@@ -62,11 +72,11 @@ public class ClientWarehouseTest {
     when(server.getItems()).thenReturn(getItemsFuture);
 
     CompletableFuture<Boolean> putItemFuture = new CompletableFuture<>();
-    when(server.putItem(item)).thenReturn(putItemFuture);
+    when(server.putItem(item, adminAuth)).thenReturn(putItemFuture);
 
     wh.putItem(item);
 
-    verify(server, times(1)).putItem(item);
+    verify(server, times(1)).putItem(item, adminAuth);
     verify(server, times(0)).getItems();
 
     // item should be added locally even though the future is not completed
@@ -91,11 +101,11 @@ public class ClientWarehouseTest {
     when(server.getItems()).thenReturn(getItemsFuture);
 
     CompletableFuture<Boolean> addItemFuture = new CompletableFuture<>();
-    when(server.putItem(any())).thenReturn(addItemFuture);
+    when(server.putItem(any(), eq(adminAuth))).thenReturn(addItemFuture);
 
     wh.putItem(item);
 
-    verify(server, times(1)).putItem(item);
+    verify(server, times(1)).putItem(item, adminAuth);
 
     // item should be added locally even though the future is not completed
     assertEquals(1, wh.getAllItems().size());
@@ -112,17 +122,17 @@ public class ClientWarehouseTest {
     // warehouse should put changes after update
     item.setWidth(10.0);
 
-    verify(server, times(2)).putItem(item);
+    verify(server, times(2)).putItem(item, adminAuth);
 
     Item itemCopy = new Item(item);
     itemCopy.setWidth(5.0);
 
     CompletableFuture<Boolean> updateItemFuture = new CompletableFuture<>();
-    when(server.putItem(any())).thenReturn(updateItemFuture);
+    when(server.putItem(any(), eq(adminAuth))).thenReturn(updateItemFuture);
 
     wh.putItem(itemCopy);
 
-    verify(server, times(1)).putItem(itemCopy);
+    verify(server, times(1)).putItem(itemCopy, adminAuth);
   }
 
   @Test
@@ -132,11 +142,11 @@ public class ClientWarehouseTest {
     when(server.getItems()).thenReturn(getItemsFuture);
 
     CompletableFuture<Boolean> addItemFuture = new CompletableFuture<>();
-    when(server.putItem(item)).thenReturn(addItemFuture);
+    when(server.putItem(item, adminAuth)).thenReturn(addItemFuture);
 
     wh.putItem(item);
 
-    verify(server, times(1)).putItem(item);
+    verify(server, times(1)).putItem(item, adminAuth);
     verify(server, times(0)).getItems();
 
     // item should be added locally even though the future is not completed
@@ -246,8 +256,8 @@ public class ClientWarehouseTest {
   @Test
   @DisplayName("Test Warehouse listener")
   void testListener() {
-    when(server.putItem(any())).thenReturn(CompletableFuture.completedFuture(true));
-    when(server.removeItem(any())).thenReturn(CompletableFuture.completedFuture(null));
+    when(server.putItem(any(), eq(adminAuth))).thenReturn(CompletableFuture.completedFuture(true));
+    when(server.removeItem(any(), eq(adminAuth))).thenReturn(CompletableFuture.completedFuture(null));
 
     EntityCollectionListener<Item> listener = new EntityCollectionListener<>() {
       @Override

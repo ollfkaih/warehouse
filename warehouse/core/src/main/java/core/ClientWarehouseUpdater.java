@@ -27,21 +27,21 @@ public class ClientWarehouseUpdater {
       @Override
       public void entityAdded(Item item) {
         if (sendUpdates) {
-          server.putItem(item).thenAccept(unused -> loadItems());
+          server.putItem(item, warehouse.getAuthSession()).thenAccept(unused -> loadItems());
         }
       }
 
       @Override
       public void entityUpdated(Item item) {
         if (sendUpdates) {
-          server.putItem(item).thenAccept(unused -> loadItems());
+          server.putItem(item, warehouse.getAuthSession()).thenAccept(unused -> loadItems());
         }
       }
 
       @Override
       public void entityRemoved(Item item) {
         if (sendUpdates) {
-          server.removeItem(item.getId()).thenAccept(unused -> loadItems());
+          server.removeItem(item.getId(), warehouse.getAuthSession()).thenAccept(unused -> loadItems());
         }
       }
     });

@@ -106,10 +106,11 @@ public class RemoteWarehouseServer implements ServerInterface {
   }
 
   @Override
-  public CompletableFuture<Boolean> putItem(Item item) {
+  public CompletableFuture<Boolean> putItem(Item item, AuthSession auth) {
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(warehouseUrl("item", item.getId())))
         .header("Content-Type", "application/json")
+        .header("auth-token", auth.getToken())
         .PUT(HttpRequest.BodyPublishers.ofString(jsonify(item)))
         .build();
 
@@ -120,9 +121,10 @@ public class RemoteWarehouseServer implements ServerInterface {
   }
 
   @Override
-  public CompletableFuture<Item> removeItem(String id) {
+  public CompletableFuture<Item> removeItem(String id, AuthSession auth) {
     HttpRequest request = HttpRequest.newBuilder()
         .header("Accept", "application/json")
+        .header("auth-token", auth.getToken())
         .uri(URI.create(warehouseUrl("item", id)))
         .DELETE()
         .build();
