@@ -30,7 +30,8 @@ const App = () => {
 
   const { data, error, mutate } = useSWR(
     REACT_APP_DOMAIN + REACT_APP_GET_ALL_ITEMS_ENDPOINT,
-    getRequest
+    getRequest,
+    { refreshInterval: 1 }
   )
   const deleteItem = async (id: string) => {
     await deleteRequest(REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + id)
