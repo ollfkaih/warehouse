@@ -57,7 +57,7 @@ public class ServerSelectController {
     try {
       whController.loadPersistedData(new RemoteWarehouseServer(serverUrl));
     } catch (Exception e) {
-      errorMessageField.setText(e.getMessage());
+      errorMessageField.setText("Server URL er ikke korrekt.");
       return;
     }
 
@@ -70,6 +70,7 @@ public class ServerSelectController {
   private void startLocal() {
     whController.loadPersistedData(new LocalServer("local_server"));
     whController.showView();
+    whController.stoppedLoading();
     hideView();
     resetView();
   }
