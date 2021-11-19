@@ -81,7 +81,7 @@ public class RegisterController {
     } else if (!password1.equals(password2)) {
       errorMessageField.setText("Passordene er ikke like.");
     } else {
-      User user = new User(username, password1, true);
+      User user = new User(username, password1);
       CompletableFuture<Void> registerFuture = warehouse.register(user);
       registerFuture.thenAccept(x -> {
         Platform.runLater(this::hideRegisterView);

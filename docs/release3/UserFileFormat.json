@@ -11,11 +11,7 @@
       "description": "The users password",
       "type": "string",
       "format": "password"
-    },
-    "admin": {
-      "description": "A boolean to say if user is admin or not",
-      "type": "boolean"
     }
   },
-  "required": ["userName", "password", "admin"]
+  "required": ["userName", "password"]
 }

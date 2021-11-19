@@ -22,7 +22,6 @@ class Item [[java:core.Item]] {
 class User [[java:core.User]] {
 	~String userName
 	~String password
-	~boolean admin
 
 }
 class Warehouse [[java:core.Warehouse]] {

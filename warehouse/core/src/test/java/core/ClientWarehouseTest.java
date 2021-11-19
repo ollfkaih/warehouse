@@ -35,9 +35,9 @@ public class ClientWarehouseTest {
   ClientWarehouse wh;
   Item item;
   Item anotherItem;
-  User admin;
-  User user;
-  AuthSession adminAuth;
+  User user1;
+  User user2;
+  AuthSession user1Auth;
 
   @BeforeEach
   public void setup() {
@@ -52,16 +52,16 @@ public class ClientWarehouseTest {
 
     item = new Item("itemName");
     anotherItem = new Item("secondItem");
-    admin = new User("admin", "password123", true);
-    user = new User("user", "superSecure", false);
+    user1 = new User("user1", "password123");
+    user2 = new User("user2", "superSecure");
 
-    adminAuth = new AuthSession(admin);
+    user1Auth = new AuthSession(user1);
 
     CompletableFuture<AuthSession> loginFuture = new CompletableFuture<>();
     when(server.login(any())).thenReturn(loginFuture);
-    wh.login(admin.getUserName(), admin.getPassword());
+    wh.login(user1.getUserName(), user1.getPassword());
 
-    loginFuture.complete(adminAuth);
+    loginFuture.complete(user1Auth);
     reset(server);
   }
 
@@ -72,11 +72,11 @@ public class ClientWarehouseTest {
     when(server.getItems()).thenReturn(getItemsFuture);
 
     CompletableFuture<Boolean> putItemFuture = new CompletableFuture<>();
-    when(server.putItem(item, adminAuth)).thenReturn(putItemFuture);
+    when(server.putItem(item, user1Auth)).thenReturn(putItemFuture);
 
     wh.putItem(item);
 
-    verify(server, times(1)).putItem(item, adminAuth);
+    verify(server, times(1)).putItem(item, user1Auth);
     verify(server, times(0)).getItems();
 
     // item should be added locally even though the future is not completed
@@ -101,11 +101,11 @@ public class ClientWarehouseTest {
     when(server.getItems()).thenReturn(getItemsFuture);
 
     CompletableFuture<Boolean> addItemFuture = new CompletableFuture<>();
-    when(server.putItem(any(), eq(adminAuth))).thenReturn(addItemFuture);
+    when(server.putItem(any(), eq(user1Auth))).thenReturn(addItemFuture);
 
     wh.putItem(item);
 
-    verify(server, times(1)).putItem(item, adminAuth);
+    verify(server, times(1)).putItem(item, user1Auth);
 
     // item should be added locally even though the future is not completed
     assertEquals(1, wh.getAllItems().size());
@@ -122,17 +122,17 @@ public class ClientWarehouseTest {
     // warehouse should put changes after update
     item.setWidth(10.0);
 
-    verify(server, times(2)).putItem(item, adminAuth);
+    verify(server, times(2)).putItem(item, user1Auth);
 
     Item itemCopy = new Item(item);
     itemCopy.setWidth(5.0);
 
     CompletableFuture<Boolean> updateItemFuture = new CompletableFuture<>();
-    when(server.putItem(any(), eq(adminAuth))).thenReturn(updateItemFuture);
+    when(server.putItem(any(), eq(user1Auth))).thenReturn(updateItemFuture);
 
     wh.putItem(itemCopy);
 
-    verify(server, times(1)).putItem(itemCopy, adminAuth);
+    verify(server, times(1)).putItem(itemCopy, user1Auth);
   }
 
   @Test
@@ -142,11 +142,11 @@ public class ClientWarehouseTest {
     when(server.getItems()).thenReturn(getItemsFuture);
 
     CompletableFuture<Boolean> addItemFuture = new CompletableFuture<>();
-    when(server.putItem(item, adminAuth)).thenReturn(addItemFuture);
+    when(server.putItem(item, user1Auth)).thenReturn(addItemFuture);
 
     wh.putItem(item);
 
-    verify(server, times(1)).putItem(item, adminAuth);
+    verify(server, times(1)).putItem(item, user1Auth);
     verify(server, times(0)).getItems();
 
     // item should be added locally even though the future is not completed
@@ -256,8 +256,8 @@ public class ClientWarehouseTest {
   @Test
   @DisplayName("Test Warehouse listener")
   void testListener() {
-    when(server.putItem(any(), eq(adminAuth))).thenReturn(CompletableFuture.completedFuture(true));
-    when(server.removeItem(any(), eq(adminAuth))).thenReturn(CompletableFuture.completedFuture(null));
+    when(server.putItem(any(), eq(user1Auth))).thenReturn(CompletableFuture.completedFuture(true));
+    when(server.removeItem(any(), eq(user1Auth))).thenReturn(CompletableFuture.completedFuture(null));
 
     EntityCollectionListener<Item> listener = new EntityCollectionListener<>() {
       @Override
@@ -306,7 +306,7 @@ public class ClientWarehouseTest {
   @Test
   @DisplayName("Test login")
   void testLogin() {
-    User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), true);
+    User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
 
     CompletableFuture<Void> registerFuture = new CompletableFuture<>();
     when(server.register(user)).thenReturn(registerFuture);
@@ -319,7 +319,7 @@ public class ClientWarehouseTest {
     verify(server, times(1)).register(user);
     registerFuture.complete(null);
 
-    wh.login(user.userName, user.password);
+    wh.login(user.getUserName(), user.getPassword());
 
     verify(server, times(1)).login(any());
     AuthSession authSession = new AuthSession(user);

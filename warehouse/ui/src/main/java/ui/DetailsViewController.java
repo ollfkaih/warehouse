@@ -122,7 +122,7 @@ public class DetailsViewController {
       e.printStackTrace();
     }
 
-    if (warehouse.getCurrentUser() == null || !warehouse.getCurrentUser().isAdmin()) {
+    if (warehouse.getCurrentUser() == null) {
       btnEdit.setVisible(false);
     }
     maxCharsLimiter(inpPlacementSection, placementMaxLength);

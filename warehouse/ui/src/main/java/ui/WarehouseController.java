@@ -171,7 +171,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
       ItemElementAnchorPane itemElement = new ItemElementAnchorPane(items.get(i));
 
       String id = items.get(i).getId();
-      if (warehouse.getCurrentUser() != null && warehouse.getCurrentUser().isAdmin()) {
+      if (warehouse.getCurrentUser() != null) {
         itemElement.getDecrementButton().setOnAction(e -> decrementAmount(id));
         itemElement.getIncrementButton().setOnAction(e -> incrementAmount(id));
       } else {
@@ -233,7 +233,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
     } else { 
       itemElement.getStyleClass().add("hoverOverDark");
     }
-    if (warehouse.getCurrentUser() != null && warehouse.getCurrentUser().isAdmin()) {
+    if (warehouse.getCurrentUser() != null) {
       itemElement.setButtonsVisible(true);
     }
   }
@@ -249,7 +249,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
 
   @FXML
   private void addItem() {
-    if (warehouse.getCurrentUser().isAdmin()) {
+    if (warehouse.getCurrentUser() != null) {
       Item item = new Item("");
       openDetailsView(item);
       detailsViewControllers.get(item).toggleEditing();
@@ -262,13 +262,13 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
   }
 
   protected void incrementAmount(String id) {
-    if (warehouse.getCurrentUser().isAdmin()) {
+    if (warehouse.getCurrentUser() != null) {
       warehouse.getItem(id).incrementAmount();
     }
   }
 
   protected void decrementAmount(String id) {
-    if (warehouse.getCurrentUser().isAdmin()) {
+    if (warehouse.getCurrentUser() != null) {
       warehouse.getItem(id).decrementAmount();
     }
   }
