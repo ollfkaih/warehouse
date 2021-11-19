@@ -63,15 +63,21 @@ const App = () => {
     return <p>Domain for server not set, configure REACT_APP_DOMAIN variable</p>
 
   function showDetailsCol(): React.ReactNode {
-    return editingItem != null ? (
-      <Col className="fit-to-height col-md-pull-6" xs="12" md="6">
-        <ItemDetailsButtons
-          setCurrentItem={setCurrentItem}
-          editingItem={editingItem}
-          saveItem={saveItem}
-          deleteItem={deleteItem}
-        />
-        <ItemDetails editingItem={editingItem} setEditingItem={setEditingItem} />
+    return currentItem != null && editingItem != null ? (
+      <Col
+        className="overflow-auto fit-to-height col-md-pull-6 detailsView"
+        xs="12"
+        xl="7"
+      >
+        <div className="detailsViewInsideDiv">
+          <ItemDetailsButtons
+            setCurrentItem={setCurrentItem}
+            editingItem={editingItem}
+            saveItem={saveItem}
+            deleteItem={deleteItem}
+          />
+          <ItemDetails editingItem={editingItem} setEditingItem={setEditingItem} />
+        </div>
       </Col>
     ) : (
       <Col></Col>
@@ -102,9 +108,9 @@ const App = () => {
               <Row className="h-100 flex-nowrap flex-row-reverse rb">
                 {showDetailsCol()}
                 <Col
-                  className="fit-to-height ps-4 col-md-push-6 align-items-end align"
+                  className="fit-to-height ps-4 col-md-push-5 align-items-end align"
                   xs="12"
-                  md="6"
+                  lg="5"
                 >
                   <SearchBar searchText={searchText} setSearchText={setSearchText} />
                   <SortButtons

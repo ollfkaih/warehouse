@@ -1,6 +1,6 @@
 $primary: rgb(132, 0, 155);
-$secondary: rgb(231, 231, 231);
-$light: rgba(213, 169, 223);
+$secondary: #f4f4f4;
+$light: #f3e7f5;
 $dark: rgb(76, 4, 88);
 $danger: #b13a3a;
 $success: rgb(3, 122, 3);
@@ -38,11 +38,11 @@ $form-floating-input-padding-b: 1.625rem;
 }
 
 .fit-to-height {
-  max-height: calc(100vh - 8.5em);
+  max-height: calc(100vh - 6em);
 }
 
 .item-list {
-  max-height: calc(100vh - 14.5em);
+  max-height: calc(100vh - 18em);
 }
 
 .item-list-element:hover {
@@ -75,4 +75,101 @@ $form-floating-input-padding-b: 1.625rem;
 .success-light:hover {
   background: $success;
   color: white !important;
+}
+
+.searchForm {
+  font-size: 22px;
+}
+
+.searchForm:hover {
+  background-color: #f1dcf5 !important;
+}
+
+.searchFormGroup {
+  margin: 20px 0;
+}
+
+.backButton {
+  width: 100%;
+}
+
+.backButton:hover {
+  color: white !important;
+  background-color: $primary;
+}
+
+.deleteButton {
+  width: 100%;
+}
+
+.saveButton {
+  width: 100%;
+}
+
+.form-floating > label {
+  margin-left: 14px;
+}
+
+.detailsView {
+  padding: 0px 40px;
+}
+
+.detailsViewInsideDiv {
+  padding: 24px 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin: 20px 0;
+}
+
+.input-section {
+  text-align: center;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  background-color: #00000000;
+  border: 0;
+}
+
+.input-section:focus {
+  border: 0px;
+  background-color: #f4f4f4;
+}
+
+.input-section:hover {
+  background-color: #00000010;
+}
+
+.inputSectionDiv {
+  padding: 0px;
+  background-color: $secondary;
+  border-radius: 7px;
+  margin: 0;
+}
+
+.inputSectionDiv > p {
+  text-align: center;
+  color: #505050;
+  font-size: 10px;
+}
+
+@media only screen and (max-width: 992px) {
+  .detailsViewInsideDiv {
+    padding: 0px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0) !important;
+    margin: 20px 0;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .inputSectionDiv {
+    padding: 0px;
+    background-color: $secondary;
+    border-radius: 7px;
+    margin: 10px 12px;
+  }
+
+  .detailsView {
+    padding: 0px;
+  }
 }

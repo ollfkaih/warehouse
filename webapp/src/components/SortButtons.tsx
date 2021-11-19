@@ -20,7 +20,7 @@ const SortButtons = (props: IProps) => {
       >
         <ToggleButton
           variant="light"
-          className="text-primary"
+          className="text-primary mx-1 rounded-pill sortToggle"
           id="brand-button"
           value={SortOption.Brand}
           onClick={() => props.setSortOption(SortOption.Brand)}
@@ -29,7 +29,7 @@ const SortButtons = (props: IProps) => {
         </ToggleButton>
         <ToggleButton
           variant="light"
-          className="text-primary"
+          className="text-primary mx-1 rounded-pill sortToggle"
           id="name-button"
           value={SortOption.Name}
           onClick={() => props.setSortOption(SortOption.Name)}
@@ -38,7 +38,7 @@ const SortButtons = (props: IProps) => {
         </ToggleButton>
         <ToggleButton
           variant="light"
-          className="text-primary"
+          className="text-primary mx-1 rounded-pill sortToggle"
           id="amount-button"
           value={SortOption.Amount}
           onClick={() => props.setSortOption(SortOption.Amount)}
@@ -47,7 +47,7 @@ const SortButtons = (props: IProps) => {
         </ToggleButton>
         <ToggleButton
           variant="light"
-          className="text-primary"
+          className="text-primary mx-1 rounded-pill sortToggle"
           id="toggle-button"
           value={SortOption.Price}
           onClick={() => props.setSortOption(SortOption.Price)}
@@ -56,7 +56,7 @@ const SortButtons = (props: IProps) => {
         </ToggleButton>
         <ToggleButton
           variant="light"
-          className="text-primary"
+          className="text-primary mx-1 rounded-pill sortToggle"
           id="date-button"
           value={SortOption.Date}
           onClick={() => props.setSortOption(SortOption.Date)}

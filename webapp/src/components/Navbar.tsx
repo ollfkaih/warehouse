@@ -10,13 +10,13 @@ interface IProps {
 }
 
 const Navbar = (props: IProps) => (
-  <BootstrapNavbar className="pb-0 m-0" expand={false}>
-    <BootstrapNavbar.Brand className="navbar-left ms-3">
+  <BootstrapNavbar className="p-0 m-0" expand={false}>
+    <BootstrapNavbar.Brand className="navbar-left ms-3 py-1">
       <Link to="/">
         <Image
           className="text-primary"
           alt="Warehouse"
-          height="80em"
+          height="60em"
           src="/icon/purple_logo.svg"
         />
       </Link>
@@ -25,11 +25,11 @@ const Navbar = (props: IProps) => (
       {props.login ? (
         <Link to="/">
           <Button
-            className="rounded-pill"
+            className="rounded-pill px-4"
             variant="outline-primary"
             onClick={() => props.onLogin(false)}
           >
-            Logg ut
+            <i className="far fa-lock"></i> Logg ut
           </Button>
         </Link>
       ) : (
