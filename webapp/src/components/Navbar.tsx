@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom'
 import BootstrapNavbar from 'react-bootstrap/Navbar'
 import Button from 'react-bootstrap/Button'
 import { Image } from 'react-bootstrap'
+import AuthSession from '../modules/AuthSession'
 
 interface IProps {
-  login: boolean
+  login?: AuthSession
   onLogin: (bool: boolean) => void
 }
 

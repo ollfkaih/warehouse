@@ -13,16 +13,21 @@ import Item from './modules/Item'
 import SortButtons from './components/SortButtons'
 import SortOption from './modules/SortOption'
 import ItemDetailsButtons from './components/ItemDetailsButtons'
-import { deleteRequest, saveRequest, getRequest } from './asyncRequests'
+import { deleteRequest, saveRequest, getRequest, loginRequest } from './asyncRequests'
 import useSWR from 'swr'
 import { v4 as uuidv4 } from 'uuid'
+import AuthSession from './modules/AuthSession'
+import Login from './components/Login'
+import LoginRequest from './modules/LoginRequest'
 
 const REACT_APP_DOMAIN = 'http://localhost:8080'
 const REACT_APP_SERVER_PATH = '/warehouse/item/'
 const REACT_APP_GET_ALL_ITEMS_ENDPOINT = '/warehouse/items'
+const REACT_APP_USER_SERVER_PATH = '/warehouse/user/'
 
 const App = () => {
-  const [login, setLogin] = useState(true)
+  const [showLoginModal, setShowLoginModal] = useState<boolean>(false)
+  const [loginSession, setLoginSession] = useState<AuthSession | undefined>(undefined)
   const [currentItem, setCurrentItem] = useState<Item>()
   const [searchText, setSearchText] = useState('')
   const [sortOption, setSortOption] = useState<SortOption>(SortOption.Name)
@@ -34,12 +39,19 @@ const App = () => {
     { refreshInterval: 1 }
   )
   const deleteItem = async (id: string) => {
-    await deleteRequest(REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + id)
+    if (!loginSession) return
+    await deleteRequest(REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + id, loginSession)
     mutate()
     setCurrentItem(undefined)
   }
   const saveItem = async (item: Item | undefined) => {
-    item && (await saveRequest(REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + item.id, item))
+    if (!loginSession) return
+    item &&
+      (await saveRequest(
+        REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + item.id,
+        loginSession,
+        item
+      ))
     mutate()
   }
   const [editingItem, setEditingItem] = useState<Item>()
@@ -66,12 +78,26 @@ const App = () => {
     )
   }
 
+  const login = async (loginDetails: LoginRequest) => {
+    const authSession = await loginRequest(
+      REACT_APP_DOMAIN + REACT_APP_USER_SERVER_PATH + 'login/',
+      loginDetails
+    )
+    setLoginSession(authSession)
+    setShowLoginModal(false)
+  }
+
   return (
     <Col className="vh-100 overflow-hidden">
-      <Navbar login={login} onLogin={setLogin} />
+      <Navbar
+        login={loginSession}
+        onLogin={(login) =>
+          login ? setShowLoginModal(true) : setLoginSession(undefined)
+        }
+      />
       <Row className="Content d-flex m-0 flex-shrink-1 h-100">
         <Route path="/" exact>
-          {login ? (
+          {loginSession ? (
             <Container className="p-3 pe-0 pt-0 m-0 mw-100 h-100">
               <Row className="h-100 flex-nowrap flex-row-reverse rb">
                 {showDetailsCol()}
@@ -113,7 +139,14 @@ const App = () => {
               </Row>
             </Container>
           ) : (
-            <SplashPage />
+            <>
+              <Login
+                show={showLoginModal}
+                onClose={() => setShowLoginModal(false)}
+                onLogin={(request) => login(request)}
+              />
+              <SplashPage />
+            </>
           )}
         </Route>
         <Route path="/login">
