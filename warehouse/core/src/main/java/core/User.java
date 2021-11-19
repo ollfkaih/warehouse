@@ -13,21 +13,17 @@ import java.util.Objects;
 public class User extends Entity<User> {
   private String userName;
   private String password;
-  private boolean admin;
 
-  public User(@JsonProperty("id") String id, @JsonProperty("userName") String userName, @JsonProperty("password") String password,
-      @JsonProperty("admin") boolean admin) {
+  public User(@JsonProperty("id") String id, @JsonProperty("userName") String userName, @JsonProperty("password") String password) {
     super(id);
     setUserName(userName);
     this.password = password; // needs to set directly to avoid double hashing
-    setAdmin(admin);
   }
 
-  public User(String userName, String password, boolean admin) {
+  public User(String userName, String password) {
     super();
     setUserName(userName);
     setPassword(password);
-    setAdmin(admin);
   }
 
   public String getUserName() {
@@ -63,15 +59,6 @@ public class User extends Entity<User> {
     return md5Hash(password).equals(this.password);
   }
 
-  public boolean isAdmin() {
-    return admin;
-  }
-
-  public void setAdmin(boolean admin) {
-    this.admin = admin;
-    notifyUpdated();
-  }
-
   private static String md5Hash(String password) {
     String outString = null;
     try {
@@ -92,7 +79,7 @@ public class User extends Entity<User> {
 
   @Override
   public String toString() {
-    return "Username: " + userName + " Password: " + password + " Admin: " + admin;
+    return "Username: " + userName + " Password: " + password;
   }
 
   @Override
@@ -104,12 +91,12 @@ public class User extends Entity<User> {
       return false;
     }
     User user = (User) o;
-    return admin == user.admin && userName.equals(user.userName) && password.equals(user.password);
+    return userName.equals(user.userName) && password.equals(user.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userName, password, admin);
+    return Objects.hash(userName, password);
   }
 
   @Override

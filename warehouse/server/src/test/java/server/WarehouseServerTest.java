@@ -196,7 +196,7 @@ public class WarehouseServerTest {
 
   void registerAndLogin() throws Exception {
     String password = "password123";
-    User user = new User("TestUser", password, true);
+    User user = new User("TestUser", password);
 
     register(user);
 

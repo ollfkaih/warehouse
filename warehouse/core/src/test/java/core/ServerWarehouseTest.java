@@ -60,7 +60,7 @@ public class ServerWarehouseTest {
     assertEquals(0, wh.getUsers().size());
     assertFalse(wh.containsUserByUsername(username));
 
-    User user = new User(username, "password123", true);
+    User user = new User(username, "password123");
     wh.addUser(user);
 
     assertEquals(user, addedUser);
@@ -76,7 +76,7 @@ public class ServerWarehouseTest {
 
     String username = UUID.randomUUID().toString();
     String password = UUID.randomUUID().toString();
-    User user = new User(username, password, false);
+    User user = new User(username, password);
     wh.addUser(user);
 
     assertThrows(IllegalArgumentException.class, () -> wh.login(username + "-wrong", password + "-wrong"));
@@ -97,13 +97,13 @@ public class ServerWarehouseTest {
   public void testRegisterSameName() {
     String username = UUID.randomUUID().toString();
     String password = UUID.randomUUID().toString();
-    User user = new User(username, password, false);
+    User user = new User(username, password);
     wh.addUser(user);
 
-    User user2 = new User(username, UUID.randomUUID().toString(), true);
+    User user2 = new User(username, UUID.randomUUID().toString());
     assertThrows(IllegalArgumentException.class, () -> wh.addUser(user2));
 
-    User user3 = new User(username.toUpperCase(), UUID.randomUUID().toString(), false);
+    User user3 = new User(username.toUpperCase(), UUID.randomUUID().toString());
     assertThrows(IllegalArgumentException.class, () -> wh.addUser(user3));
   }
 
@@ -116,7 +116,7 @@ public class ServerWarehouseTest {
     Item item = new Item(UUID.randomUUID().toString(), new Random().nextInt(100));
     itemCollection.add(item);
 
-    User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), true);
+    User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
     userCollection.add(user);
 
     ServerWarehouse wh = new ServerWarehouse(itemCollection, userCollection);

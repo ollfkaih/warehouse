@@ -16,8 +16,8 @@ public class UserTest {
 
   @BeforeEach
   void setup() {
-    user1 = new User("a", "b", true);
-    user2 = new User("c", "d", false);
+    user1 = new User("a", "b");
+    user2 = new User("c", "d");
   }
 
   @Test
@@ -26,18 +26,16 @@ public class UserTest {
     assertEquals("a", user1.getUserName());
     assertTrue(user1.checkPassword("b"));
     assertFalse(user1.checkPassword("d"));
-    assertTrue(user1.isAdmin());
     assertEquals("c", user2.getUserName());
     assertTrue(user2.checkPassword("d"));
     assertFalse(user2.checkPassword("b"));
-    assertFalse(user2.isAdmin());
   }
 
   @Test
   @DisplayName("Test")
   void testExceptions() {
-    assertThrows(IllegalArgumentException.class, () -> user3 = new User("", "", true));
-    assertThrows(IllegalArgumentException.class, () -> user3 = new User("", "b", true));
-    assertThrows(IllegalArgumentException.class, () -> user3 = new User("a", "", true));
+    assertThrows(IllegalArgumentException.class, () -> user3 = new User("", ""));
+    assertThrows(IllegalArgumentException.class, () -> user3 = new User("", "b"));
+    assertThrows(IllegalArgumentException.class, () -> user3 = new User("a", ""));
   }
 }
