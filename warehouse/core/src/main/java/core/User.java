@@ -11,9 +11,9 @@ import java.util.Objects;
  * Class for representing one type of user.
  */
 public class User extends Entity<User> {
-  String userName;
-  String password;
-  boolean admin;
+  private String userName;
+  private String password;
+  private boolean admin;
 
   public User(@JsonProperty("id") String id, @JsonProperty("userName") String userName, @JsonProperty("password") String password,
       @JsonProperty("admin") boolean admin) {

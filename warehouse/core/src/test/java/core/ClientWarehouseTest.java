@@ -319,7 +319,7 @@ public class ClientWarehouseTest {
     verify(server, times(1)).register(user);
     registerFuture.complete(null);
 
-    wh.login(user.userName, user.password);
+    wh.login(user.getUserName(), user.getPassword());
 
     verify(server, times(1)).login(any());
     AuthSession authSession = new AuthSession(user);
