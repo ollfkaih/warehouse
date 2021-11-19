@@ -2,6 +2,7 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Item from '../modules/Item'
+var Barcode = require('react-barcode')
 
 interface IProps {
   editingItem: Item
@@ -9,15 +10,28 @@ interface IProps {
 }
 
 const ItemDetails = (props: IProps) => {
-  function validateNumber(e: any, propertyName: keyof Item) {
+  function validateNumber(
+    e: any,
+    propertyName: keyof Item,
+    allowLeadingZeroes?: boolean
+  ) {
     const number = Number(e?.target?.value)
-    return !isNaN(number) && number > 0 && number < Number.MAX_SAFE_INTEGER
-      ? Number(e.target.value)
+    return !isNaN(number) &&
+      (number > 0 || allowLeadingZeroes) &&
+      number < Number.MAX_SAFE_INTEGER
+      ? e.target.value
       : props.editingItem[propertyName]
   }
 
-  const changeValue = (e: any, propertyName: keyof Item, isNumber: boolean) => {
-    const legalValue = isNumber ? validateNumber(e, propertyName) : e.target.value
+  const changeValue = (
+    e: any,
+    propertyName: keyof Item,
+    isNumber: boolean,
+    allowLeadingZeroes?: boolean
+  ) => {
+    const legalValue = isNumber
+      ? validateNumber(e, propertyName, allowLeadingZeroes)
+      : e.target.value
 
     props.setEditingItem({
       ...props.editingItem,
@@ -236,10 +250,18 @@ const ItemDetails = (props: IProps) => {
                   placeholder="0360002914522"
                   value={props.editingItem.barcode ?? ''}
                   type="text"
-                  onChange={(e) => changeValue(e, 'barcode', true)}
+                  onChange={(e) => changeValue(e, 'barcode', true, true)}
                 />
               </Form.Group>
             </Row>
+            {props.editingItem.barcode &&
+            props.editingItem.barcode.toString().length === 13 ? (
+              <Row>
+                <Barcode value={props.editingItem.barcode} />
+              </Row>
+            ) : (
+              <></>
+            )}
           </Row>
         </Form>
       )}
