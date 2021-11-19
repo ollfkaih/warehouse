@@ -36,7 +36,7 @@ public class EntityCollectionAutoPersistence<T extends Entity<T>> implements Ent
     try {
       dataPersistence.save(entity, entity.getId());
     } catch (IOException e) {
-      System.out.println("ERROR: could not auto-save entity with id '" + entity.getId() + "'");
+      System.err.println("ERROR: could not auto-save entity with id '" + entity.getId() + "'");
       e.printStackTrace();
     }
   }
@@ -45,7 +45,7 @@ public class EntityCollectionAutoPersistence<T extends Entity<T>> implements Ent
     try {
       dataPersistence.delete(entity.getId());
     } catch (IOException e) {
-      System.out.println("ERROR: could not auto-save deletion of entity with id '" + entity.getId() + "'");
+      System.err.println("ERROR: could not auto-save deletion of entity with id '" + entity.getId() + "'");
       e.printStackTrace();
     }
   }

@@ -34,7 +34,7 @@ public class WarehouseApp extends Application {
       stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("appIcon/1-rounded.png")));
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("[WarehouseApp.java] Icon-image not found");
+      System.err.println("ERROR: [WarehouseApp.java] Icon-image not found");
     }
     warehouseController = (WarehouseController) fxmlLoader.getController();
     warehouseController.setStage(stage);

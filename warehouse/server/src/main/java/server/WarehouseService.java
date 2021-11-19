@@ -33,7 +33,7 @@ public class WarehouseService {
       itemEntityCollection.addAll(dataPersistence.loadAll());
       return itemEntityCollection;
     } catch (Exception e) {
-      System.out.println("LOADING SAVED ITEMS FAILED");
+      System.err.println("ERROR: Loading saved items failed");
       return new EntityCollection<>();
     }
   }

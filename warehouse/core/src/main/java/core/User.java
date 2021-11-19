@@ -30,7 +30,7 @@ public class User extends Entity<User> {
     return userName;
   }
 
-  public void setUserName(String userName) {
+  private void setUserName(String userName) {
     if (userName.equals("")) {
       throw new IllegalArgumentException("Username cannot be empty");
     }
@@ -38,14 +38,6 @@ public class User extends Entity<User> {
     notifyUpdated();
   }
   
-  public void setPassword(String password) {
-    if (password.equals("")) {
-      throw new IllegalArgumentException("Password cannot be empty");
-    }
-    this.password = md5Hash(password);
-    notifyUpdated();
-  }
-
   /**
    * Get the password hash. Used when serializing users for persistence.
    *
@@ -53,6 +45,14 @@ public class User extends Entity<User> {
    */
   public String getPassword() {
     return password;
+  }
+
+  private void setPassword(String password) {
+    if (password.equals("")) {
+      throw new IllegalArgumentException("Password cannot be empty");
+    }
+    this.password = md5Hash(password);
+    notifyUpdated();
   }
 
   public boolean checkPassword(String password) {
