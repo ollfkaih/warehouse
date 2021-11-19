@@ -254,6 +254,7 @@ public class DetailsViewController {
     stage.requestFocus();
     this.update();
     addInputValidationListeners();
+    inpName.setOnMouseClicked(e -> inpName.selectAll());
   }
 
   private void addInputValidationListeners() {

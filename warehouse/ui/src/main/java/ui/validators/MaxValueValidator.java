@@ -1,7 +1,7 @@
 package ui.validators;
 
 /**
- * Validates that the input is longer or equal to the minLength.
+ * Validates that the input is shorter or equal to the specified maxValue.
  */
 public class MaxValueValidator implements InputValidator {
   int maxValue;
@@ -12,11 +12,11 @@ public class MaxValueValidator implements InputValidator {
 
   @Override
   public boolean validateInput(String input) {
-    return Double.parseDouble(input) <= maxValue;
+    return input.length() <= maxValue;
   }
 
   @Override
   public String getErrorMessage() {
-    return "Value is too big";
+    return "Max " + maxValue + " characters are allowed";
   }
 }
