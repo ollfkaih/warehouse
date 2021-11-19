@@ -65,7 +65,7 @@ public class ClientWarehouse extends BaseWarehouse {
     return new ArrayList<>(itemCollection.getAllSorted(comparator));
   }
 
-  public CompletableFuture<Void>  login(String username, String password) {
+  public CompletableFuture<Void> login(String username, String password) {
     return server
         .login(new LoginRequest(username, password))
         .thenAccept(authSession1 -> this.authSession = authSession1);
