@@ -18,6 +18,7 @@ public class ItemField {
    * Interface for a function that saves an itemField textField value to the
    * corresponding item property.
    */
+  @FunctionalInterface
   public static interface SaveFunction {
     void saveItemField(ItemField itemField);
   }
@@ -26,6 +27,7 @@ public class ItemField {
    * Interface for a function that gets the item property value for the property
    * the field corresponds to.
    */
+  @FunctionalInterface
   public static interface GetFunction {
     Object getItemValue();
   }
