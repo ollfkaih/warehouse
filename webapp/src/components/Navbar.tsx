@@ -9,8 +9,8 @@ interface IProps {
 }
 
 const Navbar = (props: IProps) => (
-  <BootstrapNavbar className="pb-0 m-0" expand={false}>
-    <BootstrapNavbar.Brand className="navbar-left ms-3 py-4">
+  <BootstrapNavbar className="p-0 m-0" expand={false}>
+    <BootstrapNavbar.Brand className="navbar-left ms-3 py-1">
       <Link to="/">
         <Image
           className="text-primary"

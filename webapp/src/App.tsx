@@ -51,7 +51,11 @@ const App = () => {
 
   function showDetailsCol(): React.ReactNode {
     return currentItem != null && editingItem != null ? (
-      <Col className="fit-to-height col-md-pull-6 detailsView" xs="12" lg="7">
+      <Col
+        className="overflow-auto fit-to-height col-md-pull-6 detailsView"
+        xs="12"
+        xl="7"
+      >
         <div className="detailsViewInsideDiv">
           <ItemDetailsButtons
             setCurrentItem={setCurrentItem}
@@ -68,7 +72,7 @@ const App = () => {
   }
 
   return (
-    <Col className="vh-100">
+    <Col className="vh-100 overflow-hidden">
       <Navbar login={login} onLogin={setLogin} />
       <Row className="Content d-flex m-0 flex-shrink-1 h-100">
         <Route path="/" exact>

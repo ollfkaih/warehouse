@@ -28,7 +28,7 @@ const ItemDetails = (props: IProps) => {
   return (
     <>
       {props.editingItem && (
-        <Form className="overflow-auto h-100">
+        <Form className="overflow-auto-y h-100">
           <Row md="12" className="m-0">
             <Row className="m-1 pt-4">
               <h5>
@@ -65,7 +65,7 @@ const ItemDetails = (props: IProps) => {
                 </label>
               </Row>
               <Col md="6" className="p-0">
-                <Row className="m-1">
+                <Row className="m-0">
                   <Form.Group as={Col}>
                     <Form.Control
                       id="amount-control"
@@ -78,14 +78,14 @@ const ItemDetails = (props: IProps) => {
                   </Form.Group>
                 </Row>
               </Col>
-              <Col md="6" className="pb-2">
+              <Col md="6" className="p-0">
                 <Row className="m-0">
-                  <div className="inputSectionDiv col">
+                  <div className="inputSectionDiv col me-1">
                     <Form.Group as={Col}>
                       <Form.Control
                         id="section-control"
                         className="input-section"
-                        placeholder="a1"
+                        placeholder="?"
                         value={props.editingItem.section ?? ''}
                         onChange={(e) => changeValue(e, 'section', false)}
                       />
@@ -98,7 +98,7 @@ const ItemDetails = (props: IProps) => {
                       <Form.Control
                         id="row-control"
                         className="input-section"
-                        placeholder="a1"
+                        placeholder="?"
                         value={props.editingItem.row ?? ''}
                         onChange={(e) => changeValue(e, 'row', false)}
                       />
@@ -106,12 +106,12 @@ const ItemDetails = (props: IProps) => {
                     <p>Rad</p>
                   </div>
 
-                  <div className="inputSectionDiv col">
+                  <div className="inputSectionDiv col ms-1">
                     <Form.Group as={Col}>
                       <Form.Control
                         id="shelf-control"
                         className="input-section"
-                        placeholder="a1"
+                        placeholder="?"
                         value={props.editingItem.shelf ?? ''}
                         onChange={(e) => changeValue(e, 'shelf', false)}
                       />
