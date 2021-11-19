@@ -10,15 +10,22 @@ interface IProps {
 const ItemListElement = ({ item, setCurrentItem, selected }: IProps) => {
   return (
     <Row
+      id={item.id}
       className={
         'mb-1 bg-secondary flex-nowrap rounded-3 bg-secondary m-0 p-2 ' +
         (selected ? 'selected' : 'item-list-element')
       }
       onClick={() => setCurrentItem(item)}
     >
-      <Col className="text-truncate">{item.brand}</Col>
-      <Col className="text-truncate">{item.name}</Col>
-      <Col className="text-truncate">{item.amount}</Col>
+      <Col id="itemBrand" className="text-truncate">
+        {item.brand}
+      </Col>
+      <Col id="itemName" className="text-truncate">
+        {item.name}
+      </Col>
+      <Col id="itemAmount" className="text-truncate">
+        {item.amount}
+      </Col>
     </Row>
   )
 }

@@ -14,6 +14,7 @@ const SearchBar = (props: IProps) => {
       <InputGroup.Text className="p-0 mb-3 container-fluid border-white placeholder-primary searchFormGroup">
         <Form.Control
           className="bg-light text-primary form-control p-2 border-0 searchForm"
+          id="searchField"
           type="text"
           placeholder="Søk..."
           value={props.searchText}

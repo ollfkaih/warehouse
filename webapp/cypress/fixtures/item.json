@@ -1,0 +1,16 @@
+{
+  "name": "ProduktNavn",
+  "amount": 565646565,
+  "barcode": 1234567890128,
+  "brand": "Produsent",
+  "regularPrice": 7500,
+  "salePrice": 6000,
+  "purchasePrice": 5000,
+  "section": "AD",
+  "row": "BC",
+  "shelf": "16",
+  "weight": 10,
+  "height": 50,
+  "width": 60,
+  "length": 15
+}
