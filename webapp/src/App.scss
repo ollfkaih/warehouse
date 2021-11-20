@@ -152,6 +152,10 @@ $form-floating-input-padding-b: 1.625rem;
   font-size: 10px;
 }
 
+.loginInputFieldLabel {
+  margin-left: 0px !important;
+}
+
 @media only screen and (max-width: 992px) {
   .detailsViewInsideDiv {
     padding: 0px;

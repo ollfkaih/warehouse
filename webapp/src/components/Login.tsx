@@ -22,7 +22,7 @@ const Login = (props: IProps) => {
   return (
     <Modal show={props.show} onHide={close}>
       <Modal.Header closeButton>
-        <Modal.Title>Login</Modal.Title>
+        <Modal.Title>Logg inn</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -37,13 +37,15 @@ const Login = (props: IProps) => {
               setLoginDetails({ ...loginDetails, username: e.target.value })
             }
           />
-          <label htmlFor="username-control">Brukernavn</label>
+          <label htmlFor="username-control" className="loginInputFieldLabel">
+            <i className="far fa-user"></i> Brukernavn
+          </label>
         </Form.Floating>
 
         <Form.Floating as={Col}>
           <Form.Control
             id="password-control"
-            className="bg-secondary"
+            className="bg-secondary mt-3"
             placeholder="0.0"
             value={loginDetails.password}
             type="password"
@@ -51,13 +53,15 @@ const Login = (props: IProps) => {
               setLoginDetails({ ...loginDetails, password: e.target.value })
             }
           />
-          <label htmlFor="password-control">Passord</label>
+          <label htmlFor="password-control" className="loginInputFieldLabel">
+            <i className="far fa-lock"></i> Passord
+          </label>
         </Form.Floating>
       </Modal.Body>
 
       <Modal.Footer>
         <Button variant="secondary" onClick={close}>
-          Close
+          <i className="far fa-times"></i> Lukk
         </Button>
         <Button
           variant="primary"
@@ -65,7 +69,7 @@ const Login = (props: IProps) => {
             props.onLogin(loginDetails)
           }}
         >
-          Save changes
+          <i className="far fa-key"></i> Logg inn
         </Button>
       </Modal.Footer>
     </Modal>
