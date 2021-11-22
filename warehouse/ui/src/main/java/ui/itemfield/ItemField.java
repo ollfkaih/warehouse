@@ -40,12 +40,12 @@ public class ItemField {
   protected String errorMessage;
   protected List<InputValidator> validators = new ArrayList<>();
 
-  public ItemField(TextField textField, boolean nullable, SaveFunction saveFunction, GetFunction getFunction, Label errorLbael) {
+  public ItemField(TextField textField, boolean nullable, SaveFunction saveFunction, GetFunction getFunction, Label errorLabel) {
     this.textField = textField;
     this.nullable = nullable;
     this.saveFunction = saveFunction;
     this.getFunction = getFunction;
-    this.errorLabel = errorLbael;
+    this.errorLabel = errorLabel;
 
     addChangeValidator();
   }
