@@ -20,10 +20,10 @@ import AuthSession from './modules/AuthSession'
 import Login from './components/Login'
 import LoginRequest from './modules/LoginRequest'
 
-const REACT_APP_DOMAIN = 'http://localhost:8080'
-const REACT_APP_SERVER_PATH = '/warehouse/item/'
-const REACT_APP_GET_ALL_ITEMS_ENDPOINT = '/warehouse/items'
-const REACT_APP_USER_SERVER_PATH = '/warehouse/user/'
+const DOMAIN = process.env.REACT_APP_DOMAIN || ''
+const SERVER_PATH = process.env.REACT_APP_SERVER_PATH || ''
+const GET_ALL_ITEMS_ENDPOINT = process.env.REACT_APP_GET_ALL_ITEMS_ENDPOINT || ''
+const USER_SERVER_PATH = process.env.REACT_APP_USER_SERVER_PATH || ''
 
 const App = () => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false)
@@ -33,29 +33,22 @@ const App = () => {
   const [sortOption, setSortOption] = useState<SortOption>(SortOption.Name)
   const [sortAscendingOrder, setSortAscendingOrder] = useState<boolean>(false)
 
-  const { data, error, mutate } = useSWR(
-    REACT_APP_DOMAIN + REACT_APP_GET_ALL_ITEMS_ENDPOINT,
-    getRequest,
-    { refreshInterval: 1 }
-  )
+  const { data, error, mutate } = useSWR(DOMAIN + GET_ALL_ITEMS_ENDPOINT, getRequest, {
+    refreshInterval: 1,
+  })
   const deleteItem = async (id: string) => {
     if (!loginSession) return
     if (editingItem !== currentItem) {
       setEditingItem(undefined)
     } else {
-      await deleteRequest(REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + id, loginSession)
+      await deleteRequest('' + DOMAIN + SERVER_PATH + id, loginSession)
     }
     mutate()
     setCurrentItem(undefined)
   }
   const saveItem = async (item: Item | undefined) => {
     if (!loginSession) return
-    item &&
-      (await saveRequest(
-        REACT_APP_DOMAIN + REACT_APP_SERVER_PATH + item.id,
-        loginSession,
-        item
-      ))
+    item && (await saveRequest(DOMAIN + SERVER_PATH + item.id, loginSession, item))
     mutate()
   }
   const [editingItem, setEditingItem] = useState<Item>()
@@ -63,8 +56,8 @@ const App = () => {
     setEditingItem(currentItem)
   }, [currentItem])
 
-  if (!REACT_APP_DOMAIN)
-    return <p>Domain for server not set, configure REACT_APP_DOMAIN variable</p>
+  if (!DOMAIN)
+    return <p>Domain for server not set, configure process.env.DOMAIN variable</p>
 
   function showDetailsCol(): React.ReactNode {
     return editingItem != null ? (
@@ -88,23 +81,41 @@ const App = () => {
     )
   }
 
+  const addButtonIfNotEditing = () =>
+    editingItem || (
+      <Button
+        id="addNewItemButton"
+        className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg"
+        onClick={() =>
+          setEditingItem({
+            name: '',
+            id: uuidv4(),
+            amount: 0,
+            creationDate: new Date(),
+          })
+        }
+      >
+        <i className="fal fa-plus me-2" />
+        Legg til produkt
+      </Button>
+    )
+
   const login = async (loginDetails: LoginRequest) => {
     const authSession = await loginRequest(
-      REACT_APP_DOMAIN + REACT_APP_USER_SERVER_PATH + 'login/',
+      DOMAIN + USER_SERVER_PATH + 'login/',
       loginDetails
     )
     setLoginSession(authSession)
     setShowLoginModal(false)
   }
 
+  const promptLoginOrLogout = (promptLogin: boolean) => {
+    promptLogin ? setShowLoginModal(true) : setLoginSession(undefined)
+  }
+
   return (
     <Col className="vh-100 overflow-hidden">
-      <Navbar
-        login={loginSession}
-        onLogin={(login) =>
-          login ? setShowLoginModal(true) : setLoginSession(undefined)
-        }
-      />
+      <Navbar login={loginSession} onLogin={promptLoginOrLogout} />
       <Row className="Content d-flex m-0 flex-shrink-1 h-100">
         <Route path="/" exact>
           {loginSession ? (
@@ -132,20 +143,7 @@ const App = () => {
                     swrData={data}
                     swrError={error}
                   />
-                  <Button
-                    id="addNewItemButton"
-                    className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg btn"
-                    onClick={() =>
-                      setEditingItem({
-                        name: '',
-                        id: uuidv4(),
-                        amount: 0,
-                        creationDate: new Date(),
-                      })
-                    }
-                  >
-                    <i className="fal fa-plus me-2"></i>Legg til produkt
-                  </Button>
+                  {addButtonIfNotEditing()}
                 </Col>
               </Row>
             </Container>
@@ -156,7 +154,7 @@ const App = () => {
                 onClose={() => setShowLoginModal(false)}
                 onLogin={(request) => login(request)}
               />
-              <SplashPage />
+              <SplashPage login={loginSession} onLogin={promptLoginOrLogout} />
             </>
           )}
         </Route>

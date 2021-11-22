@@ -166,6 +166,31 @@ $form-floating-input-padding-b: 1.625rem;
   margin-left: 0px !important;
 }
 
+.frontImage {
+  padding: 20px;
+}
+
+.frontText {
+}
+
+.frontTextTop {
+  color: grey;
+  margin: 0 0 -5px 0;
+}
+
+.frontTextHeading {
+  margin: 0;
+  font-weight: 700;
+}
+
+.frontTextDescription {
+  font-size: 25px;
+}
+
+.frontRow {
+  margin-top: -150px;
+}
+
 @media only screen and (max-width: 992px) {
   .detailsViewInsideDiv {
     padding: 0px;
@@ -185,5 +210,9 @@ $form-floating-input-padding-b: 1.625rem;
 
   .detailsView {
     padding: 0px;
+  }
+
+  .frontRow {
+    margin-top: 0px;
   }
 }

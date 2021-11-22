@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import BootstrapNavbar from 'react-bootstrap/Navbar'
-import Button from 'react-bootstrap/Button'
 import { Image } from 'react-bootstrap'
 import AuthSession from '../modules/AuthSession'
+import LoginButton from './LoginButton'
 
 interface IProps {
   login?: AuthSession
@@ -22,29 +22,7 @@ const Navbar = (props: IProps) => (
       </Link>
     </BootstrapNavbar.Brand>
     <BootstrapNavbar.Text className="navbar-right me-4">
-      {props.login ? (
-        <Link to="/">
-          <Button
-            className="rounded-pill px-4"
-            variant="outline-primary"
-            onClick={() => props.onLogin(false)}
-          >
-            <i className="far fa-lock"></i> Logg ut
-          </Button>
-        </Link>
-      ) : (
-        <>
-          <Link to="/">
-            <Button
-              className="rounded-pill"
-              variant="outline-primary"
-              onClick={() => props.onLogin(true)}
-            >
-              Logg inn
-            </Button>
-          </Link>
-        </>
-      )}
+      <LoginButton login={props.login} onLogin={props.onLogin} />
     </BootstrapNavbar.Text>
   </BootstrapNavbar>
 )
