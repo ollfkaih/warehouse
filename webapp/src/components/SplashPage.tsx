@@ -1,5 +1,4 @@
-import { Button, Col, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Col, Row } from 'react-bootstrap'
 import AuthSession from '../modules/AuthSession'
 import LoginButton from './LoginButton'
 
