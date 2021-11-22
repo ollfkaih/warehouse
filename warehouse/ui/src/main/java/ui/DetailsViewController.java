@@ -274,7 +274,7 @@ public class DetailsViewController {
     
     if (item.getBarcode() != null) {
       generateBarcodeImage();
-    }else {
+    } else {
       barcodeImageView.setImage(null);
     }
   }
