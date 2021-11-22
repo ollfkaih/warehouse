@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ItemListElement from './ItemListElement'
 import Item from '../modules/Item'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Placeholder, Row } from 'react-bootstrap'
 import SortOption from '../modules/SortOption'
 
 interface IProps {
@@ -22,8 +22,6 @@ const ItemList = (props: IProps) => {
   }, [props.swrData])
 
   if (props.swrError) return <p>Could not load items</p>
-  if (!props.swrData) return <p>Loading</p>
-  if (!items) return <p>Could not load items</p>
 
   const sortingComparator = (item1: Item, item2: Item, ascending: boolean): number => {
     const ascendingFactor = ascending ? 1 : -1
@@ -86,22 +84,36 @@ const ItemList = (props: IProps) => {
           </Col>
         </Row>
         <Container fluid className="overflow-auto w-auto item-list m-0 p-0">
-          {items
-            .filter(
-              (item) =>
-                item.name.toLowerCase().match(props.searchText.toLowerCase()) ||
-                item.brand?.toLowerCase().match(props.searchText.toLowerCase()) ||
-                item.barcode?.toString() === props.searchText
-            )
-            .sort((item1, item2) => sortingComparator(item1, item2, ascending))
-            .map((item) => (
-              <ItemListElement
-                key={item.id}
-                item={item}
-                selected={props.currentItem === item ? true : false}
-                setCurrentItem={props.setCurrentItem}
-              />
-            ))}
+          {items ? (
+            items
+              .filter(
+                (item) =>
+                  item.name.toLowerCase().match(props.searchText.toLowerCase()) ||
+                  item.brand?.toLowerCase().match(props.searchText.toLowerCase()) ||
+                  item.barcode?.toString() === props.searchText
+              )
+              .sort((item1, item2) => sortingComparator(item1, item2, ascending))
+              .map((item) => (
+                <ItemListElement
+                  key={item.id}
+                  item={item}
+                  selected={props.currentItem === item ? true : false}
+                  setCurrentItem={props.setCurrentItem}
+                />
+              ))
+          ) : (
+            <span className="px-2 m-1">
+              <Placeholder animation="glow">
+                <Placeholder xs={3} />
+              </Placeholder>
+              <Placeholder animation="glow">
+                <Placeholder xs={{ span: 3, offset: 1 }} />
+              </Placeholder>
+              <Placeholder animation="glow">
+                <Placeholder xs={{ span: 3, offset: 1 }} />
+              </Placeholder>
+            </span>
+          )}
         </Container>
       </Container>
     )
