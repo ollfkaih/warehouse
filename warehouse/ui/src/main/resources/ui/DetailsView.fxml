@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <ScrollPane fx:id="detailsViewScrollPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #f9f9f9" stylesheets="@CSS/inputStyle.css, @CSS/ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <content>
@@ -35,6 +36,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
+                              <Text fx:id="notifyCannotEdit" strokeType="OUTSIDE" strokeWidth="0.0" text="Du må være innlogget for å redigere" textAlignment="CENTER" wrappingWidth="379.603515625" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                            </children>
                         </AnchorPane>
                         <HBox fx:id="sectionSaveDelete" maxHeight="59.0" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" spacing="20.0">

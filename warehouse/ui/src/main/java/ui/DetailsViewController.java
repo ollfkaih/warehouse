@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -75,6 +76,7 @@ public class DetailsViewController {
   @FXML private ImageView barcodeImageView;
   @FXML private HBox sectionSaveDelete;
   @FXML private Label barcodeErrorLabel;
+  @FXML private Text notifyCannotEdit;
 
   private final Stage stage;
   private Parent detailsRoot;
@@ -125,9 +127,10 @@ public class DetailsViewController {
       e.printStackTrace();
     }
 
-    if (warehouse.getCurrentUser() == null) {
-      btnEdit.setVisible(false);
-    }
+    // toggles between info-text and edit-button
+    btnEdit.setVisible(!(warehouse.getCurrentUser() == null));
+    notifyCannotEdit.setVisible(warehouse.getCurrentUser() == null);
+
     maxCharsLimiter(inpPlacementSection, placementMaxLength);
     maxCharsLimiter(inpPlacementRow, placementMaxLength);
     maxCharsLimiter(inpPlacementShelf, placementMaxLength);
