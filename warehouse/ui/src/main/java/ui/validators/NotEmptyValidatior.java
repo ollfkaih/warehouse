@@ -10,4 +10,8 @@ public class NotEmptyValidatior implements InputValidator {
     return input != null && !input.equals("");
   }
 
+  @Override
+  public String getErrorMessage() {
+    return "Field cannot be empty";
+  }
 }

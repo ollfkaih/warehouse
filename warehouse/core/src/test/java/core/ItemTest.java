@@ -167,7 +167,7 @@ public class ItemTest {
     assertEquals(changeCounter, 1);
 
     changeCounter = 0;
-    item.setBarcode("1234567890123");
+    item.setBarcode("1234567890128");
     assertEquals(changeCounter, 1);
 
     changeCounter = 0;

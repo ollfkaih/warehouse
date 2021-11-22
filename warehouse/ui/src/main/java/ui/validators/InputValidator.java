@@ -5,4 +5,6 @@ package ui.validators;
  */
 public interface InputValidator {
   public boolean validateInput(String input);
+  
+  public String getErrorMessage();
 }

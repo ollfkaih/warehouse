@@ -18,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import localserver.LocalServer;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -126,7 +125,15 @@ class WarehouseControllerTest {
     });
   } 
         
-  // Thanks to Marcos Supridatta and Joel Stevick for this superb solution: https://stackoverflow.com/questions/12837592/how-to-scroll-to-make-a-node-within-the-content-of-a-scrollpane-visible
+  /**
+   * Ensures that a Node in a ScrollPane is visible.
+   *
+   * @author Marcos Supridatta
+   * @author Joel Stevick
+   * @see ExternalURL https://stackoverflow.com/questions/12837592/how-to-scroll-to-make-a-node-within-the-content-of-a-scrollpane-visible
+   * @param scrollPane containing the node
+   * @param node to make visible
+   */
   private static void ensureVisible(ScrollPane scrollPane, Node node) {
     Bounds viewport = scrollPane.getViewportBounds();
     double contentHeight = scrollPane.getContent().localToScene(scrollPane.getContent().getBoundsInLocal()).getHeight();
@@ -159,9 +166,10 @@ class WarehouseControllerTest {
         .values()
         .stream()
         .collect(Collectors.toList());
-    
+
     ScrollPane detailsViewScrollPane = detailsViewControllers.get(detailsViewControllers.size() - 1).getScrollPane();
-    ensureVisibleClickOn(detailsViewScrollPane, robot, WAREHOUSE_NEW_ITEM_INPUTFIELD).write(testProductName);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, WAREHOUSE_NEW_ITEM_INPUTFIELD)
+        .write(testProductName);
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
     Stage stage = ((Stage) ((robot.lookup(DETAILS_VIEW).query())).getScene().getWindow());
     robot.interact(stage::close);
@@ -187,17 +195,51 @@ class WarehouseControllerTest {
     robot.clickOn(REGISTER_REGISTERBUTTON);
   }
 
+  /**
+   * Verifies that the detailsView display the Items actual values.
+   *
+   * @param item corresponding to the detailsView to test 
+   */
+  private void verifyDetailView(Item item) {
+    FxAssert.verifyThat(INP_BRAND, TextInputControlMatchers.hasText(item.getBrand()));
+    FxAssert.verifyThat(INP_AMOUNT, TextInputControlMatchers.hasText(String.valueOf(item.getAmount())));
+    FxAssert.verifyThat(INP_ORDINARY_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getRegularPrice())));
+    FxAssert.verifyThat(INP_SALES_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getSalePrice())));
+    FxAssert.verifyThat(INP_RETAILER_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getPurchasePrice())));
+    FxAssert.verifyThat(INP_PLACEMENT_SECTION, TextInputControlMatchers.hasText(item.getSection()));
+    FxAssert.verifyThat(INP_PLACEMENT_ROW, TextInputControlMatchers.hasText(item.getRow()));
+    FxAssert.verifyThat(INP_PLACEMENT_SHELF, TextInputControlMatchers.hasText(item.getShelf()));
+    FxAssert.verifyThat(INP_DIMENSIONS_LENGTH, TextInputControlMatchers.hasText(String.valueOf(item.getLength())));
+    FxAssert.verifyThat(INP_DIMENSIONS_WIDTH, TextInputControlMatchers.hasText(String.valueOf(item.getWidth())));
+    FxAssert.verifyThat(INP_DIMENSIONS_HEIGTH, TextInputControlMatchers.hasText(String.valueOf(item.getHeight())));
+    FxAssert.verifyThat(INP_WEIGHT, TextInputControlMatchers.hasText(String.valueOf(item.getWeight())));
+    FxAssert.verifyThat(INP_BARCODE, TextInputControlMatchers.hasText(item.getBarcode()));
+  }
+
+  private List<Node> findItemNodes(FxRobot robot) {
+    return robot.lookup(ITEM_LIST).queryAs(VBox.class).getChildren();
+  }
+
+  private void selectOptionInComboBox(FxRobot robot, String comboBoxQuery, String option) {
+    ComboBox<String> comboBox = robot.lookup(comboBoxQuery).queryAs(ComboBox.class);
+
+    robot.interact(() -> {
+      comboBox.getSelectionModel().select(option);
+    });
+  }
+
+  private void verifyItemsInOrder(FxRobot robot, String... itemNames) {
+    List<Node> items = findItemNodes(robot);
+    for (int i = 0; i < itemNames.length; i++) {
+      FxAssert.verifyThat(items.get(i), NodeMatchers.hasChild(itemNames[i]));
+    }
+  }
+
   @BeforeEach
   void setup() {
     Platform.runLater(() -> {
       warehouseController.loadPersistedData(new LocalServer("ui_test"));
-      removeAllItems();
     });
-  }
-
-  @AfterEach
-  void teardown() {
-    removeAllItems();
   }
 
   @Test
@@ -216,17 +258,22 @@ class WarehouseControllerTest {
   @DisplayName("Test add and remove item")
   void testAddAndDelete(FxRobot robot) {
     login(robot);
+
     final String testProductName = getRandomProductName();
     createNewItem(robot, testProductName);
     assertNotNull(getItemFromWarehouse(testProductName), "unable to create item");
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
+    
     robot.clickOn(testProductName);
     ScrollPane detailsViewScrollPane = getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane();
     ensureVisibleClickOn(detailsViewScrollPane, robot, EDIT_BUTTON);
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_DELETE_BUTTON);
+    
     robot.clickOn(CONFIRM_BOX_APPROVE_TEXT);
     assertNull(getItemFromWarehouse(testProductName), "unable to delete item");
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, testProductName));
+    
+    removeAllItems();
   }
 
   @Test
@@ -265,33 +312,18 @@ class WarehouseControllerTest {
     ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
 
     verifyDetailView(testItem);
-
     robot.interact(() -> ((Stage) ((robot.lookup(DETAILS_VIEW).query())).getScene().getWindow()).close());
 
     robot.clickOn(testProductName);
     verifyDetailView(testItem);
     
     robot.clickOn(EDIT_BUTTON);
-
     verifyDetailView(testItem);
+
     ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_VIEW_DELETE_BUTTON);
     robot.clickOn(CONFIRM_BOX_APPROVE_TEXT);
-  }
 
-  private void verifyDetailView(Item item) {
-    FxAssert.verifyThat(INP_BRAND, TextInputControlMatchers.hasText(item.getBrand()));
-    FxAssert.verifyThat(INP_AMOUNT, TextInputControlMatchers.hasText(String.valueOf(item.getAmount())));
-    FxAssert.verifyThat(INP_ORDINARY_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getRegularPrice())));
-    FxAssert.verifyThat(INP_SALES_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getSalePrice())));
-    FxAssert.verifyThat(INP_RETAILER_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getPurchasePrice())));
-    FxAssert.verifyThat(INP_PLACEMENT_SECTION, TextInputControlMatchers.hasText(item.getSection()));
-    FxAssert.verifyThat(INP_PLACEMENT_ROW, TextInputControlMatchers.hasText(item.getRow()));
-    FxAssert.verifyThat(INP_PLACEMENT_SHELF, TextInputControlMatchers.hasText(item.getShelf()));
-    FxAssert.verifyThat(INP_DIMENSIONS_LENGTH, TextInputControlMatchers.hasText(String.valueOf(item.getLength())));
-    FxAssert.verifyThat(INP_DIMENSIONS_WIDTH, TextInputControlMatchers.hasText(String.valueOf(item.getWidth())));
-    FxAssert.verifyThat(INP_DIMENSIONS_HEIGTH, TextInputControlMatchers.hasText(String.valueOf(item.getHeight())));
-    FxAssert.verifyThat(INP_WEIGHT, TextInputControlMatchers.hasText(String.valueOf(item.getWeight())));
-    FxAssert.verifyThat(INP_BARCODE, TextInputControlMatchers.hasText(item.getBarcode()));
+    removeAllItems();
   }
 
   @Test
@@ -301,60 +333,46 @@ class WarehouseControllerTest {
     final String testProductName = getRandomProductName();
     createNewItem(robot, testProductName);
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
+    
     Item testItem = getItemFromWarehouse(testProductName);
     assertNotNull(testItem);
     assertEquals(0, testItem.getAmount());
+    
     robot.moveTo(testProductName);
     robot.clickOn(WAREHOUSE_INCREMENT_BUTTON);
     assertEquals(1, testItem.getAmount());
+    
     robot.moveTo(testProductName);
     robot.clickOn(WAREHOUSE_DECREMENT_BUTTON);
     assertEquals(0, testItem.getAmount());
+
+    removeAllItems();
   }
 
   @Test
   @DisplayName("Test incrementButtons on detailsView")
   void testDetailViewIncrement(FxRobot robot) {
     login(robot);
-
     final String testProductName = getRandomProductName();
     createNewItem(robot, testProductName);
     robot.clickOn(testProductName);
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
+    
     Item testItem = getItemFromWarehouse(testProductName);
     ScrollPane detailsViewScrollPane = getDetailsViewController(testItem).getScrollPane();
     assertNotNull(testItem);
 
     ensureVisibleClickOn(detailsViewScrollPane, robot, EDIT_BUTTON);
-
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_INCREMENT_BUTTON);
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
     assertEquals(1, testItem.getAmount());
 
     ensureVisibleClickOn(detailsViewScrollPane, robot, EDIT_BUTTON);
-
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_DECREMENT_BUTTON);
     ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
     assertEquals(0, testItem.getAmount());
-  }
 
-  private List<Node> findItemNodes(FxRobot robot) {
-    return robot.lookup(ITEM_LIST).queryAs(VBox.class).getChildren();
-  }
-
-  private void selectOptionInComboBox(FxRobot robot, String comboBoxQuery, String option) {
-    ComboBox<String> comboBox = robot.lookup(comboBoxQuery).queryAs(ComboBox.class);
-
-    robot.interact(() -> {
-      comboBox.getSelectionModel().select(option);
-    });
-  }
-
-  private void verifyItemsInOrder(FxRobot robot, String... itemNames) {
-    List<Node> items = findItemNodes(robot);
-    for (int i = 0; i < itemNames.length; i++) {
-      FxAssert.verifyThat(items.get(i), NodeMatchers.hasChild(itemNames[i]));
-    }
+    removeAllItems();
   }
 
   @Test
@@ -376,5 +394,7 @@ class WarehouseControllerTest {
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, "B"));
     FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, "C"));
     robot.clickOn(INP_SEARCH).push(KeyCode.BACK_SPACE);
+
+    removeAllItems();
   }
 }

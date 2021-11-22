@@ -10,4 +10,9 @@ public class NotNegativeValidator implements InputValidator {
   public boolean validateInput(String input) {
     return validator.validateInput(input);
   }
+
+  @Override
+  public String getErrorMessage() {
+    return "Number cannot be negative";
+  }
 }

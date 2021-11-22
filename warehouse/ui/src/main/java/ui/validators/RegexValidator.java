@@ -16,4 +16,9 @@ public class RegexValidator implements InputValidator {
   public boolean validateInput(String input) {
     return pattern.matcher(input).find();
   }
+
+  @Override
+  public String getErrorMessage() {
+    return "Validation error";
+  }
 }
