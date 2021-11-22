@@ -23,7 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -76,7 +75,7 @@ public class DetailsViewController {
   @FXML private ImageView barcodeImageView;
   @FXML private HBox sectionSaveDelete;
   @FXML private Label barcodeErrorLabel;
-  @FXML private Text notifyCannotEdit;
+  @FXML private Label notifyCannotEdit;
 
   private final Stage stage;
   private Parent detailsRoot;
