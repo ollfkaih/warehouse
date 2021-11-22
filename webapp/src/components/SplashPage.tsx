@@ -12,11 +12,10 @@ const SplashPage = (props: IProps) => {
     <>
       <Row className="align-items-center frontRow">
         <Col md="6" className="frontText align-middle px-5">
-          <p className="frontTextTop">#1 easy to use</p>
+          <p className="frontTextTop">2138 presenterer</p>
           <h1 className="text-primary frontTextHeading">Warehouse</h1>
           <p className="frontTextDescription">
-            Store and manage your items with ease. Use this site to connect to your local
-            warehouse server.
+            Kontroller ditt varelager på en visjonær måte med fremtidens verktøy.
           </p>
           <LoginButton login={props.login} onLogin={props.onLogin} />
         </Col>

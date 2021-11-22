@@ -3,7 +3,10 @@ import dateFormat from 'dateformat'
 import LoginRequest from './modules/LoginRequest'
 import AuthSession from './modules/AuthSession'
 
-export const getRequest = async (url: string) => fetch(url).then((res) => res.json())
+export const getRequest = async (url: string, loginSession: AuthSession | undefined) => {
+  if (!loginSession) return
+  return fetch(url).then((res) => res.json())
+}
 export const deleteRequest = async (url: string, auth: AuthSession) =>
   fetch(url, {
     method: 'DELETE',
