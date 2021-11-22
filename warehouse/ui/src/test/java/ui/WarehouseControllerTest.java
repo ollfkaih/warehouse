@@ -126,7 +126,7 @@ class WarehouseControllerTest {
   } 
         
   /**
-   * Ensures that a Node is visible in a ScrollPane.
+   * Ensures that a Node in a ScrollPane is visible.
    *
    * @author Marcos Supridatta
    * @author Joel Stevick
