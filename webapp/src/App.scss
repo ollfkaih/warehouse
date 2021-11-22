@@ -151,6 +151,20 @@ $form-floating-input-padding-b: 1.625rem;
   color: #505050;
   font-size: 10px;
 }
+.barcodeRow {
+  background-color: $secondary;
+  padding: 10px;
+  border-radius: 7px;
+  margin-left: 28px;
+  width: 50%;
+}
+
+.barcodeRow > svg > rect {
+  fill: $secondary !important;
+}
+.loginInputFieldLabel {
+  margin-left: 0px !important;
+}
 
 @media only screen and (max-width: 992px) {
   .detailsViewInsideDiv {
