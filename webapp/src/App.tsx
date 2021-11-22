@@ -20,7 +20,7 @@ import AuthSession from './modules/AuthSession'
 import Login from './components/Login'
 import LoginRequest from './modules/LoginRequest'
 
-const REACT_APP_DOMAIN = 'http://10.24.6.213:8080'
+const REACT_APP_DOMAIN = 'http://localhost:8080'
 const REACT_APP_SERVER_PATH = '/warehouse/item/'
 const REACT_APP_GET_ALL_ITEMS_ENDPOINT = '/warehouse/items'
 const REACT_APP_USER_SERVER_PATH = '/warehouse/user/'
@@ -88,6 +88,27 @@ const App = () => {
     )
   }
 
+  const addButtonIfNotEditing = () =>
+    editingItem ? (
+      <></>
+    ) : (
+      <Button
+        id="addNewItemButton"
+        className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg"
+        onClick={() =>
+          setEditingItem({
+            name: '',
+            id: uuidv4(),
+            amount: 0,
+            creationDate: new Date(),
+          })
+        }
+      >
+        <i className="fal fa-plus me-2" />
+        Legg til produkt
+      </Button>
+    )
+
   const login = async (loginDetails: LoginRequest) => {
     const authSession = await loginRequest(
       REACT_APP_DOMAIN + REACT_APP_USER_SERVER_PATH + 'login/',
@@ -97,14 +118,13 @@ const App = () => {
     setShowLoginModal(false)
   }
 
+  const promptLoginOrLogout = (promptLogin: boolean) => {
+    promptLogin ? setShowLoginModal(true) : setLoginSession(undefined)
+  }
+
   return (
     <Col className="vh-100 overflow-hidden">
-      <Navbar
-        login={loginSession}
-        onLogin={(login) =>
-          login ? setShowLoginModal(true) : setLoginSession(undefined)
-        }
-      />
+      <Navbar login={loginSession} onLogin={promptLoginOrLogout} />
       <Row className="Content d-flex m-0 flex-shrink-1 h-100">
         <Route path="/" exact>
           {loginSession ? (
@@ -132,20 +152,7 @@ const App = () => {
                     swrData={data}
                     swrError={error}
                   />
-                  <Button
-                    id="addNewItemButton"
-                    className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg btn"
-                    onClick={() =>
-                      setEditingItem({
-                        name: '',
-                        id: uuidv4(),
-                        amount: 0,
-                        creationDate: new Date(),
-                      })
-                    }
-                  >
-                    <i className="fal fa-plus me-2"></i>Legg til produkt
-                  </Button>
+                  {addButtonIfNotEditing()}
                 </Col>
               </Row>
             </Container>
@@ -156,12 +163,7 @@ const App = () => {
                 onClose={() => setShowLoginModal(false)}
                 onLogin={(request) => login(request)}
               />
-              <SplashPage
-                login={loginSession}
-                onLogin={(login) =>
-                  login ? setShowLoginModal(true) : setLoginSession(undefined)
-                }
-              />
+              <SplashPage login={loginSession} onLogin={promptLoginOrLogout} />
             </>
           )}
         </Route>
