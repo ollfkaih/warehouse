@@ -1,6 +1,8 @@
 # Dokumentasjon for innlevering 3
 
-Innlevering 3 utvider lagersystemet fra innlevering 2. Brukeren kan holde styr på hvilke varer vedkommendet har i lageret sitt og detaljer om hver vare. Følgende data lagres om hver vare og vises for brukeren:
+Innlevering 3 utvider lagersystemet fra innlevering 2. Vi har valgt *både* å videreutvikle JavaFX-appen vår, i tillegg til å lage en nettleser-versjon av programmet i react.
+
+I lagersystemet kan brukeren holde styr på hvilke varer vedkommendet har i lageret sitt, samt detaljer om hver vare. Følgende data lagres om hver vare og vises for brukeren:
 - Produktnavn (obligatorisk)
 - Produsent
 - Lagerbeholdning (antall)
