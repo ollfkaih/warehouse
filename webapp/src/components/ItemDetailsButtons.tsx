@@ -3,6 +3,7 @@ import { Col, Row } from 'react-bootstrap'
 import Item from '../modules/Item'
 
 interface IProps {
+  setCurrentItem: (item: Item | undefined) => void
   setEditingItem: (item: Item | undefined) => void
   editingItem: Item
   saveItem: (item: Item | undefined) => void
@@ -17,7 +18,10 @@ const ItemDetailsButtons = (props: IProps) => {
           variant="light"
           className="text-primary backButton"
           id="back-button"
-          onClick={() => props.setEditingItem(undefined)}
+          onClick={() => {
+            props.setEditingItem(undefined)
+            props.setCurrentItem(undefined)
+          }}
         >
           <i className="far fa-arrow-left"></i> Tilbake
         </Button>
