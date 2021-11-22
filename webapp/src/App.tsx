@@ -82,9 +82,7 @@ const App = () => {
   }
 
   const addButtonIfNotEditing = () =>
-    editingItem ? (
-      <></>
-    ) : (
+    editingItem || (
       <Button
         id="addNewItemButton"
         className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg"
