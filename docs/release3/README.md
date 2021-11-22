@@ -15,30 +15,32 @@ Følgende data lagres, men vises ikke for brukeren:
 
 Brukersnittet fra innlevering 2 er videreført og forbedret. En bruker som ikke er logget inn vil kun ha read-only acces i appen. Brukeren vil bli presentert med et hovedvindu som inneholder en liste over alle produktene på lager, og informasjonen om produktnavn, produsent og antall på lager. Brukeren vil ha også mulighet til å søke etter produkter i et søkefelt, samt å sortere varene etter produktnavn, antall og produksjonsdato ved å bruke en nedtrekksmeny. Ved å trykke på et produkt i listen vil brukeren få opp et vindu med detaljert informasjon om produktet.
 
-Hovedvindu og detaljevindu til en upålogget bruker:
-![Warehouse upålogget](/docs/release3/Warehouse1_release3.png)
-![DetailsView upålogget](/docs/release3/DetailsView1_release3.png)
-
 En pålogget bruker vil i tillegg ha mulighet til å redigere varelageret. Brukeren kan legge til nye produkter ved å trykke på "Legg til nytt produkt"-knappet, samt redigere eksisterende produkter ved å trykke på "rediger"-knappen i detaljevinduet til det produktet du ønsker å redigere. Siden vareantall er den egenskapen som man oftest ønsker å endre på, er det også lagt til en snarvei der man kan endre vareantall ved å trykke på +/- knappene på høyre side av hvert element i produktlisten.
-
-Hovedvindu og detaljevindu til en pålogget bruker:
-![Warehouse pålogget](/docs/release3/Warehouse2_release3.png)
-![DetailsView pålogget](/docs/release3/DetailsView2_release3.png)
 
 Brukeren har også mulighet til å logge seg av og på, samt å registrere nye brukere. Følgende data lagres om brukeren:
 - Navn
 - Passord (hashet)
 
-Listen over varer og brukere blir lagret til disk i en JSON-fil slik som i release 1. Ettersom detaljvinduet fungerer både som brukerens metode for å lese og endre detaljer om en vare har vi valgt å ikke lagre dataene i detaljvinduet før brukeren trykker på lagreknappen. På denne måten unngår vi ikke-tiltenkt lagring ved å kreve at brukeren aktivt må lagre.
+Lagring //TODO EIK
 
 ## Brukerhistorier
-[Brukerhistorie 2 og 3](/docs/release2/userStoriesRelease2.md) 
+[Brukerhistorie 2 og 3](/docs/release2/userStoriesRelease2.md)
 er relevant for denne innleveringen.
 Funksjonalitet laget basert på første brukerhistorie, [`us-1`](/docs/release1/userStoriesRelease1.md), ligger fortsatt i appen, men knappen for å slette varer er flyttet til det nye detaljvinduet, som nevnt over.
 
-## Prosessen bak versjon 2
-I [creatingRelease2.md](/docs/release2/creatingRelease2.md) finner du noen av valgene vi har tatt i andre versjon av appen vår, og litt om hva som har fungert bra og dårlig med verktøy, språk og samarbeid.
+## Prosessen bak versjon 3
+I [creatingRelease3.md](/docs/release3/creatingRelease3.md) finner du noen av valgene vi har tatt i den tredje versjonen av appen vår, og litt om hva som har fungert bra og dårlig med verktøy, språk og samarbeid.
 
+## Bildeeksempler
+Hovedvindu og detaljevindu til en upålogget bruker:
+![Warehouse upålogget](/docs/release3/Warehouse1_release3.png)
+![DetailsView upålogget](/docs/release3/DetailsView1_release3.png)
+
+Hovedvindu og detaljevindu til en pålogget bruker:
+![Warehouse pålogget](/docs/release3/Warehouse2_release3.png)
+![DetailsView pålogget](/docs/release3/DetailsView2_release3.png)
+
+//DESIGNSKISSE TODO FREDRIK
 ## Designskisse
 Designskissen under var utgangspunktet for detaljvinduet i versjon 2.  
 ![Designskisse innlevering 2](/docs/release2/Warehouse_p2.png)
