@@ -53,6 +53,7 @@ public class WarehouseApp extends Application {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    warehouseController.endExecutor();
   }
 
   public static void main(String[] args) {

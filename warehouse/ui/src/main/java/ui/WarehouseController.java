@@ -34,6 +34,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Main Controller class. Controls the main Warehouse view.
@@ -73,6 +75,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
   private final Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
   private LoginController loginController;
   private ServerSelectController serverSelectController;
+  private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
 
   @FXML
   void initialize() {
@@ -89,8 +92,18 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
     rt.setByAngle(360);
     rt.setCycleCount(-1);
     rt.setAutoReverse(false);
-
     rt.play();
+    executor.scheduleAtFixedRate(() -> updatePerSecond(), 0, 2, TimeUnit.SECONDS);
+  }
+
+  public void endExecutor() {
+    executor.shutdown();
+  }
+
+  public void updatePerSecond() {
+    if (warehouse != null) {
+      Platform.runLater(() -> updateInventory());
+    }
   }
 
   protected void setStage(Stage stage) {
@@ -164,10 +177,10 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
 
   @FXML
   private void updateInventory() {
+    warehouse.loadItems();
     addItemButton.setVisible(warehouse.getCurrentUser() != null); // set "Legg til produkt" visible when user is logged in
     itemList.getChildren().clear();
     List<Item> items = getItems();
-
     for (int i = 0; i < items.size(); i++) {
       ItemElementAnchorPane itemElement = new ItemElementAnchorPane(items.get(i));
 
@@ -208,7 +221,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
       statusAnchorPane.setVisible(false);
     }
   }
-
+  
   private void openDetailsView(Item item) {
     if (! detailsViewControllers.containsKey(item)) {
       detailsViewControllers.put(item, new DetailsViewController(item, this.warehouse, this));
