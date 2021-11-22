@@ -17,6 +17,6 @@ public class MaxLengthValidator implements InputValidator {
 
   @Override
   public String getErrorMessage() {
-    return "Length is too long";
+    return "Length must be less than " + maxLength;
   }
 }

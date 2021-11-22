@@ -30,6 +30,7 @@ import ui.itemfield.ItemField;
 import ui.validators.BarcodeValidator;
 import ui.validators.DoubleValidator;
 import ui.validators.IntegerValidator;
+import ui.validators.MaxLengthValidator;
 import ui.validators.MaxValueValidator;
 import ui.validators.NotEmptyValidatior;
 import ui.validators.NotNegativeValidator;
@@ -266,9 +267,9 @@ public class DetailsViewController {
     fields.get(Field.SALE_PRICE).addValidators(new DoubleValidator(), new NotNegativeValidator());
     fields.get(Field.PURCHASE_PRICE).addValidators(new DoubleValidator(), new NotNegativeValidator());
 
-    fields.get(Field.SECTION).addValidators(new MaxValueValidator(placementMaxLength));
-    fields.get(Field.ROW).addValidators(new MaxValueValidator(placementMaxLength));
-    fields.get(Field.SHELF).addValidators(new MaxValueValidator(placementMaxLength));
+    fields.get(Field.SECTION).addValidators(new MaxLengthValidator(placementMaxLength));
+    fields.get(Field.ROW).addValidators(new MaxLengthValidator(placementMaxLength));
+    fields.get(Field.SHELF).addValidators(new MaxLengthValidator(placementMaxLength));
 
     fields.get(Field.HEIGHT).addValidators(new DoubleValidator(), new NotNegativeValidator());
     fields.get(Field.LENGTH).addValidators(new DoubleValidator(), new NotNegativeValidator());
