@@ -20,7 +20,7 @@ import AuthSession from './modules/AuthSession'
 import Login from './components/Login'
 import LoginRequest from './modules/LoginRequest'
 
-const REACT_APP_DOMAIN = 'http://10.24.6.213:8080'
+const REACT_APP_DOMAIN = 'http://localhost:8080'
 const REACT_APP_SERVER_PATH = '/warehouse/item/'
 const REACT_APP_GET_ALL_ITEMS_ENDPOINT = '/warehouse/items'
 const REACT_APP_USER_SERVER_PATH = '/warehouse/user/'
@@ -134,7 +134,7 @@ const App = () => {
                   />
                   <Button
                     id="addNewItemButton"
-                    className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg btn"
+                    className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg"
                     onClick={() =>
                       setEditingItem({
                         name: '',
