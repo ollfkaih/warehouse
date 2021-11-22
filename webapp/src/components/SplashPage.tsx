@@ -15,7 +15,8 @@ const SplashPage = (props: IProps) => {
           <p className="frontTextTop">#1 easy to use</p>
           <h1 className="text-primary frontTextHeading">Warehouse</h1>
           <p className="frontTextDescription">
-            Store and manage your infrastructure like a visionary, not a functionary
+            Store and manage your items with ease. Use this site to connect to your local
+            warehouse server.
           </p>
           <LoginButton login={props.login} onLogin={props.onLogin} />
         </Col>
