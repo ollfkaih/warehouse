@@ -320,10 +320,12 @@ public class DetailsViewController {
       if (!field.isValid()) {
         return;
       }
-    }    
-    for (ItemField field : fields.values()) {
-      field.saveField();
     }
+    item.doBatchChanges(() -> {
+      for (ItemField field : fields.values()) {
+        field.saveField();
+      }
+    });
     if (!warehouse.containsItem(item.getId())) {
       barcodeErrorLabel.setText("");
       warehouse.addItem(item);
