@@ -126,13 +126,13 @@ class WarehouseControllerTest {
   } 
         
   /**
-   * Ensures that a Node is visible in a ScrollPane.
+   * Ensures that a Node in a ScrollPane is visible.
    *
    * @author Marcos Supridatta
    * @author Joel Stevick
    * @see ExternalURL https://stackoverflow.com/questions/12837592/how-to-scroll-to-make-a-node-within-the-content-of-a-scrollpane-visible
-   * @param scrollPane that contains the node
-   * @param node to make visible in scrollPane
+   * @param scrollPane containing the node
+   * @param node to make visible
    */
   private static void ensureVisible(ScrollPane scrollPane, Node node) {
     Bounds viewport = scrollPane.getViewportBounds();
