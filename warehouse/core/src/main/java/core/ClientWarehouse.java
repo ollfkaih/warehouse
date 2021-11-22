@@ -97,4 +97,8 @@ public class ClientWarehouse extends BaseWarehouse {
   public void removeLoadingListener(LoadingListener listener) {
     updater.removeLoadingListener(listener);
   }
+  
+  public void loadItems() {
+    updater.loadItems();
+  }
 }
