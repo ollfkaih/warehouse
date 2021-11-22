@@ -256,7 +256,7 @@ const ItemDetails = (props: IProps) => {
             </Row>
             {props.editingItem.barcode &&
             props.editingItem.barcode.toString().length === 13 ? (
-              <Row>
+              <Row className="barcodeRow mt-2">
                 <Barcode value={props.editingItem.barcode} />
               </Row>
             ) : (
