@@ -1,8 +1,6 @@
 # Prosessen bak versjon 3
 Dette dokumentet er ment å kort dokumentere hvordan vi har samarbeidet for å lage tredje og siste versjon av Warehouse-appen, og skal kort si hva som har fungert bra og dårlig.  I tillegg skal vi nevne valg vi har tatt i prosessen og grunnlaget for disse.
 
-Koden er delt opp i modulene 'core', 'data', 'ui'.
-
 ## Hva vi er fornøyd/misfornøyd med
 
 ### Misfornøyd: Store issues og branches som endrer på mange filer over lang tid
