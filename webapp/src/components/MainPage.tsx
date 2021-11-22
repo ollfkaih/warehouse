@@ -65,6 +65,7 @@ const MainPage = (props: IProps) => {
       >
         <div className="detailsViewInsideDiv">
           <ItemDetailsButtons
+            setCurrentItem={setCurrentItem}
             setEditingItem={setEditingItem}
             editingItem={editingItem}
             saveItem={saveItem}
