@@ -8,8 +8,17 @@ import java.util.UUID;
  * Base class for all objects with id.
  */
 public abstract class Entity<T extends Entity<T>> {
+  /**
+   * Functional interface for doing multiple changes to item, without notifying multiple times.  
+   */
+  @FunctionalInterface
+  public interface BatchChanger {
+    public void doChanges();
+  }
+
   private final String id;
   private final Collection<EntityListener<T>> listeners = new ArrayList<>();
+  private boolean notifyChanges = true;
 
   protected Entity(String id) {
     this.id = id;
@@ -23,11 +32,20 @@ public abstract class Entity<T extends Entity<T>> {
     return id;
   }
 
+  public void doBatchChanges(BatchChanger changeFunction) {
+    notifyChanges = false;
+    changeFunction.doChanges();
+    notifyChanges = true;
+    notifyUpdated();
+  }
+
   protected abstract T getThis(); 
 
   protected void notifyUpdated() {
-    for (EntityListener<T> listener : listeners) {
-      listener.updated(getThis());
+    if (notifyChanges) {
+      for (EntityListener<T> listener : listeners) {
+        listener.updated(getThis());
+      }
     }
   }
 
