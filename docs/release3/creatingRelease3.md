@@ -3,42 +3,29 @@ Dette dokumentet er ment å kort dokumentere hvordan vi har samarbeidet for å l
 
 Koden er delt opp i modulene 'core', 'data', 'ui'.
 
-## Hva vi skal fortsette med/unngå i fremtiden
+## Hva vi er fornøyd/misfornøyd med
 
-### Unngå: Store issues som endrer på mange filer over lang tid 
-Spesielt issue #13 gjorde oss oppmerksomme på dette problemet: Den tilhørende grena endret på mange filer, og de som jobbet i andre grener samtidig måtte rebase på gren 13 for å ha tilgang til det nye UI-et.  
-Noe av problemet er at issuet ble laget før release 1 var ferdig (som en idé), men ikke delt opp i flere issues før vi begynte å jobbe på det.  
-Den beste løsningen er å dele opp issuet når man ser at dette vil
-- medføre endringer i mange filer, og/eller
-- ta betydelig tid før det blir flettet inn i main.  
+### Misfornøyd: Store issues og branches som endrer på mange filer over lang tid
+Vi har blitt flinkere på å ikke lage for store branches, men har alikevel opplevt et par ganger at noen i gruppen har laget litt for store issues/grener. Issue #154 burde for eksempel bli splittet opp i flere issues som man kunne jobbe på hver for seg, siden den inneholdt såpass mange endringer i flere ulike filer. Dermed oppsto en del oppstå en del merge-conflikter som måtte løses når denne grenen skulle pushes til main.
 
-Som et eksempel, burde 13 være delt opp i følgende issues:
+Det er ikke alltid lett å vite i forkant at en issue for stor. Dette er fordi noen issues plutselig kan være mye vanskeligere og kreve flere endringer en man i forkant trodde. Men en nøkkelregel vi har lært av denne erfaringen er at alltid er bedre å ha mange litt for små issues, enn én alt for stor issue.
 
-- (Tegne mockup av designet for hånd/i tegneprogram)
-- Lage en prototype av designet i FXML (uten fungerende felt/logikk bak)
-- Koble FXML sammen med enkel kontrollerlogikk
-- Skrive mer kontrollerlogikk, f.eks. validering av tekstsfelt eller visning av feilmeldinger  
+### Fornøyd: god bruk av kravspesifikasjoner og brukerhistorie
+Vi har i release 3 blitt flinkere til å skrive og aktivt bruke brukerhistoriene fra starten. Vi har også blitt flinkere på å definere klare mål i det vi startet med en release og ungått og endre på dem underveis.
 
-Hadde vi gjort det på denne måten, hadde man ikke behøvd å rebase så mange andre grener på 13, eller å merge andre grener inn i 13 fordi man trengte filene i issue 13.
-I tillegg får alle tilgang til, og kan jobbe med, det nye designet tidligere, og man får færre merge-konflikter.
+### Fornøyd: Parprogrammering
+På store issues har vi i stor grad benyttett par-programmering. Det har ikke vært faste par, men vi har byttet på parene etter behov. Vår erfaring er at det er en god og effektiv arbeidsmetode. Det er fint å ha to hoder som kan løse problemene som oppstår. I tillegg ungår vi dermed at det kun er én person som har satt seg inn i issuet.  
 
-### Unngå: Definer kravspesifikasjon til relase for sent
-Vi må unngå å endre på kravspesifikasjon mot slutten av hver release. Vi bør også definere klarere mål i det vi starter med en release.
-En utfordring med å definere klare mål er at vi ofte kommer med gode ideer underveis i releasene, som igjen gjør at spesifikasjonene endres.
-Vi har også erfart at vi bør bruke brukerhistoriene mer aktivt i utviklingsprosessen, og unngå å endre på disse underveis.
-I release 3 bør vi derfor begynne med å lage brukerhistoriene, og finne ut hva som skal med i koden før vi går i gang med å skrive kode.
+### Fornøyd: Faste ukentlige møter
+Vi har hatt faste fysiske møter to ganger i uken gjennom hele release 1, 2 og 3. 
+På møtene starter vi med et Stand-up-møte hvor hvert gruppemedlem går gjennom hva vedkommende har gjort siden sist og planlegger å få fullført på møtet. Videre diskuterer vi nye ideer, oppretter issues, utdeler oppgaver og setter opp par-programmering ved behov. 
 
-### Fortsette: Parprogrammering
-På issuene av større størrelse har vi i stor grad benyttett par-programmering. Vi har endret på parene ved hver issue. Vår erfaring er at det er en god og effektiv arbeidsmetode.
-Det er fint å ha to hoder som kan løse problemene som oppstår i tillegg til at minst to på gruppa forstår logikken. 
-
-### Fortsette: Faste ukentlige møter
-Vi har hatt faste fysiske møter to ganger i uken gjennom hele release 2. 
-På møtene starter vi med et Stand-up-møte hvor hvert gruppemedlem går gjennom hva vedkommende har gjort siden sist og planlegger å få fullført på møtet. Videre diskuterer vi nye ideer, oppretter issues, utdeler oppgaver og setter opp par-programmering ved behov.
-
-### Fortsette: Bruk av verktøy for kontinuerlig integrasjon (CI/CD)
-Vi har satt opp pipelines i GitLab som kjører ved hver commit. Pipelinen bruker et Docker-image og forsøker å bygge og kjøre testene vi har skrevet i tillegg til å kjøre SpotBugs for å oppdage feil og CheckStyle for å verifisere at koden ser i henhold ut. 
+### Fornøyd: Bruk av verktøy for kontinuerlig integrasjon (CI/CD)
+Vi har satt opp pipelines i GitLab som kjører ved hver commit. Pipelinen bruker et Docker-image og forsøker å bygge og kjøre testene vi har skrevet. I tillegg kjører piplinen SpotBugs for å oppdage feil, CheckStyle og Prettier check for å verifisere at koden ser bra og uniform ut.
 Vi syntes det er problematisk å ikke ha mulighet til å kjøre ui-testene hodeløst i pipelinen. Dette kan skape en falsk trygghet ved at testene i pipelinen blir grønne selv om ui-testene ikke har blitt kjørt.
 
-### Fortsette: Bruk av gode commitmeldinger og Squashe-commits
-Vi er fornøyde med å bruke "squash-commits" funksjonen for å redusere antall commits i main, slik at commit-historikken blir ryddigere. Vi er også fornøyde med detaljnivået i commit-meldingene som gjør det enkelt for oss å se hva som har blitt gjort i tidligere merges.
+### Fornøyd: Bruk av gode commitmeldinger og Squashe commits
+Vi mener selv vi har vært flinke på å skrive gode og oversiktlige commit-meldinger. Vi er fornøyde med å bruke "squash commits" funksjonen for å redusere antall commits i main, slik at commit-historikken blir ryddigere. Vi er også fornøyde med detaljnivået i commit-meldingene som gjør det enkelt for oss å se hva som har blitt gjort i tidligere merges. 
+
+### God fokus på MMI
+Vi har forøkt å tenke over hvordan appen blir brukt av andre mennesker, og designe appen slik at den all funksjonaliteten er mest mulig intuitiv og følger etablerte konvensjoner for design. Vi har i tillegg utført flere uformelle brukertester for å se om testbrukerne brukte appen slik den var tiltenkt.
