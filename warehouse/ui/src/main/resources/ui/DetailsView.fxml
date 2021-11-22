@@ -35,6 +35,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
+                              <Label fx:id="notifyCannotEdit" text="Du må være innlogget for å redigere" alignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                            </children>
                         </AnchorPane>
                         <HBox fx:id="sectionSaveDelete" maxHeight="59.0" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" spacing="20.0">

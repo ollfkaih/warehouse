@@ -75,6 +75,7 @@ public class DetailsViewController {
   @FXML private ImageView barcodeImageView;
   @FXML private HBox sectionSaveDelete;
   @FXML private Label barcodeErrorLabel;
+  @FXML private Label notifyCannotEdit;
 
   private final Stage stage;
   private Parent detailsRoot;
@@ -125,9 +126,10 @@ public class DetailsViewController {
       e.printStackTrace();
     }
 
-    if (warehouse.getCurrentUser() == null) {
-      btnEdit.setVisible(false);
-    }
+    // toggles between info-text and edit-button
+    btnEdit.setVisible(!(warehouse.getCurrentUser() == null));
+    notifyCannotEdit.setVisible(warehouse.getCurrentUser() == null);
+
     maxCharsLimiter(inpPlacementSection, placementMaxLength);
     maxCharsLimiter(inpPlacementRow, placementMaxLength);
     maxCharsLimiter(inpPlacementShelf, placementMaxLength);
