@@ -16,7 +16,7 @@ const LoginButton = (props: IProps) => (
           variant="outline-primary"
           onClick={() => props.onLogin(false)}
         >
-          <i className="far fa-lock"></i> Logg ut
+          <i className="far fa-lock" /> Logg ut
         </Button>
       </Link>
     ) : (
