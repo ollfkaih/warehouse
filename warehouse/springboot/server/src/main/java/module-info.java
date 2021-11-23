@@ -1,4 +1,4 @@
-module warehouse.server {
+module warehouse.springboot.server {
   requires com.fasterxml.jackson.databind;
 
   requires spring.web;
@@ -11,5 +11,5 @@ module warehouse.server {
   requires warehouse.core;
   requires warehouse.data;
 
-  opens server to spring.beans, spring.context, spring.web, spring.core;
+  opens springboot.server to spring.beans, spring.context, spring.web, spring.core;
 }

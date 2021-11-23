@@ -1,4 +1,4 @@
-package server;
+package springboot.server;
 
 import core.Item;
 import core.User;

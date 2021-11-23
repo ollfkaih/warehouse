@@ -156,6 +156,6 @@
         <module>ui</module>
         <module>localserver</module>
         <module>report</module>
-        <module>server</module>
+        <module>springboot/server</module>
     </modules>
 </project>

@@ -1,4 +1,4 @@
-package server;
+package springboot.server;
 
 import core.Entity;
 import core.EntityCollection;
