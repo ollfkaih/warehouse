@@ -1,9 +1,9 @@
 package springboot.server;
 
-import core.Item;
-import core.User;
-import core.server.AuthSession;
-import core.server.LoginRequest;
+import core.main.AuthSession;
+import core.main.Item;
+import core.main.LoginRequest;
+import core.main.User;
 import core.server.ServerWarehouse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -1,12 +1,12 @@
 package ui;
 
-import static core.CoreConst.SortOption;
+import static core.main.CoreConst.SortOption;
 
-import core.ClientWarehouse;
-import core.EntityCollectionListener;
-import core.Item;
-import core.LoadingListener;
-import core.server.ServerInterface;
+import core.client.ClientWarehouse;
+import core.client.LoadingListener;
+import core.client.ServerInterface;
+import core.main.EntityCollectionListener;
+import core.main.Item;
 import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

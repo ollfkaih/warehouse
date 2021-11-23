@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import core.Item;
+import com.fasterxml.jackson.core.type.TypeReference;
+import core.main.Item;
+import core.main.User;
+import data.FileSaver;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -32,8 +35,8 @@ import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ExtendWith(ApplicationExtension.class)
 class WarehouseControllerTest {
@@ -161,11 +164,9 @@ class WarehouseControllerTest {
 
   private void createNewItem(FxRobot robot, final String testProductName) {
     robot.clickOn(ADD_ITEM_BUTTON);
-    List<DetailsViewController> detailsViewControllers = warehouseController
+    List<DetailsViewController> detailsViewControllers = new ArrayList<>(warehouseController
         .getDetailViewControllers()
-        .values()
-        .stream()
-        .collect(Collectors.toList());
+        .values());
 
     ScrollPane detailsViewScrollPane = detailsViewControllers.get(detailsViewControllers.size() - 1).getScrollPane();
     ensureVisibleClickOn(detailsViewScrollPane, robot, WAREHOUSE_NEW_ITEM_INPUTFIELD)
@@ -236,9 +237,15 @@ class WarehouseControllerTest {
   }
 
   @BeforeEach
-  void setup() {
+  void setup() throws IOException {
+    FileSaver<Item> itemFileSaver = new FileSaver<>(new TypeReference<>() {}, "ui_test" + "-items");
+    FileSaver<User> userFileSaver = new FileSaver<>(new TypeReference<>() {}, "ui_test" + "-users");
+    itemFileSaver.deleteAll();
+    userFileSaver.deleteAll();
+
+    LocalServer server = new LocalServer(itemFileSaver, userFileSaver);
     Platform.runLater(() -> {
-      warehouseController.loadPersistedData(new LocalServer("ui_test"));
+      warehouseController.loadPersistedData(server);
     });
   }
 

@@ -2,8 +2,8 @@ package springboot.server;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.Item;
-import core.User;
+import core.main.Item;
+import core.main.User;
 import data.DataPersistence;
 import data.DataUtils;
 import data.FileSaver;

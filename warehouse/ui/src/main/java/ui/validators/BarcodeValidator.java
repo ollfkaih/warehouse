@@ -1,6 +1,6 @@
 package ui.validators;
 
-import core.BarcodeUtils;
+import core.main.BarcodeUtils;
 
 /**
  * Validates that the input is a valid EAN-13 barcode.

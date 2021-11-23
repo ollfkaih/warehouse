@@ -151,7 +151,9 @@
     </build>
 
     <modules>
-        <module>core</module>
+        <module>core/main</module>
+        <module>core/server</module>
+        <module>core/client</module>
         <module>data</module>
         <module>ui</module>
         <module>localserver</module>

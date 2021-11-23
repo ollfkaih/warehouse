@@ -5,7 +5,6 @@ import java.util.Collection;
 
 /**
  * Interface for persisting data. 
- * NOTE: T can be a collection of objects, f.ex. if we want to save all the Items in a Warehouse.
  */
 public interface DataPersistence<T> {
   /**

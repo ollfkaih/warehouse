@@ -1,9 +1,9 @@
 package springboot.server;
 
-import core.Entity;
-import core.EntityCollection;
-import core.Item;
-import core.User;
+import core.main.Entity;
+import core.main.EntityCollection;
+import core.main.Item;
+import core.main.User;
 import core.server.ServerWarehouse;
 import data.DataPersistence;
 import data.EntityCollectionAutoPersistence;

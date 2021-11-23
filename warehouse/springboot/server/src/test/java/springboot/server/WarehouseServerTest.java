@@ -8,10 +8,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.Item;
-import core.User;
-import core.server.AuthSession;
-import core.server.LoginRequest;
+import core.main.AuthSession;
+import core.main.Item;
+import core.main.LoginRequest;
+import core.main.User;
 import data.DataPersistence;
 import data.DataUtils;
 import data.FileSaver;

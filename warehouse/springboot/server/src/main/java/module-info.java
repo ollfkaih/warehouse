@@ -8,7 +8,7 @@ module warehouse.springboot.server {
   requires spring.core;
   requires spring.boot.autoconfigure;
 
-  requires warehouse.core;
+  requires warehouse.core.server;
   requires warehouse.data;
 
   opens springboot.server to spring.beans, spring.context, spring.web, spring.core;

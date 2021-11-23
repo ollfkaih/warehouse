@@ -2,9 +2,9 @@ package ui;
 
 import static java.util.Map.entry;
 
-import core.ClientWarehouse;
-import core.CoreConst;
-import core.Item;
+import core.client.ClientWarehouse;
+import core.main.CoreConst;
+import core.main.Item;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
