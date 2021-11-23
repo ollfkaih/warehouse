@@ -19,17 +19,22 @@ const USER_SERVER_PATH = process.env.REACT_APP_USER_SERVER_PATH || ''
 const App = () => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false)
   const [loginSession, setLoginSession] = useState<AuthSession | undefined>(undefined)
+  const [loginError, setLoginError] = useState<String | undefined>()
 
   if (!DOMAIN)
     return <p>Domain for server not set, configure process.env.DOMAIN variable</p>
 
   const login = async (loginDetails: LoginRequest) => {
-    const authSession = await loginRequest(
-      DOMAIN + USER_SERVER_PATH + 'login/',
-      loginDetails
-    )
-    setLoginSession(authSession)
-    setShowLoginModal(false)
+    try {
+      const authSession = await loginRequest(
+        DOMAIN + USER_SERVER_PATH + 'login/',
+        loginDetails
+      )
+      setLoginSession(authSession)
+      setShowLoginModal(false)
+    } catch (e) {
+      setLoginError(e as String)
+    }
   }
 
   const promptLoginOrLogout = (promptLogin: boolean) => {
@@ -52,6 +57,7 @@ const App = () => {
             <>
               <Login
                 show={showLoginModal}
+                error={loginError}
                 onClose={() => setShowLoginModal(false)}
                 onLogin={(request) => login(request)}
               />
