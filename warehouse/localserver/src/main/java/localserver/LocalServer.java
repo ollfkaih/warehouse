@@ -1,13 +1,14 @@
 package localserver;
 
+
 import com.fasterxml.jackson.core.type.TypeReference;
-import core.Entity;
-import core.EntityCollection;
-import core.Item;
-import core.User;
-import core.server.AuthSession;
-import core.server.LoginRequest;
-import core.server.ServerInterface;
+import core.client.ServerInterface;
+import core.main.AuthSession;
+import core.main.Entity;
+import core.main.EntityCollection;
+import core.main.Item;
+import core.main.LoginRequest;
+import core.main.User;
 import core.server.ServerWarehouse;
 import data.DataPersistence;
 import data.EntityCollectionAutoPersistence;
@@ -23,9 +24,13 @@ public class LocalServer implements ServerInterface {
   private final ServerWarehouse warehouse;
 
   public LocalServer(String folderName) {
-    DataPersistence<Item> itemPersistence = new FileSaver<>(new TypeReference<>() {}, folderName + "-items");
-    DataPersistence<User> userPersistence = new FileSaver<>(new TypeReference<>() {}, folderName + "-users");
+    this(
+        new FileSaver<>(new TypeReference<>() {}, folderName + "-items"),
+        new FileSaver<>(new TypeReference<>() {}, folderName + "-users")
+    );
+  }
 
+  public LocalServer(DataPersistence<Item> itemPersistence, DataPersistence<User> userPersistence) {
     warehouse = new ServerWarehouse(getEntityCollection(itemPersistence), getEntityCollection(userPersistence));
 
     EntityCollectionAutoPersistence<Item> autoItemPersistence = new EntityCollectionAutoPersistence<>(itemPersistence);

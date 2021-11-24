@@ -25,8 +25,19 @@
 
         <dependency>
             <groupId>it1901</groupId>
-            <artifactId>warehouse-core</artifactId>
+            <artifactId>warehouse-core.main</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it1901</groupId>
+            <artifactId>warehouse-core.server</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it1901</groupId>
+            <artifactId>warehouse-core.client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>it1901</groupId>

@@ -1,7 +1,7 @@
 package data;
 
-import core.Entity;
-import core.EntityCollectionListener;
+import core.main.Entity;
+import core.main.EntityCollectionListener;
 
 import java.io.IOException;
 

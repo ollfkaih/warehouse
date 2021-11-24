@@ -151,11 +151,13 @@
     </build>
 
     <modules>
-        <module>core</module>
+        <module>core/main</module>
+        <module>core/server</module>
+        <module>core/client</module>
         <module>data</module>
         <module>ui</module>
         <module>localserver</module>
         <module>report</module>
-        <module>server</module>
+        <module>springboot/server</module>
     </modules>
 </project>

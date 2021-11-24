@@ -1,5 +1,5 @@
 module warehouse.ui {
-  requires warehouse.core;
+  requires warehouse.core.client;
   requires warehouse.data;
   requires warehouse.localserver;
   requires java.sql;

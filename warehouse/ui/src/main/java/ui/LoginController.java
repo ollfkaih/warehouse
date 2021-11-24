@@ -1,6 +1,6 @@
 package ui;
 
-import core.ClientWarehouse;
+import core.client.ClientWarehouse;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
