@@ -8,18 +8,16 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="400.0" stylesheets="@CSS/ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="116.0" layoutY="33.0" text="Registrer bruker">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="172.0" layoutY="85.0" text="Brukernavn" />
-      <TextField fx:id="usernameField" layoutX="126.0" layoutY="105.0" promptText="Brukernavn" />
-      <Label layoutX="180.0" layoutY="140.0" text="Passord" />
-      <PasswordField fx:id="passwordField1" layoutX="127.0" layoutY="160.0" promptText="Passord" />
-      <PasswordField fx:id="passwordField2" layoutX="128.0" layoutY="190.0" promptText="Gjenta passord" />
-      <Button fx:id="btnRegister" layoutX="142.0" layoutY="240.0" onAction="#register" text="Registrer ny bruker" />
-      <Label fx:id="errorMessageField" alignment="CENTER" layoutX="52.0" layoutY="280.0" prefHeight="17.0" prefWidth="300.0" text="" textFill="RED" />
-   </children>
+  <Label layoutX="116.0" layoutY="33.0" text="Registrer bruker">
+    <font>
+      <Font size="24.0" />
+    </font>
+  </Label>
+  <Label layoutX="172.0" layoutY="85.0" text="Brukernavn" />
+  <TextField fx:id="usernameField" layoutX="126.0" layoutY="105.0" promptText="Brukernavn" />
+  <Label layoutX="180.0" layoutY="140.0" text="Passord" />
+  <PasswordField fx:id="passwordField1" layoutX="127.0" layoutY="160.0" promptText="Passord" />
+  <PasswordField fx:id="passwordField2" layoutX="128.0" layoutY="190.0" promptText="Gjenta passord" />
+  <Button fx:id="registerButton" layoutX="142.0" layoutY="240.0" onAction="#register" text="Registrer ny bruker" />
+  <Label fx:id="errorMessageField" alignment="CENTER" layoutX="52.0" layoutY="280.0" prefHeight="17.0" prefWidth="300.0" text="" textFill="RED" />
 </AnchorPane>

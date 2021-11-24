@@ -25,10 +25,6 @@ public class RegisterController {
   @FXML PasswordField passwordField2;
   @FXML Label errorMessageField;
 
-  private String username;
-  private String password1;
-  private String password2;
-
   private Stage stage;
 
   private final ClientWarehouse warehouse;
@@ -72,9 +68,9 @@ public class RegisterController {
 
   @FXML
   private void register() {
-    username = usernameField.getText();
-    password1 = passwordField1.getText();
-    password2 = passwordField2.getText();
+    String username = usernameField.getText();
+    String password1 = passwordField1.getText();
+    String password2 = passwordField2.getText();
 
     if (username.isEmpty() || password1.isEmpty() || password2.isEmpty()) {
       errorMessageField.setText("Du må fylle ut alle feltene før du kan gå videre.");
@@ -83,9 +79,7 @@ public class RegisterController {
     } else {
       User user = new User(username, password1, false);
       CompletableFuture<Void> registerFuture = warehouse.register(user);
-      registerFuture.thenAccept(x -> {
-        Platform.runLater(this::hideRegisterView);
-      }).exceptionally(e -> {
+      registerFuture.thenAccept(x -> Platform.runLater(this::hideRegisterView)).exceptionally(e -> {
         e.printStackTrace();
         Platform.runLater(() -> errorMessageField.setText("Noe gikk galt under registreringen. Prøv igjenn."));
         return null;

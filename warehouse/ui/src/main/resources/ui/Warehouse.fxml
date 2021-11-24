@@ -18,125 +18,127 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" minWidth="-Infinity" prefHeight="500.0" prefWidth="624.0" style="-fx-border-width: 10;" stylesheets="@CSS/ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
-    <GridPane fx:id="dividerGridPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="120.0" vgrow="NEVER" />
-        <RowConstraints maxHeight="91.0" minHeight="25.0" prefHeight="47.0" vgrow="NEVER" />
-        <RowConstraints maxHeight="349.0" minHeight="289.0" prefHeight="333.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-        <children>
-        <VBox fx:id="titleAddandSearch" prefWidth="560.0" spacing="10.0">
-          <AnchorPane id="appTitleBox" style="-fx-background-color: #840B9B;">
-               <ImageView fitHeight="50.0" fitWidth="241.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@appIcon/white_transparent.png" />
-                  </image>
-               </ImageView>
-               <Label fx:id="loadingLabel" layoutX="199.0" layoutY="15.0" maxWidth="140.0" prefHeight="21.0" text="Loading..." textFill="WHITE" AnchorPane.leftAnchor="200.0">
-                  <graphic>
-                     <ImageView fx:id="loadingImage" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@icons/spinner.png" />
-                        </image>
-                     </ImageView>
-                  </graphic>
-               </Label>
-              <Label fx:id="usernameLabel" layoutX="413.0" layoutY="15.0" maxWidth="140.0" prefHeight="21.0" style="-fx-background-color: rgba(0,0,0,0.15); -fx-background-radius: 10px; -fx-padding: 2px 10px 2px 10px;" textFill="WHITE" AnchorPane.rightAnchor="116.0">
-                  <graphic>
-                     <ImageView fx:id="userImage" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@icons/user-lock-white.png" />
-                        </image>
-                     </ImageView>
-                  </graphic></Label>
-             <Button fx:id="loginButton" layoutX="524.0" layoutY="12.0" minWidth="70.0" onAction="#login" styleClass="loginButton" text="Logg inn" textFill="#840b9b" AnchorPane.rightAnchor="30.0">
-                  <font>
-                     <Font name="System Bold" size="13.0" />
-                  </font></Button>
-          </AnchorPane>
-          <HBox fx:id="searchPane" alignment="CENTER" minHeight="50.0" spacing="5" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
-              <TextField fx:id="searchInput" minWidth="200" prefHeight="27.0" promptText="Søk..." styleClass="searchField" stylesheets="@CSS/inputStyle.css">
-                  <opaqueInsets>
-                     <Insets />
-                  </opaqueInsets></TextField>
-              <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sorter" styleClass="sortBox" />
-                  <Button fx:id="orderByButton" onAction="#changeOrderBy" prefHeight="27.0" prefWidth="32.0" styleClass="orderByButton">
-                    <graphic>
-                    <VBox fx:id="sortAndOrderSelectors" alignment="center" spacing="5.0">
-                          <children>
-                              <Region prefHeight="200.0" prefWidth="200.0" stylesheets="@CSS/arrowIcons.css">
-                                <styleClass>
-                                    <String fx:value="orderByUp" />
-                                    <String fx:value="up" />
-                                </styleClass></Region>
-                              <Region prefHeight="200.0" prefWidth="200.0" stylesheets="@CSS/arrowIcons.css">
-                                <styleClass>
-                                    <String fx:value="orderByDown" />
-                                    <String fx:value="down" />
-                                </styleClass></Region>
-                          </children>
-                    </VBox>
-                    </graphic>
-                  </Button>
-             <Button id="addItemButton" fx:id="addItemButton" minWidth="70" onAction="#addItem" style="-fx-background-color: #840B9B;" text="Legg til produkt">
-                  <HBox.margin>
-                     <Insets left="20.0" right="20.0" />
-                  </HBox.margin>
-               </Button>
-          </HBox>
+<AnchorPane minWidth="-Infinity" prefHeight="500.0" prefWidth="624.0" style="-fx-border-width: 10;" stylesheets="@CSS/ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
+  <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+            AnchorPane.topAnchor="0.0">
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+    </columnConstraints>
+    <rowConstraints>
+      <RowConstraints minHeight="120.0" vgrow="NEVER"/>
+      <RowConstraints maxHeight="91.0" minHeight="25.0" prefHeight="47.0" vgrow="NEVER"/>
+      <RowConstraints maxHeight="349.0" minHeight="289.0" prefHeight="333.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <VBox prefWidth="560.0" spacing="10.0">
+      <AnchorPane id="appTitleBox" style="-fx-background-color: #840B9B;">
+        <ImageView fitHeight="50.0" fitWidth="241.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+          <Image url="@appIcon/white_transparent.png"/>
+        </ImageView>
+        <Label fx:id="loadingLabel" layoutX="199.0" layoutY="15.0" maxWidth="140.0" prefHeight="21.0" text="Loading..."
+               textFill="WHITE" AnchorPane.leftAnchor="200.0">
+          <graphic>
+            <ImageView fx:id="loadingImage" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+              <Image url="@icons/spinner.png"/>
+            </ImageView>
+          </graphic>
+        </Label>
+        <Label fx:id="usernameLabel" layoutX="413.0" layoutY="15.0" maxWidth="140.0" prefHeight="21.0"
+               style="-fx-background-color: rgba(0,0,0,0.15); -fx-background-radius: 10px; -fx-padding: 2px 10px 2px 10px;"
+               textFill="WHITE" AnchorPane.rightAnchor="116.0">
+          <graphic>
+            <ImageView fx:id="userImage" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+              <Image url="@icons/user-lock-white.png"/>
+            </ImageView>
+          </graphic>
+        </Label>
+        <Button fx:id="openLoginViewOrLogoutButton" layoutX="524.0" layoutY="12.0" minWidth="70.0" onAction="#openLoginViewOrLogout"
+                styleClass="openLoginViewOrLogoutButton" text="Logg inn" textFill="#840b9b" AnchorPane.rightAnchor="30.0">
+          <font>
+            <Font name="System Bold" size="13.0"/>
+          </font>
+        </Button>
+      </AnchorPane>
+      <HBox alignment="CENTER" minHeight="50.0" spacing="5"
+            style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
+        <TextField fx:id="searchInput" minWidth="200" prefHeight="27.0" promptText="Søk..." styleClass="searchField"
+                   stylesheets="@CSS/inputStyle.css">
+          <opaqueInsets>
+            <Insets/>
+          </opaqueInsets>
+        </TextField>
+        <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sorter"
+                  styleClass="sortBox"/>
+        <Button fx:id="reverseOrderButton" onAction="#reverseOrder" prefHeight="27.0" prefWidth="32.0"
+                styleClass="reverseOrderButton">
+          <graphic>
+            <VBox alignment="center" spacing="5.0">
+              <Region prefHeight="200.0" prefWidth="200.0" stylesheets="@CSS/arrowIcons.css">
+                <styleClass>
+                  <String fx:value="orderByUp"/>
+                  <String fx:value="up"/>
+                </styleClass>
+              </Region>
+              <Region prefHeight="200.0" prefWidth="200.0" stylesheets="@CSS/arrowIcons.css">
+                <styleClass>
+                  <String fx:value="orderByDown"/>
+                  <String fx:value="down"/>
+                </styleClass>
+              </Region>
+            </VBox>
+          </graphic>
+        </Button>
+        <Button id="addItemButton" fx:id="addItemButton" minWidth="70" onAction="#addItem"
+                style="-fx-background-color: #840B9B;" text="Legg til produkt">
+          <HBox.margin>
+            <Insets left="20.0" right="20.0"/>
+          </HBox.margin>
+        </Button>
+      </HBox>
     </VBox>
-         <AnchorPane prefHeight="23.0" prefWidth="624.0" style="-fx-background-color: #dddddd;" GridPane.rowIndex="1">
-            <children>
-               <Label contentDisplay="CENTER" layoutX="9.0" layoutY="3.0" prefHeight="23.0" prefWidth="72.0" text="Merke" AnchorPane.leftAnchor="25.0">
-                  <font>
-                     <Font size="14.0" />
-                  </font></Label>
-               <Label layoutX="12.0" layoutY="23.0" prefHeight="20.0" prefWidth="72.0" text="Navn" AnchorPane.leftAnchor="25.0">
-                  <font>
-                     <Font name="System Bold" size="14.0" />
-                  </font>
-               </Label>
-               <Label alignment="CENTER" contentDisplay="CENTER" text="Antall" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="0.0">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-            </children>
-         </AnchorPane>
-     <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="450.0" stylesheets="@CSS/ItemStyle.css" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-      <content>
-        <VBox fx:id="itemList" alignment="center" />
-      </content>
-            <GridPane.margin>
-               <Insets />
-            </GridPane.margin>
+    <AnchorPane prefHeight="23.0" prefWidth="624.0" style="-fx-background-color: #dddddd;" GridPane.rowIndex="1">
+      <Label contentDisplay="CENTER" layoutX="9.0" layoutY="3.0" prefHeight="23.0" prefWidth="72.0" text="Merke"
+             AnchorPane.leftAnchor="25.0">
+        <font>
+          <Font size="14.0"/>
+        </font>
+      </Label>
+      <Label layoutX="12.0" layoutY="23.0" prefHeight="20.0" prefWidth="72.0" text="Navn"
+             AnchorPane.leftAnchor="25.0">
+        <font>
+          <Font name="System Bold" size="14.0"/>
+        </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Antall" AnchorPane.bottomAnchor="0.0"
+             AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="0.0">
+        <font>
+          <Font size="14.0"/>
+        </font>
+      </Label>
+    </AnchorPane>
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="450.0"
+                stylesheets="@CSS/ItemStyle.css" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+      <GridPane.margin>
+        <Insets/>
+      </GridPane.margin>
+      <VBox fx:id="itemList" alignment="center"/>
     </ScrollPane>
-  </children>
   </GridPane>
-   <AnchorPane fx:id="statusAnchorPane" layoutX="65.0" layoutY="211.0" prefHeight="143.0" prefWidth="518.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="200.0">
-      <children>
-         <VBox alignment="CENTER" prefHeight="143.0" prefWidth="619.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
-            <children>
-               <HBox alignment="CENTER" prefHeight="38.0" prefWidth="620.0">
-                  <children>
-                     <ImageView fx:id="statusImage" fitHeight="55.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@icons/person-dolly-empty.png" />
-                        </image>
-                     </ImageView>
-                  </children>
-               </HBox>
-               <Label fx:id="statusLabel" alignment="CENTER" prefHeight="137.0" text="warehouse is empty" textAlignment="CENTER" textFill="#85129c">
-                  <font>
-                     <Font name="System Bold" size="30.0" />
-                  </font>
-               </Label>
-            </children>
-         </VBox>
-      </children>
-   </AnchorPane>
+  <AnchorPane fx:id="statusAnchorPane" layoutX="65.0" layoutY="211.0" prefHeight="143.0" prefWidth="518.0"
+              AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="200.0">
+    <VBox alignment="CENTER" prefHeight="143.0" prefWidth="619.0" AnchorPane.leftAnchor="1.0"
+          AnchorPane.rightAnchor="1.0">
+      <HBox alignment="CENTER" prefHeight="38.0" prefWidth="620.0">
+        <ImageView fx:id="statusImage" fitHeight="55.0" fitWidth="63.0" pickOnBounds="true"
+                   preserveRatio="true">
+          <Image url="@icons/person-dolly-empty.png"/>
+        </ImageView>
+      </HBox>
+      <Label fx:id="statusLabel" alignment="CENTER" prefHeight="137.0" text="warehouse is empty"
+             textAlignment="CENTER" textFill="#85129c">
+        <font>
+          <Font name="System Bold" size="30.0"/>
+        </font>
+      </Label>
+    </VBox>
+  </AnchorPane>
 </AnchorPane>

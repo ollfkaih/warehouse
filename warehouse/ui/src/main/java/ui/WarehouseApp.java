@@ -19,12 +19,11 @@ import java.io.IOException;
  * This class displays the JavaFX App.
  */
 public class WarehouseApp extends Application {
-  private FXMLLoader fxmlLoader;
   private WarehouseController warehouseController;
     
   @Override
   public void start(Stage stage) throws IOException {
-    fxmlLoader = new FXMLLoader(this.getClass().getResource("Warehouse.fxml"));
+    FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Warehouse.fxml"));
     fxmlLoader.load();
     stage.setScene(new Scene(fxmlLoader.getRoot()));
     stage.show();
@@ -36,7 +35,7 @@ public class WarehouseApp extends Application {
       e.printStackTrace();
       System.err.println("ERROR: [WarehouseApp.java] Icon-image not found");
     }
-    warehouseController = (WarehouseController) fxmlLoader.getController();
+    warehouseController = fxmlLoader.getController();
     warehouseController.setStage(stage);
     warehouseController.hideView();
     stage.setOnCloseRequest(this::handleCloseRequest);

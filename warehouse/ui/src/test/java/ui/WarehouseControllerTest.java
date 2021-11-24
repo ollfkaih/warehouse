@@ -41,45 +41,48 @@ import java.util.List;
 @ExtendWith(ApplicationExtension.class)
 class WarehouseControllerTest {
 
-  private static final String INP_BARCODE = "#inpBarcode";
-  private static final String INP_WEIGHT = "#inpWeight";
-  private static final String INP_DIMENSIONS_HEIGTH = "#inpDimensionsHeigth";
-  private static final String INP_DIMENSIONS_WIDTH = "#inpDimensionsWidth";
-  private static final String INP_DIMENSIONS_LENGTH = "#inpDimensionsLength";
-  private static final String INP_PLACEMENT_SHELF = "#inpPlacementShelf";
-  private static final String INP_PLACEMENT_ROW = "#inpPlacementRow";
-  private static final String INP_PLACEMENT_SECTION = "#inpPlacementSection";
-  private static final String INP_RETAILER_PRICE = "#inpRetailerPrice";
-  private static final String INP_SALES_PRICE = "#inpSalesPrice";
-  private static final String INP_ORDINARY_PRICE = "#inpOrdinaryPrice";
-  private static final String INP_AMOUNT = "#inpAmount";
-  private static final String INP_BRAND = "#inpBrand";
-  private static final String DETAILS_VIEW_INCREMENT_BUTTON = "#btnIncrement";
-  private static final String DETAILS_VIEW_DECREMENT_BUTTON = "#btnDecrement";
-  private static final String DETAILS_VIEW_SAVE_BUTTON = "#btnSave";
-  private static final String DETAILS_VIEW_DELETE_BUTTON = "#btnDelete";
+  private static final String DETAILS_INPUT_NAME = "#nameInput";
+  private static final String DETAILS_INPUT_BARCODE = "#barcodeInput";
+  private static final String DETAILS_INPUT_WEIGHT = "#weightInput";
+  private static final String DETAILS_INPUT_DIMENSIONS_HEIGHT = "#dimensionsHeightInput";
+  private static final String DETAILS_INPUT_DIMENSIONS_WIDTH = "#dimensionsWidthInput";
+  private static final String DETAILS_INPUT_DIMENSIONS_LENGTH = "#dimensionsLengthInput";
+  private static final String DETAILS_INPUT_PLACEMENT_SHELF = "#placementShelfInput";
+  private static final String DETAILS_INPUT_PLACEMENT_ROW = "#placementRowInput";
+  private static final String DETAILS_INPUT_PLACEMENT_SECTION = "#placementSectionInput";
+  private static final String DETAILS_INPUT_RETAILER_PRICE = "#retailerPriceInput";
+  private static final String DETAILS_INPUT_SALES_PRICE = "#salesPriceInput";
+  private static final String DETAILS_INPUT_ORDINARY_PRICE = "#ordinaryPriceInput";
+  private static final String DETAILS_INPUT_AMOUNT = "#amountInput";
+  private static final String DETAILS_INPUT_BRAND = "#brandInput";
+  private static final String DETAILS_BUTTON_INCREMENT = "#incrementButton";
+  private static final String DETAILS_BUTTON_DECREMENT = "#decrementButton";
+  private static final String DETAILS_BUTTON_EDIT = "#editButton";
+  private static final String DETAILS_BUTTON_SAVE = "#saveButton";
+  private static final String DETAILS_BUTTON_DELETE = "#deleteButton";
 
-  private static final String WAREHOUSE_INCREMENT_BUTTON = "#incrementButton";
-  private static final String WAREHOUSE_DECREMENT_BUTTON = "#decrementButton";
-  private static final String INP_SEARCH = "#searchInput";
-  private static final String ORDER_BY_BUTTON = "#orderByButton";
-  private static final String SORT_OPTIONS_DROPDOWN = "#sortBySelector";
-  private static final String ADD_ITEM_BUTTON = "#addItemButton";
-  private static final String WAREHOUSE_NEW_ITEM_INPUTFIELD  = "#inpName";
-  private static final String ITEM_LIST = "#itemList";
-  private static final String DETAILS_VIEW = "#detailsViewScrollPane";
-  private static final String LOGIN_BUTTON = "#loginButton";
-  private static final String EDIT_BUTTON = "#btnEdit";
+  private static final String WAREHOUSE_BUTTON_INCREMENT = "#incrementButton";
+  private static final String WAREHOUSE_BUTTON_DECREMENT = "#decrementButton";
+  private static final String WAREHOUSE_INPUT_SEARCH = "#searchInput";
+  private static final String WAREHOUSE_SELECTOR_SORT_BY = "#sortBySelector";
+  private static final String WAREHOUSE_BUTTON_REVERSE_ORDER = "#reverseOrderButton";
+  private static final String WAREHOUSE_BUTTON_ADD_ITEM = "#addItemButton";
+  private static final String WAREHOUSE_BUTTON_LOGIN_LOGOUT = "#openLoginViewOrLogoutButton";
 
-  private static final String LOGIN_USERFIELD = "#usernameField";
-  private static final String LOGIN_PASSWORDFIELD = "#passwordField";
-  private static final String LOGIN_LOGINBUTTON = "#loginUserButton";
-  private static final String REGISTER_BUTTON = "#registerNewUserButton";
-  private static final String REGISTER_USERFIELD = "#usernameField";
-  private static final String REGISTER_PASSWORDFIELD_1 = "#passwordField1";
-  private static final String REGISTER_PASSWORDFIELD_2 = "#passwordField2";
-  private static final String REGISTER_REGISTERBUTTON = "#btnRegister";
-  private static final String CONFIRM_BOX_APPROVE_TEXT = "Slett";  
+  private static final String WAREHOUSE_ITEM_LIST = "#itemList";
+  private static final String WAREHOUSE_DETAILS_VIEW = "#detailsViewScrollPane";
+
+  private static final String LOGIN_INPUT_USERNAME = "#usernameField";
+  private static final String LOGIN_INPUT_PASSWORD = "#passwordField";
+  private static final String LOGIN_BUTTON_LOGIN = "#loginUserButton";
+  private static final String LOGIN_BUTTON_REGISTER = "#openRegisterViewButton";
+
+  private static final String REGISTER_INPUT_USERNAME = "#usernameField";
+  private static final String REGISTER_INPUT_PASSWORD = "#passwordField1";
+  private static final String REGISTER_INPUT_REPEAT_PASSWORD = "#passwordField2";
+  private static final String REGISTER_BUTTON_REGISTER = "#registerButton";
+
+  private static final String DELETE_CONFIRMATION_DELETE_TEXT = "Slett";
 
   private String testUserName;
   private WarehouseController warehouseController;
@@ -93,7 +96,7 @@ class WarehouseControllerTest {
     stage.setScene(new Scene(root));
     stage.show();
 
-    addItemButtonCopy = new Button(ADD_ITEM_BUTTON);
+    addItemButtonCopy = new Button(WAREHOUSE_BUTTON_ADD_ITEM);
   }
 
   private String getRandomProductName() {
@@ -163,37 +166,37 @@ class WarehouseControllerTest {
   }
 
   private void createNewItem(FxRobot robot, final String testProductName) {
-    robot.clickOn(ADD_ITEM_BUTTON);
+    robot.clickOn(WAREHOUSE_BUTTON_ADD_ITEM);
     List<DetailsViewController> detailsViewControllers = new ArrayList<>(warehouseController
         .getDetailViewControllers()
         .values());
 
     ScrollPane detailsViewScrollPane = detailsViewControllers.get(detailsViewControllers.size() - 1).getScrollPane();
-    ensureVisibleClickOn(detailsViewScrollPane, robot, WAREHOUSE_NEW_ITEM_INPUTFIELD)
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_INPUT_NAME)
         .write(testProductName);
-    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
-    Stage stage = ((Stage) ((robot.lookup(DETAILS_VIEW).query())).getScene().getWindow());
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_BUTTON_SAVE);
+    Stage stage = ((Stage) ((robot.lookup(WAREHOUSE_DETAILS_VIEW).query())).getScene().getWindow());
     robot.interact(stage::close);
   }
 
   private void login(FxRobot robot) {
-    robot.clickOn(LOGIN_BUTTON);
+    robot.clickOn(WAREHOUSE_BUTTON_LOGIN_LOGOUT);
     if (testUserName == null) {
       register(robot);
     }
-    robot.clickOn(LOGIN_USERFIELD).write(testUserName);
-    robot.clickOn(LOGIN_PASSWORDFIELD).write("passord");
-    robot.clickOn(LOGIN_LOGINBUTTON);
+    robot.clickOn(LOGIN_INPUT_USERNAME).write(testUserName);
+    robot.clickOn(LOGIN_INPUT_PASSWORD).write("passord");
+    robot.clickOn(LOGIN_BUTTON_LOGIN);
   }
 
   private void register(FxRobot robot) {
     testUserName = getRandomProductName();
-    robot.clickOn(LOGIN_BUTTON);
-    robot.clickOn(REGISTER_BUTTON);
-    robot.clickOn(REGISTER_USERFIELD).write(testUserName);
-    robot.clickOn(REGISTER_PASSWORDFIELD_1).write("passord");
-    robot.clickOn(REGISTER_PASSWORDFIELD_2).write("passord");
-    robot.clickOn(REGISTER_REGISTERBUTTON);
+    robot.clickOn(WAREHOUSE_BUTTON_LOGIN_LOGOUT);
+    robot.clickOn(LOGIN_BUTTON_REGISTER);
+    robot.clickOn(REGISTER_INPUT_USERNAME).write(testUserName);
+    robot.clickOn(REGISTER_INPUT_PASSWORD).write("passord");
+    robot.clickOn(REGISTER_INPUT_REPEAT_PASSWORD).write("passord");
+    robot.clickOn(REGISTER_BUTTON_REGISTER);
   }
 
   /**
@@ -202,23 +205,23 @@ class WarehouseControllerTest {
    * @param item corresponding to the detailsView to test 
    */
   private void verifyDetailView(Item item) {
-    FxAssert.verifyThat(INP_BRAND, TextInputControlMatchers.hasText(item.getBrand()));
-    FxAssert.verifyThat(INP_AMOUNT, TextInputControlMatchers.hasText(String.valueOf(item.getAmount())));
-    FxAssert.verifyThat(INP_ORDINARY_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getRegularPrice())));
-    FxAssert.verifyThat(INP_SALES_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getSalePrice())));
-    FxAssert.verifyThat(INP_RETAILER_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getPurchasePrice())));
-    FxAssert.verifyThat(INP_PLACEMENT_SECTION, TextInputControlMatchers.hasText(item.getSection()));
-    FxAssert.verifyThat(INP_PLACEMENT_ROW, TextInputControlMatchers.hasText(item.getRow()));
-    FxAssert.verifyThat(INP_PLACEMENT_SHELF, TextInputControlMatchers.hasText(item.getShelf()));
-    FxAssert.verifyThat(INP_DIMENSIONS_LENGTH, TextInputControlMatchers.hasText(String.valueOf(item.getLength())));
-    FxAssert.verifyThat(INP_DIMENSIONS_WIDTH, TextInputControlMatchers.hasText(String.valueOf(item.getWidth())));
-    FxAssert.verifyThat(INP_DIMENSIONS_HEIGTH, TextInputControlMatchers.hasText(String.valueOf(item.getHeight())));
-    FxAssert.verifyThat(INP_WEIGHT, TextInputControlMatchers.hasText(String.valueOf(item.getWeight())));
-    FxAssert.verifyThat(INP_BARCODE, TextInputControlMatchers.hasText(item.getBarcode()));
+    FxAssert.verifyThat(DETAILS_INPUT_BRAND, TextInputControlMatchers.hasText(item.getBrand()));
+    FxAssert.verifyThat(DETAILS_INPUT_AMOUNT, TextInputControlMatchers.hasText(String.valueOf(item.getAmount())));
+    FxAssert.verifyThat(DETAILS_INPUT_ORDINARY_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getRegularPrice())));
+    FxAssert.verifyThat(DETAILS_INPUT_SALES_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getSalePrice())));
+    FxAssert.verifyThat(DETAILS_INPUT_RETAILER_PRICE, TextInputControlMatchers.hasText(String.valueOf(item.getPurchasePrice())));
+    FxAssert.verifyThat(DETAILS_INPUT_PLACEMENT_SECTION, TextInputControlMatchers.hasText(item.getSection()));
+    FxAssert.verifyThat(DETAILS_INPUT_PLACEMENT_ROW, TextInputControlMatchers.hasText(item.getRow()));
+    FxAssert.verifyThat(DETAILS_INPUT_PLACEMENT_SHELF, TextInputControlMatchers.hasText(item.getShelf()));
+    FxAssert.verifyThat(DETAILS_INPUT_DIMENSIONS_LENGTH, TextInputControlMatchers.hasText(String.valueOf(item.getLength())));
+    FxAssert.verifyThat(DETAILS_INPUT_DIMENSIONS_WIDTH, TextInputControlMatchers.hasText(String.valueOf(item.getWidth())));
+    FxAssert.verifyThat(DETAILS_INPUT_DIMENSIONS_HEIGHT, TextInputControlMatchers.hasText(String.valueOf(item.getHeight())));
+    FxAssert.verifyThat(DETAILS_INPUT_WEIGHT, TextInputControlMatchers.hasText(String.valueOf(item.getWeight())));
+    FxAssert.verifyThat(DETAILS_INPUT_BARCODE, TextInputControlMatchers.hasText(item.getBarcode()));
   }
 
   private List<Node> findItemNodes(FxRobot robot) {
-    return robot.lookup(ITEM_LIST).queryAs(VBox.class).getChildren();
+    return robot.lookup(WAREHOUSE_ITEM_LIST).queryAs(VBox.class).getChildren();
   }
 
   private void selectOptionInComboBox(FxRobot robot, String comboBoxQuery, String option) {
@@ -244,9 +247,7 @@ class WarehouseControllerTest {
     userFileSaver.deleteAll();
 
     LocalServer server = new LocalServer(itemFileSaver, userFileSaver);
-    Platform.runLater(() -> {
-      warehouseController.loadPersistedData(server);
-    });
+    Platform.runLater(() -> warehouseController.loadPersistedData(server));
   }
 
   @Test
@@ -258,7 +259,7 @@ class WarehouseControllerTest {
   @Test
   @DisplayName("Add-item button exists")
   void testAddButtonExist() {
-    FxAssert.verifyThat(addItemButtonCopy, LabeledMatchers.hasText(ADD_ITEM_BUTTON));
+    FxAssert.verifyThat(addItemButtonCopy, LabeledMatchers.hasText(WAREHOUSE_BUTTON_ADD_ITEM));
   }
 
   @Test
@@ -269,16 +270,16 @@ class WarehouseControllerTest {
     final String testProductName = getRandomProductName();
     createNewItem(robot, testProductName);
     assertNotNull(getItemFromWarehouse(testProductName), "unable to create item");
-    FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
+    FxAssert.verifyThat(WAREHOUSE_ITEM_LIST, NodeMatchers.hasChild(testProductName));
     
     robot.clickOn(testProductName);
     ScrollPane detailsViewScrollPane = getDetailsViewController(getItemFromWarehouse(testProductName)).getScrollPane();
-    ensureVisibleClickOn(detailsViewScrollPane, robot, EDIT_BUTTON);
-    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_DELETE_BUTTON);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_BUTTON_EDIT);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_BUTTON_DELETE);
     
-    robot.clickOn(CONFIRM_BOX_APPROVE_TEXT);
+    robot.clickOn(DELETE_CONFIRMATION_DELETE_TEXT);
     assertNull(getItemFromWarehouse(testProductName), "unable to delete item");
-    FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, testProductName));
+    FxAssert.verifyThat(WAREHOUSE_ITEM_LIST, NodeMatchers.hasChildren(0, testProductName));
     
     removeAllItems();
   }
@@ -293,42 +294,42 @@ class WarehouseControllerTest {
 
     Item testItem = getItemFromWarehouse(testProductName);
     assertNotNull(testItem, "unable to locate the created Item");
-    FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
+    FxAssert.verifyThat(WAREHOUSE_ITEM_LIST, NodeMatchers.hasChild(testProductName));
 
     robot.push(KeyCode.BACK_SPACE);
     robot.clickOn(testProductName);
-    robot.clickOn(EDIT_BUTTON);
+    robot.clickOn(DETAILS_BUTTON_EDIT);
     robot.push(KeyCode.BACK_SPACE);
     DetailsViewController testProductViewController = getDetailsViewController(testItem);
     ScrollPane testProductViewScrollPane = testProductViewController.getScrollPane();
     assertNotNull(testProductViewController, "unable to find the detailsViewController of the opened item");
 
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_BRAND).write("TestBrand");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_AMOUNT).push(KeyCode.BACK_SPACE).write("50");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_ORDINARY_PRICE).write("4000");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_SALES_PRICE).write("3000");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_RETAILER_PRICE).write("2000");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_PLACEMENT_SECTION).write("B");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_PLACEMENT_ROW).write("19");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_PLACEMENT_SHELF).write("3");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_DIMENSIONS_LENGTH).write("10");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_DIMENSIONS_WIDTH).write("20");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_DIMENSIONS_HEIGTH).write("4");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_WEIGHT).write("5.0");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_BARCODE).write("6830473201734");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_BRAND).write("TestBrand");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_AMOUNT).push(KeyCode.BACK_SPACE).write("50");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_ORDINARY_PRICE).write("4000");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_SALES_PRICE).write("3000");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_RETAILER_PRICE).write("2000");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_PLACEMENT_SECTION).write("B");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_PLACEMENT_ROW).write("19");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_PLACEMENT_SHELF).write("3");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_DIMENSIONS_LENGTH).write("10");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_DIMENSIONS_WIDTH).write("20");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_DIMENSIONS_HEIGHT).write("4");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_WEIGHT).write("5.0");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_INPUT_BARCODE).write("6830473201734");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_BUTTON_SAVE);
 
     verifyDetailView(testItem);
-    robot.interact(() -> ((Stage) ((robot.lookup(DETAILS_VIEW).query())).getScene().getWindow()).close());
+    robot.interact(() -> ((Stage) ((robot.lookup(WAREHOUSE_DETAILS_VIEW).query())).getScene().getWindow()).close());
 
     robot.clickOn(testProductName);
     verifyDetailView(testItem);
     
-    robot.clickOn(EDIT_BUTTON);
+    robot.clickOn(DETAILS_BUTTON_EDIT);
     verifyDetailView(testItem);
 
-    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_VIEW_DELETE_BUTTON);
-    robot.clickOn(CONFIRM_BOX_APPROVE_TEXT);
+    ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_BUTTON_DELETE);
+    robot.clickOn(DELETE_CONFIRMATION_DELETE_TEXT);
 
     removeAllItems();
   }
@@ -339,18 +340,18 @@ class WarehouseControllerTest {
     login(robot);
     final String testProductName = getRandomProductName();
     createNewItem(robot, testProductName);
-    FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
+    FxAssert.verifyThat(WAREHOUSE_ITEM_LIST, NodeMatchers.hasChild(testProductName));
     
     Item testItem = getItemFromWarehouse(testProductName);
     assertNotNull(testItem);
     assertEquals(0, testItem.getAmount());
     
     robot.moveTo(testProductName);
-    robot.clickOn(WAREHOUSE_INCREMENT_BUTTON);
+    robot.clickOn(WAREHOUSE_BUTTON_INCREMENT);
     assertEquals(1, testItem.getAmount());
     
     robot.moveTo(testProductName);
-    robot.clickOn(WAREHOUSE_DECREMENT_BUTTON);
+    robot.clickOn(WAREHOUSE_BUTTON_DECREMENT);
     assertEquals(0, testItem.getAmount());
 
     removeAllItems();
@@ -363,20 +364,20 @@ class WarehouseControllerTest {
     final String testProductName = getRandomProductName();
     createNewItem(robot, testProductName);
     robot.clickOn(testProductName);
-    FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild(testProductName));
+    FxAssert.verifyThat(WAREHOUSE_ITEM_LIST, NodeMatchers.hasChild(testProductName));
     
     Item testItem = getItemFromWarehouse(testProductName);
     ScrollPane detailsViewScrollPane = getDetailsViewController(testItem).getScrollPane();
     assertNotNull(testItem);
 
-    ensureVisibleClickOn(detailsViewScrollPane, robot, EDIT_BUTTON);
-    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_INCREMENT_BUTTON);
-    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_BUTTON_EDIT);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_BUTTON_INCREMENT);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_BUTTON_SAVE);
     assertEquals(1, testItem.getAmount());
 
-    ensureVisibleClickOn(detailsViewScrollPane, robot, EDIT_BUTTON);
-    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_DECREMENT_BUTTON);
-    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_BUTTON_EDIT);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_BUTTON_DECREMENT);
+    ensureVisibleClickOn(detailsViewScrollPane, robot, DETAILS_BUTTON_SAVE);
     assertEquals(0, testItem.getAmount());
 
     removeAllItems();
@@ -390,17 +391,17 @@ class WarehouseControllerTest {
     createNewItem(robot, "B");
     createNewItem(robot, "C");
 
-    robot.clickOn(SORT_OPTIONS_DROPDOWN);
-    selectOptionInComboBox(robot, SORT_OPTIONS_DROPDOWN, "Navn");
+    robot.clickOn(WAREHOUSE_SELECTOR_SORT_BY);
+    selectOptionInComboBox(robot, WAREHOUSE_SELECTOR_SORT_BY, "Navn");
     verifyItemsInOrder(robot, "A", "B", "C");
-    robot.clickOn(ORDER_BY_BUTTON);
+    robot.clickOn(WAREHOUSE_BUTTON_REVERSE_ORDER);
     verifyItemsInOrder(robot, "C", "B", "A");
 
-    robot.clickOn(INP_SEARCH).write("A");
-    FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChild("A"));
-    FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, "B"));
-    FxAssert.verifyThat(ITEM_LIST, NodeMatchers.hasChildren(0, "C"));
-    robot.clickOn(INP_SEARCH).push(KeyCode.BACK_SPACE);
+    robot.clickOn(WAREHOUSE_INPUT_SEARCH).write("A");
+    FxAssert.verifyThat(WAREHOUSE_ITEM_LIST, NodeMatchers.hasChild("A"));
+    FxAssert.verifyThat(WAREHOUSE_ITEM_LIST, NodeMatchers.hasChildren(0, "B"));
+    FxAssert.verifyThat(WAREHOUSE_ITEM_LIST, NodeMatchers.hasChildren(0, "C"));
+    robot.clickOn(WAREHOUSE_INPUT_SEARCH).push(KeyCode.BACK_SPACE);
 
     removeAllItems();
   }

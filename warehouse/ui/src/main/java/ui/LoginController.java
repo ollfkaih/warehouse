@@ -91,7 +91,7 @@ public class LoginController {
   }
 
   @FXML
-  private void register() {
+  private void openRegisterView() {
     registerController.showRegisterView();
     resetLoginView();
   }

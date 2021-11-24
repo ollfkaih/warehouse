@@ -7,36 +7,36 @@
   -fx-cursor: hand;
 }
 
-#btnSave {
+#saveButton {
     -fx-background-color: #850B9C;
   }
 
-#btnDelete {
+#deleteButton {
     -fx-background-color: #DB1818;
 }
 
-.orderByButton {
+.reverseOrderButton {
     -fx-text-fill: BLACK;
     -fx-background-color: rgba(0,0,0, 0.05);
 }
 
-.orderByButton:hover, .orderByButton:focus {
+.reverseOrderButton:hover, .reverseOrderButton:focus {
     -fx-background-color: rgba(0,0,0,0.10);
   }
 
-.orderByButton .orderByUp {
+.reverseOrderButton .orderByUp {
     -fx-background-color: BLACK;
 }
 
-.orderByButton.descending .orderByUp {
+.reverseOrderButton.descending .orderByUp {
     -fx-background-color: GRAY;
 }
 
-.orderByButton .orderByDown {
+.reverseOrderButton .orderByDown {
     -fx-background-color: GRAY;
 }
 
-.orderByButton.descending .orderByDown {
+.reverseOrderButton.descending .orderByDown {
     -fx-background-color: BLACK;
 }
 
@@ -61,21 +61,21 @@
 }
 
 
-.loginButton {
+.openLoginViewOrLogoutButton {
     -fx-background-color:#fff;
     -fx-text-fill:  #840B9B;
 }
 
-.loginButton:hover {
+.openLoginViewOrLogoutButton:hover {
   -fx-background-color:#f1f1f1;
 }
 
-.btnIncrementA {
+.incrementButtonA {
     -fx-graphic: url("../icons/plus-circle.png");
     -fx-background-color:rgba(0,0,0,0);
 }
 
-.btnDecrementA {
+.decrementButtonA {
     -fx-graphic: url("../icons/minus-circle.png");
     -fx-background-color:rgba(0,0,0,0);
 }

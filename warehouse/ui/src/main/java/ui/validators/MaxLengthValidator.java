@@ -4,7 +4,7 @@ package ui.validators;
  * Validates that the input length is shorter or equal to the maxLength.
  */
 public class MaxLengthValidator implements InputValidator {
-  private int maxLength;
+  private final int maxLength;
 
   public MaxLengthValidator(int maxLength) {
     this.maxLength = maxLength;

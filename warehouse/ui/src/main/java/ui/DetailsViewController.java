@@ -5,8 +5,6 @@ import static java.util.Map.entry;
 import core.client.ClientWarehouse;
 import core.main.CoreConst;
 import core.main.Item;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +30,7 @@ import ui.validators.DoubleValidator;
 import ui.validators.IntegerValidator;
 import ui.validators.MaxLengthValidator;
 import ui.validators.MaxValueValidator;
-import ui.validators.NotEmptyValidatior;
+import ui.validators.NotEmptyValidator;
 import ui.validators.NotNegativeValidator;
 
 import java.io.IOException;
@@ -47,31 +45,30 @@ public class DetailsViewController {
   private static final int SAFEBOUND_TOP = 30;
   private static final int SAFEBOUND_BOTTOM = 75;
   private static final int placementMaxLength = CoreConst.MAX_POSITION_LENGTH;
-  private static BarcodeValidator barcodeValidator;
 
   @FXML private ScrollPane detailsViewScrollPane;
 
   @FXML private Label sharedErrorLabel;
-  @FXML private TextField inpName;
+  @FXML private TextField nameInput;
   @FXML private Label nameErrorLabel;
-  @FXML private TextField inpBrand;
-  @FXML private TextField inpAmount;
-  @FXML private Button btnIncrement;
-  @FXML private Button btnDecrement;
-  @FXML private TextField inpPlacementSection;
-  @FXML private TextField inpPlacementRow;
-  @FXML private TextField inpPlacementShelf;
-  @FXML private TextField inpOrdinaryPrice;
-  @FXML private TextField inpSalesPrice;
-  @FXML private TextField inpRetailerPrice;
-  @FXML private TextField inpDimensionsLength;
-  @FXML private TextField inpDimensionsWidth;
-  @FXML private TextField inpDimensionsHeigth;
-  @FXML private TextField inpWeight;
-  @FXML private TextField inpBarcode;
-  @FXML private Button btnEdit;
-  @FXML private Button btnSave;
-  @FXML private Button btnDelete;
+  @FXML private TextField brandInput;
+  @FXML private TextField amountInput;
+  @FXML private Button incrementButton;
+  @FXML private Button decrementButton;
+  @FXML private TextField placementSectionInput;
+  @FXML private TextField placementRowInput;
+  @FXML private TextField placementShelfInput;
+  @FXML private TextField ordinaryPriceInput;
+  @FXML private TextField salesPriceInput;
+  @FXML private TextField retailerPriceInput;
+  @FXML private TextField dimensionsLengthInput;
+  @FXML private TextField dimensionsWidthInput;
+  @FXML private TextField dimensionsHeightInput;
+  @FXML private TextField weightInput;
+  @FXML private TextField barcodeInput;
+  @FXML private Button editButton;
+  @FXML private Button saveButton;
+  @FXML private Button deleteButton;
   @FXML private ImageView barcodeImageView;
   @FXML private HBox sectionSaveDelete;
   @FXML private Label barcodeErrorLabel;
@@ -127,56 +124,45 @@ public class DetailsViewController {
     }
 
     // toggles between info-text and edit-button
-    btnEdit.setVisible(!(warehouse.getCurrentUser() == null));
+    editButton.setVisible(!(warehouse.getCurrentUser() == null));
     notifyCannotEdit.setVisible(warehouse.getCurrentUser() == null);
 
-    maxCharsLimiter(inpPlacementSection, placementMaxLength);
-    maxCharsLimiter(inpPlacementRow, placementMaxLength);
-    maxCharsLimiter(inpPlacementShelf, placementMaxLength);
-    onlyIntLimiter(inpAmount);
-    onlyFloatLimiter(inpOrdinaryPrice);
-    onlyFloatLimiter(inpSalesPrice);
-    onlyFloatLimiter(inpRetailerPrice);
-    onlyFloatLimiter(inpDimensionsHeigth);
-    onlyFloatLimiter(inpDimensionsLength);
-    onlyFloatLimiter(inpDimensionsWidth);
-    onlyFloatLimiter(inpWeight);
-    maxCharsLimiter(inpBarcode, CoreConst.MAX_BARCODE_LENGTH);
-    onlyIntLimiter(inpBarcode);
+    maxCharsLimiter(placementSectionInput, placementMaxLength);
+    maxCharsLimiter(placementRowInput, placementMaxLength);
+    maxCharsLimiter(placementShelfInput, placementMaxLength);
+    onlyIntLimiter(amountInput);
+    onlyFloatLimiter(ordinaryPriceInput);
+    onlyFloatLimiter(salesPriceInput);
+    onlyFloatLimiter(retailerPriceInput);
+    onlyFloatLimiter(dimensionsHeightInput);
+    onlyFloatLimiter(dimensionsLengthInput);
+    onlyFloatLimiter(dimensionsWidthInput);
+    onlyFloatLimiter(weightInput);
+    maxCharsLimiter(barcodeInput, CoreConst.MAX_BARCODE_LENGTH);
+    onlyIntLimiter(barcodeInput);
   }
   
   private static void onlyIntLimiter(TextField textField) {
-    textField.textProperty().addListener(new ChangeListener<String>() {
-      @Override
-      public void changed(ObservableValue<? extends String> observable, String oldValue, 
-          String newValue) {
-        if (!newValue.matches("\\d*")) {
-            textField.setText(newValue.replaceAll("[^\\d]", ""));
-        }
+    textField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (!newValue.matches("\\d*")) {
+        textField.setText(newValue.replaceAll("[^\\d]", ""));
       }
     });
   }
 
   private static void onlyFloatLimiter(TextField textField) {
-    textField.textProperty().addListener(new ChangeListener<String>() {
-      @Override
-      public void changed(ObservableValue<? extends String> observable, String oldValue, 
-          String newValue) {
-        if (!newValue.matches("[0-9]*\\.?[0-9]*")) {
-            textField.setText(newValue.replaceAll("[^[0-9]|\\.]", ""));
-        }
+    textField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (!newValue.matches("[0-9]*\\.?[0-9]*")) {
+        textField.setText(newValue.replaceAll("[^[0-9]|.]", ""));
       }
     });
   }
 
   private static void maxCharsLimiter(TextField textField, final int maxLength) {
-    textField.textProperty().addListener(new ChangeListener<String>() {
-      @Override
-      public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-        if (textField.getText().length() > maxLength) {
-          String s = textField.getText().substring(0, maxLength);
-          textField.setText(s);
-        }
+    textField.textProperty().addListener((ov, oldValue, newValue) -> {
+      if (textField.getText().length() > maxLength) {
+        String s = textField.getText().substring(0, maxLength);
+        textField.setText(s);
       }
     });
   }
@@ -185,59 +171,59 @@ public class DetailsViewController {
   public void initialize() {
     fields = Map.ofEntries(
         entry(Field.NAME,
-            new ItemField(inpName, false, itemField -> item.setName(itemField.getStringValue()),
+            new ItemField(nameInput, false, itemField -> item.setName(itemField.getStringValue()),
                 item::getName, nameErrorLabel)),
 
         entry(Field.BRAND,
-            new ItemField(inpBrand, true, itemField -> item.setBrand(itemField.getStringValue()),
+            new ItemField(brandInput, true, itemField -> item.setBrand(itemField.getStringValue()),
                 item::getBrand, sharedErrorLabel)),
 
         entry(Field.AMOUNT,
-            new ItemField(inpAmount, false, itemField -> item.setAmount(itemField.getIntegerValue()),
+            new ItemField(amountInput, false, itemField -> item.setAmount(itemField.getIntegerValue()),
                 item::getAmount, sharedErrorLabel)),
 
         entry(Field.REGULAR_PRICE,
-            new ItemField(inpOrdinaryPrice, true, itemField -> item.setRegularPrice(itemField.getDoubleValue()),
+            new ItemField(ordinaryPriceInput, true, itemField -> item.setRegularPrice(itemField.getDoubleValue()),
                 item::getRegularPrice, sharedErrorLabel)),
 
         entry(Field.SALE_PRICE,
-            new ItemField(inpSalesPrice, true, itemField -> item.setSalePrice(itemField.getDoubleValue()),
+            new ItemField(salesPriceInput, true, itemField -> item.setSalePrice(itemField.getDoubleValue()),
                 item::getSalePrice, sharedErrorLabel)),
 
         entry(Field.PURCHASE_PRICE,
-            new ItemField(inpRetailerPrice, true, itemField -> item.setPurchasePrice(itemField.getDoubleValue()),
+            new ItemField(retailerPriceInput, true, itemField -> item.setPurchasePrice(itemField.getDoubleValue()),
                 item::getPurchasePrice, sharedErrorLabel)),
 
         entry(Field.SECTION,
-            new ItemField(inpPlacementSection, true, itemField -> item.setSection(itemField.getStringValue()),
+            new ItemField(placementSectionInput, true, itemField -> item.setSection(itemField.getStringValue()),
                 item::getSection, sharedErrorLabel)),
 
         entry(Field.ROW,
-            new ItemField(inpPlacementRow, true, itemField -> item.setRow(itemField.getStringValue()),
+            new ItemField(placementRowInput, true, itemField -> item.setRow(itemField.getStringValue()),
                 item::getRow, sharedErrorLabel)),
 
         entry(Field.SHELF,
-            new ItemField(inpPlacementShelf, true, itemField -> item.setShelf(itemField.getStringValue()),
+            new ItemField(placementShelfInput, true, itemField -> item.setShelf(itemField.getStringValue()),
                 item::getShelf, sharedErrorLabel)),
 
         entry(Field.HEIGHT,
-            new ItemField(inpDimensionsHeigth, true, itemField -> item.setHeight(itemField.getDoubleValue()),
+            new ItemField(dimensionsHeightInput, true, itemField -> item.setHeight(itemField.getDoubleValue()),
                 item::getHeight, sharedErrorLabel)),
 
         entry(Field.WIDTH,
-            new ItemField(inpDimensionsWidth, true, itemField -> item.setWidth(itemField.getDoubleValue()),
+            new ItemField(dimensionsWidthInput, true, itemField -> item.setWidth(itemField.getDoubleValue()),
                 item::getWidth, sharedErrorLabel)),
 
         entry(Field.LENGTH,
-            new ItemField(inpDimensionsLength, true, itemField -> item.setLength(itemField.getDoubleValue()),
+            new ItemField(dimensionsLengthInput, true, itemField -> item.setLength(itemField.getDoubleValue()),
                 item::getLength, sharedErrorLabel)),
 
         entry(Field.WEIGHT,
-            new ItemField(inpWeight, true, itemField -> item.setWeight(itemField.getDoubleValue()),
+            new ItemField(weightInput, true, itemField -> item.setWeight(itemField.getDoubleValue()),
                 item::getWeight, sharedErrorLabel)),
 
         entry(Field.BARCODE, 
-            new ItemField(inpBarcode, true, itemField -> item.setBarcode(itemField.getStringValue()),
+            new ItemField(barcodeInput, true, itemField -> item.setBarcode(itemField.getStringValue()),
                 item::getBarcode, sharedErrorLabel))
     );
   }
@@ -257,11 +243,11 @@ public class DetailsViewController {
     stage.requestFocus();
     this.update();
     addInputValidationListeners();
-    inpName.setOnMouseClicked(e -> inpName.selectAll());
+    nameInput.setOnMouseClicked(e -> nameInput.selectAll());
   }
 
   private void addInputValidationListeners() {
-    fields.get(Field.NAME).addValidators(new NotEmptyValidatior());
+    fields.get(Field.NAME).addValidators(new NotEmptyValidator());
     fields.get(Field.BRAND).addValidators();
     fields.get(Field.AMOUNT).addValidators(new IntegerValidator(), new NotNegativeValidator(), new MaxValueValidator(CoreConst.MAX_AMOUNT));
 
@@ -309,8 +295,8 @@ public class DetailsViewController {
       nameErrorLabel.setText("Legg til produktnavn for å lagre.");
       return;
     }
-    String barcode = inpBarcode.getText();
-    barcodeValidator = new BarcodeValidator();
+    String barcode = barcodeInput.getText();
+    BarcodeValidator barcodeValidator = new BarcodeValidator();
     if (barcode.length() > 0 && barcode.length() < 13) {
       barcodeErrorLabel.setText("Barcode må inneholde 13 tall.");
       return;
@@ -364,12 +350,12 @@ public class DetailsViewController {
 
   @FXML
   private void decrement() {
-    inpAmount.setText(String.valueOf(Integer.parseInt(inpAmount.getText()) - 1));
+    amountInput.setText(String.valueOf(Integer.parseInt(amountInput.getText()) - 1));
   }
 
   @FXML
   private void increment() {
-    inpAmount.setText(String.valueOf(Integer.parseInt(inpAmount.getText()) + 1));
+    amountInput.setText(String.valueOf(Integer.parseInt(amountInput.getText()) + 1));
   }
 
   @FXML
@@ -379,28 +365,28 @@ public class DetailsViewController {
       field.setDisabled(!editing);
     }
     
-    btnIncrement.setDisable(!editing);
-    btnDecrement.setDisable(!editing);
+    incrementButton.setDisable(!editing);
+    decrementButton.setDisable(!editing);
 
-    WarehouseController.setRegionVisibility((Region) btnSave.getParent(), editing);
-    WarehouseController.setRegionVisibility((Region) btnEdit.getParent(), !editing);
+    WarehouseController.setRegionVisibility((Region) saveButton.getParent(), editing);
+    WarehouseController.setRegionVisibility((Region) editButton.getParent(), !editing);
 
-    btnEdit.setVisible(!editing);
-    btnSave.setVisible(editing);
-    btnSave.setDisable(!editing);
-    btnDelete.setVisible(editing);
-    btnDelete.setDisable(!editing);
+    editButton.setVisible(!editing);
+    saveButton.setVisible(editing);
+    saveButton.setDisable(!editing);
+    deleteButton.setVisible(editing);
+    deleteButton.setDisable(!editing);
 
-    btnDelete.prefWidthProperty().bind(sectionSaveDelete.widthProperty().divide(2));
-    btnSave.prefWidthProperty().bind(sectionSaveDelete.widthProperty().divide(2));
+    deleteButton.prefWidthProperty().bind(sectionSaveDelete.widthProperty().divide(2));
+    saveButton.prefWidthProperty().bind(sectionSaveDelete.widthProperty().divide(2));
   }
 
   public String toString() {
-    return "" + inpName.getText() + "\n" + inpBrand.getText() + "\n" + inpAmount.getText() + "\n"
-        + inpOrdinaryPrice.getText() + "\n" + inpSalesPrice.getText() + "\n" + inpRetailerPrice.getText() + "\n"
-        + inpPlacementSection.getText() + "\n" + inpPlacementRow.getText() + "\n" + inpPlacementShelf.getText() + "\n"
-        + inpDimensionsLength.getText() + "\n" + inpDimensionsWidth.getText() + "\n" + inpDimensionsHeigth.getText()
-        + "\n" + inpWeight.getText() + "\n" + inpBarcode.getText();
+    return "" + nameInput.getText() + "\n" + brandInput.getText() + "\n" + amountInput.getText() + "\n"
+        + ordinaryPriceInput.getText() + "\n" + salesPriceInput.getText() + "\n" + retailerPriceInput.getText() + "\n"
+        + placementSectionInput.getText() + "\n" + placementRowInput.getText() + "\n" + placementShelfInput.getText() + "\n"
+        + dimensionsLengthInput.getText() + "\n" + dimensionsWidthInput.getText() + "\n" + dimensionsHeightInput.getText()
+        + "\n" + weightInput.getText() + "\n" + barcodeInput.getText();
   }
   
   protected ScrollPane getScrollPane() {
