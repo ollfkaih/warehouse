@@ -87,7 +87,7 @@ public class RegisterController {
         Platform.runLater(this::hideRegisterView);
       }).exceptionally(e -> {
         e.printStackTrace();
-        Platform.runLater(() -> errorMessageField.setText(e.getCause().getMessage()));
+        Platform.runLater(() -> errorMessageField.setText("Noe gikk galt under registreringen. Prøv igjenn."));
         return null;
       });
     }
