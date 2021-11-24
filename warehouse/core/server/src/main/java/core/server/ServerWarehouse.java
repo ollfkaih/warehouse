@@ -52,7 +52,7 @@ public class ServerWarehouse extends BaseWarehouse {
   }
 
   public AuthSession login(String username, String password) {
-    User user = findUserByUsername(username).orElseThrow(() -> new IllegalArgumentException("User does not exist"));
+    User user = findUserByUsername(username).orElseThrow(() -> new IllegalArgumentException("Brukernavn eller passord er feil."));
     if (!user.checkPassword(password)) {
       throw new IllegalArgumentException("Brukernavn eller passord er feil.");
     }
