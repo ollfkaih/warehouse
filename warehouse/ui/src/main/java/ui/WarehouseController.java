@@ -175,6 +175,10 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
     stage.close();
   }
 
+  /**
+   * Deletes the current list of items if it exists and creates a new list. If the list is empty
+   * (due to no items or no search results) it will display a corresponding info-message.
+   */
   @FXML
   private void updateInventory() {
     addItemButton.setVisible(warehouse.getCurrentUser() != null); // set "Legg til produkt" visible when user is logged in
@@ -208,16 +212,20 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
     }
 
     if (items.isEmpty()) {
-      statusAnchorPane.setVisible(true);
-      if (searchInput.getText().equals("")) {
-        statusLabel.setText("Warehouse har ingen elementer");
-        statusImage.setImage(emptyDolly);
-      } else {
-        statusImage.setImage(emptySearch);
-        statusLabel.setText("Ingen resultater");
-      }
+      displayEmptyMessage(items);
     } else {
       statusAnchorPane.setVisible(false);
+    }
+  }
+
+  private void displayEmptyMessage(List<Item> items) {
+    statusAnchorPane.setVisible(true);
+    if (searchInput.getText().equals("")) {
+      statusLabel.setText("Warehouse har ingen elementer");
+      statusImage.setImage(emptyDolly);
+    } else {
+      statusImage.setImage(emptySearch);
+      statusLabel.setText("Ingen resultater");
     }
   }
   
