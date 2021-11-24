@@ -102,7 +102,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
 
   public void updatePerSecond() {
     if (warehouse != null) {
-      Platform.runLater(() -> updateInventory());
+      Platform.runLater(warehouse::loadItems);
     }
   }
 
@@ -177,7 +177,6 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
 
   @FXML
   private void updateInventory() {
-    warehouse.loadItems();
     addItemButton.setVisible(warehouse.getCurrentUser() != null); // set "Legg til produkt" visible when user is logged in
     itemList.getChildren().clear();
     List<Item> items = getItems();
