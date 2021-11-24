@@ -17,13 +17,17 @@ public class User extends Entity<User> {
   public User(@JsonProperty("id") String id, @JsonProperty("userName") String userName, @JsonProperty("password") String password) {
     super(id);
     setUserName(userName);
-    this.password = password; // needs to set directly to avoid double hashing
+    setPassword(password);
   }
 
-  public User(String userName, String password) {
+  public User(String userName, String password, boolean hash) {
     super();
     setUserName(userName);
-    setPassword(password);
+    if (hash) {
+      hashAndSetPassword(password);
+    } else {
+      setPassword(password);
+    }
   }
 
   public String getUserName() {
@@ -47,11 +51,15 @@ public class User extends Entity<User> {
     return password;
   }
 
-  private void setPassword(String password) {
+  public void hashAndSetPassword(String password) {
     if (password.equals("")) {
       throw new IllegalArgumentException("Password cannot be empty");
     }
-    this.password = md5Hash(password);
+    setPassword(md5Hash(password));
+  }
+
+  private void setPassword(String password) {
+    this.password = password;
     notifyUpdated();
   }
 

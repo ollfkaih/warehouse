@@ -52,8 +52,8 @@ public class ClientWarehouseTest {
 
     item = new Item("itemName");
     anotherItem = new Item("secondItem");
-    user1 = new User("user1", "password123");
-    user2 = new User("user2", "superSecure");
+    user1 = new User("user1", "password123", true);
+    user2 = new User("user2", "superSecure", true);
 
     user1Auth = new AuthSession(user1);
 
@@ -306,7 +306,7 @@ public class ClientWarehouseTest {
   @Test
   @DisplayName("Test login")
   void testLogin() {
-    User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+    User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), true);
 
     CompletableFuture<Void> registerFuture = new CompletableFuture<>();
     when(server.register(user)).thenReturn(registerFuture);

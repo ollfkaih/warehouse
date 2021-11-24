@@ -196,7 +196,7 @@ public class WarehouseServerTest {
 
   void registerAndLogin() throws Exception {
     String password = "password123";
-    User user = new User("TestUser", password);
+    User user = new User("TestUser", password, false);
 
     register(user);
 
@@ -205,7 +205,8 @@ public class WarehouseServerTest {
     assertNotNull(authSession);
     assertNotNull(authSession.getUser());
     assertNotNull(authSession.getToken());
-    assertEquals(user, authSession.getUser());
+    assertEquals(user.getId(), authSession.getUser().getId());
+    assertEquals(user.getUserName(), authSession.getUser().getUserName());
 
     auth = authSession;
   }

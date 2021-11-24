@@ -47,6 +47,7 @@ public class ServerWarehouse extends BaseWarehouse {
     if (containsUserByUsername(user.getUserName())) {
       throw new IllegalArgumentException("Brukernavnet er allerede i bruk.");
     }
+    user.hashAndSetPassword(user.getPassword());
     userCollection.add(user);
   }
 
