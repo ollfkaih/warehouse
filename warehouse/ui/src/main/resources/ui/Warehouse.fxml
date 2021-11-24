@@ -18,8 +18,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" minWidth="-Infinity" prefHeight="500.0" prefWidth="624.0" style="-fx-border-width: 10;" stylesheets="@CSS/ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
-    <GridPane fx:id="dividerGridPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane minWidth="-Infinity" prefHeight="500.0" prefWidth="624.0" style="-fx-border-width: 10;" stylesheets="@CSS/ButtonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.WarehouseController">
+    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
       </columnConstraints>
@@ -29,7 +29,7 @@
         <RowConstraints maxHeight="349.0" minHeight="289.0" prefHeight="333.0" vgrow="SOMETIMES" />
       </rowConstraints>
         <children>
-        <VBox fx:id="titleAddandSearch" prefWidth="560.0" spacing="10.0">
+        <VBox prefWidth="560.0" spacing="10.0">
           <AnchorPane id="appTitleBox" style="-fx-background-color: #840B9B;">
                <ImageView fitHeight="50.0" fitWidth="241.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -58,7 +58,7 @@
                      <Font name="System Bold" size="13.0" />
                   </font></Button>
           </AnchorPane>
-          <HBox fx:id="searchPane" alignment="CENTER" minHeight="50.0" spacing="5" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
+          <HBox alignment="CENTER" minHeight="50.0" spacing="5" style="-fx-background-color: #f1f1f1; -fx-border-radius: 10px;">
               <TextField fx:id="searchInput" minWidth="200" prefHeight="27.0" promptText="Søk..." styleClass="searchField" stylesheets="@CSS/inputStyle.css">
                   <opaqueInsets>
                      <Insets />
@@ -66,7 +66,7 @@
               <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sorter" styleClass="sortBox" />
                   <Button fx:id="orderByButton" onAction="#changeOrderBy" prefHeight="27.0" prefWidth="32.0" styleClass="orderByButton">
                     <graphic>
-                    <VBox fx:id="sortAndOrderSelectors" alignment="center" spacing="5.0">
+                    <VBox alignment="center" spacing="5.0">
                           <children>
                               <Region prefHeight="200.0" prefWidth="200.0" stylesheets="@CSS/arrowIcons.css">
                                 <styleClass>
@@ -107,7 +107,7 @@
                </Label>
             </children>
          </AnchorPane>
-     <ScrollPane fx:id="itemContainer" fitToWidth="true" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="450.0" stylesheets="@CSS/ItemStyle.css" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+     <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="450.0" stylesheets="@CSS/ItemStyle.css" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
       <content>
         <VBox fx:id="itemList" alignment="center" />
       </content>
