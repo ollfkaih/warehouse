@@ -71,13 +71,15 @@ Prettier check:
   retry: 1
 
 Cypress:
-  image: cypress/browsers:node16.5.0-chrome94-ff93
+  image: sondresorbye/pw-manager 
   stage: Webapp test
   needs: [Yarn Build]
   script:
-      - cd webapp
+      - cd warehouse
+      - mvn install -DskipUiTests -DskipTests -v $HOME/.m2:/var/maven/.m2:z -e MAVEN_CONFIG=/var/maven/.m2 -e MAVEN_OPTS="-Duser.home=/var/maven
+      - cd ../webapp
       - yarn install --frozen-lockfile --cache-folder .yarn
-      - mvn -f ..\warehouse\server spring-boot:run & yarn start & npx cypress run
+      - (cd ../warehouse/springboot/server; mvn -v $HOME/.m2:/var/maven/.m2:z -e MAVEN_CONFIG=/var/maven/.m2 -e MAVEN_OPTS="-Duser.home=/var/maven spring-boot:run) & (yarn start & npx cypress run)
   retry: 1
   artifacts:
     when: always
