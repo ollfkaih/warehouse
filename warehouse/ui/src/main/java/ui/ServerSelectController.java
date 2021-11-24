@@ -16,9 +16,9 @@ import java.io.IOException;
  */
 public class ServerSelectController {
   @FXML
-  TextField serverUrlField;
+  private TextField serverUrlField;
   @FXML
-  Label errorMessageField;
+  private Label errorMessageField;
 
   private Stage stage;
 

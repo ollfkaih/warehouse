@@ -16,7 +16,7 @@ import javafx.stage.WindowEvent;
 import java.io.IOException;
 
 /**
- * JavaFX App.
+ * This class displays the JavaFX App.
  */
 public class WarehouseApp extends Application {
   private FXMLLoader fxmlLoader;
