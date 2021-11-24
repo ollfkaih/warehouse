@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 /**
- * Class for representing one type of user.
+ * Class for representing a user.
  */
 public class User extends Entity<User> {
   private String userName;

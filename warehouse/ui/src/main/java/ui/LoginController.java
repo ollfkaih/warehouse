@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * This controller shows a separate window for loggin in.
+ * This controller shows a separate window for login.
  */
 public class LoginController {
   @FXML

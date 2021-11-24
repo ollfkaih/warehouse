@@ -13,6 +13,6 @@ public class BarcodeValidator implements InputValidator {
 
   @Override
   public String getErrorMessage() {
-    return "Barcode format is wrong";
+    return "Barcode format is wrong (use EAN-13)";
   }
 }

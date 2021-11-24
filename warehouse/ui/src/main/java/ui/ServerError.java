@@ -1,7 +1,7 @@
 package ui;
 
 /**
- * Class for errors returned by the server through the REST-API.
+ * Class to store and get errors returned by the server through the REST-API.
  */
 public class ServerError extends RuntimeException {
   private final int status;

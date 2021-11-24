@@ -40,8 +40,8 @@ import java.io.InputStream;
 import java.util.Map;
 
 /**
- * This controller shows a separate window with all the properties of an item,
- * and the possibilty to change propeties of the selected item.
+ * This controller shows a separate window (called the DetailsView of an Item)
+ * with ability to view and edit the Items properties.
  */
 public class DetailsViewController {
   private static final int SAFEBOUND_TOP = 30;
@@ -402,11 +402,8 @@ public class DetailsViewController {
         + inpDimensionsLength.getText() + "\n" + inpDimensionsWidth.getText() + "\n" + inpDimensionsHeigth.getText()
         + "\n" + inpWeight.getText() + "\n" + inpBarcode.getText();
   }
-
-  
   
   protected ScrollPane getScrollPane() {
     return detailsViewScrollPane;
   }
-  
 }

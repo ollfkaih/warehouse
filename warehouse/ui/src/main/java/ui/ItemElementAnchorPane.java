@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 /**
- * This element is an item in the list over items.
+ * This element represents an item as a row in the ScrollPane that displays the list of items.
  */
 public class ItemElementAnchorPane extends AnchorPane {
   final Font boldFont = new Font("Arial Bold", 13);
