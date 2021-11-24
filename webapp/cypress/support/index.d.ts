@@ -3,6 +3,11 @@
 declare namespace Cypress {
   interface Chainable<Subject> {
     /**
+     * Logs in to the web ui using the user fixture
+     */
+    login(): void
+    register(): void
+    /**
      * Create an item with name and amount
      * @example
      * cy.createItem('name', 0)

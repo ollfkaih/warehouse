@@ -37,10 +37,11 @@ const MainPage = (props: IProps) => {
 
   const deleteItem = async (id: string) => {
     if (!props.loginSession) return
+    else {
+      await deleteRequest('' + props.DOMAIN + props.SERVER_PATH + id, props.loginSession)
+    }
     if (editingItem !== currentItem) {
       setEditingItem(undefined)
-    } else {
-      await deleteRequest('' + props.DOMAIN + props.SERVER_PATH + id, props.loginSession)
     }
     mutate()
     setCurrentItem(undefined)
