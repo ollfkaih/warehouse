@@ -5,14 +5,16 @@ package ui.validators;
  */
 public interface InputValidator {
   /**
-   * Method to validate an input with custom validation rules
+   * Method to validate an input with custom validation rules.
+   *
    * @param input string to validate
    * @return boolean indicating if input is valid
    */
   public boolean validateInput(String input);
   
   /**
-   * Returns the reason to why an InputValidator returned false
+   * Returns the reason to why an InputValidator returned false.
+   *
    * @return String errorMessage
    */
   public String getErrorMessage();
