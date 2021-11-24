@@ -15,15 +15,13 @@ Følgende data lagres, men vises ikke for brukeren:
 - Produkt-id (lagres f.eks. i tilfellet bruker ønske å lage flere brukere med samme navn, men fra forskjellige produsenter)
 - Opprettelsestidspunkt (gjør det mulig å sortere produktene etter opprettelsestidspunkt)
 
-Brukersnittet fra innlevering 2 er videreført og forbedret. En bruker som ikke er logget inn vil kun ha read-only acces i appen. Brukeren vil bli presentert med et hovedvindu som inneholder en liste over alle produktene på lager, og informasjonen om produktnavn, produsent og antall på lager. Brukeren vil ha også mulighet til å søke etter produkter i et søkefelt, samt å sortere varene etter produktnavn, antall og produksjonsdato ved å bruke en nedtrekksmeny. Ved å trykke på et produkt i listen vil brukeren få opp et vindu med detaljert informasjon om produktet.
+Brukergrensesnittet fra innlevering 2 er videreført og forbedret. En bruker som ikke er logget inn vil kun ha read-only acces i appen. Brukeren vil bli presentert med et hovedvindu som inneholder en liste over alle produktene på lager, og informasjonen om produktnavn, produsent og antall på lager. Brukeren vil også ha mulighet til å søke etter produkter i et søkefelt, samt å sortere varene etter produktnavn, antall og produksjonsdato ved å bruke en nedtrekksmeny. Ved å trykke på et produkt i listen vil brukeren få opp et vindu med detaljert informasjon om produktet.
 
 En pålogget bruker vil i tillegg ha mulighet til å redigere varelageret. Brukeren kan legge til nye produkter ved å trykke på "Legg til nytt produkt"-knappet, samt redigere eksisterende produkter ved å trykke på "rediger"-knappen i detaljevinduet til det produktet du ønsker å redigere. Siden vareantall er den egenskapen som man oftest ønsker å endre på, er det også lagt til en snarvei der man kan endre vareantall ved å trykke på +/- knappene på høyre side av hvert element i produktlisten.
 
 Brukeren har også mulighet til å logge seg av og på, samt å registrere nye brukere. Følgende data lagres om brukeren:
 - Navn
 - Passord (hashet)
-
-Lagring //TODO EIK
 
 ## Brukerhistorier
 [Brukerhistorie 2 og 3](/docs/release2/userStoriesRelease2.md)
