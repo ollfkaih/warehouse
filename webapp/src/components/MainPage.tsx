@@ -84,7 +84,7 @@ const MainPage = (props: IProps) => {
       return (
         <Button
           id="addNewItemButton"
-          className="rounded-pill position-fixed bottom-0 end-50 m-4 btn-lg"
+          className="rounded-pill position-fixed bottom-0 m-4 btn-lg"
           onClick={() =>
             setEditingItem({
               name: '',
