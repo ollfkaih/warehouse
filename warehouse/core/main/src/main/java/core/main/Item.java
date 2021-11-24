@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Class for representing one type of item.
+ * Class for representing an item.
  */
 public class Item extends Entity<Item> {
   private String name;
