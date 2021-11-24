@@ -2,7 +2,7 @@ stages:
   - Java build
   - Java test
   - Webapp build
-  - Webapp lint
+  - Webapp test
 
 cache:
   paths:
@@ -63,9 +63,24 @@ Yarn Build:
 
 Prettier check:
   image: node:16.3.0
-  stage: Webapp lint
+  stage: Webapp test
   needs: []
   script:
     - cd webapp
     - npx prettier --check .
   retry: 1
+
+Cypress:
+  image: cypress/browsers:node16.5.0-chrome94-ff93
+  stage: Webapp test
+  needs: [Yarn Build]
+  script:
+      - cd webapp
+      - yarn install --frozen-lockfile --cache-folder .yarn
+      - mvn -f ..\warehouse\server spring-boot:run & yarn start & npx cypress run
+  retry: 1
+  artifacts:
+    when: always
+    paths:
+      - $CI_BUILDS_DIR/$CI_PROJECT_PATH/webapp/cypress/videos/**/*.mp4
+      - $CI_BUILDS_DIR/$CI_PROJECT_PATH/webapp/cypress/screenshots/**/*.png

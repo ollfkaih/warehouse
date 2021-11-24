@@ -70,6 +70,7 @@ const Login = (props: IProps) => {
           <i className="far fa-times"></i> Lukk
         </Button>
         <Button
+          id="login-button-modal"
           variant="primary"
           onClick={() => {
             props.onLogin(loginDetails)

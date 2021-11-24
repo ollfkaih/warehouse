@@ -1,8 +1,18 @@
 /// <reference types="cypress" />
 import item from '../../fixtures/item.json'
+import user from '../../fixtures/user.json'
+
+before(() => {
+  cy.register()
+})
+
+beforeEach(() => {
+  cy.login()
+})
 
 describe('Warehouse', () => {
   it('should be able to edit item properties', () => {
+    cy.viewport(1600, 800)
     cy.createItem(item.name, 0)
     cy.editItem(item)
     cy.verifyItemProperties(item)
