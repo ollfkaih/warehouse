@@ -4,10 +4,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import ui.WarehouseController;
 import ui.validators.InputValidator;
-import ui.validators.NotEmptyValidatior;
+import ui.validators.NotEmptyValidator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class ItemField {
    * corresponding item property.
    */
   @FunctionalInterface
-  public static interface SaveFunction {
+  public interface SaveFunction {
     void saveItemField(ItemField itemField);
   }
 
@@ -28,7 +29,7 @@ public class ItemField {
    * the field corresponds to.
    */
   @FunctionalInterface
-  public static interface GetFunction {
+  public interface GetFunction {
     Object getItemValue();
   }
 
@@ -55,7 +56,7 @@ public class ItemField {
   }
 
   private void handleChange(String value) {
-    InputValidator notEmptyValidator = new NotEmptyValidatior();
+    InputValidator notEmptyValidator = new NotEmptyValidator();
     boolean isEmpty = !notEmptyValidator.validateInput(value);
     if (!nullable && isEmpty) {
       setError("Feltet kan ikke være tomt");
@@ -100,7 +101,7 @@ public class ItemField {
   private void setError(String error) {
     boolean legal = error == null;
     errorMessage = error;
-    textField.getStyleClass().removeAll(Arrays.asList("illegalInput"));
+    textField.getStyleClass().removeAll(Collections.singletonList("illegalInput"));
     if (!legal) {
       textField.getStyleClass().add("illegalInput");
       errorLabel.setText(error);
@@ -111,9 +112,7 @@ public class ItemField {
   }
 
   public void addValidators(InputValidator... validators) {
-    for (InputValidator validator : validators) {
-      this.validators.add(validator);
-    }
+    Collections.addAll(this.validators, validators);
   }
 
   public void setDisabled(boolean disabled) {

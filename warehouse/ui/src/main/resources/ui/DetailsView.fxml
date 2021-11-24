@@ -283,7 +283,7 @@
                 <Font name="System Font" size="13.0" />
               </font>
             </Label>
-            <TextField fx:id="inpDimensionsHeigth" disable="true" promptText="Høyde" />
+            <TextField fx:id="inpDimensionsHeight" disable="true" promptText="Høyde" />
             <Label text="cm">
               <font>
                 <Font size="10.0" />

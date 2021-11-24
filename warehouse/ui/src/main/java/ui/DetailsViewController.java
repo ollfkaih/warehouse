@@ -5,8 +5,6 @@ import static java.util.Map.entry;
 import core.client.ClientWarehouse;
 import core.main.CoreConst;
 import core.main.Item;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +30,7 @@ import ui.validators.DoubleValidator;
 import ui.validators.IntegerValidator;
 import ui.validators.MaxLengthValidator;
 import ui.validators.MaxValueValidator;
-import ui.validators.NotEmptyValidatior;
+import ui.validators.NotEmptyValidator;
 import ui.validators.NotNegativeValidator;
 
 import java.io.IOException;
@@ -47,7 +45,6 @@ public class DetailsViewController {
   private static final int SAFEBOUND_TOP = 30;
   private static final int SAFEBOUND_BOTTOM = 75;
   private static final int placementMaxLength = CoreConst.MAX_POSITION_LENGTH;
-  private static BarcodeValidator barcodeValidator;
 
   @FXML private ScrollPane detailsViewScrollPane;
 
@@ -66,7 +63,7 @@ public class DetailsViewController {
   @FXML private TextField inpRetailerPrice;
   @FXML private TextField inpDimensionsLength;
   @FXML private TextField inpDimensionsWidth;
-  @FXML private TextField inpDimensionsHeigth;
+  @FXML private TextField inpDimensionsHeight;
   @FXML private TextField inpWeight;
   @FXML private TextField inpBarcode;
   @FXML private Button btnEdit;
@@ -137,7 +134,7 @@ public class DetailsViewController {
     onlyFloatLimiter(inpOrdinaryPrice);
     onlyFloatLimiter(inpSalesPrice);
     onlyFloatLimiter(inpRetailerPrice);
-    onlyFloatLimiter(inpDimensionsHeigth);
+    onlyFloatLimiter(inpDimensionsHeight);
     onlyFloatLimiter(inpDimensionsLength);
     onlyFloatLimiter(inpDimensionsWidth);
     onlyFloatLimiter(inpWeight);
@@ -146,37 +143,26 @@ public class DetailsViewController {
   }
   
   private static void onlyIntLimiter(TextField textField) {
-    textField.textProperty().addListener(new ChangeListener<String>() {
-      @Override
-      public void changed(ObservableValue<? extends String> observable, String oldValue, 
-          String newValue) {
-        if (!newValue.matches("\\d*")) {
-            textField.setText(newValue.replaceAll("[^\\d]", ""));
-        }
+    textField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (!newValue.matches("\\d*")) {
+        textField.setText(newValue.replaceAll("[^\\d]", ""));
       }
     });
   }
 
   private static void onlyFloatLimiter(TextField textField) {
-    textField.textProperty().addListener(new ChangeListener<String>() {
-      @Override
-      public void changed(ObservableValue<? extends String> observable, String oldValue, 
-          String newValue) {
-        if (!newValue.matches("[0-9]*\\.?[0-9]*")) {
-            textField.setText(newValue.replaceAll("[^[0-9]|\\.]", ""));
-        }
+    textField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (!newValue.matches("[0-9]*\\.?[0-9]*")) {
+        textField.setText(newValue.replaceAll("[^[0-9]|.]", ""));
       }
     });
   }
 
   private static void maxCharsLimiter(TextField textField, final int maxLength) {
-    textField.textProperty().addListener(new ChangeListener<String>() {
-      @Override
-      public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-        if (textField.getText().length() > maxLength) {
-          String s = textField.getText().substring(0, maxLength);
-          textField.setText(s);
-        }
+    textField.textProperty().addListener((ov, oldValue, newValue) -> {
+      if (textField.getText().length() > maxLength) {
+        String s = textField.getText().substring(0, maxLength);
+        textField.setText(s);
       }
     });
   }
@@ -221,7 +207,7 @@ public class DetailsViewController {
                 item::getShelf, sharedErrorLabel)),
 
         entry(Field.HEIGHT,
-            new ItemField(inpDimensionsHeigth, true, itemField -> item.setHeight(itemField.getDoubleValue()),
+            new ItemField(inpDimensionsHeight, true, itemField -> item.setHeight(itemField.getDoubleValue()),
                 item::getHeight, sharedErrorLabel)),
 
         entry(Field.WIDTH,
@@ -261,7 +247,7 @@ public class DetailsViewController {
   }
 
   private void addInputValidationListeners() {
-    fields.get(Field.NAME).addValidators(new NotEmptyValidatior());
+    fields.get(Field.NAME).addValidators(new NotEmptyValidator());
     fields.get(Field.BRAND).addValidators();
     fields.get(Field.AMOUNT).addValidators(new IntegerValidator(), new NotNegativeValidator(), new MaxValueValidator(CoreConst.MAX_AMOUNT));
 
@@ -310,7 +296,7 @@ public class DetailsViewController {
       return;
     }
     String barcode = inpBarcode.getText();
-    barcodeValidator = new BarcodeValidator();
+    BarcodeValidator barcodeValidator = new BarcodeValidator();
     if (barcode.length() > 0 && barcode.length() < 13) {
       barcodeErrorLabel.setText("Barcode må inneholde 13 tall.");
       return;
@@ -399,7 +385,7 @@ public class DetailsViewController {
     return "" + inpName.getText() + "\n" + inpBrand.getText() + "\n" + inpAmount.getText() + "\n"
         + inpOrdinaryPrice.getText() + "\n" + inpSalesPrice.getText() + "\n" + inpRetailerPrice.getText() + "\n"
         + inpPlacementSection.getText() + "\n" + inpPlacementRow.getText() + "\n" + inpPlacementShelf.getText() + "\n"
-        + inpDimensionsLength.getText() + "\n" + inpDimensionsWidth.getText() + "\n" + inpDimensionsHeigth.getText()
+        + inpDimensionsLength.getText() + "\n" + inpDimensionsWidth.getText() + "\n" + inpDimensionsHeight.getText()
         + "\n" + inpWeight.getText() + "\n" + inpBarcode.getText();
   }
   

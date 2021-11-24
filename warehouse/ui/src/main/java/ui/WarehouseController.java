@@ -67,8 +67,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
 
   private final Map<Item, DetailsViewController> detailsViewControllers = new HashMap<>();
   private LoginController loginController;
-  private ServerSelectController serverSelectController;
-  private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+  private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
 
   @FXML
   void initialize() {
@@ -78,7 +77,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
     searchInput.textProperty().addListener((observable, oldValue, newValue) -> updateInventory());
 
     statusLabel.setWrapText(true);
-    serverSelectController = new ServerSelectController(this);
+    ServerSelectController serverSelectController = new ServerSelectController(this);
     serverSelectController.showView();
 
     RotateTransition rt = new RotateTransition(Duration.millis(1000), loadingImage);
@@ -86,7 +85,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
     rt.setCycleCount(-1);
     rt.setAutoReverse(false);
     rt.play();
-    executor.scheduleAtFixedRate(() -> updatePerSecond(), 0, 2, TimeUnit.SECONDS);
+    executor.scheduleAtFixedRate(this::updatePerSecond, 0, 2, TimeUnit.SECONDS);
   }
 
   public void endExecutor() {

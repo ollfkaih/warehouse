@@ -43,7 +43,7 @@ class WarehouseControllerTest {
 
   private static final String INP_BARCODE = "#inpBarcode";
   private static final String INP_WEIGHT = "#inpWeight";
-  private static final String INP_DIMENSIONS_HEIGTH = "#inpDimensionsHeigth";
+  private static final String INP_DIMENSIONS_HEIGHT = "#inpDimensionsHeight";
   private static final String INP_DIMENSIONS_WIDTH = "#inpDimensionsWidth";
   private static final String INP_DIMENSIONS_LENGTH = "#inpDimensionsLength";
   private static final String INP_PLACEMENT_SHELF = "#inpPlacementShelf";
@@ -212,7 +212,7 @@ class WarehouseControllerTest {
     FxAssert.verifyThat(INP_PLACEMENT_SHELF, TextInputControlMatchers.hasText(item.getShelf()));
     FxAssert.verifyThat(INP_DIMENSIONS_LENGTH, TextInputControlMatchers.hasText(String.valueOf(item.getLength())));
     FxAssert.verifyThat(INP_DIMENSIONS_WIDTH, TextInputControlMatchers.hasText(String.valueOf(item.getWidth())));
-    FxAssert.verifyThat(INP_DIMENSIONS_HEIGTH, TextInputControlMatchers.hasText(String.valueOf(item.getHeight())));
+    FxAssert.verifyThat(INP_DIMENSIONS_HEIGHT, TextInputControlMatchers.hasText(String.valueOf(item.getHeight())));
     FxAssert.verifyThat(INP_WEIGHT, TextInputControlMatchers.hasText(String.valueOf(item.getWeight())));
     FxAssert.verifyThat(INP_BARCODE, TextInputControlMatchers.hasText(item.getBarcode()));
   }
@@ -313,7 +313,7 @@ class WarehouseControllerTest {
     ensureVisibleClickOn(testProductViewScrollPane, robot, INP_PLACEMENT_SHELF).write("3");
     ensureVisibleClickOn(testProductViewScrollPane, robot, INP_DIMENSIONS_LENGTH).write("10");
     ensureVisibleClickOn(testProductViewScrollPane, robot, INP_DIMENSIONS_WIDTH).write("20");
-    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_DIMENSIONS_HEIGTH).write("4");
+    ensureVisibleClickOn(testProductViewScrollPane, robot, INP_DIMENSIONS_HEIGHT).write("4");
     ensureVisibleClickOn(testProductViewScrollPane, robot, INP_WEIGHT).write("5.0");
     ensureVisibleClickOn(testProductViewScrollPane, robot, INP_BARCODE).write("6830473201734");
     ensureVisibleClickOn(testProductViewScrollPane, robot, DETAILS_VIEW_SAVE_BUTTON);

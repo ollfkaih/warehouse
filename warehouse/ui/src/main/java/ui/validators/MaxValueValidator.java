@@ -4,7 +4,7 @@ package ui.validators;
  * Validates that the input value is less than or equal to the specified maxValue.
  */
 public class MaxValueValidator implements InputValidator {
-  private int maxValue;
+  private final int maxValue;
 
   public MaxValueValidator(int maxValue) {
     this.maxValue = maxValue;

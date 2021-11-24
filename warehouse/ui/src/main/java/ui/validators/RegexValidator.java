@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
  * Validates that input matches the given regex string.
  */
 public class RegexValidator implements InputValidator {
-  private Pattern pattern;
+  private final Pattern pattern;
 
   public RegexValidator(String regex) {
     this.pattern = Pattern.compile(regex);
