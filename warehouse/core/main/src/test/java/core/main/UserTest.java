@@ -16,8 +16,8 @@ public class UserTest {
 
   @BeforeEach
   void setup() {
-    user1 = new User("a", "b");
-    user2 = new User("c", "d");
+    user1 = new User("a", "b", true);
+    user2 = new User("c", "d", true);
   }
 
   @Test
@@ -34,8 +34,8 @@ public class UserTest {
   @Test
   @DisplayName("Test")
   void testExceptions() {
-    assertThrows(IllegalArgumentException.class, () -> user3 = new User("", ""));
-    assertThrows(IllegalArgumentException.class, () -> user3 = new User("", "b"));
-    assertThrows(IllegalArgumentException.class, () -> user3 = new User("a", ""));
+    assertThrows(IllegalArgumentException.class, () -> user3 = new User("", "", true));
+    assertThrows(IllegalArgumentException.class, () -> user3 = new User("", "b", false));
+    assertThrows(IllegalArgumentException.class, () -> user3 = new User("a", "", true));
   }
 }
