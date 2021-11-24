@@ -31,8 +31,8 @@ Funksjonalitet laget basert på første brukerhistorie, [`us-1`](/docs/release1/
 ## Prosessen bak versjon 3
 I [creatingRelease3.md](/docs/release3/creatingRelease3.md) finner du noen av valgene vi har tatt i den tredje versjonen av appen vår, og litt om hva som har fungert bra og dårlig med verktøy, språk og samarbeid.
 
-## Bildeeksempler
-Hovedvindu og detaljevindu til en upålogget bruker:  
+## Bildeeksempler: java-app
+Hovedvindu og detaljevindu til en upålogget bruker:
 ![Warehouse upålogget](/docs/release3/Warehouse1_release3.png)
 ![DetailsView upålogget](/docs/release3/DetailsView1_release3.png)
 
@@ -40,7 +40,10 @@ Hovedvindu og detaljevinduer til en pålogget bruker:
 ![Warehouse pålogget](/docs/release3/Warehouse2_release3.png)
 ![DetailsView pålogget](/docs/release3/DetailsView2_release3.png)
 
-//DESIGNSKISSE TODO FREDRIK
+
+## Bildeeksempler: web-app
+
+
 ## Designskisse
-Designskissen under var utgangspunktet for detaljvinduet i versjon 2.  
-![Designskisse innlevering 2](/docs/release2/Warehouse_p2.png)
+Designskissen under var utgangspunktet for detaljvinduet i versjon 3.  
+//TODO DESIGNSKISSE TODO FREDRIK
