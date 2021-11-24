@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 import item from '../../fixtures/item.json'
-import user from '../../fixtures/user.json'
 
 before(() => {
   cy.register()
