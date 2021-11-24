@@ -18,6 +18,6 @@
   <Label layoutX="180.0" layoutY="140.0" text="Passord" />
   <PasswordField fx:id="passwordField1" layoutX="127.0" layoutY="160.0" promptText="Passord" />
   <PasswordField fx:id="passwordField2" layoutX="128.0" layoutY="190.0" promptText="Gjenta passord" />
-  <Button fx:id="btnRegister" layoutX="142.0" layoutY="240.0" onAction="#register" text="Registrer ny bruker" />
+  <Button fx:id="registerButton" layoutX="142.0" layoutY="240.0" onAction="#register" text="Registrer ny bruker" />
   <Label fx:id="errorMessageField" alignment="CENTER" layoutX="52.0" layoutY="280.0" prefHeight="17.0" prefWidth="300.0" text="" textFill="RED" />
 </AnchorPane>

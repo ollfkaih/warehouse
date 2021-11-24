@@ -51,8 +51,8 @@
             </ImageView>
           </graphic>
         </Label>
-        <Button fx:id="loginButton" layoutX="524.0" layoutY="12.0" minWidth="70.0" onAction="#login"
-                styleClass="loginButton" text="Logg inn" textFill="#840b9b" AnchorPane.rightAnchor="30.0">
+        <Button fx:id="openLoginViewOrLogoutButton" layoutX="524.0" layoutY="12.0" minWidth="70.0" onAction="#openLoginViewOrLogout"
+                styleClass="openLoginViewOrLogoutButton" text="Logg inn" textFill="#840b9b" AnchorPane.rightAnchor="30.0">
           <font>
             <Font name="System Bold" size="13.0"/>
           </font>
@@ -68,8 +68,8 @@
         </TextField>
         <ComboBox fx:id="sortBySelector" minWidth="98.0" onAction="#changeSortBy" prefHeight="27.0" promptText="Sorter"
                   styleClass="sortBox"/>
-        <Button fx:id="orderByButton" onAction="#changeOrderBy" prefHeight="27.0" prefWidth="32.0"
-                styleClass="orderByButton">
+        <Button fx:id="reverseOrderButton" onAction="#reverseOrder" prefHeight="27.0" prefWidth="32.0"
+                styleClass="reverseOrderButton">
           <graphic>
             <VBox alignment="center" spacing="5.0">
               <Region prefHeight="200.0" prefWidth="200.0" stylesheets="@CSS/arrowIcons.css">

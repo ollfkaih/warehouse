@@ -18,7 +18,7 @@
     <AnchorPane minHeight="0.0" minWidth="0.0">
       <VBox prefHeight="84.0" prefWidth="400.0" AnchorPane.bottomAnchor="-32.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <AnchorPane fx:id="anchorPaneEdit" prefHeight="42.0" prefWidth="200.0">
-          <Button fx:id="btnEdit" alignment="CENTER" onAction="#toggleEditing" prefHeight="42.0" prefWidth="366.0" text="Rediger" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <Button fx:id="editButton" alignment="CENTER" onAction="#toggleEditing" prefHeight="42.0" prefWidth="366.0" text="Rediger" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <font>
               <Font name="Arial Bold" size="16.0" />
             </font>
@@ -31,7 +31,7 @@
           <Label fx:id="notifyCannotEdit" text="Du må være innlogget for å redigere" alignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
         </AnchorPane>
         <HBox fx:id="sectionSaveDelete" maxHeight="59.0" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" spacing="20.0">
-          <Button fx:id="btnSave" alignment="CENTER" disable="true" onAction="#saveItem" prefHeight="42.0" prefWidth="190.0" text="LAGRE" visible="false" HBox.hgrow="ALWAYS">
+          <Button fx:id="saveButton" alignment="CENTER" disable="true" onAction="#saveItem" prefHeight="42.0" prefWidth="190.0" text="LAGRE" visible="false" HBox.hgrow="ALWAYS">
             <font>
               <Font name="Arial Bold" size="16.0" />
             </font>
@@ -41,7 +41,7 @@
               </ImageView>
             </graphic>
           </Button>
-          <Button fx:id="btnDelete" disable="true" onAction="#promptRemoveItem" prefHeight="42.0" prefWidth="190.0" text="SLETT" visible="false" HBox.hgrow="ALWAYS">
+          <Button fx:id="deleteButton" disable="true" onAction="#promptRemoveItem" prefHeight="42.0" prefWidth="190.0" text="SLETT" visible="false" HBox.hgrow="ALWAYS">
             <font>
               <Font name="Arial Bold" size="16.0" />
             </font>
@@ -85,7 +85,7 @@
                   </ImageView>
                 </graphic>
               </Label>
-              <TextField fx:id="inpName" disable="true" prefWidth="190.0" promptText="Produktnavn" text="" />
+              <TextField fx:id="nameInput" disable="true" prefWidth="190.0" promptText="Produktnavn" text="" />
               <Label fx:id="nameErrorLabel" textFill="RED" />
             </VBox>
           </AnchorPane>
@@ -101,7 +101,7 @@
                   </ImageView>
                 </graphic>
               </Label>
-              <TextField fx:id="inpBrand" disable="true" promptText="Produsent" />
+              <TextField fx:id="brandInput" disable="true" promptText="Produsent" />
             </VBox>
           </AnchorPane>
         </HBox>
@@ -130,13 +130,13 @@
               </font>
             </Label>
             <HBox prefWidth="155.0">
-              <Button fx:id="btnDecrement" alignment="CENTER" contentDisplay="CENTER" disable="true" ellipsisString="" graphicTextGap="0.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onAction="#decrement" prefHeight="30.0" prefWidth="30.0" style="-fx-padding: 0;" styleClass="btnDecrementA" stylesheets="@CSS/ButtonStyle.css" textOverrun="CLIP">
+              <Button fx:id="decrementButton" alignment="CENTER" contentDisplay="CENTER" disable="true" ellipsisString="" graphicTextGap="0.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onAction="#decrement" prefHeight="30.0" prefWidth="30.0" style="-fx-padding: 0;" styleClass="decrementButtonA" stylesheets="@CSS/ButtonStyle.css" textOverrun="CLIP">
                 <font>
                   <Font name="System Bold" size="12.0" />
                 </font>
               </Button>
-              <TextField fx:id="inpAmount" alignment="CENTER" disable="true" minHeight="30.0" prefHeight="30.0" prefWidth="96.0" promptText="0" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
-              <Button fx:id="btnIncrement" alignment="CENTER" disable="true" ellipsisString="" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onAction="#increment" prefHeight="30.0" prefWidth="30.0" styleClass="btnIncrementA" stylesheets="@CSS/ButtonStyle.css" textOverrun="CLIP">
+              <TextField fx:id="amountInput" alignment="CENTER" disable="true" minHeight="30.0" prefHeight="30.0" prefWidth="96.0" promptText="0" style="-fx-background-color: #fff; -fx-border-radius: 0;" />
+              <Button fx:id="incrementButton" alignment="CENTER" disable="true" ellipsisString="" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onAction="#increment" prefHeight="30.0" prefWidth="30.0" styleClass="incrementButtonA" stylesheets="@CSS/ButtonStyle.css" textOverrun="CLIP">
                 <font>
                   <Font name="System Bold" size="12.0" />
                 </font>
@@ -154,7 +154,7 @@
                 <Pane styleClass="placementPane">
                   <VBox alignment="TOP_CENTER" prefWidth="63.0">
                     <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                      <TextField fx:id="inpPlacementSection" disable="true" promptText="?" styleClass="placementTextField" />
+                      <TextField fx:id="placementSectionInput" disable="true" promptText="?" styleClass="placementTextField" />
                       <Label text="Seksjon" textAlignment="CENTER" />
                     </VBox>
                   </VBox>
@@ -164,7 +164,7 @@
                 <Pane styleClass="placementPane">
                   <VBox alignment="TOP_CENTER" prefWidth="63.0">
                     <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                      <TextField fx:id="inpPlacementRow" disable="true" promptText="?" styleClass="placementTextField" />
+                      <TextField fx:id="placementRowInput" disable="true" promptText="?" styleClass="placementTextField" />
                       <Label text="Reol" textAlignment="CENTER" />
                     </VBox>
                   </VBox>
@@ -174,7 +174,7 @@
                 <Pane styleClass="placementPane">
                   <VBox alignment="TOP_CENTER" prefWidth="63.0">
                     <VBox alignment="TOP_CENTER" prefWidth="63.0">
-                      <TextField fx:id="inpPlacementShelf" disable="true" promptText="?" styleClass="placementTextField" />
+                      <TextField fx:id="placementShelfInput" disable="true" promptText="?" styleClass="placementTextField" />
                       <Label text="Hylle" textAlignment="CENTER" />
                     </VBox>
                   </VBox>
@@ -207,7 +207,7 @@
                 <Font name="System Font" size="13.0" />
               </font>
             </Label>
-            <TextField fx:id="inpOrdinaryPrice" disable="true" promptText="Ordinærpris" />
+            <TextField fx:id="ordinaryPriceInput" disable="true" promptText="Ordinærpris" />
             <Label text="ink.mva">
               <font>
                 <Font size="10.0" />
@@ -216,7 +216,7 @@
           </VBox>
           <VBox prefHeight="200.0">
             <Label text="Utsalg" />
-            <TextField fx:id="inpSalesPrice" disable="true" promptText="Utsalgspris" />
+            <TextField fx:id="salesPriceInput" disable="true" promptText="Utsalgspris" />
             <Label text="ink.mva">
               <font>
                 <Font size="10.0" />
@@ -225,7 +225,7 @@
           </VBox>
           <VBox prefHeight="200.0">
             <Label text="Innkjøp" />
-            <TextField fx:id="inpRetailerPrice" disable="true" promptText="Innkjøpspris" />
+            <TextField fx:id="retailerPriceInput" disable="true" promptText="Innkjøpspris" />
             <Label text="eks.mva">
               <font>
                 <Font size="10.0" />
@@ -257,7 +257,7 @@
                 <Font name="System Font" size="13.0" />
               </font>
             </Label>
-            <TextField fx:id="inpDimensionsLength" disable="true" promptText="Lengde" />
+            <TextField fx:id="dimensionsLengthInput" disable="true" promptText="Lengde" />
             <Label text="cm">
               <font>
                 <Font size="10.0" />
@@ -270,7 +270,7 @@
                 <Font name="System Font" size="13.0" />
               </font>
             </Label>
-            <TextField fx:id="inpDimensionsWidth" disable="true" promptText="Bredde" />
+            <TextField fx:id="dimensionsWidthInput" disable="true" promptText="Bredde" />
             <Label text="cm">
               <font>
                 <Font size="10.0" />
@@ -283,7 +283,7 @@
                 <Font name="System Font" size="13.0" />
               </font>
             </Label>
-            <TextField fx:id="inpDimensionsHeight" disable="true" promptText="Høyde" />
+            <TextField fx:id="dimensionsHeightInput" disable="true" promptText="Høyde" />
             <Label text="cm">
               <font>
                 <Font size="10.0" />
@@ -296,7 +296,7 @@
                 <Font name="System Font" size="13.0" />
               </font>
             </Label>
-            <TextField fx:id="inpWeight" disable="true" promptText="Vekt (kg)" />
+            <TextField fx:id="weightInput" disable="true" promptText="Vekt (kg)" />
             <Label text="kg">
               <font>
                 <Font name="System Bold" size="10.0" />
@@ -322,7 +322,7 @@
               <Insets bottom="5.0" />
             </VBox.margin>
           </Label>
-          <TextField fx:id="inpBarcode" disable="true" promptText="0000000000000">
+          <TextField fx:id="barcodeInput" disable="true" promptText="0000000000000">
             <font>
               <Font name="Arial" size="13.0" />
             </font>
