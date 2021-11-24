@@ -1,10 +1,10 @@
 package ui.validators;
 
 /**
- * Validates that the input is less than or equal to the specified maxValue.
+ * Validates that the input value is less than or equal to the specified maxValue.
  */
 public class MaxValueValidator implements InputValidator {
-  int maxValue;
+  private int maxValue;
 
   public MaxValueValidator(int maxValue) {
     this.maxValue = maxValue;
@@ -17,6 +17,6 @@ public class MaxValueValidator implements InputValidator {
 
   @Override
   public String getErrorMessage() {
-    return "Value cannot be greater than " + maxValue;
+    return "Value cannot be greater than " + Integer.toString(maxValue);
   }
 }
