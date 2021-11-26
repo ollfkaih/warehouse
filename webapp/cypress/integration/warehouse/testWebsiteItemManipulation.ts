@@ -71,42 +71,56 @@ describe('Warehouse', () => {
     cy.get('label[for=brand-button]').click()
     cy.get('#itemList').then(($items) => {
       const strings = [...$items].map((item) => item.innerText)
-      expect(strings).to.deep.equal(['ProdusentB\nProdB\n10\nProdusentA\nProdA\n5'])
+      expect(strings).to.deep.equal([
+        `${prodB.brand}\n${prodB.name}\n${prodB.amount}\n${prodA.brand}\n${prodA.name}\n${prodA.amount}`,
+      ])
     })
 
     cy.get('label[for=brand-button]').click()
     cy.get('#itemList').then(($items) => {
       const strings = [...$items].map((item) => item.innerText)
-      expect(strings).to.deep.equal(['ProdusentB\nProdB\n10\nProdusentA\nProdA\n5'])
+      expect(strings).to.deep.equal([
+        `${prodB.brand}\n${prodB.name}\n${prodB.amount}\n${prodA.brand}\n${prodA.name}\n${prodA.amount}`,
+      ])
     })
 
     cy.get('label[for=name-button]').click()
     cy.get('#itemList').then(($items) => {
       const strings = [...$items].map((item) => item.innerText)
-      expect(strings).to.deep.equal(['ProdusentB\nProdB\n10\nProdusentA\nProdA\n5'])
+      expect(strings).to.deep.equal([
+        `${prodB.brand}\n${prodB.name}\n${prodB.amount}\n${prodA.brand}\n${prodA.name}\n${prodA.amount}`,
+      ])
     })
 
     cy.get('label[for=amount-button]').click()
     cy.get('#itemList').then(($items) => {
       const strings = [...$items].map((item) => item.innerText)
-      expect(strings).to.deep.equal(['ProdusentB\nProdB\n10\nProdusentA\nProdA\n5'])
+      expect(strings).to.deep.equal([
+        `${prodB.brand}\n${prodB.name}\n${prodB.amount}\n${prodA.brand}\n${prodA.name}\n${prodA.amount}`,
+      ])
     })
 
     cy.get('label[for=price-button]').click()
     cy.get('#itemList').then(($items) => {
       const strings = [...$items].map((item) => item.innerText)
-      expect(strings).to.deep.equal(['ProdusentB\nProdB\n10\nProdusentA\nProdA\n5'])
+      expect(strings).to.deep.equal([
+        `${prodB.brand}\n${prodB.name}\n${prodB.amount}\n${prodA.brand}\n${prodA.name}\n${prodA.amount}`,
+      ])
     })
 
     cy.get('label[for=date-button]').click()
     cy.get('#itemList').then(($items) => {
       const strings = [...$items].map((item) => item.innerText)
-      expect(strings).to.deep.equal(['ProdusentA\nProdA\n5\nProdusentB\nProdB\n10'])
+      expect(strings).to.deep.equal([
+        `${prodA.brand}\n${prodA.name}\n${prodA.amount}\n${prodB.brand}\n${prodB.name}\n${prodB.amount}`,
+      ])
     })
     cy.get('#sortDirectionButton').click()
     cy.get('#itemList').then(($items) => {
       const strings = [...$items].map((item) => item.innerText)
-      expect(strings).to.deep.equal(['ProdusentB\nProdB\n10\nProdusentA\nProdA\n5'])
+      expect(strings).to.deep.equal([
+        `${prodB.brand}\n${prodB.name}\n${prodB.amount}\n${prodA.brand}\n${prodA.name}\n${prodA.amount}`,
+      ])
     })
 
     cy.get('#searchField').clear().type('ProdA')
