@@ -25,3 +25,5 @@ yarn-error.log*
 
 //cypress defaults
 cypress/integration/2-advanced-examples
+cypress/screenshots
+cypress/videos

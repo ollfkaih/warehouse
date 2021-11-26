@@ -65,7 +65,7 @@ const ItemList = (props: IProps) => {
 
   const renderItems = (ascending: boolean) => {
     return (
-      <Container fluid id="itemList" className="item-list w-auto mt-3 p-0">
+      <Container fluid id="itemListContainer" className="item-list w-auto mt-3 p-0">
         <Row className="text-primary bg-secondary text-bold rounded-1 mb-2 m-0 p-2">
           <Col>
             <strong>
@@ -83,7 +83,7 @@ const ItemList = (props: IProps) => {
             </strong>
           </Col>
         </Row>
-        <Container fluid className="overflow-auto w-auto item-list m-0 p-0">
+        <Container fluid id="itemList" className="overflow-auto w-auto item-list m-0 p-0">
           {items ? (
             items
               .filter(
