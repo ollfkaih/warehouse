@@ -4,7 +4,7 @@ import LoginRequest from '../modules/LoginRequest'
 
 interface IProps {
   show: boolean
-  error?: String
+  error?: any
   onClose: () => void
   onLogin: (LoginRequest: LoginRequest) => void
 }
@@ -18,6 +18,12 @@ const Login = (props: IProps) => {
   const close = () => {
     setLoginDetails({ username: '', password: '' })
     props.onClose()
+  }
+
+  const showErrorMessageString = () => {
+    if (props.error?.message instanceof String) {
+      return <span className="bg-danger text-white rounded p-1">{props.error}</span>
+    }
   }
 
   return (
@@ -58,11 +64,7 @@ const Login = (props: IProps) => {
             <i className="far fa-lock"></i> Passord
           </label>
         </Form.Floating>
-        <Col className="mt-2">
-          {props.error && (
-            <span className="bg-danger text-white rounded p-1">{props.error}</span>
-          )}
-        </Col>
+        <Col className="mt-2">{showErrorMessageString}</Col>
       </Modal.Body>
 
       <Modal.Footer>
