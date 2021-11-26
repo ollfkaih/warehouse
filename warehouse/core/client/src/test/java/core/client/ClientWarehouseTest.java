@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -26,10 +29,6 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class ClientWarehouseTest {
-  static Item addedItem;
-  static Item removedItem;
-  static boolean updated = false;
-
   ServerInterface server = mock(ServerInterface.class);
 
   ClientWarehouse wh;
@@ -259,48 +258,34 @@ public class ClientWarehouseTest {
     when(server.putItem(any(), eq(user1Auth))).thenReturn(CompletableFuture.completedFuture(true));
     when(server.removeItem(any(), eq(user1Auth))).thenReturn(CompletableFuture.completedFuture(null));
 
-    EntityCollectionListener<Item> listener = new EntityCollectionListener<>() {
-      @Override
-      public void entityAdded(Item i) {
-        addedItem = i;
-      }
+    EntityCollectionListener<Item> listener = mock(EntityCollectionListener.class);
 
-      @Override
-      public void entityUpdated(Item i) {
-        updated = true;
-      }
-
-      @Override
-      public void entityRemoved(Item i) {
-        removedItem = i;
-      }
-    };
+    doNothing().when(listener).entityAdded(any());
+    doNothing().when(listener).entityUpdated(any());
+    doNothing().when(listener).entityRemoved(any());
 
     wh.addItemsListener(listener);
 
     wh.putItem(item);
-    assertEquals(item, addedItem);
+    verify(listener, times(1)).entityAdded(item);
 
-    updated = false;
     item.setHeight(6.9);
-    assertTrue(updated);
+    verify(listener, times(1)).entityUpdated(item);
 
     // remove item from warehouse, and test that updates no longer fire events
     wh.removeItem(item);
-    assertEquals(item, removedItem);
+    verify(listener, times(1)).entityRemoved(item);
 
-    updated = false;
+    clearInvocations(listener);
     item.setBarcode("7453928692308");
-
-    Assertions.assertFalse(updated);
+    verify(listener, never()).entityUpdated(item);
 
     // test removing items listener
     wh.removeItemsListener(listener);
 
-    updated = false;
     Item item2 = new Item("item2", 2);
     wh.putItem(item2);
-    Assertions.assertFalse(updated);
+    verify(listener, never()).entityUpdated(item2);
   }
 
   @Test

@@ -5,6 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +20,6 @@ import java.util.Random;
 import java.util.UUID;
 
 public class ItemTest {
-  static int changeCounter;
-
   Item item;
 
   @BeforeEach
@@ -152,74 +156,64 @@ public class ItemTest {
     return UUID.randomUUID().toString();
   }
 
+  private void assertListenerInvoked(EntityListener<Item> mockListener) {
+    verify(mockListener, times(1)).updated(item);
+    clearInvocations(mockListener);
+  }
+
   @Test
   @DisplayName("Test listener")
   void testListener() {
-    EntityListener<Item> listener = (item) -> changeCounter++;
+    EntityListener<Item> listener = (EntityListener<Item>) mock(EntityListener.class);
+    doNothing().when(listener).updated(item);
     item.addListener(listener);
 
-    changeCounter = 0;
     item.setName("name");
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setAmount(2);
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setBarcode("1234567890128");
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setBrand("brand");
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setRegularPrice(100.00);
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setSalePrice(99.99);
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setPurchasePrice(1.43);
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setSection("A");
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setRow("42");
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setShelf("02");
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setHeight(10.0);
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setWidth(2.32);
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setLength(53.0);
-    assertEquals(changeCounter, 1);
-
-    changeCounter = 0;
+    assertListenerInvoked(listener);
+    
     item.setWeight(0.012);
-    assertEquals(changeCounter, 1);
-
+    assertListenerInvoked(listener);
 
     item.removeListener(listener);
 
-    changeCounter = 0;
     item.setLength(53.0);
-    assertEquals(changeCounter, 0);
+    verify(listener, never()).updated(item);
   }
 
   @Test
