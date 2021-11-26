@@ -37,7 +37,7 @@ public class FileSaver<T> implements DataPersistence<T> {
   }
 
   public FileSaver(TypeReference<T> type, String folder) {
-    this(type, DataUtils.createObjectMapper(), folder, "json");
+    this(type, DataUtils.getObjectMapper(), folder, "json");
   }
 
   @Override

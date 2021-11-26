@@ -47,11 +47,11 @@ public class WarehouseServerTest {
   @Autowired
   private MockMvc mockMvc;
 
-  private final ObjectMapper objectMapper = DataUtils.createObjectMapper();
+  private final ObjectMapper objectMapper = DataUtils.getObjectMapper();
 
   @TestConfiguration
   public static class TestApplicationConfig {
-    private final ObjectMapper objectMapper = DataUtils.createObjectMapper();
+    private final ObjectMapper objectMapper = DataUtils.getObjectMapper();
 
     @Bean
     @Primary
