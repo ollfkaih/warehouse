@@ -45,6 +45,12 @@ Hovedvindu og detaljevinduer til en pålogget bruker:
 ![Warehouse pålogget](/docs/release3/screenshots/Warehouse2_release3.png)
 ![DetailsView pålogget](/docs/release3/screenshots/DetailsView2_release3.png)
 
+## Designskisser: web-app
+Web-appen er basert på følgende mockups:
+![SplashPage](/docs/release3/mockups/Webapp_Splashpage.png)
+![Dashboard](/docs/release3/mockups/Webapp_Dashboard.png)
+![DetailsView](/docs/release3/mockups/Webapp_DetailsView.png)
+
 ## Bildeeksempler: web-app
 Påloggingsvindu:
 ![Påloggingsvindu](/docs/release3/screenshots/Webapp_login.png)
