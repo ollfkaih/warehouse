@@ -146,7 +146,7 @@ public class WarehouseController implements EntityCollectionListener<Item>, Load
   }
 
   protected void confirmLogin() {
-    usernameLabel.setText(warehouse.getCurrentUser().getUserName());
+    usernameLabel.setText(warehouse.getCurrentUser().getUsername());
     usernameLabel.setVisible(true);
     openLoginViewOrLogoutButton.setText("Logg ut");
     userImage.setImage(userEdit);

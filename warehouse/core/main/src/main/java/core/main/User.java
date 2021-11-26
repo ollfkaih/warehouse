@@ -11,18 +11,18 @@ import java.util.Objects;
  * Class for representing a user.
  */
 public class User extends Entity<User> {
-  private String userName;
+  private String username;
   private String password;
 
-  public User(@JsonProperty("id") String id, @JsonProperty("userName") String userName, @JsonProperty("password") String password) {
+  public User(@JsonProperty("id") String id, @JsonProperty("username") String username, @JsonProperty("password") String password) {
     super(id);
-    setUserName(userName);
+    setUsername(username);
     setPassword(password);
   }
 
-  public User(String userName, String password, boolean hash) {
+  public User(String username, String password, boolean hash) {
     super();
-    setUserName(userName);
+    setUsername(username);
     if (hash) {
       hashAndSetPassword(password);
     } else {
@@ -30,15 +30,15 @@ public class User extends Entity<User> {
     }
   }
 
-  public String getUserName() {
-    return userName;
+  public String getUsername() {
+    return username;
   }
 
-  private void setUserName(String userName) {
-    if (userName.equals("")) {
-      throw new IllegalArgumentException("Username cannot be empty");
+  private void setUsername(String username) {
+    if (username.equals("")) {
+      throw new IllegalArgumentException("username cannot be empty");
     }
-    this.userName = userName;
+    this.username = username;
     notifyUpdated();
   }
   
@@ -87,7 +87,7 @@ public class User extends Entity<User> {
 
   @Override
   public String toString() {
-    return "Username: " + userName + " Password: " + password;
+    return "Username: " + username + " Password: " + password;
   }
 
   @Override
@@ -99,12 +99,12 @@ public class User extends Entity<User> {
       return false;
     }
     User user = (User) o;
-    return userName.equals(user.userName) && password.equals(user.password);
+    return username.equals(user.username) && password.equals(user.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userName, password);
+    return Objects.hash(username, password);
   }
 
   @Override

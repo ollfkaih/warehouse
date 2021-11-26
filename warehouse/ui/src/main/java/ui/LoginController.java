@@ -69,11 +69,11 @@ public class LoginController {
 
   @FXML
   private void login() {
-    String userName = usernameField.getText();
+    String username = usernameField.getText();
     String password = passwordField.getText();
 
-    if (!userName.isEmpty() && !password.isEmpty()) {
-      CompletableFuture<Void> loginFuture = wh.login(userName, password);
+    if (!username.isEmpty() && !password.isEmpty()) {
+      CompletableFuture<Void> loginFuture = wh.login(username, password);
       loginFuture.thenApply(x -> {
         Platform.runLater(() -> {
           whController.confirmLogin();

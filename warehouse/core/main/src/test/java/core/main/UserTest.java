@@ -23,10 +23,10 @@ public class UserTest {
   @Test
   @DisplayName("Test constructor")
   void testContructor() {
-    assertEquals("a", user1.getUserName());
+    assertEquals("a", user1.getUsername());
     assertTrue(user1.checkPassword("b"));
     assertFalse(user1.checkPassword("d"));
-    assertEquals("c", user2.getUserName());
+    assertEquals("c", user2.getUsername());
     assertTrue(user2.checkPassword("d"));
     assertFalse(user2.checkPassword("b"));
   }

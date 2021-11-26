@@ -58,7 +58,7 @@ public class ClientWarehouseTest {
 
     CompletableFuture<AuthSession> loginFuture = new CompletableFuture<>();
     when(server.login(any())).thenReturn(loginFuture);
-    wh.login(user1.getUserName(), user1.getPassword());
+    wh.login(user1.getUsername(), user1.getPassword());
 
     loginFuture.complete(user1Auth);
     reset(server);
@@ -304,7 +304,7 @@ public class ClientWarehouseTest {
     verify(server, times(1)).register(user);
     registerFuture.complete(null);
 
-    wh.login(user.getUserName(), user.getPassword());
+    wh.login(user.getUsername(), user.getPassword());
 
     verify(server, times(1)).login(any());
     AuthSession authSession = new AuthSession(user);

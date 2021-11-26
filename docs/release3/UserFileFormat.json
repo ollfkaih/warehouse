@@ -3,7 +3,7 @@
   "title": "User",
   "type": "object",
   "properties": {
-    "userName": {
+    "username": {
       "description": "Nickname (and id) of user",
       "type": "string"
     },
@@ -13,5 +13,5 @@
       "format": "password"
     }
   },
-  "required": ["userName", "password"]
+  "required": ["username", "password"]
 }
