@@ -19,7 +19,7 @@ const USER_SERVER_PATH = process.env.REACT_APP_USER_SERVER_PATH || ''
 const App = () => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false)
   const [loginSession, setLoginSession] = useState<AuthSession | undefined>(undefined)
-  const [loginError, setLoginError] = useState<String | undefined>()
+  const [loginError, setLoginError] = useState<any>()
 
   if (!DOMAIN)
     return <p>Domain for server not set, configure process.env.DOMAIN variable</p>
@@ -34,7 +34,7 @@ const App = () => {
       setShowLoginModal(false)
       setLoginError(undefined)
     } catch (e) {
-      setLoginError(e as String)
+      setLoginError(e)
     }
   }
 
