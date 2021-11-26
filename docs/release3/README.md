@@ -47,9 +47,10 @@ Hovedvindu og detaljevinduer til en pålogget bruker:
 
 ## Designskisser: web-app
 Web-appen er basert på følgende mockups:
-![SplashPage](/docs/release3/mockups/Webapp_Splashpage.png)
-![Dashboard](/docs/release3/mockups/Webapp_Dashboard.png)
-![DetailsView](/docs/release3/mockups/Webapp_DetailsView.png)
+
+<img src="docs/release3/mockups/Webapp_Splashpage.png" alt="Splashpage" width="33%" />
+<img src="docs/release3/mockups/Webapp_Dashboard.png" alt="Dashboard" width="33%" />
+<img src="docs/release3/mockups/Webapp_DetailsView.png" alt="DetailsView" width="33%" />
 
 ## Bildeeksempler: web-app
 Påloggingsvindu:
