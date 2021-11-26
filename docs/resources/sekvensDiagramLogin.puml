@@ -1,0 +1,21 @@
+@startuml requestsWhenLoggingIn
+skinparam backgroundColor #EEEBDC
+
+actor Bruker
+Bruker -> UI : Klikk Login-knapp
+UI -> ClientWarehouse : Login
+database API
+ClientWarehouse -> API : Login
+
+alt#Gold #LightGreen Hvis brukernavn og passord stemmer
+    API -> ClientWarehouse : Ok, her er token
+    ClientWarehouse -> ClientWarehouse : Lagre token og innlogget bruker
+    ClientWarehouse -> UI : Oppdater med innlogget bruker
+    UI -> Bruker : Viser resultat
+else #Salmon Hvis noe er feil
+    API -> ClientWarehouse : Feil!
+    ClientWarehouse -> UI : Feil!
+    UI -> Bruker : Viser feilmelding
+end
+
+@enduml
