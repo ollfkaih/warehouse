@@ -13,3 +13,5 @@ Man kan lage et varelager lokalt, eller koble til en tjener.
 ## Nett-klient
 Nettsiden vår lar deg koble til et eksisterende varelager (på en tjener), og krever alltid at man logger inn (med en eksisterende bruker). Vi har tenkt at nettsiden skal være tilgjengelig fra hvor som helst i verden, og at det derfor gir mening å kreve autentisering for å koble til et lager.  
 Når man er logget inn, lar nettsiden deg se, redigere og slette varer på lageret.
+
+<img src="docs/release3/screenshots/java_and_webapp.png" alt="Java and Webapp" width="100%" />
