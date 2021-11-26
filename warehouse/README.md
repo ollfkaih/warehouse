@@ -3,7 +3,7 @@ En enkel app som viser lagerstatus for et varelager. Mer dokumentasjon om de uli
 
 Bildet under viser et skjermbilde av appen, med en liste over lagerførte varer i vinduet til høyre og to detaljvinduer til venstre som lar deg se og endre egenskapene til hver enkel vare.
 
-<img src="docs/release3/screenshots/java_app.png" width="500px" />
+<img src="docs/release3/screenshots/java_app.png" width="100%" />
 
 ## Prosjektets oppbygning
 Prosjektet består av tre moduler som utfører ulike oppgaver i appen.

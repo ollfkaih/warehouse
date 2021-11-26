@@ -51,7 +51,3 @@ Påloggingsvindu:
 
 Hovedvindu:
 ![Hovedvindu](/docs/release3/screenshots/Webapp_main.png)
-
-## Designskisse
-Designskissen under var utgangspunktet for detaljvinduet i versjon 3.  
-//TODO DESIGNSKISSE TODO FREDRIK
