@@ -23,6 +23,8 @@ Brukeren har også mulighet til å logge seg av og på, samt å registrere nye b
 - Navn
 - Passord (hashet)
 
+Det lagres også en bruker-id for hver bruker. Denne er ikke strengt nødvendig ettersom brukernavn er unike, men den gjør implementasjonen av applikasjonen enklere ettersom noen funksjoner kan brukes både til varer og brukere. I tillegg muligjør det endring av brukernavn som en fremtidig funksjon.
+
 Brukergrensesnittet til web-appen likner for det meste på JavaFX-appen, men med er par viktige forskjeller. Når man åpner webappen blir man for eksempel møtt med et påloggingsvindu som krever at man logger seg på for å kunne se hovedsiden. I tillegg er registrering av ny bruker fjernet. Dette er på grunn av sikkerhet, slik at folk ikke bare kan koble seg til serveren og registrere en ny bruker. 
 
 Layouten er også litt annerledes. For eksempel, når man trykker på et produkt så får man opp detaljeinformasjon på venstre side av hovedvinduet, i stedet for at det åpnes et helt nytt vindu. 
