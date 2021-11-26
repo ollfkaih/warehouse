@@ -1,4 +1,4 @@
-# Warehouse core
+# Warehouse core.main
 Denne pakken inneholder kjernelogikken til warehouse-programmet. 
 
 Den inneholder klassen `Warehouse` som representerer varehuset, og ved hjelp av klassene `Item` og `User` representeres varer og brukere som varehuset inneholder.  
