@@ -84,7 +84,7 @@ class WarehouseControllerTest {
 
   private static final String DELETE_CONFIRMATION_DELETE_TEXT = "Slett";
 
-  private String testUserName;
+  private String testUsername;
   private WarehouseController warehouseController;
   private Button addItemButtonCopy;
 
@@ -181,19 +181,19 @@ class WarehouseControllerTest {
 
   private void login(FxRobot robot) {
     robot.clickOn(WAREHOUSE_BUTTON_LOGIN_LOGOUT);
-    if (testUserName == null) {
+    if (testUsername == null) {
       register(robot);
     }
-    robot.clickOn(LOGIN_INPUT_USERNAME).write(testUserName);
+    robot.clickOn(LOGIN_INPUT_USERNAME).write(testUsername);
     robot.clickOn(LOGIN_INPUT_PASSWORD).write("passord");
     robot.clickOn(LOGIN_BUTTON_LOGIN);
   }
 
   private void register(FxRobot robot) {
-    testUserName = getRandomProductName();
+    testUsername = getRandomProductName();
     robot.clickOn(WAREHOUSE_BUTTON_LOGIN_LOGOUT);
     robot.clickOn(LOGIN_BUTTON_REGISTER);
-    robot.clickOn(REGISTER_INPUT_USERNAME).write(testUserName);
+    robot.clickOn(REGISTER_INPUT_USERNAME).write(testUsername);
     robot.clickOn(REGISTER_INPUT_PASSWORD).write("passord");
     robot.clickOn(REGISTER_INPUT_REPEAT_PASSWORD).write("passord");
     robot.clickOn(REGISTER_BUTTON_REGISTER);

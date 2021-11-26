@@ -36,15 +36,15 @@ public class ServerWarehouse extends BaseWarehouse {
   }
 
   public boolean containsUserByUsername(String username) {
-    return userCollection.contains(user -> user.getUserName().equalsIgnoreCase(username));
+    return userCollection.contains(user -> user.getUsername().equalsIgnoreCase(username));
   }
 
   private Optional<User> findUserByUsername(String username) {
-    return userCollection.find(user -> user.getUserName().equals(username));
+    return userCollection.find(user -> user.getUsername().equals(username));
   }
 
   public void addUser(User user) {
-    if (containsUserByUsername(user.getUserName())) {
+    if (containsUserByUsername(user.getUsername())) {
       throw new IllegalArgumentException("Brukernavnet er allerede i bruk.");
     }
     user.hashAndSetPassword(user.getPassword());

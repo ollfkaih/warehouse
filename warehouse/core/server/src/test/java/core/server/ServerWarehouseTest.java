@@ -125,7 +125,7 @@ public class ServerWarehouseTest {
     ServerWarehouse wh = new ServerWarehouse(itemCollection, userCollection);
 
     assertTrue(wh.containsItem(item.getId()));
-    assertTrue(wh.containsUserByUsername(user.getUserName()));
+    assertTrue(wh.containsUserByUsername(user.getUsername()));
     assertEquals(item, wh.getItem(item.getId()));
     assertEquals(itemCollection.getAll(), wh.getAllItems());
     assertEquals(userCollection.getAll(), wh.getUsers());

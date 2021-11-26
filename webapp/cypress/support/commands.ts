@@ -1,14 +1,14 @@
 import Item from '../../src/modules/Item'
 import { v4 as uuidv4 } from 'uuid'
 
-const userName = uuidv4()
+const username = uuidv4()
 const id = uuidv4()
 const password = 'pwd'
 
 Cypress.Commands.add('login', () => {
   cy.visit('http://localhost:3000')
   cy.contains('Logg inn').click()
-  cy.get('#username-control').type(userName)
+  cy.get('#username-control').type(username)
   cy.get('#password-control').type(password)
   cy.get('#login-button-modal').click()
   cy.get('#logout-btn').should('be.visible')
@@ -20,7 +20,7 @@ Cypress.Commands.add('register', () => {
     url: 'localhost:8080/warehouse/user/register',
     body: {
       id: id,
-      userName: userName,
+      username: username,
       password: password,
     },
   })

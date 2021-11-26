@@ -200,13 +200,13 @@ public class WarehouseServerTest {
 
     register(user);
 
-    AuthSession authSession = login(new LoginRequest(user.getUserName(), password));
+    AuthSession authSession = login(new LoginRequest(user.getUsername(), password));
 
     assertNotNull(authSession);
     assertNotNull(authSession.getUser());
     assertNotNull(authSession.getToken());
     assertEquals(user.getId(), authSession.getUser().getId());
-    assertEquals(user.getUserName(), authSession.getUser().getUserName());
+    assertEquals(user.getUsername(), authSession.getUser().getUsername());
 
     auth = authSession;
   }
