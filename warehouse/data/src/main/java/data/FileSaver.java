@@ -33,7 +33,6 @@ public class FileSaver<T> implements DataPersistence<T> {
       ensureFolderExists();
     } catch (IOException e) {
       e.printStackTrace();
-      // TODO: Handle error somehow
     }
   }
 
