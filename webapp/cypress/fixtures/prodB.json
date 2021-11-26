@@ -1,0 +1,16 @@
+{
+  "name": "ProdB",
+  "amount": 10,
+  "barcode": 1234567890128,
+  "brand": "ProdusentB",
+  "regularPrice": 200,
+  "salePrice": 200,
+  "purchasePrice": 100,
+  "section": "B",
+  "row": "15",
+  "shelf": "20",
+  "weight": 20,
+  "height": 20,
+  "width": 20,
+  "length": 20
+}

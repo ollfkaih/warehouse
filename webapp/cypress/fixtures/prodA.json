@@ -1,0 +1,16 @@
+{
+  "name": "ProdA",
+  "amount": 5,
+  "barcode": 1846138651849,
+  "brand": "ProdusentA",
+  "regularPrice": 100,
+  "salePrice": 100,
+  "purchasePrice": 50,
+  "section": "A",
+  "row": "10",
+  "shelf": "2",
+  "weight": 10,
+  "height": 10,
+  "width": 10,
+  "length": 10
+}

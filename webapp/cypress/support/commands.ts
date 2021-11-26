@@ -11,6 +11,7 @@ Cypress.Commands.add('login', () => {
   cy.get('#username-control').type(userName)
   cy.get('#password-control').type(password)
   cy.get('#login-button-modal').click()
+  cy.get('#logout-btn').should('be.visible')
 })
 
 Cypress.Commands.add('register', () => {
@@ -61,22 +62,4 @@ Cypress.Commands.add('verifyItemProperties', (item: Item) => {
         .get('#' + itemProperty + '-control')
         .should('have.value', item[itemProperty].toString())
   }
-})
-
-Cypress.Commands.add('createDefaultItems', () => {
-  cy.createItem('A', 0)
-  cy.createItem('AA', 1000000)
-  cy.createItem('D', 50000)
-})
-
-Cypress.Commands.add('deleteDefaultItems', () => {
-  //TODO: Do better
-  /*cy.contains('Navn').click()
-  //cy.get('#sortDirectionButton').click()
-  cy.get('#searchField').clear()
-  cy.deleteItemByName('A')
-  cy.wait(500)
-  cy.deleteItemByName('AA')
-  cy.wait(500)
-  cy.deleteItemByName('D')*/
 })
