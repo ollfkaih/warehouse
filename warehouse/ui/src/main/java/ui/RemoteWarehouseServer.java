@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
  * Connection to a remote server.
  */
 public class RemoteWarehouseServer implements ServerInterface {
-  private static final ObjectMapper objectMapper = DataUtils.createObjectMapper();
+  private static final ObjectMapper objectMapper = DataUtils.getObjectMapper();
   private static final HttpClient client = HttpClient.newHttpClient();
   private final String baseUrl;
 

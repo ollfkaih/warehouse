@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Primary;
 public class WarehouseServerApplication {
   private final DataPersistence<Item> itemPersistence = new FileSaver<>(new TypeReference<>() {}, "spring-server-items");
   private final DataPersistence<User> userPersistence = new FileSaver<>(new TypeReference<>() {}, "spring-server-users");
-  private final ObjectMapper objectMapper = DataUtils.createObjectMapper();
+  private final ObjectMapper objectMapper = DataUtils.getObjectMapper();
 
   public static void main(String[] args) {
     SpringApplication.run(WarehouseServerApplication.class, args);

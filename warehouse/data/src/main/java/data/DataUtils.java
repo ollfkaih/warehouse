@@ -15,10 +15,16 @@ import java.time.format.DateTimeFormatter;
 public abstract class DataUtils {
   public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter
       .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
+      
+  private static final ObjectMapper mapper = createObjectMapper();
 
-  public static ObjectMapper createObjectMapper() {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule(getLocalDateTimeModule());
+  private static ObjectMapper createObjectMapper() {
+    ObjectMapper om = new ObjectMapper();
+    om.registerModule(getLocalDateTimeModule());
+    return om;
+  }
+
+  public static ObjectMapper getObjectMapper() {
     return mapper;
   }
 
