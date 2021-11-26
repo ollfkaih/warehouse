@@ -48,7 +48,7 @@ const SortButtons = (props: IProps) => {
         <ToggleButton
           variant="light"
           className="text-primary mx-1 rounded-pill sortToggle"
-          id="toggle-button"
+          id="price-button"
           value={SortOption.Price}
           onClick={() => props.setSortOption(SortOption.Price)}
         >

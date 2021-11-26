@@ -12,6 +12,7 @@ const LoginButton = (props: IProps) => (
     {props.login ? (
       <Link to="/">
         <Button
+          id="logout-btn"
           className="rounded-pill px-4"
           variant="outline-primary"
           onClick={() => props.onLogin(false)}
@@ -22,6 +23,7 @@ const LoginButton = (props: IProps) => (
     ) : (
       <Link to="/">
         <Button
+          id="login-btn"
           className="rounded-pill"
           variant="outline-primary"
           onClick={() => props.onLogin(true)}
