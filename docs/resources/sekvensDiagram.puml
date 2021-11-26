@@ -1,0 +1,24 @@
+@startuml requestsWhenSaving
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+actor Bruker
+Bruker -> UI : Klikk Lagre-knapp
+UI -> Item : Lagr egenskaper
+Item -> ClientWarehouse: Varen er endret
+Item -> ClientWarehouseUpdater : Varen er endret
+ClientWarehouse -> UI : Oppdater UI
+UI -> Bruker : Viser oppdatert vare
+database API
+ClientWarehouseUpdater -> API : Varen er endret
+API -> ClientWarehouseUpdater : Ok
+ClientWarehouseUpdater -> API : Hent alle varer
+API -> ClientWarehouseUpdater : Her er varene :)
+alt#Gold #White Hvis en vare er oppdatert/lagt til/slettet
+    ClientWarehouseUpdater -> ClientWarehouse : Vare er endret
+    ClientWarehouse -> ClientWarehouse : Bytt ut med oppdatert versjon
+    ClientWarehouse -> UI : Oppdater UI
+    UI -> Bruker : Viser oppdatert vare
+end
+
+@enduml
