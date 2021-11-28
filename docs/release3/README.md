@@ -12,7 +12,7 @@ I lagersystemet kan brukeren holde styr på hvilke varer vedkommendet har i lage
 - Strekkode
 
 Følgende data lagres, men vises ikke for brukeren:
-- Produkt-id (lagres f.eks. i tilfellet bruker ønske å lage flere brukere med samme navn, men fra forskjellige produsenter)
+- Produkt-id (lagres f.eks. i tilfellet bruker ønske å lage flere produkter med samme navn, men fra forskjellige produsenter)
 - Opprettelsestidspunkt (gjør det mulig å sortere produktene etter opprettelsestidspunkt)
 
 Brukergrensesnittet til JavaFX-appen er en videreføring fra innlevering 2. En bruker som ikke er logget inn vil kun ha read-only acces i appen. Brukeren vil bli presentert med et hovedvindu som inneholder en liste over alle produktene på lager, og informasjonen om produktnavn, produsent og antall på lager. Brukeren vil også ha mulighet til å søke etter produkter i et søkefelt, samt å sortere varene etter produktnavn, antall og produksjonsdato ved å bruke en nedtrekksmeny. Ved å trykke på et produkt i listen vil brukeren få opp et vindu med detaljert informasjon om produktet.
