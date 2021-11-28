@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "User",
+  "type": "object",
+  "properties": {
+    "username": {
+      "description": "Nickname (and id) of user",
+      "type": "string"
+    },
+    "password": {
+      "description": "The users password",
+      "type": "string",
+      "format": "password"
+    }
+  },
+  "required": ["username", "password"]
+}

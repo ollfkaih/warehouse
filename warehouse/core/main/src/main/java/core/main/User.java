@@ -20,6 +20,13 @@ public class User extends Entity<User> {
     setPassword(password);
   }
 
+  /**
+   * Create a new User.
+   *
+   * @param username The username of the user
+   * @param password The password of the user
+   * @param hash Whether or not the password should be hashed before setting
+   */
   public User(String username, String password, boolean hash) {
     super();
     setUsername(username);

@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "object",
+  "title": "Item",
+  "properties": {
+    "id": {
+      "description": "A universally unique id (UUID) for the item",
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "description": "The name of the item",
+      "type": "string"
+    },
+    "amount": {
+      "description": "Quantity of this item in storage",
+      "type": "integer",
+      "minimum": 0
+    },
+    "barcode": {
+      "description": "EAN13 code",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "brand": {
+      "description": "Brand/Manufacturer of item",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "regularPrice": {
+      "description": "Regular price of item",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number",
+          "minimum": 0
+        }
+      ],
+      "minimum": 0
+    },
+    "salePrice": {
+      "description": "Current price of item",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number",
+          "minimum": 0
+        }
+      ]
+    },
+    "purchasePrice": {
+      "description": "Price paid for item to manufacturer",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number",
+          "minimum": 0
+        }
+      ],
+      "minimum": 0
+    },
+    "section": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "rack": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "shelf": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "weight": {
+      "description": "Weight of the item in kgs",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "creationDate": {
+      "description": "Creation date of item",
+      "type": "string",
+      "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})\\.([0-9]{9})$"
+    },
+    "height": {
+      "description": "Height of item",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "width": {
+      "description": "Width of item",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "length": {
+      "description": "Length of item",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    }
+  },
+  "required": ["amount", "id", "name", "creationDate"]
+}
