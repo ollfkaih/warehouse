@@ -121,7 +121,7 @@
     "creationDate": {
       "description": "Creation date of item",
       "type": "string",
-      "format": "date-time"
+      "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})\\.([0-9]{9})$"
     },
     "height": {
       "description": "Height of item",

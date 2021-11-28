@@ -15,7 +15,7 @@ class FileSaverTest {
   @DisplayName("Test that we can write and read items and users from file")
   void testSerializeDeserialize() throws IOException {
     Item item = new Item("Bok", 4);
-    User user = new User("test87", "password", false);
+    User user = new User("test87", "password", true);
 
     FileSaver<Item> itemSaver = new FileSaver<Item>(new TypeReference<Item>() {}, "test-items-folder");
     itemSaver.save(item, "testItem");
