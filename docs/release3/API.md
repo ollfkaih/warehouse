@@ -1,7 +1,7 @@
 # API dokumentasjon
 
-Warehouse APIet lar applikasjoner enkelt hente og oppdatere produkter på en Warehouse-server.
-Både java-applikasjonen og webappen bruker APIet, dermed blir det lett å bruke dem sammen ved å koble til samme server.
+Warehouse APIet lar applikasjoner enkelt hente og oppdatere produkter på en Warehouse-tjener.
+Både java-applikasjonen og webappen bruker APIet, dermed blir det lett å bruke dem sammen ved å koble til samme tjener.
 
 ## Innlogging
 Enkelte endepunkt krever innlogging for å fungere, dette gjøres med en `auth-token`.
