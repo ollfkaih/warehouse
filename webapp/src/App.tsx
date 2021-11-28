@@ -32,7 +32,7 @@ const App = () => {
       )
       setLoginSession(authSession)
       setShowLoginModal(false)
-      setLoginError(undefined)
+      setLoginError('')
     } catch (e) {
       setLoginError(e)
     }

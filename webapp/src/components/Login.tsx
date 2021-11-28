@@ -20,12 +20,6 @@ const Login = (props: IProps) => {
     props.onClose()
   }
 
-  const showErrorMessageString = () => {
-    if (props.error?.message instanceof String) {
-      return <span className="bg-danger text-white rounded p-1">{props.error}</span>
-    }
-  }
-
   return (
     <Modal show={props.show} onHide={close}>
       <Modal.Header closeButton>
@@ -64,7 +58,9 @@ const Login = (props: IProps) => {
             <i className="far fa-lock"></i> Passord
           </label>
         </Form.Floating>
-        <Col className="mt-2">{showErrorMessageString}</Col>
+        <Col className="mt-2">
+          <span className="bg-white text-danger rounded p-1">{props.error}</span>
+        </Col>
       </Modal.Body>
 
       <Modal.Footer>
