@@ -12,7 +12,7 @@ const SplashPage = (props: IProps) => {
     <>
       <Row className="align-items-center frontRow">
         <Col md="6" className="frontText align-middle px-5">
-          <p className="frontTextTop">2138 presenterer</p>
+          <p className="frontTextTop">Gruppe 2138 presenterer</p>
           <h1 className="text-primary frontTextHeading">Warehouse</h1>
           <p className="frontTextDescription">
             Kontroller ditt varelager på en visjonær måte med fremtidens verktøy.
@@ -25,7 +25,7 @@ const SplashPage = (props: IProps) => {
             src="artwork/warehouse-artwork.svg"
             width="100%"
             alt="desc"
-          ></img>
+          />
         </Col>
       </Row>
     </>
