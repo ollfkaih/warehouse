@@ -26,8 +26,8 @@
     </columnConstraints>
     <rowConstraints>
       <RowConstraints minHeight="120.0" vgrow="NEVER"/>
-      <RowConstraints maxHeight="91.0" minHeight="25.0" prefHeight="47.0" vgrow="NEVER"/>
-      <RowConstraints maxHeight="349.0" minHeight="289.0" prefHeight="333.0" vgrow="SOMETIMES"/>
+      <RowConstraints maxHeight="47.0" minHeight="47.0" vgrow="NEVER"/>
+      <RowConstraints minHeight="289.0" prefHeight="333.0" vgrow="SOMETIMES"/>
     </rowConstraints>
     <VBox prefWidth="560.0" spacing="10.0">
       <AnchorPane id="appTitleBox" style="-fx-background-color: #840B9B;">
