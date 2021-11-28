@@ -36,11 +36,11 @@ component warehouse.springboot.server {
 component spring {
 }
 
-warehouse.ui ..> javafx
-warehouse.ui ..> fxml
-warehouse.ui ..> barbecue
+warehouse.ui .> javafx
+warehouse.ui .> fxml
+warehouse.ui .> barbecue
 
-ui ..> core.client
+ui ...> core.client
 ui ..> localserver
 ui .left.> data
 
