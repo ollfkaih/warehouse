@@ -75,11 +75,11 @@ Cypress:
   stage: Webapp test
   needs: [Yarn Build]
   script:
-      - cd warehouse
-      - mvn install -B -DskipUiTests -DskipTests -Dmaven.repo.local=$CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/m2/
-      - cd ../webapp
-      - yarn install --frozen-lockfile --cache-folder .yarn
-      - (cd ../warehouse/springboot/server; mvn -B spring-boot:run -Dmaven.repo.local=$CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/m2/) & (yarn start & npx cypress run)
+    - cd warehouse
+    - mvn install -B -DskipUiTests -DskipTests -Dmaven.repo.local=$CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/m2/
+    - cd ../webapp
+    - yarn install --frozen-lockfile --cache-folder .yarn
+    - (cd ../warehouse/springboot/server; mvn -B spring-boot:run -Dmaven.repo.local=$CI_BUILDS_DIR/$CI_PROJECT_PATH/warehouse/m2/) & (yarn start & npx cypress run)
   retry: 1
   artifacts:
     when: always

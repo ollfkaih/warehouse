@@ -1,15 +1,15 @@
 ScrollPane {
-    -fx-background-color: #f9f9f9;
+  -fx-background-color: #f9f9f9;
 }
 .hoverOverDark {
-    -fx-background-color: #d3d3d3;
+  -fx-background-color: #d3d3d3;
 }
 .hoverOverLight {
-    -fx-background-color: #dddddd;
+  -fx-background-color: #dddddd;
 }
 .notHoverOverDark {
-    -fx-background-color: #e4e4e4;
+  -fx-background-color: #e4e4e4;
 }
 .notHoverOverLight {
-    -fx-background-color: #efefef;
+  -fx-background-color: #efefef;
 }

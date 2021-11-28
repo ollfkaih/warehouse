@@ -1,7 +1,7 @@
 TextField {
   -fx-border-width: 2px;
   -fx-border-color: lightgrey;
-  -fx-focus-color: #840B9B;
+  -fx-focus-color: #840b9b;
 }
 
 TextField:disabled {
@@ -13,42 +13,41 @@ TextField:disabled {
 
 .legalInput {
   -fx-border-color: chartreuse;
-
 }
 .illegalInput {
   -fx-border-color: red;
-  
 }
 
 .searchField {
-  -fx-background-image:url('../icons/search.png');
-  -fx-background-color: rgba(0,0,0,0.05);
+  -fx-background-image: url("../icons/search.png");
+  -fx-background-color: rgba(0, 0, 0, 0.05);
   -fx-background-repeat: no-repeat;
   -fx-background-position: 95%;
-  -fx-background-size:15px;
-  -fx-prompt-text-fill:  rgba(1,1,1,0.7);
-  -fx-border-color: rgba(0,0,0,0);
-  -fx-border-size:1px;
+  -fx-background-size: 15px;
+  -fx-prompt-text-fill: rgba(1, 1, 1, 0.7);
+  -fx-border-color: rgba(0, 0, 0, 0);
+  -fx-border-size: 1px;
 }
-  .searchField:hover, .searchField:focused {
-    -fx-background-color: rgba(0,0,0,0.10);
-  }
+.searchField:hover,
+.searchField:focused {
+  -fx-background-color: rgba(0, 0, 0, 0.1);
+}
 
 .placementPane {
-  -fx-background-color: #fff; 
-  -fx-border-color: #aaa; 
+  -fx-background-color: #fff;
+  -fx-border-color: #aaa;
   -fx-border-radius: 8;
   -fx-background-radius: 8;
 }
 
-.placementTextField{
-  -fx-border-color: rgba(0,0,0,0);
-  -fx-background-color: rgba(0,0,0,0);
+.placementTextField {
+  -fx-border-color: rgba(0, 0, 0, 0);
+  -fx-background-color: rgba(0, 0, 0, 0);
   -fx-font-size: 18px;
   -fx-padding: 5 0 5 0;
   -fx-alignment: center;
 }
 
-  .placementTextField:disabled {
-    -fx-prompt-text-fill: rgb(0,0,0);
-  }
+.placementTextField:disabled {
+  -fx-prompt-text-fill: rgb(0, 0, 0);
+}

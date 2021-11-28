@@ -15,9 +15,6 @@
         "format": "password"
       }
     },
-    "required": [
-      "userName",
-      "password"
-    ]
+    "required": ["userName", "password"]
   }
 }
