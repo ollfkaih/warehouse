@@ -56,7 +56,7 @@ Web-appen er basert på følgende mockups:
 <img src="docs/release3/mockups/Webapp_DetailsView.png" alt="DetailsView" width="33%" />
 
 ## Bildeeksempler: web-app
-Påloggingsvindu:
+Forside:
 ![Påloggingsvindu](/docs/release3/screenshots/Webapp_login.png)
 
 Hovedvindu:
