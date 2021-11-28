@@ -25,16 +25,16 @@ Brukeren har også mulighet til å logge seg av og på, samt å registrere nye b
 
 Det lagres også en bruker-id for hver bruker. Denne er ikke strengt nødvendig ettersom brukernavn er unike, men den gjør implementasjonen av applikasjonen enklere ettersom noen funksjoner kan brukes både til varer og brukere. I tillegg muligjør det endring av brukernavn som en fremtidig funksjon.
 
-Brukergrensesnittet til web-appen likner for det meste på JavaFX-appen, men med er par viktige forskjeller. Når man åpner webappen blir man for eksempel møtt med et påloggingsvindu som krever at man logger seg på for å kunne se hovedsiden. I tillegg er registrering av ny bruker fjernet. Dette er på grunn av sikkerhet, slik at folk ikke bare kan koble seg til serveren og registrere en ny bruker. 
+Brukergrensesnittet til web-appen likner for det meste på JavaFX-appen, men med et par viktige forskjeller. Når man åpner webappen blir man for eksempel møtt med et påloggingsvindu som krever at man logger seg på for å kunne se hovedsiden. I tillegg er registrering av ny bruker fjernet. Dette er på grunn av sikkerhet, slik at folk ikke bare kan koble seg til serveren og registrere en ny bruker. 
 
-Layouten er også litt annerledes. For eksempel får man opp detaljinformasjon på venstre side av hovedvinduet når man trykker på en vare, i stedet for at det åpnes et helt nytt vindu. 
+Layouten er også litt annerledes. For eksempel får man opp detaljinformasjon på høyre side av hovedvinduet når man trykker på en vare, i stedet for at det åpnes et helt nytt vindu. 
 
 Strukturen på React-prosjektet følger ikke samme trelags-struktur som Java-prosjektet, istedenfor er nettsiden delt opp i mange komponenter som har egne interne tilstander, og logikken som kreves for å vise innholdet i den komponenten på skjermen.  
 
 ## Brukerhistorier
-[Brukerhistorie 2 og 3](/docs/release2/userStoriesRelease2.md)
+[Brukerhistorie 4, 5 og 6](/docs/release3/userStoriesRelease3.md)
 er relevant for denne innleveringen.
-Funksjonalitet laget basert på første brukerhistorie, [`us-1`](/docs/release1/userStoriesRelease1.md), ligger fortsatt i appen, men knappen for å slette varer er flyttet til det nye detaljvinduet, som nevnt over.
+Funksjonalitet laget basert på de første brukerhistoriene, [`us-1`](/docs/release1/userStoriesRelease1.md) og [2 og 3](/docs/release2/userStoriesRelease2.md), ligger fortsatt i appen, men knappen for å slette varer er flyttet til det nye detaljvinduet, som nevnt over.
 
 ## Prosessen bak versjon 3
 I [creatingRelease3.md](/docs/release3/creatingRelease3.md) finner du noen av valgene vi har tatt i den tredje versjonen av appen vår, og litt om hva som har fungert bra og dårlig med verktøy, språk og samarbeid.
