@@ -31,3 +31,7 @@ Vi har laget noen brukerhistorier til de forskjellige versjonene av appen.
 2. Kjør `mvn install` (Om noen tester skulle feile og du forstatt vil kjøre appen, kan du bruke `mvn install -DskipTests -DskipUiTests`)
 3. Bytt så mappe til `ui`
 4. Kjør programmet med `mvn javafx:run`
+
+## Bygge java-klienten
+
+For å bygge en kjørbar (portabel) versjon av appen, må du først bytte gren til `package-java-app`, og så følge instruksjonene i readme-en i [ui](/warehouse/ui) der.
