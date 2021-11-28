@@ -1,8 +1,8 @@
 .inputGroup:hover {
-    -fx-background-color: #E3E3E3;
+  -fx-background-color: #e3e3e3;
 }
 
 .inputGroup {
-    -fx-padding: 10px;
-    -fx-background-radius: 10px;
+  -fx-padding: 10px;
+  -fx-background-radius: 10px;
 }

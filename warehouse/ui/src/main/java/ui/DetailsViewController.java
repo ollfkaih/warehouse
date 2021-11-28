@@ -118,7 +118,7 @@ public class DetailsViewController {
     stage.setOnCloseRequest(e -> close());
 
     try {
-      stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("appIcon/1-rounded.png")));
+      stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("appIcon/purple_icon.png")));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -274,6 +274,8 @@ public class DetailsViewController {
     
     if (item.getBarcode() != null) {
       generateBarcodeImage();
+    } else {
+      barcodeImageView.setImage(null);
     }
   }
 

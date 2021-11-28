@@ -1,0 +1,64 @@
+@startuml
+
+class ServerWarehouse [[java:core.server.ServerWarehouse]] {
+	-EntityCollection<User> userCollection
+	-Map<String,AuthSession> authSessions
+	..inherited from BaseWarehouse..
+	-EntityCollection<Item> itemCollection
+}
+
+class "EntityCollection<Item>" as EntityCollection_Item_ [[java:core.main.EntityCollection]] {
+	-Map<String,T> entities
+	-Collection<EntityCollectionListener<T>> listeners
+	-Map<String,EntityListener<T>> entityListeners
+}
+
+class "EntityCollection<User>" as EntityCollection_User_ [[java:core.main.EntityCollection]] {
+	-Map<String,T> entities
+	-Collection<EntityCollectionListener<T>> listeners
+	-Map<String,EntityListener<T>> entityListeners
+}
+
+class Item [[java:core.main.Item]] {
+	-String name
+	-int amount
+	-String barcode
+	-String brand
+	-Double regularPrice
+	-Double salePrice
+	-Double purchasePrice
+	-String section
+	-String row
+	-String shelf
+	-Double height
+	-Double width
+	-Double length
+	-Double weight
+	-LocalDateTime creationDate
+	..inherited from Entity..
+	-String id
+	-Collection<EntityListener<T>> listeners
+}
+
+class User [[java:core.User]] {
+	-String username
+	-String password
+	..inherited from Entity..
+	-String id
+	-Collection<EntityListener<T>> listeners
+}
+
+class AuthSession [[java:core.main.AuthSession]] {
+	-User user
+	-String token
+}
+
+ServerWarehouse "1" --> "1" EntityCollection_User_ : userCollection
+EntityCollection_User_ "1" --> "*" User : entities
+User "1" *.. "1" EntityCollection_User_ : listener
+ServerWarehouse "1" --> "*" AuthSession : authSessions
+ServerWarehouse "1" --> "1" EntityCollection_Item_ : itemCollection
+EntityCollection_Item_ "1" --> "*" Item : entities
+Item "1" *.. "1" EntityCollection_Item_ : listener
+AuthSession "1" --> "1" User : user
+@enduml

@@ -2,7 +2,7 @@
 
 ## Lagersjef Lise (us-4)
 
-Som lagersjef ønsker Lise sikkerhet i lagersystemet slik at uvedkommende ikke kan koble seg til og gjøre endringer. Hun ønsker at alle ansatte skal ha brukerkontoer som de må logge seg inn på for å bruke systemet.
+Som lagersjef ønsker Lise sikkerhet i lagersystemet slik at uvedkommende ikke kan koble seg til og gjøre endringer. Hun ønsker at alle ansatte men bruker skal ha mulighet til å redigere varelageret:
 
 Viktig å kunne:
 

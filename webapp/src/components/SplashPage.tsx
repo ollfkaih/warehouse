@@ -19,13 +19,16 @@ const SplashPage = (props: IProps) => {
           </p>
           <LoginButton login={props.login} onLogin={props.onLogin} />
         </Col>
-        <Col md="6" className="px-5">
+        <Col md="6" className="px-5 text-center">
           <img
             className="frontImage"
             src="artwork/warehouse-artwork.svg"
             width="100%"
             alt="desc"
           />
+          <a href="https://storyset.com/hobby" className="text-primary small">
+            Hobby illustrations by Storyset
+          </a>
         </Col>
       </Row>
     </>

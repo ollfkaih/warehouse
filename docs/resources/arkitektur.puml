@@ -1,0 +1,64 @@
+@startuml warehouse module architecture
+
+component warehouse.core {
+	package core.main
+	package core.client
+	package core.server
+}
+
+component jackson {
+}
+
+component warehouse.ui {
+	package ui
+}
+
+component javafx {
+	component fxml {
+	}
+}
+
+component barbecue {
+}
+
+component warehouse.localserver {
+  package localserver
+}
+
+component warehouse.data {
+	package data
+}
+
+component warehouse.springboot.server {
+  package springboot.server
+}
+
+component spring {
+}
+
+warehouse.ui .> javafx
+warehouse.ui .> fxml
+warehouse.ui .> barbecue
+
+ui ...> core.client
+ui ..> localserver
+ui .left.> data
+
+core.client ..> core.main
+core.server ..> core.main
+core.main .left.> jackson
+
+warehouse.localserver ..> jackson
+localserver ..> warehouse.core
+localserver ..> data
+
+data ..> jackson
+data ..> core.main
+
+warehouse.springboot.server ..> spring
+warehouse.springboot.server ..> jackson
+
+springboot.server ..> core.server
+springboot.server ..> data
+
+@enduml

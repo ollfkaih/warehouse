@@ -30,7 +30,7 @@ public class WarehouseApp extends Application {
     stage.setMinHeight(380);
     stage.setMinWidth(500);
     try {
-      stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("appIcon/1-rounded.png")));
+      stage.getIcons().add(new Image(WarehouseApp.class.getResourceAsStream("appIcon/purple_icon.png")));
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println("ERROR: [WarehouseApp.java] Icon-image not found");

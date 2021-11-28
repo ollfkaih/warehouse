@@ -159,11 +159,6 @@
         ]
       }
     },
-    "required": [
-      "amount",
-      "id",
-      "name",
-      "creationDate"
-    ]
+    "required": ["amount", "id", "name", "creationDate"]
   }
 }

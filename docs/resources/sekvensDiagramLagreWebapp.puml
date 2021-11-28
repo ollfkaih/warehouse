@@ -1,0 +1,17 @@
+@startuml requestsWhenSavingWebapp
+skinparam backgroundColor #EEEBDC
+
+actor Bruker
+Bruker -> ItemDetailsButtons : Klikk Lagre-knapp
+ItemDetailsButtons -> MainPage : saveItem
+participant SWR
+database API
+MainPage -> API : putItem
+API -> MainPage : ok
+MainPage -> SWR : mutate
+SWR -> API : getItems
+API -> SWR : oppdaterte varer
+SWR -> MainPage : re-render
+MainPage -> Bruker : Vis oppdaterte varer
+
+@enduml

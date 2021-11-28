@@ -1,6 +1,6 @@
-.button{
-    -fx-text-fill: WHITE;
-    -fx-background-color: #840B9B; 
+.button {
+  -fx-text-fill: WHITE;
+  -fx-background-color: #840b9b;
 }
 
 .button:hover {
@@ -8,74 +8,75 @@
 }
 
 #saveButton {
-    -fx-background-color: #850B9C;
-  }
+  -fx-background-color: #850b9c;
+}
 
 #deleteButton {
-    -fx-background-color: #DB1818;
+  -fx-background-color: #db1818;
 }
 
 .reverseOrderButton {
-    -fx-text-fill: BLACK;
-    -fx-background-color: rgba(0,0,0, 0.05);
+  -fx-text-fill: BLACK;
+  -fx-background-color: rgba(0, 0, 0, 0.05);
 }
 
-.reverseOrderButton:hover, .reverseOrderButton:focus {
-    -fx-background-color: rgba(0,0,0,0.10);
-  }
+.reverseOrderButton:hover,
+.reverseOrderButton:focus {
+  -fx-background-color: rgba(0, 0, 0, 0.1);
+}
 
 .reverseOrderButton .orderByUp {
-    -fx-background-color: BLACK;
+  -fx-background-color: BLACK;
 }
 
 .reverseOrderButton.descending .orderByUp {
-    -fx-background-color: GRAY;
+  -fx-background-color: GRAY;
 }
 
 .reverseOrderButton .orderByDown {
-    -fx-background-color: GRAY;
+  -fx-background-color: GRAY;
 }
 
 .reverseOrderButton.descending .orderByDown {
-    -fx-background-color: BLACK;
+  -fx-background-color: BLACK;
 }
 
 .sortBox {
-    -fx-background-color: rgba(0,0,0,0.05);
-    -fx-prompt-text-fill:  rgba(1,1,1,0.7);
-    -fx-border-color: rgba(0,0,0,0);
-    -fx-border-size:2px;
+  -fx-background-color: rgba(0, 0, 0, 0.05);
+  -fx-prompt-text-fill: rgba(1, 1, 1, 0.7);
+  -fx-border-color: rgba(0, 0, 0, 0);
+  -fx-border-size: 2px;
 }
-  
-.sortBox:hover, .sortBox:showing {
-    -fx-background-color: rgba(0,0,0,0.10);
-    -fx-cursor: hand;
+
+.sortBox:hover,
+.sortBox:showing {
+  -fx-background-color: rgba(0, 0, 0, 0.1);
+  -fx-cursor: hand;
 }
 
 .sortBox .list-view .list-cell:hover {
-    -fx-background-color: #840B9B;
+  -fx-background-color: #840b9b;
 }
 
 .sortBox .list-view .list-cell:filled:selected {
-  -fx-background-color: #840B9B;
+  -fx-background-color: #840b9b;
 }
 
-
 .openLoginViewOrLogoutButton {
-    -fx-background-color:#fff;
-    -fx-text-fill:  #840B9B;
+  -fx-background-color: #fff;
+  -fx-text-fill: #840b9b;
 }
 
 .openLoginViewOrLogoutButton:hover {
-  -fx-background-color:#f1f1f1;
+  -fx-background-color: #f1f1f1;
 }
 
 .incrementButtonA {
-    -fx-graphic: url("../icons/plus-circle.png");
-    -fx-background-color:rgba(0,0,0,0);
+  -fx-graphic: url("../icons/plus-circle.png");
+  -fx-background-color: rgba(0, 0, 0, 0);
 }
 
 .decrementButtonA {
-    -fx-graphic: url("../icons/minus-circle.png");
-    -fx-background-color:rgba(0,0,0,0);
+  -fx-graphic: url("../icons/minus-circle.png");
+  -fx-background-color: rgba(0, 0, 0, 0);
 }
