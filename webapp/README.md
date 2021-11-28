@@ -22,3 +22,6 @@ Altså `cd webapp; yarn; yarn start`
 For å kunne kjøre integrasjonstestene til nettsiden, må først både [nettjeneren](/warehouse/README.md#kjøre-java-tjeneren) og [webappen](/webapp/README.md#kjøre-webappen) kjøre.  
 Testene forutsetter at det ikke finnes noen varer på lageret fra før.  
 I en tredje terminal kan du så skrive `npx cypress run` for å bare kjøre testene, eller `npx cypress open` for å åpne et gui hvor du kan kjøre og følge med på det som skjer i testene.
+
+#### Eksterne kilder
+Bildet på forsiden av Webappen er hentet fra <a href="https://storyset.com/hobby">Storyset</a>
