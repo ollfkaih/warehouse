@@ -1,11 +1,13 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-main-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2138/gr2138/-/tree/main/) [![Gitpod Release1](https://img.shields.io/badge/Gitpod-release-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2138/gr2138/-/tree/release)
 
 # IT1901 Prosjekt - Warehouse
+_Warehouse lets you store and manage items._
 
-Prosjektrepo for IT1901 - group 38.  
+Project repo for IT1901 at NTNU (autumn 2021).  
+
 Dokumentasjon ligger i mappen [docs](/docs) og i undermapper for hver utgivelse av appen.  
-Java-prosjektet ligger i [warehouse](/warehouse)-mappen, og en readme finnes også [der](/warehouse/README.md).  
-Web-prosjektet ligger i [webapp](/webapp)-mappen, og den har også en [readme](/webapp/README.md).
+Warehouse består av en server i [warehouse](/warehouse)-mappen, og en har der også en frontend i JavaFX.  
+En alternativ frontend (webklient) ligger i [webapp](/webapp)-mappen.
 
 ## Java-klient
 
