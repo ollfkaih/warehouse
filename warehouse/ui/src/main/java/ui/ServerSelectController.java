@@ -39,13 +39,14 @@ public class ServerSelectController {
     stage.setOnCloseRequest(event -> {
       try {
         whController.close();
+        System.exit(0);
       } catch (Exception e) {
         e.printStackTrace();
       }
     });
     this.whController = whController;
-  }
-  
+  }  
+
   @FXML
   private void connect() {
     String serverUrl = serverUrlField.getText();
