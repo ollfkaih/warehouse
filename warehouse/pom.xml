@@ -10,7 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
-        <jackson.version>2.12.5</jackson.version>
+        <jackson.version>2.12.7</jackson.version>
         <skipTests>false</skipTests>
     </properties>
 
